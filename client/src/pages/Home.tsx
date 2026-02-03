@@ -34,19 +34,18 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 glass-card border-b">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="glass-card border-b sticky top-0 z-50">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-primary/10">
                 <BarChart3 className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">Executive Analytics Dashboard</h1>
-                <p className="text-xs text-muted-foreground">Real-time program insights</p>
+                <h1 className="text-2xl font-bold">Executive Analytics Dashboard</h1>
+                <p className="text-sm text-muted-foreground">Week 5 (W5) • Real-time program insights</p>
               </div>
             </div>
-
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
                 <>
