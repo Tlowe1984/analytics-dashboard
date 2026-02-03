@@ -67,3 +67,7 @@
 - [x] Extract and parse milestone data from spreadsheet
 - [x] Build Upcoming Dates UI section with 3 subsections
 - [x] Display PDP gates, Key Software Milestones, and Hardware dates
+
+## Text Visibility Fix
+- [x] Fix white text color in Upcoming Dates section for better visibility
+- [x] Ensure proper contrast between text and background

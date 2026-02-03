@@ -38,8 +38,8 @@ export default function UpcomingDates() {
     <div className="w-full">
       {/* Section Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-2">Upcoming Dates</h2>
-        <p className="text-sm text-white/60">Program milestones and key dates</p>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Upcoming Dates</h2>
+        <p className="text-sm text-muted-foreground">Program milestones and key dates</p>
       </div>
 
       {/* Three Column Grid */}
@@ -56,7 +56,7 @@ export default function UpcomingDates() {
                 <div className={`p-2 rounded-lg bg-gradient-to-br ${section.color}`}>
                   <Icon className={`w-5 h-5 ${section.iconColor}`} />
                 </div>
-                <h3 className="text-lg font-semibold text-white">{section.title}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{section.title}</h3>
               </div>
 
               {/* Milestones List */}
@@ -70,7 +70,7 @@ export default function UpcomingDates() {
                   ))}
                 </div>
               ) : section.data.length === 0 ? (
-                <p className="text-sm text-white/40 italic">No upcoming milestones</p>
+                <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
                 <div className="space-y-3">
                   {section.data.map((milestone) => (
@@ -80,16 +80,16 @@ export default function UpcomingDates() {
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-white/90 mb-1 truncate">
+                          <p className="text-sm font-medium text-foreground mb-1 truncate">
                             {milestone.milestoneName}
                           </p>
-                          <p className="text-xs text-white/50">{milestone.product}</p>
+                          <p className="text-xs text-muted-foreground">{milestone.product}</p>
                         </div>
                         <div className="flex-shrink-0 text-right">
-                          <p className="text-xs font-mono text-white/70">
+                          <p className="text-xs font-mono text-foreground/80">
                             {format(new Date(milestone.milestoneDate), "MMM d")}
                           </p>
-                          <p className="text-xs text-white/40">
+                          <p className="text-xs text-muted-foreground">
                             {format(new Date(milestone.milestoneDate), "yyyy")}
                           </p>
                         </div>
