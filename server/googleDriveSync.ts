@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 const execAsync = promisify(exec);
 
 const RCLONE_CONFIG = "/home/ubuntu/.gdrive-rclone.ini";
-const GOOGLE_DOC_NAME = "Test Device & Growth Canonical Program Review.docx";
+const GOOGLE_DOC_NAME = "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx";
 const GOOGLE_SHEETS_NAME = "WearableProgramMilestonesSOT-ForAI_UserConsumption.xlsx";
 
 interface SyncResult {
