@@ -287,7 +287,7 @@ export default function ToplineView() {
             <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold">Devices Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
+            <h2 className="text-xl font-bold">Exec Summary Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
             <p className="text-xs text-muted-foreground">Product category overview</p>
           </div>
         </div>

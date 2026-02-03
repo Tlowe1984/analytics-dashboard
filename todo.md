@@ -170,3 +170,6 @@
 - [x] Update database schema to support exec_summary and decisions section types
 - [x] Update tRPC endpoints and db functions for new section types
 - [x] Test with real data (8 wins, 21 exec summary items loaded)
+
+## Update Section Title
+- [x] Change "Devices Week X" to "Exec Summary Week X" for the tabbed section
