@@ -187,3 +187,9 @@
 - [x] Create manual sync script (sync_decisions.sh) for daily updates
 - [x] Test with real data from Wearable Decisions Canonical doc
 - [x] Remove duplicate Decisions placeholder from Additional Dashboard Sections
+
+## Daily Auto-Sync at 6 AM PST
+- [x] Create unified sync script combining Devices, Software, and Decisions syncs (sync_all_exec_summary.sh)
+- [x] Document cron job setup for production (6 AM PST = 14:00 UTC)
+- [x] Test unified sync script successfully (syncs all 3 data sources)
+- [x] Create DAILY_SYNC_SCHEDULE.md with setup instructions
