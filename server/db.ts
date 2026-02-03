@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, DashboardItem, InsertDashboardItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,86 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Dashboard data queries
+export async function getAllDashboardItems() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get dashboard items: database not available");
+    return [];
+  }
+
+  const result = await db.select().from(dashboardItems).orderBy(dashboardItems.order);
+  return result;
+}
+
+export async function getDashboardItemsBySection(
+  sectionType: "highlights" | "risks" | "upcoming",
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg"
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get dashboard items: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select()
+    .from(dashboardItems)
+    .where(
+      and(
+        eq(dashboardItems.sectionType, sectionType),
+        eq(dashboardItems.productCategory, productCategory)
+      )
+    )
+    .orderBy(dashboardItems.order);
+
+  return result;
+}
+
+export async function createDashboardItem(item: InsertDashboardItem) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create dashboard item: database not available");
+    return null;
+  }
+
+  const result = await db.insert(dashboardItems).values(item);
+  return result;
+}
+
+export async function updateDashboardItem(id: number, content: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update dashboard item: database not available");
+    return null;
+  }
+
+  const result = await db
+    .update(dashboardItems)
+    .set({ content, updatedAt: new Date() })
+    .where(eq(dashboardItems.id, id));
+
+  return result;
+}
+
+export async function deleteDashboardItem(id: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete dashboard item: database not available");
+    return null;
+  }
+
+  const result = await db.delete(dashboardItems).where(eq(dashboardItems.id, id));
+  return result;
+}
+
+export async function clearAllDashboardItems() {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot clear dashboard items: database not available");
+    return null;
+  }
+
+  const result = await db.delete(dashboardItems);
+  return result;
+}

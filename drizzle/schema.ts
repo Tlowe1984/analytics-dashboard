@@ -1,17 +1,10 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
  */
 export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
   id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
   openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
@@ -25,4 +18,35 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Dashboard data items for the topline view
+ * Stores individual bullets/items organized by section type and product category
+ */
+export const dashboardItems = mysqlTable("dashboard_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sectionType: mysqlEnum("section_type", ["highlights", "risks", "upcoming"]).notNull(),
+  productCategory: mysqlEnum("product_category", ["ai_glasses", "wrist", "arg_ssg"]).notNull(),
+  content: text("content").notNull(),
+  order: int("order").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type DashboardItem = typeof dashboardItems.$inferSelect;
+export type InsertDashboardItem = typeof dashboardItems.$inferInsert;
+
+/**
+ * Sync metadata for tracking Google Docs integration
+ */
+export const syncMetadata = mysqlTable("sync_metadata", {
+  id: int("id").autoincrement().primaryKey(),
+  documentId: varchar("document_id", { length: 255 }).notNull(),
+  lastSyncedAt: timestamp("last_synced_at").notNull(),
+  syncStatus: mysqlEnum("sync_status", ["success", "failed", "pending"]).default("pending").notNull(),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SyncMetadata = typeof syncMetadata.$inferSelect;
+export type InsertSyncMetadata = typeof syncMetadata.$inferInsert;
