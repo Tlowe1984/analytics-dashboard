@@ -49,45 +49,33 @@ const productConfig = {
   },
 };
 
-function SectionCard({
+function SectionContent({
   sectionType,
-  productCategory,
   items,
 }: {
   sectionType: "highlights" | "risks" | "upcoming";
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
   items: DashboardItem[];
 }) {
   const section = sectionConfig[sectionType];
-  const product = productConfig[productCategory];
   const SectionIcon = section.icon;
-  const ProductIcon = product.icon;
 
   return (
-    <div className="glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className={cn("p-2 rounded-lg", section.bgClass)}>
-            <SectionIcon className={cn("w-5 h-5", section.iconClass)} />
-          </div>
-          <div>
-            <h3 className="font-semibold text-sm text-muted-foreground">{section.label}</h3>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <ProductIcon className="w-4 h-4 text-foreground/70" />
-              <p className="text-base font-medium text-foreground">{product.label}</p>
-            </div>
-          </div>
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <div className={cn("p-1.5 rounded-lg", section.bgClass)}>
+          <SectionIcon className={cn("w-4 h-4", section.iconClass)} />
         </div>
+        <h4 className="font-semibold text-sm">{section.label}</h4>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 pl-1">
         {items.length === 0 ? (
-          <p className="text-sm text-muted-foreground italic">No items yet</p>
+          <p className="text-xs text-muted-foreground italic">No items yet</p>
         ) : (
           items.map((item) => (
             <div key={item.id} className="flex items-start gap-2 group">
               <div
-                className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
                 style={{ backgroundColor: section.color }}
               />
               <p className="text-sm text-foreground/90 leading-relaxed group-hover:text-foreground transition-colors">
@@ -101,20 +89,75 @@ function SectionCard({
   );
 }
 
+function ProductCard({
+  productCategory,
+  allItems,
+}: {
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
+  allItems: DashboardItem[];
+}) {
+  const product = productConfig[productCategory];
+  const ProductIcon = product.icon;
+
+  // Filter items for this product category
+  const highlightItems = allItems.filter(
+    (item) => item.productCategory === productCategory && item.sectionType === "highlights"
+  );
+  const riskItems = allItems.filter(
+    (item) => item.productCategory === productCategory && item.sectionType === "risks"
+  );
+  const upcomingItems = allItems.filter(
+    (item) => item.productCategory === productCategory && item.sectionType === "upcoming"
+  );
+
+  return (
+    <div className="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+      {/* Product Header */}
+      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/50">
+        <div className="p-3 rounded-xl bg-primary/10">
+          <ProductIcon className="w-6 h-6 text-primary" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold">{product.label}</h3>
+          <p className="text-xs text-muted-foreground">Executive Summary</p>
+        </div>
+      </div>
+
+      {/* Sections */}
+      <div className="space-y-6">
+        <SectionContent sectionType="highlights" items={highlightItems} />
+        <div className="border-t border-border/30 pt-6">
+          <SectionContent sectionType="risks" items={riskItems} />
+        </div>
+        <div className="border-t border-border/30 pt-6">
+          <SectionContent sectionType="upcoming" items={upcomingItems} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ToplineView() {
   const { data: allItems, isLoading } = trpc.dashboard.getAll.useQuery();
 
   if (isLoading) {
     return (
       <div className="w-full py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="glass-card rounded-2xl p-6 animate-pulse">
-              <div className="h-20 bg-muted/20 rounded-lg mb-4" />
-              <div className="space-y-3">
-                <div className="h-4 bg-muted/20 rounded" />
-                <div className="h-4 bg-muted/20 rounded w-5/6" />
-                <div className="h-4 bg-muted/20 rounded w-4/6" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="glass-card rounded-2xl p-8 animate-pulse">
+              <div className="h-16 bg-muted/20 rounded-lg mb-6" />
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <div className="h-6 bg-muted/20 rounded w-1/3" />
+                  <div className="h-4 bg-muted/20 rounded" />
+                  <div className="h-4 bg-muted/20 rounded w-5/6" />
+                </div>
+                <div className="space-y-3">
+                  <div className="h-6 bg-muted/20 rounded w-1/3" />
+                  <div className="h-4 bg-muted/20 rounded" />
+                  <div className="h-4 bg-muted/20 rounded w-5/6" />
+                </div>
               </div>
             </div>
           ))}
@@ -123,43 +166,21 @@ export default function ToplineView() {
     );
   }
 
-  // Group items by section and product
-  const groupedItems: Record<string, DashboardItem[]> = {};
-  allItems?.forEach((item) => {
-    const key = `${item.sectionType}_${item.productCategory}`;
-    if (!groupedItems[key]) {
-      groupedItems[key] = [];
-    }
-    groupedItems[key].push(item);
-  });
-
-  const sections: Array<"highlights" | "risks" | "upcoming"> = ["highlights", "risks", "upcoming"];
   const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
 
   return (
     <div className="w-full py-8">
       {/* Section headers */}
-      <div className="px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto mb-8">
+      <div className="px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto mb-8">
         <h2 className="text-3xl font-bold mb-2">Executive Summary</h2>
         <p className="text-muted-foreground">Topline view across product categories</p>
       </div>
 
-      {/* 3x3 Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto">
-        {sections.map((section) =>
-          products.map((product) => {
-            const key = `${section}_${product}`;
-            const items = groupedItems[key] || [];
-            return (
-              <SectionCard
-                key={key}
-                sectionType={section}
-                productCategory={product}
-                items={items}
-              />
-            );
-          })
-        )}
+      {/* Product Cards Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto">
+        {products.map((product) => (
+          <ProductCard key={product} productCategory={product} allItems={allItems || []} />
+        ))}
       </div>
     </div>
   );

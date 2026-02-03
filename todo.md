@@ -30,4 +30,9 @@
 - [x] Verify real-time data sync
 - [x] Test responsive layout across devices
 - [x] Create and run vitest tests for dashboard operations
-- [ ] Create checkpoint for deployment
+- [x] Create checkpoint for deployment
+
+## Layout Improvements
+- [x] Restructure ToplineView to group sections by product category
+- [x] Create 3 large product tiles instead of 9 separate section tiles
+- [x] Each product tile contains all 3 sections (Highlights, Risks/Opens, Upcoming)
