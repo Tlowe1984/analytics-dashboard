@@ -1,0 +1,40 @@
+{
+  "query": "SELECT * FROM dashboard_items LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM dashboard_items LIMIT 5;",
+  "rows": [
+    {
+      "id": "1190",
+      "section_type": "highlights",
+      "product_category": "wrist",
+      "content": "First highlight",
+      "order": "1",
+      "createdAt": "2026-02-03 19:23:09",
+      "updatedAt": "2026-02-03 19:23:09",
+      "is_new": "0"
+    },
+    {
+      "id": "1191",
+      "section_type": "highlights",
+      "product_category": "wrist",
+      "content": "Second highlight",
+      "order": "2",
+      "createdAt": "2026-02-03 19:23:09",
+      "updatedAt": "2026-02-03 19:23:09",
+      "is_new": "0"
+    },
+    {
+      "id": "1192",
+      "section_type": "highlights",
+      "product_category": "wrist",
+      "content": "Third highlight",
+      "order": "3",
+      "createdAt": "2026-02-03 19:23:09",
+      "updatedAt": "2026-02-03 19:23:09",
+      "is_new": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsection_type\tproduct_category\tcontent\torder\tcreatedAt\tupdatedAt\tis_new\n1190\thighlights\twrist\tFirst highlight\t1\t2026-02-03 19:23:09\t2026-02-03 19:23:09\t0\n1191\thighlights\twrist\tSecond highlight\t2\t2026-02-03 19:23:09\t2026-02-03 19:23:09\t0\n1192\thighlights\twrist\tThird highlight\t3\t2026-02-03 19:23:09\t2026-02-03 19:23:09\t0\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}

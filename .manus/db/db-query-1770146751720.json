@@ -1,0 +1,19 @@
+{
+  "query": "SELECT COUNT(*) as total FROM dashboard_items;\nSELECT product_category, section_type, COUNT(*) as count FROM dashboard_items GROUP BY product_category, section_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT COUNT(*) as total FROM dashboard_items;\nSELECT product_category, section_type, COUNT(*) as count FROM dashboard_items GROUP BY product_category, section_type;",
+  "rows": [
+    {
+      "total": "3"
+    },
+    {
+      "total": "product_category\tsection_type\tcount"
+    },
+    {
+      "total": "wrist\thighlights\t3"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n3\nproduct_category\tsection_type\tcount\nwrist\thighlights\t3\n",
+  "stderr": "",
+  "execution_time_ms": 63
+}

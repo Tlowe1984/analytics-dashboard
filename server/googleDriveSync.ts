@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import { promisify } from "util";
-import { readFile, unlink } from "fs/promises";
+import { readFile, unlink, writeFile } from "fs/promises";
 import { getDb } from "./db";
 import { dashboardItems, milestones } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
@@ -33,17 +33,18 @@ async function downloadFromGoogleDrive(fileName: string, localPath: string): Pro
 }
 
 /**
- * Parse executive summary from Word document
+ * Parse executive summary from Word document using Python docx library
  */
 async function parseExecutiveSummary(filePath: string): Promise<any[]> {
-  // Read the document content
-  const content = await readFile(filePath, 'utf-8');
+  const scriptPath = '/home/ubuntu/analytics-dashboard/server/parse_exec_summary.sh';
   
-  // This is a simplified parser - in production you'd use a proper DOCX parser
-  // For now, we'll return the existing structure
-  // TODO: Implement proper DOCX parsing with mammoth or similar library
-  
-  return [];
+  try {
+    const { stdout } = await execAsync(`bash ${scriptPath} ${filePath}`);
+    return JSON.parse(stdout);
+  } catch (error) {
+    console.error("Error parsing executive summary:", error);
+    return [];
+  }
 }
 
 /**
@@ -113,8 +114,19 @@ export async function syncExecutiveSummary(): Promise<SyncResult> {
       throw new Error("Database not available");
     }
     
-    // For now, we'll keep the existing data since parsing isn't fully implemented
-    // TODO: Implement full sync logic
+    // Clear existing dashboard items
+    await db.delete(dashboardItems);
+    
+    // Insert new items
+    for (const item of items) {
+      await db.insert(dashboardItems).values({
+        sectionType: item.section as "highlights" | "risks" | "upcoming",
+        productCategory: item.product as "ai_glasses" | "wrist" | "arg_ssg",
+        content: item.content,
+        isNew: item.is_new,
+        order: 0
+      });
+    }
     
     // Clean up
     await unlink(tempPath);

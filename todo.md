@@ -116,3 +116,18 @@
 - [x] Add visual highlighting for new information in UI (blue text with medium font weight)
 - [x] Add legend/key showing blue text indicates new information (in header subtitle)
 - [x] Update dashboard title to show "Week X Devices Update" dynamically (Week 5 Devices Update)
+
+## Fix Google Doc Sync
+- [x] Investigate why Google Doc sync is not pulling correct data
+- [x] Ensure sync pulls only from first tab "Exec Summary" section
+- [x] Verify data matches the Google Doc content exactly
+- [x] Create Python parser script to extract executive summary data
+- [x] Detect blue text for new information highlighting
+- [x] Load real data from W5 2026 Google Doc into database
+- [ ] Fix Python/Node.js integration for automatic sync button (workaround: manual sync script created)
+
+## Manual Sync Workaround
+- [x] Create standalone Python parser script
+- [x] Create manual sync shell script (sync_from_gdrive.sh)
+- [x] Document sync process in SYNC_README.md
+- [x] Test manual sync process successfully
