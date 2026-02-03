@@ -164,10 +164,22 @@ function DevicesTab() {
   const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      {products.map((product) => (
-        <ProductCard key={product} productCategory={product} allItems={allItems || []} />
-      ))}
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <a
+          href="https://drive.google.com/drive/folders/Wearables%20Everything/Reviews%20(Comment%20Only)/Device%20%26%20Growth%20Reviews" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-primary hover:underline flex items-center gap-1"
+        >
+          📄 View Source Document
+        </a>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {products.map((product) => (
+          <ProductCard key={product} productCategory={product} allItems={allItems || []} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -259,10 +271,22 @@ function SoftwareTab() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      {renderTile("wins", winsItems)}
-      {renderTile("exec_summary", execSummaryItems)}
-      {renderTile("decisions", decisionsItems)}
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <a
+          href="https://drive.google.com/drive/folders/Wearables%20Everything/Reviews%20(Comment%20Only)/Software%20(I%2BE%2C%20AI%2C%20Hearing)%20Reviews"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-primary hover:underline flex items-center gap-1"
+        >
+          📄 View Source Document
+        </a>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {renderTile("wins", winsItems)}
+        {renderTile("exec_summary", execSummaryItems)}
+        {renderTile("decisions", decisionsItems)}
+      </div>
     </div>
   );
 }

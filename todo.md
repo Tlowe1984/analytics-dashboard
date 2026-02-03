@@ -193,3 +193,8 @@
 - [x] Document cron job setup for production (6 AM PST = 14:00 UTC)
 - [x] Test unified sync script successfully (syncs all 3 data sources)
 - [x] Create DAILY_SYNC_SCHEDULE.md with setup instructions
+
+## Add Source Document Links
+- [x] Add "View Source Document" link to Devices tab header
+- [x] Add "View Source Document" link to Software tab header
+- [x] Link to Google Drive paths for both documents
