@@ -143,7 +143,7 @@ export default function ToplineView() {
   if (isLoading) {
     return (
       <div className="w-full py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto">
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="glass-card rounded-2xl p-8 animate-pulse">
               <div className="h-16 bg-muted/20 rounded-lg mb-6" />
@@ -169,15 +169,15 @@ export default function ToplineView() {
   const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-4">
       {/* Section headers */}
-      <div className="px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto mb-8">
+      <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto mb-6">
         <h2 className="text-3xl font-bold mb-2">Executive Summary</h2>
         <p className="text-muted-foreground">Topline view across product categories</p>
       </div>
 
-      {/* Product Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 sm:px-6 lg:px-8 max-w-[1800px] mx-auto">
+      {/* Product Cards Grid - Horizontal Layout */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto">
         {products.map((product) => (
           <ProductCard key={product} productCategory={product} allItems={allItems || []} />
         ))}

@@ -36,3 +36,8 @@
 - [x] Restructure ToplineView to group sections by product category
 - [x] Create 3 large product tiles instead of 9 separate section tiles
 - [x] Each product tile contains all 3 sections (Highlights, Risks/Opens, Upcoming)
+
+## Horizontal Layout Optimization
+- [x] Adjust grid to display all 3 product tiles side-by-side horizontally
+- [x] Optimize spacing and sizing for horizontal layout
+- [x] Ensure responsive behavior on smaller screens
