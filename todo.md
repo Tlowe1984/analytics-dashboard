@@ -92,3 +92,12 @@
 - [x] Remove line-through styling from completed PDP gates
 - [x] Reduce vertical spacing between milestone rows (from space-y-3 to space-y-1.5)
 - [x] Keep checkmark icon for completed milestones
+
+## Real-Time Google Docs/Sheets Integration
+- [x] Create backend sync service to download and parse Google Doc (executive summary)
+- [x] Create backend sync service to download and parse Google Sheets (milestones)
+- [x] Add tRPC procedure to trigger manual data sync
+- [x] Implement automatic periodic sync (polling mechanism - every 5 minutes)
+- [x] Add "Refresh Data" button to dashboard UI
+- [x] Show last sync timestamp in dashboard
+- [x] Handle sync errors gracefully with user feedback

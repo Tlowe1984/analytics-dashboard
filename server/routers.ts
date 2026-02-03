@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync";
 
 export const appRouter = router({
   system: systemRouter,
@@ -156,6 +157,26 @@ export const appRouter = router({
       }
 
       return { success: true, itemsCreated: sampleData.length };
+    }),
+  }),
+
+  sync: router({
+    // Sync all data from Google Drive
+    syncAll: protectedProcedure.mutation(async () => {
+      const result = await syncAll();
+      return result;
+    }),
+
+    // Sync only executive summary
+    syncExecSummary: protectedProcedure.mutation(async () => {
+      const result = await syncExecutiveSummary();
+      return result;
+    }),
+
+    // Sync only milestones
+    syncMilestones: protectedProcedure.mutation(async () => {
+      const result = await syncMilestones();
+      return result;
     }),
   }),
 

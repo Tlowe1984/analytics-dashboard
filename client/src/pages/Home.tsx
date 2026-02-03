@@ -5,6 +5,7 @@ import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
+import SyncStatus from "@/components/SyncStatus";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { BarChart3, RefreshCw } from "lucide-react";
@@ -50,6 +51,7 @@ export default function Home() {
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
                 <>
+                  <SyncStatus />
                   <Button
                     variant="outline"
                     size="sm"
