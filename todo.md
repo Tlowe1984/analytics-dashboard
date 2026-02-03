@@ -116,8 +116,3 @@
 - [x] Add visual highlighting for new information in UI (blue text with medium font weight)
 - [x] Add legend/key showing blue text indicates new information (in header subtitle)
 - [x] Update dashboard title to show "Week X Devices Update" dynamically (Week 5 Devices Update)
-
-## Prominent Legend for Blue Text
-- [x] Add visible legend/key box above Devices section
-- [x] Make it clear that blue text indicates new information
-- [x] Use visual example with blue text in the legend
