@@ -87,3 +87,8 @@
 - [x] Import all 666 milestones from spreadsheet JSON
 - [x] Populate database with all programs (Artemis, Ceres, Malibu, Ceres2, Daiquiri, Hypernova, etc.)
 - [x] Verify all milestone types are represented (186 PDP gates, 313 SW, 167 HW)
+
+## Milestone Styling Updates
+- [x] Remove line-through styling from completed PDP gates
+- [x] Reduce vertical spacing between milestone rows (from space-y-3 to space-y-1.5)
+- [x] Keep checkmark icon for completed milestones

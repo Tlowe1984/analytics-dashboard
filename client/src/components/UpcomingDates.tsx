@@ -64,7 +64,7 @@ export default function UpcomingDates() {
 
               {/* Milestones List */}
               {section.isLoading ? (
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {[...Array(5)].map((_, i) => (
                     <div key={i} className="animate-pulse">
                       <div className="h-4 bg-white/10 rounded w-3/4 mb-2"></div>
@@ -75,7 +75,7 @@ export default function UpcomingDates() {
               ) : section.data.length === 0 ? (
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {section.data.map((milestone) => {
                     const milestoneDate = new Date(milestone.milestoneDate);
                     const year = milestoneDate.getFullYear();
@@ -90,7 +90,7 @@ export default function UpcomingDates() {
                     return (
                       <div
                         key={milestone.id}
-                        className={`group hover:bg-white/5 p-3 rounded-lg transition-colors ${
+                        className={`group hover:bg-white/5 p-2 rounded-lg transition-colors ${
                           isComplete ? "opacity-70" : ""
                         }`}
                       >
@@ -101,7 +101,7 @@ export default function UpcomingDates() {
                             )}
                             <div className="flex-1 min-w-0">
                               <p className={`text-sm font-semibold mb-1 truncate ${
-                                isComplete ? "text-foreground/70 line-through" : "text-foreground"
+                                isComplete ? "text-foreground/70" : "text-foreground"
                               }`}>
                                 {milestone.product}
                               </p>
