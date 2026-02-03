@@ -208,3 +208,14 @@
 - [x] Build Systems tab UI with 3-tile layout matching Devices/Software tabs
 - [x] Add "View Source Document" link to Systems tab
 - [x] Test with real data from Systems review document (658 items: 101 wins, 413 exec summary, 144 help needed)
+
+## Elegant Indentation Solution (Numbering-Based)
+- [x] Rollback to checkpoint before indentation feature was added (27f33433)
+- [x] Analyze Word document structure using numbering levels (ilvl)
+- [x] Implement numbering-based indentation detection in parse_exec_summary.py
+- [x] Implement numbering-based indentation detection in parse_software_review.py
+- [x] Implement numbering-based indentation detection in parse_systems_review.py
+- [x] Update all sync scripts to include indent_level field
+- [x] Update UI components to render indentation based on indent_level
+- [x] Resync all data with new numbering-based logic
+- [x] Verify indentation works correctly (Monoc P2, Modelo EVT now properly indented as sub-bullets)

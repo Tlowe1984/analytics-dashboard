@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import json
 import sys
 from docx import Document
@@ -62,12 +61,28 @@ try:
                     is_new = True
                     break
         
+        # Get numbering level for indentation
+        # Level 0: Product (AI Glasses, Wrist, ARG/SSG)
+        # Level 1: Section (Highlights, Risks/Opens, Upcoming)
+        # Level 2: Main bullets (should be flush left, indent_level=0)
+        # Level 3+: Sub-bullets (should be indented, indent_level=1+)
+        indent_level = 0
+        numbering_part = para._element.pPr.numPr if para._element.pPr is not None and hasattr(para._element.pPr, 'numPr') else None
+        if numbering_part is not None and numbering_part.ilvl is not None:
+            doc_level = numbering_part.ilvl.val
+            # Map document levels to UI indent levels
+            # doc_level 0,1,2 -> indent_level 0 (flush left)
+            # doc_level 3+ -> indent_level 1+ (indented)
+            if doc_level >= 3:
+                indent_level = doc_level - 2
+        
         # Add the item
         items.append({
             'product': current_product,
             'section': current_section,
             'content': text,
-            'is_new': 1 if is_new else 0
+            'is_new': 1 if is_new else 0,
+            'indent_level': indent_level
         })
     
     print(json.dumps(items))

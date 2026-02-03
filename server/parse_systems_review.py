@@ -56,10 +56,25 @@ def parse_systems_review(docx_path):
                     is_new = 1
                     break
         
+        # Get numbering level for indentation
+        # Level 0: Section headers
+        # Level 1: Main bullets (should be flush left, indent_level=0)
+        # Level 2+: Sub-bullets (should be indented, indent_level=1+)
+        indent_level = 0
+        numbering_part = para._element.pPr.numPr if para._element.pPr is not None and hasattr(para._element.pPr, 'numPr') else None
+        if numbering_part is not None and numbering_part.ilvl is not None:
+            doc_level = numbering_part.ilvl.val
+            # Map document levels to UI indent levels
+            # doc_level 0,1 -> indent_level 0 (flush left)
+            # doc_level 2+ -> indent_level 1+ (indented)
+            if doc_level >= 2:
+                indent_level = doc_level - 1
+        
         items.append({
             "section_type": current_section,
             "content": text,
             "is_new": is_new,
+            "indent_level": indent_level,
             "order": order
         })
         order += 1

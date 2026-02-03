@@ -66,7 +66,7 @@ export function SystemsTab() {
         <div className="space-y-2.5 max-h-[600px] overflow-y-auto">
           {items && items.length > 0 ? (
             items.map((item) => (
-              <div key={item.id} className="flex items-start gap-2">
+              <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
                 <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                 <p
                   className={cn(

@@ -74,7 +74,7 @@ function SectionContent({
           <p className="text-xs text-muted-foreground italic">No items yet</p>
         ) : (
           items.map((item) => (
-            <div key={item.id} className="flex items-start gap-2">
+            <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
               <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
               <p
                 className={cn(
@@ -249,7 +249,7 @@ function SoftwareTab() {
         <div className="space-y-2.5">
           {items && items.length > 0 ? (
             items.map((item) => (
-              <div key={item.id} className="flex items-start gap-2">
+              <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
                 <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                 <p
                   className={cn(
