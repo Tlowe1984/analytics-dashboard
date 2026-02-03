@@ -1,6 +1,6 @@
 import { trpc } from "@/lib/trpc";
-import { Calendar, Cpu, Code } from "lucide-react";
-import { format, getWeek } from "date-fns";
+import { Calendar, Cpu, Code, CheckCircle2 } from "lucide-react";
+import { format, getWeek, isPast } from "date-fns";
 
 export default function UpcomingDates() {
   const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 8 });
@@ -9,28 +9,31 @@ export default function UpcomingDates() {
 
   const sections = [
     {
-      title: "Upcoming PDP Gates",
+      title: "PDP Gates",
+      type: "pdp_gates" as const,
       icon: Calendar,
       data: pdpGates.data || [],
       isLoading: pdpGates.isLoading,
-      color: "from-purple-500/20 to-purple-600/20",
-      iconColor: "text-purple-400",
-    },
-    {
-      title: "Key Software Milestones",
-      icon: Code,
-      data: swMilestones.data || [],
-      isLoading: swMilestones.isLoading,
-      color: "from-blue-500/20 to-blue-600/20",
+      color: "from-blue-500/20 to-cyan-500/20",
       iconColor: "text-blue-400",
     },
     {
+      title: "Software Milestones",
+      type: "sw_milestones" as const,
+      icon: Code,
+      data: swMilestones.data || [],
+      isLoading: swMilestones.isLoading,
+      color: "from-purple-500/20 to-pink-500/20",
+      iconColor: "text-purple-400",
+    },
+    {
       title: "Hardware Dates",
+      type: "hw_dates" as const,
       icon: Cpu,
       data: hwDates.data || [],
       isLoading: hwDates.isLoading,
-      color: "from-green-500/20 to-green-600/20",
-      iconColor: "text-green-400",
+      color: "from-orange-500/20 to-red-500/20",
+      iconColor: "text-orange-400",
     },
   ];
 
@@ -77,6 +80,7 @@ export default function UpcomingDates() {
                     const milestoneDate = new Date(milestone.milestoneDate);
                     const year = milestoneDate.getFullYear();
                     const weekNum = getWeek(milestoneDate, { weekStartsOn: 1 });
+                    const isComplete = isPast(milestoneDate);
                     
                     // Format date with week number for 2026 dates
                     const dateDisplay = year === 2026 
@@ -86,17 +90,28 @@ export default function UpcomingDates() {
                     return (
                       <div
                         key={milestone.id}
-                        className="group hover:bg-white/5 p-3 rounded-lg transition-colors"
+                        className={`group hover:bg-white/5 p-3 rounded-lg transition-colors ${
+                          isComplete ? "opacity-70" : ""
+                        }`}
                       >
                         <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-foreground mb-1 truncate">
-                              {milestone.product}
-                            </p>
-                            <p className="text-xs text-muted-foreground">{milestone.milestoneName}</p>
+                          <div className="flex-1 min-w-0 flex items-start gap-2">
+                            {isComplete && section.type === "pdp_gates" && (
+                              <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <p className={`text-sm font-semibold mb-1 truncate ${
+                                isComplete ? "text-foreground/70 line-through" : "text-foreground"
+                              }`}>
+                                {milestone.product}
+                              </p>
+                              <p className="text-xs text-muted-foreground">{milestone.milestoneName}</p>
+                            </div>
                           </div>
                           <div className="flex-shrink-0 text-right">
-                            <p className="text-xs font-mono text-foreground/80 whitespace-nowrap">
+                            <p className={`text-xs font-mono whitespace-nowrap ${
+                              isComplete ? "text-foreground/50" : "text-foreground/80"
+                            }`}>
                               {dateDisplay}
                             </p>
                           </div>

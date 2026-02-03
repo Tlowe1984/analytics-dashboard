@@ -1,4 +1,4 @@
-import { eq, and, gte, asc } from "drizzle-orm";
+import { eq, and, gte, lte, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -179,6 +179,30 @@ export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sw_mil
   if (!db) return [];
   
   const now = new Date();
+  
+  // For PDP gates: show past 3 weeks and next month
+  if (milestoneType === "pdp_gates") {
+    const threeWeeksAgo = new Date(now);
+    threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
+    
+    const oneMonthFromNow = new Date(now);
+    oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+    
+    const result = await db
+      .select()
+      .from(milestones)
+      .where(and(
+        eq(milestones.milestoneType, milestoneType),
+        gte(milestones.milestoneDate, threeWeeksAgo),
+        lte(milestones.milestoneDate, oneMonthFromNow)
+      ))
+      .orderBy(asc(milestones.milestoneDate))
+      .limit(limit);
+    
+    return result;
+  }
+  
+  // For other types: show only upcoming
   const result = await db
     .select()
     .from(milestones)

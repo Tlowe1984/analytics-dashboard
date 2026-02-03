@@ -77,3 +77,8 @@
 - [x] Sort milestones in chronological order (already sorted by database query)
 - [x] Add week number for 2026 dates with format "W## (MMM d)"
 - [x] Unify date font styling (single line with consistent font)
+
+## PDP Gates Filtering & Completion Status
+- [x] Update database query to filter PDP gates to past 3 weeks and next month
+- [x] Add visual completion indicators for past milestones
+- [x] Show checkmark and line-through styling for completed PDP gates
