@@ -1,6 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { Calendar, Cpu, Code } from "lucide-react";
-import { format } from "date-fns";
+import { format, getWeek } from "date-fns";
 
 export default function UpcomingDates() {
   const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 8 });
@@ -73,29 +73,37 @@ export default function UpcomingDates() {
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
                 <div className="space-y-3">
-                  {section.data.map((milestone) => (
-                    <div
-                      key={milestone.id}
-                      className="group hover:bg-white/5 p-3 rounded-lg transition-colors"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-foreground mb-1 truncate">
-                            {milestone.milestoneName}
-                          </p>
-                          <p className="text-xs text-muted-foreground">{milestone.product}</p>
-                        </div>
-                        <div className="flex-shrink-0 text-right">
-                          <p className="text-xs font-mono text-foreground/80">
-                            {format(new Date(milestone.milestoneDate), "MMM d")}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {format(new Date(milestone.milestoneDate), "yyyy")}
-                          </p>
+                  {section.data.map((milestone) => {
+                    const milestoneDate = new Date(milestone.milestoneDate);
+                    const year = milestoneDate.getFullYear();
+                    const weekNum = getWeek(milestoneDate, { weekStartsOn: 1 });
+                    
+                    // Format date with week number for 2026 dates
+                    const dateDisplay = year === 2026 
+                      ? `W${weekNum} (${format(milestoneDate, "MMM d")})`
+                      : format(milestoneDate, "MMM d, yyyy");
+                    
+                    return (
+                      <div
+                        key={milestone.id}
+                        className="group hover:bg-white/5 p-3 rounded-lg transition-colors"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground mb-1 truncate">
+                              {milestone.product}
+                            </p>
+                            <p className="text-xs text-muted-foreground">{milestone.milestoneName}</p>
+                          </div>
+                          <div className="flex-shrink-0 text-right">
+                            <p className="text-xs font-mono text-foreground/80 whitespace-nowrap">
+                              {dateDisplay}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>

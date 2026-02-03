@@ -71,3 +71,9 @@
 ## Text Visibility Fix
 - [x] Fix white text color in Upcoming Dates section for better visibility
 - [x] Ensure proper contrast between text and background
+
+## Milestone Display Improvements
+- [x] Swap program name to be larger/primary text and milestone name to be secondary
+- [x] Sort milestones in chronological order (already sorted by database query)
+- [x] Add week number for 2026 dates with format "W## (MMM d)"
+- [x] Unify date font styling (single line with consistent font)
