@@ -149,3 +149,14 @@
 - [x] Change main dashboard title to "Wearable Live Dashboard"
 - [x] Update Devices section title to "Devices Week X" with current week number
 - [x] Make section headers (Highlights, Risks/Opens, Upcoming) uppercase and larger
+
+## Tabbed Interface for Devices Section
+- [x] Add tab UI component (Devices, Software, Systems)
+- [x] Keep Devices tab with current 3-tile format
+- [x] Create Software tab with Wins, Product Decisions, Hotspots sections
+- [x] Create Systems tab placeholder
+- [x] Add database schema for Software review data (software_items table)
+- [x] Create parser for Software (I+E, AI, Hearing) Canonical Program Review doc
+- [x] Integrate Software doc sync into manual sync script (sync_software.sh)
+- [x] Add tRPC endpoints for Software data (software.getAll, software.getBySection)
+- [x] Implement Software tab UI with real data from Google Doc (29 wins items loaded)

@@ -1,0 +1,14 @@
+{
+  "query": "SELECT section_type, COUNT(*) as count FROM software_items GROUP BY section_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT section_type, COUNT(*) as count FROM software_items GROUP BY section_type;",
+  "rows": [
+    {
+      "section_type": "wins",
+      "count": "29"
+    }
+  ],
+  "messages": [],
+  "stdout": "section_type\tcount\nwins\t29\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

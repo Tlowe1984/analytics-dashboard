@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -246,4 +246,38 @@ export async function importMilestones(milestonesData: InsertMilestone[]) {
   }
   
   return { success: true, count };
+}
+
+// Software items queries
+export async function getAllSoftwareItems(): Promise<SoftwareItem[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get software items: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select()
+    .from(softwareItems)
+    .orderBy(softwareItems.order);
+
+  return result;
+}
+
+export async function getSoftwareItemsBySection(
+  sectionType: "wins" | "product_decisions" | "hotspots"
+): Promise<SoftwareItem[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get software items: database not available");
+    return [];
+  }
+
+  const result = await db
+    .select()
+    .from(softwareItems)
+    .where(eq(softwareItems.sectionType, sectionType))
+    .orderBy(softwareItems.order);
+
+  return result;
 }

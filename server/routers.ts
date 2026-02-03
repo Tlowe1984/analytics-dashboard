@@ -180,6 +180,24 @@ export const appRouter = router({
     }),
   }),
 
+  software: router({
+    // Get all software review items
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllSoftwareItems();
+    }),
+
+    // Get items by section
+    getBySection: publicProcedure
+      .input(
+        z.object({
+          sectionType: z.enum(["wins", "product_decisions", "hotspots"]),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getSoftwareItemsBySection(input.sectionType);
+      }),
+  }),
+
   milestones: router({
     // Get upcoming milestones by type
     getUpcoming: publicProcedure

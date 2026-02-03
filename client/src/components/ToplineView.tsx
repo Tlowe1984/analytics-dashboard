@@ -1,6 +1,8 @@
 import { trpc } from "@/lib/trpc";
-import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu } from "lucide-react";
+import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface DashboardItem {
   id: number;
@@ -139,41 +141,143 @@ function ProductCard({
   );
 }
 
-export default function ToplineView() {
+function DevicesTab() {
   const { data: allItems, isLoading } = trpc.dashboard.getAll.useQuery();
 
   if (isLoading) {
     return (
-      <div className="w-full">
-        <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 rounded-lg bg-blue-500/10 animate-pulse">
-              <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">Devices</h2>
-              <p className="text-xs text-muted-foreground">Product category overview</p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="bg-background/40 border border-border/50 rounded-xl p-5 animate-pulse">
+            <div className="h-12 bg-muted/20 rounded mb-4" />
+            <div className="space-y-3">
+              <div className="h-4 bg-muted/20 rounded w-3/4" />
+              <div className="h-4 bg-muted/20 rounded" />
+              <div className="h-4 bg-muted/20 rounded w-5/6" />
             </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-background/40 border border-border/50 rounded-xl p-5 animate-pulse">
-                <div className="h-12 bg-muted/20 rounded mb-4" />
-                <div className="space-y-3">
-                  <div className="h-4 bg-muted/20 rounded w-3/4" />
-                  <div className="h-4 bg-muted/20 rounded" />
-                  <div className="h-4 bg-muted/20 rounded w-5/6" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     );
   }
 
   const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
 
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {products.map((product) => (
+        <ProductCard key={product} productCategory={product} allItems={allItems || []} />
+      ))}
+    </div>
+  );
+}
+
+const softwareSectionConfig = {
+  wins: {
+    icon: Sparkles,
+    label: "WINS",
+    color: "text-green-600 dark:text-green-400",
+    bgClass: "bg-green-500/10",
+  },
+  product_decisions: {
+    icon: AlertTriangle,
+    label: "PRODUCT DECISIONS",
+    color: "text-blue-600 dark:text-blue-400",
+    bgClass: "bg-blue-500/10",
+  },
+  hotspots: {
+    icon: Calendar,
+    label: "HOTSPOTS",
+    color: "text-orange-600 dark:text-orange-400",
+    bgClass: "bg-orange-500/10",
+  },
+};
+
+function SoftwareTab() {
+  const { data: allItems, isLoading } = trpc.software.getAll.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="bg-background/40 border border-border/50 rounded-xl p-5 animate-pulse">
+            <div className="h-6 bg-muted/20 rounded mb-4 w-1/4" />
+            <div className="space-y-3">
+              <div className="h-4 bg-muted/20 rounded" />
+              <div className="h-4 bg-muted/20 rounded w-5/6" />
+              <div className="h-4 bg-muted/20 rounded w-4/6" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const winsItems = allItems?.filter(item => item.sectionType === "wins") || [];
+  const decisionsItems = allItems?.filter(item => item.sectionType === "product_decisions") || [];
+  const hotspotsItems = allItems?.filter(item => item.sectionType === "hotspots") || [];
+
+  const renderSection = (
+    sectionType: "wins" | "product_decisions" | "hotspots",
+    items: typeof allItems
+  ) => {
+    const section = softwareSectionConfig[sectionType];
+    const SectionIcon = section.icon;
+
+    return (
+      <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <div className={cn("p-1 rounded", section.bgClass)}>
+            <SectionIcon className={cn("w-4 h-4", section.color)} />
+          </div>
+          <h3 className="font-bold text-sm tracking-wide">{section.label}</h3>
+        </div>
+
+        <div className="space-y-2">
+          {items && items.length > 0 ? (
+            items.map((item) => (
+              <div key={item.id} className="flex items-start gap-2">
+                <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                <p
+                  className={cn(
+                    "text-sm leading-relaxed",
+                    item.isNew === 1
+                      ? "text-blue-600 dark:text-blue-400 font-medium"
+                      : "text-foreground/90"
+                  )}
+                >
+                  {item.content}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-xs text-muted-foreground italic">No items yet</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-4">
+      {renderSection("wins", winsItems)}
+      {renderSection("product_decisions", decisionsItems)}
+      {renderSection("hotspots", hotspotsItems)}
+    </div>
+  );
+}
+
+function SystemsTab() {
+  return (
+    <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-8 text-center">
+      <Layers className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+      <h3 className="text-lg font-semibold mb-2">Systems</h3>
+      <p className="text-sm text-muted-foreground">Content coming soon</p>
+    </div>
+  );
+}
+
+export default function ToplineView() {
   return (
     <div className="w-full">
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
@@ -188,12 +292,26 @@ export default function ToplineView() {
           </div>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {products.map((product) => (
-            <ProductCard key={product} productCategory={product} allItems={allItems || []} />
-          ))}
-        </div>
+        {/* Tabbed Content */}
+        <Tabs defaultValue="devices" className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsTrigger value="devices">Devices</TabsTrigger>
+            <TabsTrigger value="software">Software (I+E, AI, Hearing)</TabsTrigger>
+            <TabsTrigger value="systems">Systems</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="devices">
+            <DevicesTab />
+          </TabsContent>
+          
+          <TabsContent value="software">
+            <SoftwareTab />
+          </TabsContent>
+          
+          <TabsContent value="systems">
+            <SystemsTab />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
