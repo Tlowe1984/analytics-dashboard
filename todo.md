@@ -219,3 +219,12 @@
 - [x] Update UI components to render indentation based on indent_level
 - [x] Resync all data with new numbering-based logic
 - [x] Verify indentation works correctly (Monoc P2, Modelo EVT now properly indented as sub-bullets)
+
+## Fix Sync Errors and Daily Auto-Update
+- [x] Diagnose rclone errors (paths not found)
+- [x] Verify correct Google Drive folder structure and file paths
+- [x] Rewrite googleDriveSync.ts to use shell scripts for all 4 data sources
+- [x] Update SyncStatus.tsx to handle new sync response format
+- [x] Test manual sync - Refresh Data button now works correctly
+- [x] Set up automatic daily sync at 6 AM PST (scheduled task created)
+- [ ] Add error handling and logging to sync scripts
