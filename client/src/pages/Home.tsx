@@ -4,6 +4,7 @@ import { getLoginUrl } from "@/const";
 import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
 import DashboardChat from "@/components/DashboardChat";
+import UpcomingDates from "@/components/UpcomingDates";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { BarChart3, RefreshCw } from "lucide-react";
@@ -84,8 +85,9 @@ export default function Home() {
         </div>
 
         {/* Dashboard Content */}
-        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-8">
           <ToplineView />
+          <UpcomingDates />
         </div>
         <PlaceholderSections />
       </main>

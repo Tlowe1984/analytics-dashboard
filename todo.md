@@ -60,3 +60,10 @@
 - [x] Populate ARG/SSG section with highlights, risks, and upcoming items
 - [x] Add week number (W5) to dashboard header
 - [x] Add red indicators for critical risks marked with 🔴 (emojis preserved in content)
+
+## Upcoming Dates Section
+- [x] Access Google Sheets data from Wearable Program Milestones SOT
+- [x] Create database schema for milestone dates (PDP gates, SW milestones, HW dates)
+- [x] Extract and parse milestone data from spreadsheet
+- [x] Build Upcoming Dates UI section with 3 subsections
+- [x] Display PDP gates, Key Software Milestones, and Hardware dates

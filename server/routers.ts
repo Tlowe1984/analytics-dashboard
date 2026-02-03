@@ -158,6 +158,50 @@ export const appRouter = router({
       return { success: true, itemsCreated: sampleData.length };
     }),
   }),
+
+  milestones: router({
+    // Get upcoming milestones by type
+    getUpcoming: publicProcedure
+      .input(
+        z.object({
+          milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+          limit: z.number().default(10),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getUpcomingMilestones(input.milestoneType, input.limit);
+      }),
+
+    // Get all milestones by type
+    getByType: publicProcedure
+      .input(
+        z.object({
+          milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getAllMilestonesByType(input.milestoneType);
+      }),
+
+    // Import milestones from JSON data
+    import: protectedProcedure
+      .input(
+        z.object({
+          milestones: z.array(
+            z.object({
+              product: z.string(),
+              milestoneName: z.string(),
+              milestoneDate: z.date(),
+              milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+              originalType: z.string().optional(),
+            })
+          ),
+        })
+      )
+      .mutation(async ({ input }) => {
+        return await db.importMilestones(input.milestones);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

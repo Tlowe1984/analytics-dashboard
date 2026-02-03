@@ -1,6 +1,6 @@
-import { eq, and } from "drizzle-orm";
+import { eq, and, gte, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, DashboardItem, InsertDashboardItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -171,4 +171,55 @@ export async function clearAllDashboardItems() {
 
   const result = await db.delete(dashboardItems);
   return result;
+}
+
+// Milestone queries
+export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sw_milestones" | "hw_dates", limit = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const now = new Date();
+  const result = await db
+    .select()
+    .from(milestones)
+    .where(and(
+      eq(milestones.milestoneType, milestoneType),
+      gte(milestones.milestoneDate, now)
+    ))
+    .orderBy(asc(milestones.milestoneDate))
+    .limit(limit);
+  
+  return result;
+}
+
+export async function getAllMilestonesByType(milestoneType: "pdp_gates" | "sw_milestones" | "hw_dates") {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const result = await db
+    .select()
+    .from(milestones)
+    .where(eq(milestones.milestoneType, milestoneType))
+    .orderBy(asc(milestones.milestoneDate));
+  
+  return result;
+}
+
+export async function importMilestones(milestonesData: InsertMilestone[]) {
+  const db = await getDb();
+  if (!db) return { success: false, count: 0 };
+  
+  // Clear existing milestones
+  await db.delete(milestones);
+  
+  // Insert new milestones in batches
+  let count = 0;
+  const batchSize = 100;
+  for (let i = 0; i < milestonesData.length; i += batchSize) {
+    const batch = milestonesData.slice(i, i + batchSize);
+    await db.insert(milestones).values(batch);
+    count += batch.length;
+  }
+  
+  return { success: true, count };
 }

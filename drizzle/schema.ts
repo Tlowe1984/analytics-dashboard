@@ -50,3 +50,21 @@ export const syncMetadata = mysqlTable("sync_metadata", {
 
 export type SyncMetadata = typeof syncMetadata.$inferSelect;
 export type InsertSyncMetadata = typeof syncMetadata.$inferInsert;
+
+/**
+ * Program milestones for upcoming dates section
+ * Stores PDP gates, software milestones, and hardware dates
+ */
+export const milestones = mysqlTable("milestones", {
+  id: int("id").autoincrement().primaryKey(),
+  product: varchar("product", { length: 100 }).notNull(),
+  milestoneName: text("milestone_name").notNull(),
+  milestoneDate: timestamp("milestone_date").notNull(),
+  milestoneType: mysqlEnum("milestone_type", ["pdp_gates", "sw_milestones", "hw_dates"]).notNull(),
+  originalType: varchar("original_type", { length: 100 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Milestone = typeof milestones.$inferSelect;
+export type InsertMilestone = typeof milestones.$inferInsert;
