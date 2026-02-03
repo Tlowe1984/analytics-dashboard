@@ -218,3 +218,10 @@
 - [x] Fix rendering to preserve nested bullet structure from source documents
 - [x] Test across all three tabs (Devices, Software, Systems)
 - [x] Resync all data to populate indent_level values
+
+## Fix Over-Indentation Issue
+- [x] Fix parser to only indent actual sub-bullets, not all items
+- [x] Update indentation detection logic with 500000 twips threshold (≈ 0.35 inch)
+- [x] Apply fix to all three parsers (Devices, Software, Systems)
+- [x] Resync all data with corrected indentation
+- [x] Verify only nested bullets are indented (tested in AI Glasses UPCOMING section)

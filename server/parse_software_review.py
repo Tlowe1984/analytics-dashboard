@@ -71,10 +71,11 @@ def parse_software_review(docx_path):
             # Check if any run in this paragraph has blue text
             has_blue = any(is_blue_text(run) for run in para.runs)
             
-            # Detect indentation level
+            # Detect indentation level - only indent if significantly indented (sub-bullets)
             indent_level = 0
-            if para.paragraph_format.left_indent:
-                indent_level = int(para.paragraph_format.left_indent / 360000)
+            if para.paragraph_format.left_indent and para.paragraph_format.left_indent > 500000:
+                # Only indent if left_indent > 500000 twips (≈ 0.35 inch)
+                indent_level = max(1, int((para.paragraph_format.left_indent - 500000) / 360000) + 1)
             
             items.append({
                 "section_type": current_section,
