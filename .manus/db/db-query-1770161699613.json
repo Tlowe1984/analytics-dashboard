@@ -1,0 +1,130 @@
+{
+  "query": "SELECT product, milestone_name, milestone_date, milestone_type \nFROM milestones \nWHERE milestone_name LIKE '%Launch%' OR milestone_name LIKE '%OSD%' \nORDER BY milestone_date ASC \nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, milestone_date, milestone_type \nFROM milestones \nWHERE milestone_name LIKE '%Launch%' OR milestone_name LIKE '%OSD%' \nORDER BY milestone_date ASC \nLIMIT 20;",
+  "rows": [
+    {
+      "product": "Paloma Lifestyle",
+      "milestone_name": "Launch Date (LE)",
+      "milestone_date": "2025-07-22 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Paloma Lifestyle",
+      "milestone_name": "Launch Date (Core SKUs)",
+      "milestone_date": "2025-08-26 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "RBM2",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-17 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Ceres",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "OSD / Launch",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "hw_dates"
+    },
+    {
+      "product": "Hypernova Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Paloma",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-10-20 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Paloma Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-10-20 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "RBM2 Optics",
+      "milestone_name": "Launch Date RBM2 Optics",
+      "milestone_date": "2026-04-14 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2026-06-23 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "RBM2 Refresh",
+      "milestone_name": "Launch Date RBM2 Refresh",
+      "milestone_date": "2026-09-15 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Luna 2P",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2026-10-13 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Malibu2 - LE",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2026-12-04 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Daiquiri Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2026-12-18 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "Launch Date (USA)",
+      "milestone_date": "2026-12-18 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "Launch Date (CAN)",
+      "milestone_date": "2026-12-25 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Mojito",
+      "milestone_name": "OSD (2k units for WWD)",
+      "milestone_date": "2027-02-09 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Mojito Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2027-02-09 00:00:00",
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "product": "Mojito",
+      "milestone_name": "MP OSD",
+      "milestone_date": "2027-03-08 00:00:00",
+      "milestone_type": "pdp_gates"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tmilestone_date\tmilestone_type\nPaloma Lifestyle\tLaunch Date (LE)\t2025-07-22 00:00:00\tpdp_gates\nPaloma Lifestyle\tLaunch Date (Core SKUs)\t2025-08-26 00:00:00\tpdp_gates\nRBM2\tLaunch Date\t2025-09-17 00:00:00\tpdp_gates\nHypernova\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\nCeres\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\nHypernova\tOSD / Launch\t2025-09-30 00:00:00\thw_dates\nHypernova Case\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\nPaloma\tLaunch Date\t2025-10-20 00:00:00\tpdp_gates\nPaloma Case\tLaunch Date\t2025-10-20 00:00:00\tpdp_gates\nRBM2 Optics\tLaunch Date RBM2 Optics\t2026-04-14 00:00:00\tpdp_gates\nModelo\tLaunch Date\t2026-06-23 00:00:00\tpdp_gates\nRBM2 Refresh\tLaunch Date RBM2 Refresh\t2026-09-15 00:00:00\tpdp_gates\nLuna 2P\tLaunch Date\t2026-10-13 00:00:00\tpdp_gates\nMalibu2 - LE\tLaunch Date\t2026-12-04 00:00:00\tpdp_gates\nDaiquiri Case\tLaunch Date\t2026-12-18 00:00:00\tpdp_gates\nDaiquiri\tLaunch Date (USA)\t2026-12-18 00:00:00\tpdp_gates\nDaiquiri\tLaunch Date (CAN)\t2026-12-25 00:00:00\tpdp_gates\nMojito\tOSD (2k units for WWD)\t2027-02-09 00:00:00\tpdp_gates\nMojito Case\tLaunch Date\t2027-02-09 00:00:00\tpdp_gates\nMojito\tMP OSD\t2027-03-08 00:00:00\tpdp_gates\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

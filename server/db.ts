@@ -234,18 +234,18 @@ export async function getReleaseDates(limit = 10) {
   if (!db) return [];
   
   const now = new Date();
-  const oneMonthFromNow = new Date(now);
-  oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+  const twelveMonthsFromNow = new Date(now);
+  twelveMonthsFromNow.setMonth(twelveMonthsFromNow.getMonth() + 12);
   
   const result = await db
     .select()
     .from(milestones)
     .where(and(
       gte(milestones.milestoneDate, now),
-      lte(milestones.milestoneDate, oneMonthFromNow),
+      lte(milestones.milestoneDate, twelveMonthsFromNow),
       or(
         like(milestones.milestoneName, "%OSD%"),
-        like(milestones.milestoneName, "%launch%"),
+        like(milestones.milestoneName, "%Launch%"),
         like(milestones.milestoneName, "%release%")
       )
     ))

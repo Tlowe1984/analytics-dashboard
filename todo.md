@@ -261,3 +261,11 @@
 - [x] In Market Release Dates tile displays correctly with green rocket icon
 - [x] 4-column grid layout works on large screens
 - [x] Week numbers display correctly (W## format)
+
+## Update In Market Release Dates to Use Spreadsheet Column
+- [x] Confirmed milestone data comes from same SOT spreadsheet (already in milestones table)
+- [x] Identified release date entries: "Launch Date", "OSD", "MP OSD" in milestone names
+- [x] Verify current getReleaseDates query is correctly filtering these entries
+- [x] Updated query date range from 1 month to 12 months to show upcoming launches
+- [x] Fixed case sensitivity in query ("%Launch%" instead of "%launch%")
+- [x] Test that release dates now display in UI - showing 8 upcoming launches through Dec 2026
