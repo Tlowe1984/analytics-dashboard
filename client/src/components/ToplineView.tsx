@@ -144,7 +144,7 @@ export default function ToplineView() {
     return (
       <div className="w-full">
         <div className="devices-section rounded-3xl p-8">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="glass-card rounded-2xl p-8 animate-pulse">
                 <div className="h-16 bg-muted/20 rounded-lg mb-6" />
@@ -186,7 +186,7 @@ export default function ToplineView() {
         </div>
 
         {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <ProductCard key={product} productCategory={product} allItems={allItems || []} />
           ))}

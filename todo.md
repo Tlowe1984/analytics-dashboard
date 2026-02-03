@@ -48,3 +48,7 @@
 - [x] Implement backend tRPC procedure to query dashboard data with LLM
 - [x] Group all three product tiles into a "Devices" section with colored container
 - [x] Add "Devices" section header with visual styling
+
+## Layout Fix
+- [x] Fix product tiles to display side-by-side on all screen sizes
+- [x] Adjust breakpoint or grid configuration for horizontal layout (changed from xl to lg breakpoint)
