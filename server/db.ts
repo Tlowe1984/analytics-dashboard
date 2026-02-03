@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -280,4 +280,43 @@ export async function getSoftwareItemsBySection(
     .orderBy(softwareItems.order);
 
   return result;
+}
+
+
+// ============ Decisions Functions ============
+
+export async function getAllDecisions(): Promise<Decision[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    // Return all decisions sorted by week (most recent first)
+    const results = await db.select().from(decisions);
+    return results;
+  } catch (error) {
+    console.error("[Database] Error fetching decisions:", error);
+    return [];
+  }
+}
+
+export async function clearDecisions(): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    await db.delete(decisions);
+  } catch (error) {
+    console.error("[Database] Error clearing decisions:", error);
+  }
+}
+
+export async function insertDecision(decision: InsertDecision): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  
+  try {
+    await db.insert(decisions).values(decision);
+  } catch (error) {
+    console.error("[Database] Error inserting decision:", error);
+  }
 }

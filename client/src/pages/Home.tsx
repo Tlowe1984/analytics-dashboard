@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
+import DecisionsSection from "@/components/DecisionsSection";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
 import SyncStatus from "@/components/SyncStatus";
@@ -91,6 +92,7 @@ export default function Home() {
           <ToplineView />
           <UpcomingDates />
         </div>
+        <DecisionsSection />
         <PlaceholderSections />
       </main>
 

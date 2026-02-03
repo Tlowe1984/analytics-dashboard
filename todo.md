@@ -176,3 +176,14 @@
 
 ## Remove Placeholder Sections
 - [x] Remove Device View, Experience & Interface View, and System View from Additional Dashboard Sections
+
+## Decisions Section Implementation
+- [x] Locate Wearables Decision Canonical document in Wearables Everything folder
+- [x] Create database schema for decisions (week, dri, forum, status, decision_outcome)
+- [x] Create Python parser to extract data from Consolidated Summary table
+- [x] Filter decisions from last month only (5 decisions from W5-W3 2026)
+- [x] Build Decisions UI component with table display
+- [x] Add link to Google Drive source document
+- [x] Create manual sync script (sync_decisions.sh) for daily updates
+- [x] Test with real data from Wearable Decisions Canonical doc
+- [x] Remove duplicate Decisions placeholder from Additional Dashboard Sections

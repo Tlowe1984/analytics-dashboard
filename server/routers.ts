@@ -241,6 +241,13 @@ export const appRouter = router({
         return await db.importMilestones(input.milestones);
       }),
   }),
+
+  decisions: router({
+    // Get all decisions from last month
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllDecisions();
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

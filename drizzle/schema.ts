@@ -86,3 +86,21 @@ export const softwareItems = mysqlTable("software_items", {
 
 export type SoftwareItem = typeof softwareItems.$inferSelect;
 export type InsertSoftwareItem = typeof softwareItems.$inferInsert;
+
+/**
+ * Strategic decisions from Wearables Decision Canonical
+ * Stores decisions with week, DRI, forum, status, and outcome
+ */
+export const decisions = mysqlTable("decisions", {
+  id: int("id").autoincrement().primaryKey(),
+  week: varchar("week", { length: 20 }).notNull(), // e.g., "W49 2025"
+  dri: varchar("dri", { length: 255 }).notNull(),
+  forum: varchar("forum", { length: 255 }),
+  status: varchar("status", { length: 100 }),
+  decisionOutcome: text("decision_outcome").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Decision = typeof decisions.$inferSelect;
+export type InsertDecision = typeof decisions.$inferInsert;

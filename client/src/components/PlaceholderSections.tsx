@@ -1,18 +1,7 @@
 import { CalendarDays, CheckCircle2 } from "lucide-react";
 
-const placeholderSections = [
-  {
-    id: "dates",
-    title: "Upcoming Dates",
-    description: "Key milestones and important deadlines",
-    icon: CalendarDays,
-  },
-  {
-    id: "decisions",
-    title: "Decisions",
-    description: "Strategic decisions and action items",
-    icon: CheckCircle2,
-  },
+const placeholderSections: any[] = [
+  // All sections have been implemented
 ];
 
 export default function PlaceholderSections() {
