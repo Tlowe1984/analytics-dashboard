@@ -1,13 +1,13 @@
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { RefreshCw, Clock } from "lucide-react";
 import { toast } from "sonner";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 
 export default function SyncStatus() {
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
-  const [autoSyncEnabled, setAutoSyncEnabled] = useState(true);
+  const utils = trpc.useUtils();
   
   const syncAll = trpc.sync.syncAll.useMutation({
     onSuccess: (result) => {
@@ -28,8 +28,8 @@ export default function SyncStatus() {
       }
       
       // Invalidate queries to refresh UI
-      trpc.useUtils().dashboard.getAll.invalidate();
-      trpc.useUtils().milestones.getUpcoming.invalidate();
+      utils.dashboard.getAll.invalidate();
+      utils.milestones.getUpcoming.invalidate();
     },
     onError: (error) => {
       toast.error("Sync failed", {
@@ -38,17 +38,7 @@ export default function SyncStatus() {
     },
   });
 
-  // Auto-sync every 5 minutes
-  useEffect(() => {
-    if (!autoSyncEnabled) return;
-    
-    const interval = setInterval(() => {
-      console.log("[Auto-sync] Triggering sync...");
-      syncAll.mutate();
-    }, 5 * 60 * 1000); // 5 minutes
-    
-    return () => clearInterval(interval);
-  }, [autoSyncEnabled]);
+  // No auto-sync - manual refresh only for daily updates
 
   const handleManualSync = () => {
     syncAll.mutate();
@@ -78,23 +68,7 @@ export default function SyncStatus() {
         {syncAll.isPending ? "Syncing..." : "Refresh Data"}
       </Button>
       
-      {/* Auto-sync Toggle */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setAutoSyncEnabled(!autoSyncEnabled)}
-        className="gap-2"
-        title={autoSyncEnabled ? "Auto-sync enabled" : "Auto-sync disabled"}
-      >
-        {autoSyncEnabled ? (
-          <CheckCircle2 className="w-4 h-4 text-green-500" />
-        ) : (
-          <AlertCircle className="w-4 h-4 text-yellow-500" />
-        )}
-        <span className="text-xs">
-          Auto-sync {autoSyncEnabled ? "ON" : "OFF"}
-        </span>
-      </Button>
+
     </div>
   );
 }

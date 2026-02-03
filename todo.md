@@ -131,3 +131,11 @@
 - [x] Create manual sync shell script (sync_from_gdrive.sh)
 - [x] Document sync process in SYNC_README.md
 - [x] Test manual sync process successfully
+
+## Devices Section Redesign
+- [x] Redesign Devices section to match Upcoming Dates style
+- [x] Create cleaner, more scannable layout similar to milestone cards
+- [x] Remove complex glassmorphism tiles in favor of simpler list format
+- [x] Simplify sync mechanism for daily updates only
+- [x] Remove auto-sync toggle and periodic refresh (not needed for daily updates)
+- [x] Fix React hooks error in SyncStatus component

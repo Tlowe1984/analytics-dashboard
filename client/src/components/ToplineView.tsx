@@ -15,23 +15,20 @@ const sectionConfig = {
   highlights: {
     icon: Sparkles,
     label: "Highlights",
-    color: "var(--highlight-color)",
+    color: "text-green-600 dark:text-green-400",
     bgClass: "bg-green-500/10",
-    iconClass: "text-green-600 dark:text-green-400",
   },
   risks: {
     icon: AlertTriangle,
     label: "Risks / Opens",
-    color: "var(--risk-color)",
+    color: "text-orange-600 dark:text-orange-400",
     bgClass: "bg-orange-500/10",
-    iconClass: "text-orange-600 dark:text-orange-400",
   },
   upcoming: {
     icon: Calendar,
     label: "Upcoming",
-    color: "var(--upcoming-color)",
+    color: "text-blue-600 dark:text-blue-400",
     bgClass: "bg-blue-500/10",
-    iconClass: "text-blue-600 dark:text-blue-400",
   },
 };
 
@@ -50,93 +47,47 @@ const productConfig = {
   },
 };
 
-function SectionContent({
+function ProductSection({
+  productCategory,
   sectionType,
   items,
 }: {
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
   sectionType: "highlights" | "risks" | "upcoming";
   items: DashboardItem[];
 }) {
+  const product = productConfig[productCategory];
   const section = sectionConfig[sectionType];
   const SectionIcon = section.icon;
 
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2">
-        <div className={cn("p-1.5 rounded-lg", section.bgClass)}>
-          <SectionIcon className={cn("w-4 h-4", section.iconClass)} />
-        </div>
-        <h4 className="font-semibold text-sm">{section.label}</h4>
-      </div>
+  if (items.length === 0) return null;
 
-      <div className="space-y-2 pl-1">
-        {items.length === 0 ? (
-          <p className="text-xs text-muted-foreground italic">No items yet</p>
-        ) : (
-          items.map((item) => (
-            <div key={item.id} className="flex items-start gap-2 group">
-              <div
-                className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                style={{ backgroundColor: section.color }}
-              />
-              <p className={cn(
-                "text-sm leading-relaxed group-hover:text-foreground transition-colors",
-                item.isNew === 1 ? "text-blue-600 dark:text-blue-400 font-medium" : "text-foreground/90"
-              )}>
-                {item.content}
-              </p>
+  return (
+    <div className="space-y-1.5">
+      {items.map((item) => (
+        <div key={item.id} className="flex items-start gap-3 py-1">
+          <div className="flex items-center gap-2 min-w-[140px] flex-shrink-0">
+            <span className="text-sm font-medium text-muted-foreground">
+              {product.label}
+            </span>
+          </div>
+          <div className="flex items-start gap-2 flex-1">
+            <div className={cn("p-1 rounded", section.bgClass)}>
+              <SectionIcon className={cn("w-3 h-3", section.color)} />
             </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ProductCard({
-  productCategory,
-  allItems,
-}: {
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
-  allItems: DashboardItem[];
-}) {
-  const product = productConfig[productCategory];
-  const ProductIcon = product.icon;
-
-  // Filter items for this product category
-  const highlightItems = allItems.filter(
-    (item) => item.productCategory === productCategory && item.sectionType === "highlights"
-  );
-  const riskItems = allItems.filter(
-    (item) => item.productCategory === productCategory && item.sectionType === "risks"
-  );
-  const upcomingItems = allItems.filter(
-    (item) => item.productCategory === productCategory && item.sectionType === "upcoming"
-  );
-
-  return (
-    <div className="glass-card rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
-      {/* Product Header */}
-      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/50">
-        <div className="p-3 rounded-xl bg-primary/10">
-          <ProductIcon className="w-6 h-6 text-primary" />
+            <p
+              className={cn(
+                "text-sm leading-relaxed",
+                item.isNew === 1
+                  ? "text-blue-600 dark:text-blue-400 font-medium"
+                  : "text-foreground/90"
+              )}
+            >
+              {item.content}
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-xl font-bold">{product.label}</h3>
-          <p className="text-xs text-muted-foreground">Executive Summary</p>
-        </div>
-      </div>
-
-      {/* Sections */}
-      <div className="space-y-6">
-        <SectionContent sectionType="highlights" items={highlightItems} />
-        <div className="border-t border-border/30 pt-6">
-          <SectionContent sectionType="risks" items={riskItems} />
-        </div>
-        <div className="border-t border-border/30 pt-6">
-          <SectionContent sectionType="upcoming" items={upcomingItems} />
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
@@ -147,22 +98,24 @@ export default function ToplineView() {
   if (isLoading) {
     return (
       <div className="w-full">
-        <div className="devices-section rounded-3xl p-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 rounded-lg bg-blue-500/10 animate-pulse">
+              <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold">Devices</h2>
+              <p className="text-xs text-muted-foreground">Product category overview</p>
+            </div>
+          </div>
+          <div className="space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="glass-card rounded-2xl p-8 animate-pulse">
-                <div className="h-16 bg-muted/20 rounded-lg mb-6" />
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <div className="h-6 bg-muted/20 rounded w-1/3" />
-                    <div className="h-4 bg-muted/20 rounded" />
-                    <div className="h-4 bg-muted/20 rounded w-5/6" />
-                  </div>
-                  <div className="space-y-3">
-                    <div className="h-6 bg-muted/20 rounded w-1/3" />
-                    <div className="h-4 bg-muted/20 rounded" />
-                    <div className="h-4 bg-muted/20 rounded w-5/6" />
-                  </div>
+              <div key={i} className="space-y-2">
+                <div className="h-4 bg-muted/20 rounded w-1/4 animate-pulse" />
+                <div className="space-y-1.5">
+                  {Array.from({ length: 3 }).map((_, j) => (
+                    <div key={j} className="h-4 bg-muted/20 rounded animate-pulse" />
+                  ))}
                 </div>
               </div>
             ))}
@@ -173,27 +126,59 @@ export default function ToplineView() {
   }
 
   const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
+  const sections: Array<"highlights" | "risks" | "upcoming"> = ["highlights", "risks", "upcoming"];
 
   return (
     <div className="w-full">
-      {/* Devices Section Container */}
-      <div className="devices-section rounded-3xl p-8">
+      <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-blue-500/10">
-            <Cpu className="w-7 h-7 text-blue-600 dark:text-blue-400" />
+          <div className="p-2 rounded-lg bg-blue-500/10">
+            <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Devices</h2>
-            <p className="text-sm text-muted-foreground">Product category overview</p>
+            <h2 className="text-xl font-bold">Devices</h2>
+            <p className="text-xs text-muted-foreground">Product category overview</p>
           </div>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product} productCategory={product} allItems={allItems || []} />
-          ))}
+        {/* Sections */}
+        <div className="space-y-6">
+          {sections.map((sectionType) => {
+            const section = sectionConfig[sectionType];
+            const SectionIcon = section.icon;
+            
+            // Get all items for this section across all products
+            const sectionItems = allItems?.filter(item => item.sectionType === sectionType) || [];
+            
+            if (sectionItems.length === 0) return null;
+
+            return (
+              <div key={sectionType}>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className={cn("p-1.5 rounded-lg", section.bgClass)}>
+                    <SectionIcon className={cn("w-4 h-4", section.color)} />
+                  </div>
+                  <h3 className="font-semibold text-sm">{section.label}</h3>
+                </div>
+                <div className="space-y-0">
+                  {products.map((product) => {
+                    const productItems = sectionItems.filter(
+                      (item) => item.productCategory === product
+                    );
+                    return (
+                      <ProductSection
+                        key={product}
+                        productCategory={product}
+                        sectionType={sectionType}
+                        items={productItems}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
