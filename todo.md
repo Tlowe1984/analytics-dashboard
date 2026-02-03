@@ -225,3 +225,9 @@
 - [x] Apply fix to all three parsers (Devices, Software, Systems)
 - [x] Resync all data with corrected indentation
 - [x] Verify only nested bullets are indented (tested in AI Glasses UPCOMING section)
+
+## Increase Indentation Threshold
+- [x] Increase threshold from 500000 to 720000 twips (~0.5 inch) to prevent false positives
+- [x] Apply to all three parsers (Devices, Software, Systems)
+- [x] Resync all data with stricter threshold
+- [x] Verify items like "Monoc P2" and "Modelo EVT" are no longer indented

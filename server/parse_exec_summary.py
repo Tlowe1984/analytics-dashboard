@@ -64,10 +64,10 @@ try:
         
         # Detect indentation level - only indent if significantly indented (sub-bullets)
         indent_level = 0
-        if para.paragraph_format.left_indent and para.paragraph_format.left_indent > 500000:
-            # Only indent if left_indent > 500000 twips (≈ 0.35 inch)
+        if para.paragraph_format.left_indent and para.paragraph_format.left_indent > 720000:
+            # Only indent if left_indent > 720000 twips (≈ 0.5 inch)
             # Convert to indent level (each 360000 twips ≈ 1 level)
-            indent_level = max(1, int((para.paragraph_format.left_indent - 500000) / 360000) + 1)
+            indent_level = max(1, int((para.paragraph_format.left_indent - 720000) / 360000) + 1)
         
         # Add the item
         items.append({
