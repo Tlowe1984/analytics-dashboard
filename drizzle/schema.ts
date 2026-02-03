@@ -104,3 +104,20 @@ export const decisions = mysqlTable("decisions", {
 
 export type Decision = typeof decisions.$inferSelect;
 export type InsertDecision = typeof decisions.$inferInsert;
+
+/**
+ * Systems review items for the Systems tab
+ * Stores wins, exec summary, and help needed items
+ */
+export const systemsItems = mysqlTable("systems_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "help_needed"]).notNull(),
+  content: text("content").notNull(),
+  isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
+  order: int("order").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type SystemsItem = typeof systemsItems.$inferSelect;
+export type InsertSystemsItem = typeof systemsItems.$inferInsert;

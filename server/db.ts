@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -319,4 +319,19 @@ export async function insertDecision(decision: InsertDecision): Promise<void> {
   } catch (error) {
     console.error("[Database] Error inserting decision:", error);
   }
+}
+
+
+// ===== Systems Items =====
+
+export async function getAllSystemsItems(): Promise<SystemsItem[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(systemsItems).orderBy(asc(systemsItems.order));
+}
+
+export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summary" | "help_needed"): Promise<SystemsItem[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(systemsItems).where(eq(systemsItems.sectionType, sectionType)).orderBy(asc(systemsItems.order));
 }

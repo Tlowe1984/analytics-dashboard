@@ -1,5 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers, Trophy, FileText } from "lucide-react";
+import { SystemsTab } from "./SystemsTab";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -291,15 +292,7 @@ function SoftwareTab() {
   );
 }
 
-function SystemsTab() {
-  return (
-    <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-8 text-center">
-      <Layers className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
-      <h3 className="text-lg font-semibold mb-2">Systems</h3>
-      <p className="text-sm text-muted-foreground">Content coming soon</p>
-    </div>
-  );
-}
+
 
 export default function ToplineView() {
   return (

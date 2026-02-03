@@ -248,6 +248,20 @@ export const appRouter = router({
       return await db.getAllDecisions();
     }),
   }),
+
+  systems: router({
+    // Get all systems items
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllSystemsItems();
+    }),
+
+    // Get systems items by section
+    getBySection: publicProcedure
+      .input(z.enum(["wins", "exec_summary", "help_needed"]))
+      .query(async ({ input }) => {
+        return await db.getSystemsItemsBySection(input);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
