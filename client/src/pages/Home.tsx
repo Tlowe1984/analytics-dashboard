@@ -7,22 +7,11 @@ import DecisionsSection from "@/components/DecisionsSection";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
 import SyncStatus from "@/components/SyncStatus";
-import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
-import { BarChart3, RefreshCw } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 
 export default function Home() {
   const { user, isAuthenticated, logout } = useAuth();
-  const utils = trpc.useUtils();
-  const seedData = trpc.dashboard.seedSampleData.useMutation({
-    onSuccess: () => {
-      toast.success("Sample data loaded successfully!");
-      utils.dashboard.getAll.invalidate();
-    },
-    onError: (error) => {
-      toast.error("Failed to load sample data: " + error.message);
-    },
-  });
+
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
@@ -53,16 +42,6 @@ export default function Home() {
               {isAuthenticated ? (
                 <>
                   <SyncStatus />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => seedData.mutate()}
-                    disabled={seedData.isPending}
-                    className="glass-card border-border/50"
-                  >
-                    <RefreshCw className={`w-4 h-4 mr-2 ${seedData.isPending ? "animate-spin" : ""}`} />
-                    Load Sample Data
-                  </Button>
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">{user?.name}</span>
                     <Button variant="outline" size="sm" onClick={() => logout()} className="glass-card border-border/50">

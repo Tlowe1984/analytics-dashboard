@@ -1,0 +1,110 @@
+{
+  "query": "SELECT * FROM milestones WHERE milestone_name LIKE '%release%' OR milestone_name LIKE '%launch%' OR milestone_name LIKE '%OSD%' LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM milestones WHERE milestone_name LIKE '%release%' OR milestone_name LIKE '%launch%' OR milestone_name LIKE '%OSD%' LIMIT 10;",
+  "rows": [
+    {
+      "id": "47",
+      "product": "Artemis",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2027-10-01 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "51",
+      "product": "Ceres",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "59",
+      "product": "Ceres2",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2027-04-20 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "66",
+      "product": "Daiquiri",
+      "milestone_name": "Launch Date (USA)",
+      "milestone_date": "2026-12-18 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "67",
+      "product": "Daiquiri",
+      "milestone_name": "Launch Date (CAN)",
+      "milestone_date": "2026-12-25 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "74",
+      "product": "Daiquiri Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2026-12-18 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "79",
+      "product": "Hypernova",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "83",
+      "product": "Hypernova Case",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2025-09-30 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "90",
+      "product": "Hypernova2 Binoc",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2028-04-23 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    },
+    {
+      "id": "97",
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "Launch Date",
+      "milestone_date": "2027-04-23 00:00:00",
+      "milestone_type": "pdp_gates",
+      "original_type": "NULL",
+      "createdAt": "2026-02-03 18:40:43",
+      "updatedAt": "2026-02-03 18:40:43"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tproduct\tmilestone_name\tmilestone_date\tmilestone_type\toriginal_type\tcreatedAt\tupdatedAt\n47\tArtemis\tLaunch Date\t2027-10-01 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n51\tCeres\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n59\tCeres2\tLaunch Date\t2027-04-20 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n66\tDaiquiri\tLaunch Date (USA)\t2026-12-18 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n67\tDaiquiri\tLaunch Date (CAN)\t2026-12-25 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n74\tDaiquiri Case\tLaunch Date\t2026-12-18 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n79\tHypernova\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n83\tHypernova Case\tLaunch Date\t2025-09-30 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n90\tHypernova2 Binoc\tLaunch Date\t2028-04-23 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n97\tHypernova2 Monoc\tLaunch Date\t2027-04-23 00:00:00\tpdp_gates\tNULL\t2026-02-03 18:40:43\t2026-02-03 18:40:43\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}

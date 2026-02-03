@@ -211,6 +211,17 @@ export const appRouter = router({
         return await db.getUpcomingMilestones(input.milestoneType, input.limit);
       }),
 
+    // Get upcoming release dates (OSD, launch, release milestones)
+    getReleaseDates: publicProcedure
+      .input(
+        z.object({
+          limit: z.number().default(10),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getReleaseDates(input.limit);
+      }),
+
     // Get all milestones by type
     getByType: publicProcedure
       .input(

@@ -247,3 +247,17 @@
 - [x] Optimize database writes with single transaction
 - [x] Test sync speed improvement - **12 seconds (54% faster!)**
 - [x] Verify format and indentation remain intact
+
+## UI Cleanup and In Market Release Dates
+- [x] Remove "Load Sample Data" button from dashboard header
+- [x] Add database schema for in-market release dates (using existing milestones table)
+- [x] Create getReleaseDates query function to filter OSD/launch/release milestones
+- [x] Add tRPC endpoint for release dates
+- [x] Create "In Market Release Dates" tile in Upcoming Dates section
+- [x] Show upcoming month with week numbers (W##)
+- [x] Update grid layout to 4 columns (xl:grid-cols-4) for 4 tiles
+- [x] Test and verify all changes work correctly
+- [x] Load Sample Data button successfully removed from header
+- [x] In Market Release Dates tile displays correctly with green rocket icon
+- [x] 4-column grid layout works on large screens
+- [x] Week numbers display correctly (W## format)
