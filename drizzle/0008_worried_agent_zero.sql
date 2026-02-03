@@ -1,1 +1,0 @@
-ALTER TABLE `dashboard_items` ADD `indent_level` int DEFAULT 0 NOT NULL;

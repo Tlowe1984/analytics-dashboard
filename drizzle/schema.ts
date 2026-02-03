@@ -28,7 +28,6 @@ export const dashboardItems = mysqlTable("dashboard_items", {
   productCategory: mysqlEnum("product_category", ["ai_glasses", "wrist", "arg_ssg"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
-  indentLevel: int("indent_level").default(0).notNull(), // Indentation level for nested bullets (0 = top level)
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -80,7 +79,6 @@ export const softwareItems = mysqlTable("software_items", {
   sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "decisions"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
-  indentLevel: int("indent_level").default(0).notNull(), // Indentation level for nested bullets
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -116,7 +114,6 @@ export const systemsItems = mysqlTable("systems_items", {
   sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "help_needed"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
-  indentLevel: int("indent_level").default(0).notNull(), // Indentation level for nested bullets
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

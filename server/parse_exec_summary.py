@@ -62,20 +62,12 @@ try:
                     is_new = True
                     break
         
-        # Detect indentation level - only indent if significantly indented (sub-bullets)
-        indent_level = 0
-        if para.paragraph_format.left_indent and para.paragraph_format.left_indent > 720000:
-            # Only indent if left_indent > 720000 twips (≈ 0.5 inch)
-            # Convert to indent level (each 360000 twips ≈ 1 level)
-            indent_level = max(1, int((para.paragraph_format.left_indent - 720000) / 360000) + 1)
-        
         # Add the item
         items.append({
             'product': current_product,
             'section': current_section,
             'content': text,
-            'is_new': 1 if is_new else 0,
-            'indent_level': indent_level
+            'is_new': 1 if is_new else 0
         })
     
     print(json.dumps(items))

@@ -23,7 +23,6 @@ for (const item of data) {
     productCategory: item.product,
     content: item.content,
     isNew: item.is_new,
-    indentLevel: item.indent_level || 0,
     order: 0
   });
 }

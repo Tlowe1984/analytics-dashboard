@@ -33,7 +33,6 @@ for (const item of data) {
     sectionType: item.section_type,
     content: item.content,
     isNew: item.is_new,
-    indentLevel: item.indent_level || 0,
     order: item.order,
   });
 }

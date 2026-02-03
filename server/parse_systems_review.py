@@ -56,17 +56,10 @@ def parse_systems_review(docx_path):
                     is_new = 1
                     break
         
-        # Detect indentation level - only indent if significantly indented (sub-bullets)
-        indent_level = 0
-        if para.paragraph_format.left_indent and para.paragraph_format.left_indent > 720000:
-            # Only indent if left_indent > 720000 twips (≈ 0.5 inch)
-            indent_level = max(1, int((para.paragraph_format.left_indent - 720000) / 360000) + 1)
-        
         items.append({
             "section_type": current_section,
             "content": text,
             "is_new": is_new,
-            "indent_level": indent_level,
             "order": order
         })
         order += 1
