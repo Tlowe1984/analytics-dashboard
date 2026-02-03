@@ -44,8 +44,8 @@ export default function Home() {
                 <BarChart3 className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold">Executive Analytics Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Week 5 (W5) • Real-time program insights</p>
+                <h1 className="text-2xl font-bold">Week 5 Devices Update</h1>
+                <p className="text-sm text-muted-foreground">Real-time program insights • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span></p>
               </div>
             </div>
             <div className="flex items-center gap-3">

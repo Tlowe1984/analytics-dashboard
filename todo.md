@@ -108,3 +108,11 @@
 - [x] Download and parse executive summary from the file
 - [x] Populate Devices section with real data from the document
 - [x] Update sync service to use shared drive file path (canonical document)
+
+## Blue Text Highlighting & Week Number
+- [x] Parse document to identify blue text (new information) - Found 87 blue items
+- [x] Extract week number from document title - Found W5
+- [x] Update database schema to track new/updated items (added is_new field)
+- [x] Add visual highlighting for new information in UI (blue text with medium font weight)
+- [x] Add legend/key showing blue text indicates new information (in header subtitle)
+- [x] Update dashboard title to show "Week X Devices Update" dynamically (Week 5 Devices Update)

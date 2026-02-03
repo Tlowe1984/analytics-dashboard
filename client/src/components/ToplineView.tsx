@@ -7,6 +7,7 @@ interface DashboardItem {
   sectionType: "highlights" | "risks" | "upcoming";
   productCategory: "ai_glasses" | "wrist" | "arg_ssg";
   content: string;
+  isNew: number; // 1 if new information (blue text), 0 otherwise
   order: number;
 }
 
@@ -78,7 +79,10 @@ function SectionContent({
                 className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
                 style={{ backgroundColor: section.color }}
               />
-              <p className="text-sm text-foreground/90 leading-relaxed group-hover:text-foreground transition-colors">
+              <p className={cn(
+                "text-sm leading-relaxed group-hover:text-foreground transition-colors",
+                item.isNew === 1 ? "text-blue-600 dark:text-blue-400 font-medium" : "text-foreground/90"
+              )}>
                 {item.content}
               </p>
             </div>

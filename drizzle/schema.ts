@@ -27,6 +27,7 @@ export const dashboardItems = mysqlTable("dashboard_items", {
   sectionType: mysqlEnum("section_type", ["highlights", "risks", "upcoming"]).notNull(),
   productCategory: mysqlEnum("product_category", ["ai_glasses", "wrist", "arg_ssg"]).notNull(),
   content: text("content").notNull(),
+  isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

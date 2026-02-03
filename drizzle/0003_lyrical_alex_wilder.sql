@@ -1,0 +1,1 @@
+ALTER TABLE `dashboard_items` ADD `is_new` int DEFAULT 0 NOT NULL;
