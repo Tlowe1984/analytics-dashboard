@@ -69,6 +69,34 @@ export const appRouter = router({
         return await db.deleteDashboardItem(input.id);
       }),
 
+    // Ask AI question about dashboard data
+    askQuestion: publicProcedure
+      .input(z.object({ question: z.string().min(1) }))
+      .mutation(async ({ input }) => {
+        const { invokeLLM } = await import("./_core/llm");
+        
+        // Get all dashboard data
+        const allItems = await db.getAllDashboardItems();
+        
+        // Format data for context
+        const dataContext = allItems.map(item => 
+          `[${item.productCategory.toUpperCase()}] ${item.sectionType}: ${item.content}`
+        ).join("\n");
+        
+        const systemPrompt = `You are an AI assistant helping analyze an executive dashboard. The dashboard contains data organized by product categories (AI Glasses, Wrist, ARG/SSG) and section types (Highlights, Risks/Opens, Upcoming).\n\nCurrent dashboard data:\n${dataContext}\n\nAnswer the user's question based on this data. Be concise and specific.`;
+        
+        const response = await invokeLLM({
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: input.question },
+          ],
+        });
+        
+        return {
+          answer: response.choices[0]?.message?.content || "I couldn't generate an answer.",
+        };
+      }),
+
     // Seed sample data
     seedSampleData: protectedProcedure.mutation(async () => {
       // Clear existing data first

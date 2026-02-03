@@ -193,6 +193,17 @@
     padding-right: 0;
   }
 
+  /* Devices section with colored background */
+  .devices-section {
+    background: linear-gradient(135deg, oklch(0.95 0.02 260) 0%, oklch(0.97 0.01 280) 100%);
+    border: 1px solid oklch(0.85 0.03 260 / 0.3);
+  }
+
+  .dark .devices-section {
+    background: linear-gradient(135deg, oklch(0.2 0.03 260) 0%, oklch(0.18 0.02 280) 100%);
+    border: 1px solid oklch(0.3 0.05 260 / 0.3);
+  }
+
   @media (min-width: 640px) {
     .container {
       padding-left: 1.5rem; /* 24px - tablet padding */

@@ -41,3 +41,10 @@
 - [x] Adjust grid to display all 3 product tiles side-by-side horizontally
 - [x] Optimize spacing and sizing for horizontal layout
 - [x] Ensure responsive behavior on smaller screens
+
+## AI Chat & Devices Section
+- [x] Add Gemini-powered Q&A interface at the top of dashboard
+- [x] Create compact chat bar that takes minimal screen space
+- [x] Implement backend tRPC procedure to query dashboard data with LLM
+- [x] Group all three product tiles into a "Devices" section with colored container
+- [x] Add "Devices" section header with visual styling

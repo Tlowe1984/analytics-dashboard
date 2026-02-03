@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
+import DashboardChat from "@/components/DashboardChat";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { BarChart3, RefreshCw } from "lucide-react";
@@ -78,7 +79,15 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="pb-12">
-        <ToplineView />
+        {/* AI Chat Interface */}
+        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto pt-6 pb-4">
+          <DashboardChat />
+        </div>
+
+        {/* Dashboard Content */}
+        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto">
+          <ToplineView />
+        </div>
         <PlaceholderSections />
       </main>
 
