@@ -1,0 +1,1 @@
+ALTER TABLE `software_items` MODIFY COLUMN `section_type` enum('wins','exec_summary','decisions') NOT NULL;

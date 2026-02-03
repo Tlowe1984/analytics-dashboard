@@ -1,5 +1,5 @@
 import { trpc } from "@/lib/trpc";
-import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers } from "lucide-react";
+import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers, Trophy, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -174,20 +174,20 @@ function DevicesTab() {
 
 const softwareSectionConfig = {
   wins: {
-    icon: Sparkles,
+    icon: Trophy,
     label: "WINS",
     color: "text-green-600 dark:text-green-400",
     bgClass: "bg-green-500/10",
   },
-  product_decisions: {
-    icon: AlertTriangle,
-    label: "PRODUCT DECISIONS",
+  exec_summary: {
+    icon: FileText,
+    label: "EXEC SUMMARY",
     color: "text-blue-600 dark:text-blue-400",
     bgClass: "bg-blue-500/10",
   },
-  hotspots: {
-    icon: Calendar,
-    label: "HOTSPOTS",
+  decisions: {
+    icon: AlertTriangle,
+    label: "DECISIONS",
     color: "text-orange-600 dark:text-orange-400",
     bgClass: "bg-orange-500/10",
   },
@@ -198,7 +198,7 @@ function SoftwareTab() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="bg-background/40 border border-border/50 rounded-xl p-5 animate-pulse">
             <div className="h-6 bg-muted/20 rounded mb-4 w-1/4" />
@@ -214,11 +214,11 @@ function SoftwareTab() {
   }
 
   const winsItems = allItems?.filter(item => item.sectionType === "wins") || [];
-  const decisionsItems = allItems?.filter(item => item.sectionType === "product_decisions") || [];
-  const hotspotsItems = allItems?.filter(item => item.sectionType === "hotspots") || [];
+  const execSummaryItems = allItems?.filter(item => item.sectionType === "exec_summary") || [];
+  const decisionsItems = allItems?.filter(item => item.sectionType === "decisions") || [];
 
-  const renderSection = (
-    sectionType: "wins" | "product_decisions" | "hotspots",
+  const renderTile = (
+    sectionType: "wins" | "exec_summary" | "decisions",
     items: typeof allItems
   ) => {
     const section = softwareSectionConfig[sectionType];
@@ -227,13 +227,13 @@ function SoftwareTab() {
     return (
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
-          <div className={cn("p-1 rounded", section.bgClass)}>
-            <SectionIcon className={cn("w-4 h-4", section.color)} />
+          <div className={cn("p-2 rounded", section.bgClass)}>
+            <SectionIcon className={cn("w-5 h-5", section.color)} />
           </div>
-          <h3 className="font-bold text-sm tracking-wide">{section.label}</h3>
+          <h3 className="font-bold text-base tracking-wide">{section.label}</h3>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {items && items.length > 0 ? (
             items.map((item) => (
               <div key={item.id} className="flex items-start gap-2">
@@ -259,10 +259,10 @@ function SoftwareTab() {
   };
 
   return (
-    <div className="space-y-4">
-      {renderSection("wins", winsItems)}
-      {renderSection("product_decisions", decisionsItems)}
-      {renderSection("hotspots", hotspotsItems)}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {renderTile("wins", winsItems)}
+      {renderTile("exec_summary", execSummaryItems)}
+      {renderTile("decisions", decisionsItems)}
     </div>
   );
 }

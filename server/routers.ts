@@ -190,7 +190,7 @@ export const appRouter = router({
     getBySection: publicProcedure
       .input(
         z.object({
-          sectionType: z.enum(["wins", "product_decisions", "hotspots"]),
+          sectionType: z.enum(["wins", "exec_summary", "decisions"]),
         })
       )
       .query(async ({ input }) => {

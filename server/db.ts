@@ -265,7 +265,7 @@ export async function getAllSoftwareItems(): Promise<SoftwareItem[]> {
 }
 
 export async function getSoftwareItemsBySection(
-  sectionType: "wins" | "product_decisions" | "hotspots"
+  sectionType: "wins" | "exec_summary" | "decisions"
 ): Promise<SoftwareItem[]> {
   const db = await getDb();
   if (!db) {

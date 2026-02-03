@@ -29,8 +29,8 @@ def parse_software_review(docx_path):
     
     # Section markers
     wins_markers = ["🏆 Wins", "Wins"]
+    exec_summary_markers = ["🚀 Exec Summary", "Exec Summary"]
     decisions_markers = ["Product Decisions"]
-    hotspots_markers = ["Hotspots", "🚩 Leadership Help Needed"]
     
     for para in doc.paragraphs:
         text = para.text.strip()
@@ -43,12 +43,12 @@ def parse_software_review(docx_path):
             current_section = "wins"
             order = 0
             continue
-        elif any(marker in text for marker in decisions_markers):
-            current_section = "product_decisions"
+        elif any(marker in text for marker in exec_summary_markers):
+            current_section = "exec_summary"
             order = 0
             continue
-        elif any(marker in text for marker in hotspots_markers):
-            current_section = "hotspots"
+        elif any(marker in text for marker in decisions_markers):
+            current_section = "decisions"
             order = 0
             continue
         
@@ -57,12 +57,14 @@ def parse_software_review(docx_path):
             continue
             
         # Skip section headers and empty lines
-        if text.startswith("🚀 Exec Summary") or text.startswith("📣"):
+        if text.startswith("📣") or text.startswith("FYIs"):
             continue
         if text.startswith("🗓️ Upcoming Releases"):
             break  # Stop at upcoming releases section
         if text.startswith("Portfolio View"):
             break  # Stop at portfolio view
+        if text.startswith("🚩 Leadership Help Needed"):
+            break  # Stop at hotspots section
             
         # Check if this is a content line (starts with bracket or bullet)
         if text.startswith("[") or text.startswith("•") or text.startswith("-"):

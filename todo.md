@@ -160,3 +160,13 @@
 - [x] Integrate Software doc sync into manual sync script (sync_software.sh)
 - [x] Add tRPC endpoints for Software data (software.getAll, software.getBySection)
 - [x] Implement Software tab UI with real data from Google Doc (29 wins items loaded)
+
+## Software Tab 3-Section Layout
+- [x] Redesign Software tab to show 3 sections side-by-side (Wins, Exec Summary, Decisions)
+- [x] Update parser to extract Exec Summary section from Software doc
+- [x] Update parser to extract Decisions section from Software doc
+- [x] Update UI to display 3 tiles horizontally similar to Devices tab
+- [x] Remove Hotspots section and replace with Exec Summary
+- [x] Update database schema to support exec_summary and decisions section types
+- [x] Update tRPC endpoints and db functions for new section types
+- [x] Test with real data (8 wins, 21 exec summary items loaded)

@@ -76,7 +76,7 @@ export type InsertMilestone = typeof milestones.$inferInsert;
  */
 export const softwareItems = mysqlTable("software_items", {
   id: int("id").autoincrement().primaryKey(),
-  sectionType: mysqlEnum("section_type", ["wins", "product_decisions", "hotspots"]).notNull(),
+  sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "decisions"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
   order: int("order").default(0).notNull(),
