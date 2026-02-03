@@ -139,3 +139,8 @@
 - [x] Simplify sync mechanism for daily updates only
 - [x] Remove auto-sync toggle and periodic refresh (not needed for daily updates)
 - [x] Fix React hooks error in SyncStatus component
+
+## Restore 3-Tile Product Layout
+- [x] Restore 3 separate tiles for AI Glasses, Wrist, and ARG/SSG
+- [x] Keep cleaner styling similar to Upcoming Dates cards
+- [x] Maintain side-by-side horizontal layout
