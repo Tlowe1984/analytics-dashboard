@@ -1,24 +1,6 @@
-import { Monitor, Zap, Server, CalendarDays, CheckCircle2 } from "lucide-react";
+import { CalendarDays, CheckCircle2 } from "lucide-react";
 
 const placeholderSections = [
-  {
-    id: "device",
-    title: "Device View",
-    description: "Hardware metrics and device performance analytics",
-    icon: Monitor,
-  },
-  {
-    id: "experience",
-    title: "Experience & Interface View",
-    description: "User experience metrics and interface analytics",
-    icon: Zap,
-  },
-  {
-    id: "system",
-    title: "System View",
-    description: "System architecture and technical infrastructure",
-    icon: Server,
-  },
   {
     id: "dates",
     title: "Upcoming Dates",

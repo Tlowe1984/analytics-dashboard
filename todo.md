@@ -173,3 +173,6 @@
 
 ## Update Section Title
 - [x] Change "Devices Week X" to "Exec Summary Week X" for the tabbed section
+
+## Remove Placeholder Sections
+- [x] Remove Device View, Experience & Interface View, and System View from Additional Dashboard Sections
