@@ -269,3 +269,16 @@
 - [x] Updated query date range from 1 month to 12 months to show upcoming launches
 - [x] Fixed case sensitivity in query ("%Launch%" instead of "%launch%")
 - [x] Test that release dates now display in UI - showing 8 upcoming launches through Dec 2026
+
+## Open View Access to Dashboard
+- [ ] Check current authentication requirements (currently requires login)
+- [ ] Update App.tsx to remove authentication requirement for viewing
+- [ ] Keep authentication only for admin actions (sync, etc.)
+- [ ] Test dashboard loads without login
+- [ ] Verify all data displays correctly for unauthenticated users
+
+## Update In Market Release Dates to Show Software Milestones
+- [x] Change query from product launch dates to software release milestones
+- [x] Filter for milestone_type = 'sw_milestones' in next 1 month (changed from 12 months)
+- [x] Update tile title to "Software Releases (Next Month)"
+- [x] Test that software milestones display correctly - showing 8 software releases in next month
