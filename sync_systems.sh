@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+export PYTHONPATH=
+export PYTHONHOME=
 
 echo "=== Syncing Systems Review Data ==="
 
@@ -9,7 +11,7 @@ rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Syst
 
 # Parse the document
 echo "Parsing Systems review document..."
-python3 /home/ubuntu/analytics-dashboard/server/parse_systems_review.py "/tmp/Wearables Systems Review.docx" > /tmp/systems_data.json
+/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_systems_review.py "/tmp/Wearables Systems Review.docx" > /tmp/systems_data.json
 
 # Load into database
 echo "Loading Systems data into database..."

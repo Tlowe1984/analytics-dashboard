@@ -13,11 +13,11 @@ rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Soft
 
 # Parse Devices doc
 echo "📊 Parsing Devices executive summary..."
-python3 /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/W5 2026 Device & Growth Canonical Program Review.docx" > /tmp/devices_data.json
+/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/W5 2026 Device & Growth Canonical Program Review.docx" > /tmp/devices_data.json
 
 # Parse Software doc
 echo "📊 Parsing Software review..."
-python3 /home/ubuntu/analytics-dashboard/server/parse_software_review.py "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx" > /tmp/software_data.json
+/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_software_review.py "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx" > /tmp/software_data.json
 
 # Load Devices data
 echo "💾 Loading Devices data into database..."

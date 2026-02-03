@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3.11
 """
 Parser for Wearables Decision Canonical document
 Extracts decisions from Consolidated Summary table and filters for last month

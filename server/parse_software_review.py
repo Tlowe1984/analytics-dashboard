@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3.11
 """
 Parse Software (I+E, AI, Hearing) Canonical Program Review document
 Extracts Wins, Product Decisions, and Hotspots sections

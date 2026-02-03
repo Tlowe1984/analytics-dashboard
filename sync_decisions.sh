@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
+export PYTHONPATH=
+export PYTHONHOME=
 
 echo "🔄 Syncing Decisions from Google Drive..."
 
@@ -9,7 +11,7 @@ rclone copy "manus_google_drive:Wearables Everything/Wearable Decisions Canonica
 
 # Parse decisions
 echo "📊 Parsing decisions..."
-python3 /home/ubuntu/analytics-dashboard/server/parse_decisions.py "/tmp/Wearable Decisions Canonical .docx" > /tmp/decisions_data.json
+/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_decisions.py "/tmp/Wearable Decisions Canonical .docx" > /tmp/decisions_data.json
 
 # Load into database
 echo "💾 Loading decisions data into database..."

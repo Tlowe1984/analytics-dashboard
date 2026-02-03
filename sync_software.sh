@@ -1,11 +1,13 @@
 #!/bin/bash
 set -e
+export PYTHONPATH=
+export PYTHONHOME=
 
 echo "📥 Downloading Software document from Google Drive..."
 rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/Software (I+E, AI, Hearing) Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
 
 echo "📊 Parsing Software review..."
-python3 /home/ubuntu/analytics-dashboard/server/parse_software_review.py "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx" > /tmp/software_data.json
+/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_software_review.py "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx" > /tmp/software_data.json
 
 echo "💾 Loading Software data into database..."
 cd /home/ubuntu/analytics-dashboard
