@@ -75,6 +75,7 @@ export function SystemsTab() {
                       ? "text-blue-600 dark:text-blue-400 font-medium"
                       : "text-foreground/90"
                   )}
+                  style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}
                 >
                   {item.content}
                 </p>

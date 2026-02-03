@@ -208,3 +208,13 @@
 - [x] Build Systems tab UI with 3-tile layout matching Devices/Software tabs
 - [x] Add "View Source Document" link to Systems tab
 - [x] Test with real data from Systems review document (658 items: 101 wins, 413 exec summary, 144 help needed)
+
+## Fix Bullet Indentation in Exec Summary
+- [x] Investigate why some bullets are not showing proper indentation
+- [x] Update parsers to detect and store indentation levels from Word documents
+- [x] Add indent_level column to dashboard_items, software_items, and systems_items tables
+- [x] Update sync scripts to include indent_level when loading data
+- [x] Update UI components to render indentation based on indent_level (1.5rem per level)
+- [x] Fix rendering to preserve nested bullet structure from source documents
+- [x] Test across all three tabs (Devices, Software, Systems)
+- [x] Resync all data to populate indent_level values

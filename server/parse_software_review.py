@@ -71,10 +71,16 @@ def parse_software_review(docx_path):
             # Check if any run in this paragraph has blue text
             has_blue = any(is_blue_text(run) for run in para.runs)
             
+            # Detect indentation level
+            indent_level = 0
+            if para.paragraph_format.left_indent:
+                indent_level = int(para.paragraph_format.left_indent / 360000)
+            
             items.append({
                 "section_type": current_section,
                 "content": text,
                 "is_new": 1 if has_blue else 0,
+                "indent_level": indent_level,
                 "order": order
             })
             order += 1

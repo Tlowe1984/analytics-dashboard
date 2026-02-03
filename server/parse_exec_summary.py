@@ -62,12 +62,19 @@ try:
                     is_new = True
                     break
         
+        # Detect indentation level
+        indent_level = 0
+        if para.paragraph_format.left_indent:
+            # Convert twips to indent level (each 360 twips ≈ 0.25 inch ≈ 1 level)
+            indent_level = int(para.paragraph_format.left_indent / 360000)
+        
         # Add the item
         items.append({
             'product': current_product,
             'section': current_section,
             'content': text,
-            'is_new': 1 if is_new else 0
+            'is_new': 1 if is_new else 0,
+            'indent_level': indent_level
         })
     
     print(json.dumps(items))

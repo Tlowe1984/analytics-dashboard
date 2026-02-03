@@ -56,10 +56,16 @@ def parse_systems_review(docx_path):
                     is_new = 1
                     break
         
+        # Detect indentation level
+        indent_level = 0
+        if para.paragraph_format.left_indent:
+            indent_level = int(para.paragraph_format.left_indent / 360000)
+        
         items.append({
             "section_type": current_section,
             "content": text,
             "is_new": is_new,
+            "indent_level": indent_level,
             "order": order
         })
         order += 1
