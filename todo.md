@@ -144,3 +144,8 @@
 - [x] Restore 3 separate tiles for AI Glasses, Wrist, and ARG/SSG
 - [x] Keep cleaner styling similar to Upcoming Dates cards
 - [x] Maintain side-by-side horizontal layout
+
+## Title and Styling Updates
+- [x] Change main dashboard title to "Wearable Live Dashboard"
+- [x] Update Devices section title to "Devices Week X" with current week number
+- [x] Make section headers (Highlights, Risks/Opens, Upcoming) uppercase and larger

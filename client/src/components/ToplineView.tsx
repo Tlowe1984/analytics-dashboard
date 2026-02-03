@@ -14,19 +14,19 @@ interface DashboardItem {
 const sectionConfig = {
   highlights: {
     icon: Sparkles,
-    label: "Highlights",
+    label: "HIGHLIGHTS",
     color: "text-green-600 dark:text-green-400",
     bgClass: "bg-green-500/10",
   },
   risks: {
     icon: AlertTriangle,
-    label: "Risks / Opens",
+    label: "RISKS / OPENS",
     color: "text-orange-600 dark:text-orange-400",
     bgClass: "bg-orange-500/10",
   },
   upcoming: {
     icon: Calendar,
-    label: "Upcoming",
+    label: "UPCOMING",
     color: "text-blue-600 dark:text-blue-400",
     bgClass: "bg-blue-500/10",
   },
@@ -63,7 +63,7 @@ function SectionContent({
         <div className={cn("p-1 rounded", section.bgClass)}>
           <SectionIcon className={cn("w-3.5 h-3.5", section.color)} />
         </div>
-        <h4 className="font-semibold text-xs">{section.label}</h4>
+        <h4 className="font-bold text-sm tracking-wide">{section.label}</h4>
       </div>
 
       <div className="space-y-1.5 pl-1">
@@ -183,7 +183,7 @@ export default function ToplineView() {
             <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold">Devices</h2>
+            <h2 className="text-xl font-bold">Devices Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
             <p className="text-xs text-muted-foreground">Product category overview</p>
           </div>
         </div>
