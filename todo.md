@@ -1035,3 +1035,14 @@
 - [x] Test in development to ensure parsers still work - Verified test10 appears correctly
 - [ ] Save checkpoint and guide user to republish
 - [ ] Verify production sync works without ENOENT errors
+
+## Redesign Sync Architecture for Production (Scheduled Task Approach)
+- [x] Rollback to checkpoint with working Python parsers (11d5a3f1)
+- [x] Create Manus scheduled task to run sync daily at 6 AM PST in sandbox (has Python)
+- [x] Create daily-sync.mjs script with forceRefresh to ensure no stale data
+- [x] Scheduled task runs: download from GDrive → parse with Python → write to production database
+- [x] Make sync endpoint environment-aware (sandbox: run Python, production: show message)
+- [x] Test scheduled sync works correctly - ✅ 750 items in 113s with force refresh
+- [x] Verify dashboard displays data correctly in all 3 product slots
+- [ ] Save checkpoint and publish to production
+- [ ] Verify production works without Python runtime
