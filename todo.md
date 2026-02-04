@@ -711,3 +711,8 @@
 - [x] Made Forum and Status text smaller (text-xs)
 
 - [x] Fix Product Reviews parser to read columns K (Review Title) and L (Topic Summary) correctly
+
+- [x] Fix Upcoming Reviews descriptions to show actual Topic Summary from Column L instead of generic text
+- [x] Update parser to use Review Title as fallback when Topic Summary is empty
+- [x] Skip rows where both Review Title and Topic Summary are empty (no review planned)
+- [x] Reduced from 21 to 12 reviews by excluding blank placeholder rows

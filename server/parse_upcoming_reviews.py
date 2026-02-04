@@ -96,6 +96,10 @@ def parse_product_reviews(filepath):
             # Skip rows with no pillar or presenter data (empty rows)
             if not pillar and not presenter:
                 continue
+            
+            # Skip rows where both Review Title and Topic Summary are empty (no review planned)
+            if not title and not topic_summary:
+                continue
                 
             # Use title for topic, device/pillar as fallback
             topic = title if title else device if device else pillar if pillar else "TBD"

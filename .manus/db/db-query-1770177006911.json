@@ -1,0 +1,50 @@
+{
+  "query": "SELECT review_type, week, topic, description FROM upcoming_reviews ORDER BY date LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT review_type, week, topic, description FROM upcoming_reviews ORDER BY date LIMIT 5;",
+  "rows": [
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "Wrist",
+      "description": "Wrist review"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "AR Glasses+SSG",
+      "description": "AR Glasses+SSG review"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "AI Glasses",
+      "description": "AI Glasses review"
+    },
+    {
+      "review_type": "Systems Review",
+      "week": "W6 (Feb 06)",
+      "topic": "Stage2 AI coprocessor update",
+      "description": "Review and discuss current landscape of on-device ML acceleration as compared to Stage2 POR"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "topic": "Museum Pilot",
+      "description": "Demo Objective:"
+    }
+  ],
+  "messages": [
+    "- Demonstrate an MVP version of a RBM Tour Guide",
+    "- Seek feedback on critical user paths and ease of use, including gestures, MAI answers, and in-app user flow.",
+    "Examples include: gesture ease, intuitiveness, proactive v. triggered art detection, QR code ease, and app UX.  ",
+    "- If time review: up to date GTM plans, including updates on partnerships and potential ship timelines. (we’ll have an accompanying deck that we’ll share as a pre-read and a follow along for those who cannot physically be in the room. ",
+    "Demo will not: (but will be the subject of future reviews as needed): ",
+    "Trial Rental Experience",
+    "Trial OOBE/New user experience ",
+    "Be the final version/training of the Meta AI. ",
+    "Cover partnership negotiations including contracting or pricing. "
+  ],
+  "stdout": "review_type\tweek\ttopic\tdescription\nProduct Review\tW6 (Feb 05)\tWrist\tWrist review\nProduct Review\tW6 (Feb 05)\tAR Glasses+SSG\tAR Glasses+SSG review\nProduct Review\tW6 (Feb 05)\tAI Glasses\tAI Glasses review\nSystems Review\tW6 (Feb 06)\tStage2 AI coprocessor update\tReview and discuss current landscape of on-device ML acceleration as compared to Stage2 POR\nProduct Review\tW7 (Feb 09)\tMuseum Pilot\tDemo Objective:\n- Demonstrate an MVP version of a RBM Tour Guide\n- Seek feedback on critical user paths and ease of use, including gestures, MAI answers, and in-app user flow.\nExamples include: gesture ease, intuitiveness, proactive v. triggered art detection, QR code ease, and app UX.  \n- If time review: up to date GTM plans, including updates on partnerships and potential ship timelines. (we’ll have an accompanying deck that we’ll share as a pre-read and a follow along for those who cannot physically be in the room. \n\nDemo will not: (but will be the subject of future reviews as needed): \nTrial Rental Experience\nTrial OOBE/New user experience \nBe the final version/training of the Meta AI. \nCover partnership negotiations including contracting or pricing. \n",
+  "stderr": "",
+  "execution_time_ms": 66
+}
