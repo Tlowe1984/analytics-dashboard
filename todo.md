@@ -909,3 +909,13 @@
 - [x] Test Refresh Data button syncs all 6 data sources
 - [x] Verify Milestones and Upcoming Reviews update correctly
 - [x] Restart server to apply changes
+
+## Fix Upcoming Decisions Mobile Layout
+- [x] Identify layout issues causing horizontal scrolling on mobile
+- [x] Update UpcomingReviews component with responsive text wrapping
+- [x] Switch to card-based layout on mobile (< md breakpoint)
+- [x] Keep table layout on desktop (>= md breakpoint)
+- [x] Add break-words to description text for proper wrapping
+- [x] Test on mobile viewport sizes
+- [x] Verify description text is readable without scrolling
+- [x] Hot module reload applied changes successfully

@@ -46,7 +46,34 @@ export function UpcomingReviewsSection() {
         <span className="ml-auto text-sm text-muted-foreground">Next 14 days</span>
       </div>
 
-      <div className="overflow-x-auto">
+      {/* Mobile: Card layout */}
+      <div className="space-y-3 md:hidden">
+        {reviews.map((review) => (
+          <div key={review.id} className="bg-background/60 border border-border/40 rounded-lg p-4 space-y-2">
+            <div className="flex items-start justify-between gap-2">
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${
+                review.reviewType === "Wearables Review" ? "bg-purple-500/10 text-purple-500" :
+                review.reviewType === "Devices & Growth" ? "bg-blue-500/10 text-blue-500" :
+                review.reviewType === "Systems Review" ? "bg-green-500/10 text-green-500" :
+                "bg-orange-500/10 text-orange-500"
+              }`}>
+                {review.reviewType}
+              </span>
+              <span className="text-xs text-muted-foreground whitespace-nowrap">{review.week}</span>
+            </div>
+            <h3 className="text-sm font-semibold">{review.topic}</h3>
+            {review.description && (
+              <p className="text-sm text-muted-foreground break-words">{review.description}</p>
+            )}
+            {review.owner && (
+              <p className="text-xs text-muted-foreground">Owner: {review.owner}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: Table layout */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border/50">
