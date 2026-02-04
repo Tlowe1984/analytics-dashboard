@@ -59,22 +59,29 @@ def excel_date_to_iso(excel_date):
 def categorize_milestone(milestone_type_str):
     """Map milestone type string to enum"""
     if not milestone_type_str:
-        return "pdp_gates"
+        return "sw_milestones"  # Default to SW instead of PDP
     
     type_lower = milestone_type_str.lower()
     
-    if "pdp" in type_lower or "gate" in type_lower:
+    # Only classify as PDP if explicitly labeled "PDP Milestones"
+    if "pdp" in type_lower and "milestone" in type_lower:
         return "pdp_gates"
+    # SDP (Software Development) milestones
+    elif "sdp" in type_lower:
+        return "sw_milestones"
+    # GTM (Go-To-Market) milestones  
+    elif "gtm" in type_lower:
+        return "sw_milestones"
     elif "sw" in type_lower or "software" in type_lower:
         return "sw_milestones"
     elif "hw" in type_lower or "hardware" in type_lower or "build" in type_lower:
         return "hw_dates"
     elif "silicon" in type_lower:
         return "hw_dates"
-    elif "launch" in type_lower or "release" in type_lower:
+    elif "launch" in type_lower or "release" in type_lower or "factory" in type_lower:
         return "release_milestones"
     else:
-        return "pdp_gates"
+        return "sw_milestones"  # Default to SW instead of PDP
 
 def parse_xlsx(xlsx_file):
     """Parse XLSX file and extract milestones"""

@@ -375,3 +375,13 @@
 - [x] Adjust time window to show 3 weeks past + 4 weeks upcoming (7 weeks total)
 - [x] Style past milestones in grey color
 - [x] Test and verify correct milestones display
+
+## Fix PDP Gates Display Issues
+- [x] Investigate why only past milestones are showing (no upcoming dates)
+- [x] Check milestone data classification - ensure only true PDP gates are marked as pdp_gates type
+- [x] Verify time window calculation is working correctly (should show future dates)
+- [x] Review parsed milestone data from spreadsheet to identify classification issues
+- [x] Fix milestone type assignment in parser
+- [x] Test and verify upcoming PDP gates display correctly
+- [x] Parser now correctly filters to only 184 true PDP Milestones (down from 581)
+- [x] Showing 8 PDP gates in 7-week window (2 past, 6 upcoming)
