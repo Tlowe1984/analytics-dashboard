@@ -7,14 +7,6 @@ interface MarkdownTextProps {
 }
 
 export function MarkdownText({ content, className }: MarkdownTextProps) {
-  // Workaround: Ensure **text** patterns are properly spaced for markdown parsing
-  // Some content has **[text]** patterns that need space before/after ** to render
-  const processedContent = content
-    // Add space after ** if followed by [ to ensure proper markdown parsing
-    .replace(/\*\*\[/g, '** [')
-    // Add space before ** if preceded by ] to ensure proper markdown parsing
-    .replace(/\]\*\*/g, '] **');
-  
   return (
     <div className={className}>
       <ReactMarkdown
@@ -40,7 +32,7 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
           ol: ({ children }) => <ol className="list-decimal list-inside my-2">{children}</ol>,
         }}
       >
-        {processedContent}
+        {content}
       </ReactMarkdown>
     </div>
   );
