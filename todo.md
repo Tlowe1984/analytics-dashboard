@@ -805,3 +805,15 @@
 - [x] Update parser for Software/Systems sections if affected - Same parser used for all sections
 - [x] Resync all data to apply link position fixes
 - [x] Verify links appear inline in correct positions on dashboard
+
+## React DOM Nesting Validation Errors
+
+- [x] Fix MarkdownText component - change wrapper from <p> to <div>
+- [x] Test and verify no more nesting errors in browser console - No new errors after restart
+
+## Markdown Rendering Issues
+
+- [x] Find all components wrapping MarkdownText in <p> tags and change to <div>
+- [x] Investigate why ReactMarkdown is not rendering ** as bold - Fixed by restarting server
+- [x] Investigate why links are not showing in some sections - Fixed by restarting server
+- [x] Test and verify markdown rendering works correctly - Links and bold text rendering

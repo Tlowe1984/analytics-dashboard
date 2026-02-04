@@ -78,7 +78,7 @@ function SectionContent({
           items.map((item) => (
             <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
               <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-              <p
+              <div
                 className={cn(
                   "text-sm leading-relaxed",
                   item.isNew === 1
@@ -87,7 +87,7 @@ function SectionContent({
                 )}
               >
                 <MarkdownText content={item.content} />
-              </p>
+              </div>
             </div>
           ))
         )}
@@ -253,7 +253,7 @@ function SoftwareTab() {
             items.map((item) => (
               <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
                 <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-                <p
+                <div
                   className={cn(
                     "text-sm leading-relaxed",
                     item.isNew === 1
@@ -262,7 +262,7 @@ function SoftwareTab() {
                   )}
                 >
                   <MarkdownText content={item.content} />
-                </p>
+                </div>
               </div>
             ))
           ) : (

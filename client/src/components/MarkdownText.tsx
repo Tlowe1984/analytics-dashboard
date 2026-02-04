@@ -8,7 +8,7 @@ interface MarkdownTextProps {
 
 export function MarkdownText({ content, className }: MarkdownTextProps) {
   return (
-    <span className={className}>
+    <div className={className}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -25,12 +25,15 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
               {children}
             </a>
           ),
-          // Render paragraphs inline (no extra spacing)
-          p: ({ children }) => <span>{children}</span>,
+          // Render paragraphs without extra spacing
+          p: ({ children }) => <div className="inline">{children}</div>,
+          // Render lists with proper spacing
+          ul: ({ children }) => <ul className="list-disc list-inside my-2">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal list-inside my-2">{children}</ol>,
         }}
       >
         {content}
       </ReactMarkdown>
-    </span>
+    </div>
   );
 }
