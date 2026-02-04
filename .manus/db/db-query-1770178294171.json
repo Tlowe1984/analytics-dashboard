@@ -1,0 +1,64 @@
+{
+  "query": "\nSELECT review_type, week, topic, owner \nFROM upcoming_reviews \nWHERE review_type NOT IN ('Systems Review', 'Wearables Review')\nORDER BY date\nLIMIT 10;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute \nSELECT review_type, week, topic, owner \nFROM upcoming_reviews \nWHERE review_type NOT IN ('Systems Review', 'Wearables Review')\nORDER BY date\nLIMIT 10;\n",
+  "rows": [
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "topic": "2026 Constellation Strategy",
+      "owner": "Marissa Chacko Rahul Prasad (RL) Jossie Tirado"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "topic": "SpSu '26 Self Serve Retail Demo",
+      "owner": "Selena Salazar Palak Sood"
+    },
+    {
+      "review_type": "Devices & Growth",
+      "week": "W7 (Feb 09)",
+      "topic": "Museum Pilot",
+      "owner": "Benjamin Brenner Chris Hogan Lana Ivory Caty Caldwell"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 10)",
+      "topic": "Ambient Camera Sensing",
+      "owner": "Dan Fechete"
+    },
+    {
+      "review_type": "I+E ",
+      "week": "W7 (Feb 10)",
+      "topic": "Multi-Device Settings Strategy",
+      "owner": "Serena Daly (tentative)"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 10)",
+      "topic": "i18n and Voice - Migration to Avocado",
+      "owner": "Hitashi Dhawan Ben Bharier"
+    },
+    {
+      "review_type": "AI",
+      "week": "W7 (Feb 10)",
+      "topic": "Go/No-Go for LST Server-Side EAP Launch",
+      "owner": "Emerson Qin"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 10)",
+      "topic": "Speech Input Quality",
+      "owner": "David Li"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 10)",
+      "topic": "Project Harmony - Meta AI 2.0 convergence",
+      "owner": "Mike Fan"
+    }
+  ],
+  "messages": [],
+  "stdout": "review_type\tweek\ttopic\towner\nProduct Review\tW7 (Feb 09)\t2026 Constellation Strategy\tMarissa Chacko Rahul Prasad (RL) Jossie Tirado\nProduct Review\tW7 (Feb 09)\tSpSu '26 Self Serve Retail Demo\tSelena Salazar Palak Sood\nDevices & Growth\tW7 (Feb 09)\tMuseum Pilot\tBenjamin Brenner Chris Hogan Lana Ivory Caty Caldwell\nProduct Review\tW7 (Feb 10)\tAmbient Camera Sensing\tDan Fechete\nI+E \tW7 (Feb 10)\tMulti-Device Settings Strategy\tSerena Daly (tentative)\nProduct Review\tW7 (Feb 10)\ti18n and Voice - Migration to Avocado\tHitashi Dhawan Ben Bharier\nAI\tW7 (Feb 10)\tGo/No-Go for LST Server-Side EAP Launch\tEmerson Qin\nProduct Review\tW7 (Feb 10)\tSpeech Input Quality\tDavid Li\nProduct Review\tW7 (Feb 10)\tProject Harmony - Meta AI 2.0 convergence\tMike Fan\n",
+  "stderr": "",
+  "execution_time_ms": 87
+}

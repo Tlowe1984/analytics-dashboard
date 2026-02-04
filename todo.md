@@ -734,3 +734,10 @@
 - [x] Verify daily 6 AM auto-sync scheduler working correctly
 - [x] Run full sync test and measure timing (53 seconds total)
 - [x] Verified 362 total records across all tables with proper formatting
+
+## Show Pillar Name in Product Review Type
+
+- [x] Update Product Reviews parser to use Pillar (Column B) as review_type
+- [x] Resync upcoming reviews data
+- [x] Verify pillar names display correctly in Review Type column
+- [ ] Test and save checkpoint

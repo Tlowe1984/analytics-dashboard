@@ -108,7 +108,7 @@ def parse_product_reviews(filepath):
             owner = presenter if presenter else sponsor if sponsor else "TBD"
             
             reviews.append({
-                'review_type': 'Product Review',
+                'review_type': pillar if pillar else 'Product Review',
                 'week': get_week_string(current_date),
                 'date': current_date.isoformat(),
                 'topic': topic,
