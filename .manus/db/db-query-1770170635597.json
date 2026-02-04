@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `upcoming_reviews` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`review_type` varchar(100) NOT NULL,\n\t`week` varchar(50) NOT NULL,\n\t`date` date NOT NULL,\n\t`topic` varchar(500) NOT NULL,\n\t`description` text,\n\t`owner` varchar(500),\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `upcoming_reviews_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute CREATE TABLE `upcoming_reviews` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`review_type` varchar(100) NOT NULL,\n\t`week` varchar(50) NOT NULL,\n\t`date` date NOT NULL,\n\t`topic` varchar(500) NOT NULL,\n\t`description` text,\n\t`owner` varchar(500),\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `upcoming_reviews_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 340
+}

@@ -4,6 +4,7 @@ import { getLoginUrl } from "@/const";
 import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
 import DecisionsSection from "@/components/DecisionsSection";
+import { UpcomingReviewsSection } from "@/components/UpcomingReviewsSection";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
 import SyncStatus from "@/components/SyncStatus";
@@ -71,7 +72,10 @@ export default function Home() {
           <ToplineView />
           <UpcomingDates />
         </div>
-        <DecisionsSection />
+        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-8">
+          <DecisionsSection />
+          <UpcomingReviewsSection />
+        </div>
         <PlaceholderSections />
       </main>
 

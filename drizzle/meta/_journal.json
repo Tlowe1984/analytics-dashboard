@@ -99,6 +99,13 @@
       "when": 1770169202957,
       "tag": "0013_sturdy_annihilus",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1770170624078,
+      "tag": "0014_nosy_serpent_society",
+      "breakpoints": true
     }
   ]
 }

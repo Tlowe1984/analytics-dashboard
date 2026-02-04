@@ -403,3 +403,33 @@
 - [x] Ensure releases are sorted chronologically
 - [x] Test and verify only In-Market Displayless releases display
 - [x] Showing 8 In-Market Displayless releases from W7-W10 (Feb 11 - Mar 4)
+
+## Update Releases to Show Column B Milestones
+- [ ] Check spreadsheet structure to identify column A vs column B milestones
+- [ ] Update parser to extract column B release milestones (like v16.0 Feature Complete)
+- [ ] Verify parser correctly identifies In-Market Displayless column B milestones
+- [ ] Resync milestones data with updated parser
+- [ ] Test and verify column B milestones display in Releases section
+
+## Investigate Decisions Sync Issue
+- [ ] Test manual Decisions sync to verify latest data is fetched
+- [ ] Check if Google Doc changes are being downloaded correctly
+- [ ] Verify parser is extracting latest decisions
+- [ ] Check database to see if new decisions are loaded
+- [ ] Fix any issues preventing latest updates from displaying
+
+## Add Upcoming Decisions Tile
+- [x] Locate three review sign-up sheets in Google Drive (2026 Wearables Reviews, 2026 Product Reviews, Systems Reviews)
+- [x] Download and parse spreadsheets to extract upcoming reviews (next 14 days)
+- [x] Create database schema for upcoming_reviews table
+- [x] Create parser to extract Review Type, Week, Topic, Description, Owner
+- [x] Create sync script for upcoming reviews
+- [x] Integrate upcoming reviews sync into unified sync script
+- [x] Successfully synced 9 upcoming reviews (1 Wearables, 6 Product, 2 Systems)
+- [x] Add database query function in db.ts for upcoming reviews
+- [x] Add tRPC router for upcoming reviews
+- [x] Update Decisions section UI to add Upcoming Decisions tile
+- [x] Display reviews in table format with all required columns
+- [x] Test and verify upcoming reviews display correctly
+- [x] Color-coded review type badges (Product=blue, Systems=green, Wearables=purple)
+- [x] Showing 9 reviews from W6-W8 (Feb 5-17) with all requested data

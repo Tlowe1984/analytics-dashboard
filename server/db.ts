@@ -358,3 +358,23 @@ export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summa
   if (!db) return [];
   return db.select().from(systemsItems).where(eq(systemsItems.sectionType, sectionType)).orderBy(asc(systemsItems.order));
 }
+
+
+// ============ Upcoming Reviews Functions ============
+
+export async function getUpcomingReviews(): Promise<UpcomingReview[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { upcomingReviews } = await import("../drizzle/schema.js");
+    const { asc } = await import("drizzle-orm");
+    
+    // Return all upcoming reviews sorted by date ASC (earliest first)
+    const results = await db.select().from(upcomingReviews).orderBy(asc(upcomingReviews.date));
+    return results;
+  } catch (error) {
+    console.error("[Database] Error fetching upcoming reviews:", error);
+    return [];
+  }
+}

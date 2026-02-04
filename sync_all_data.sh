@@ -67,6 +67,15 @@ else
     ((SYNC_ERRORS++))
 fi
 
+# Sync Upcoming Reviews data
+log "📥 Syncing Upcoming Reviews data..."
+if bash "$SCRIPT_DIR/sync_upcoming_reviews.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Upcoming Reviews sync completed"
+else
+    log "❌ Upcoming Reviews sync failed"
+    ((SYNC_ERRORS++))
+fi
+
 # Summary
 log "========================================="
 if [ $SYNC_ERRORS -eq 0 ]; then

@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json, date } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -124,3 +124,22 @@ export const systemsItems = mysqlTable("systems_items", {
 
 export type SystemsItem = typeof systemsItems.$inferSelect;
 export type InsertSystemsItem = typeof systemsItems.$inferInsert;
+
+/**
+ * Upcoming reviews from three sign-up sheets
+ * Shows next 14 days of scheduled reviews
+ */
+export const upcomingReviews = mysqlTable("upcoming_reviews", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewType: varchar("review_type", { length: 100 }).notNull(), // "Wearables Review", "Product Review", "Systems Review"
+  week: varchar("week", { length: 50 }).notNull(), // e.g., "W7 (Feb 10)"
+  date: date("date").notNull(), // Review date for sorting
+  topic: varchar("topic", { length: 500 }).notNull(),
+  description: text("description"),
+  owner: varchar("owner", { length: 500 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UpcomingReview = typeof upcomingReviews.$inferSelect;
+export type InsertUpcomingReview = typeof upcomingReviews.$inferInsert;

@@ -260,6 +260,13 @@ export const appRouter = router({
     }),
   }),
 
+  upcomingReviews: router({
+    // Get all upcoming reviews (next 14 days)
+    getAll: publicProcedure.query(async () => {
+      return await db.getUpcomingReviews();
+    }),
+  }),
+
   systems: router({
     // Get all systems items
     getAll: publicProcedure.query(async () => {
