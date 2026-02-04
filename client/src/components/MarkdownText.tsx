@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface MarkdownTextProps {
   content: string;
@@ -7,13 +8,16 @@ interface MarkdownTextProps {
 }
 
 export function MarkdownText({ content, className }: MarkdownTextProps) {
+  // Workaround: Manually replace **text** with <strong>text</strong>
+  // This handles cases where ReactMarkdown doesn't parse ** correctly
+  const processedContent = content.replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
+  
   return (
     <div className={className}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
         components={{
-          // Render bold text
-          strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
           // Render links
           a: ({ href, children }) => (
             <a
@@ -32,7 +36,7 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
           ol: ({ children }) => <ol className="list-decimal list-inside my-2">{children}</ol>,
         }}
       >
-        {content}
+        {processedContent}
       </ReactMarkdown>
     </div>
   );
