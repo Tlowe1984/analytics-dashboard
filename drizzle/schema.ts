@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json, date } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json, date, index } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -32,7 +32,10 @@ export const dashboardItems = mysqlTable("dashboard_items", {
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  sectionProductIdx: index("section_product_idx").on(table.sectionType, table.productCategory),
+  orderIdx: index("order_idx").on(table.order),
+}));
 
 export type DashboardItem = typeof dashboardItems.$inferSelect;
 export type InsertDashboardItem = typeof dashboardItems.$inferInsert;
@@ -66,7 +69,10 @@ export const milestones = mysqlTable("milestones", {
   originalType: varchar("original_type", { length: 100 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  typeDateIdx: index("type_date_idx").on(table.milestoneType, table.milestoneDate),
+  dateIdx: index("date_idx").on(table.milestoneDate),
+}));
 
 export type Milestone = typeof milestones.$inferSelect;
 export type InsertMilestone = typeof milestones.$inferInsert;
@@ -84,7 +90,9 @@ export const softwareItems = mysqlTable("software_items", {
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  sectionOrderIdx: index("section_order_idx").on(table.sectionType, table.order),
+}));
 
 export type SoftwareItem = typeof softwareItems.$inferSelect;
 export type InsertSoftwareItem = typeof softwareItems.$inferInsert;
@@ -120,7 +128,9 @@ export const systemsItems = mysqlTable("systems_items", {
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  sectionOrderIdx: index("section_order_idx").on(table.sectionType, table.order),
+}));
 
 export type SystemsItem = typeof systemsItems.$inferSelect;
 export type InsertSystemsItem = typeof systemsItems.$inferInsert;
@@ -139,7 +149,10 @@ export const upcomingReviews = mysqlTable("upcoming_reviews", {
   owner: varchar("owner", { length: 500 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  dateIdx: index("date_idx").on(table.date),
+  reviewTypeIdx: index("review_type_idx").on(table.reviewType),
+}));
 
 export type UpcomingReview = typeof upcomingReviews.$inferSelect;
 export type InsertUpcomingReview = typeof upcomingReviews.$inferInsert;

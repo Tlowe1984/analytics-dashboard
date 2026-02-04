@@ -178,8 +178,9 @@ export async function clearAllDashboardItems() {
 
 // Milestone queries
 export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_milestones" | "sw_milestones" | "hw_dates" | "release_milestones", limit = 50) {
-  const db = await getDb();
-  if (!db) return [];
+  return cachedQuery(`milestones:${milestoneType}:${limit}`, async () => {
+    const db = await getDb();
+    if (!db) return [];
   
   const now = new Date();
   
@@ -202,21 +203,22 @@ export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_mi
       .orderBy(asc(milestones.milestoneDate))
       .limit(limit);
     
+      return result;
+    }
+    
+    // For other types: show only upcoming
+    const result = await db
+      .select()
+      .from(milestones)
+      .where(and(
+        eq(milestones.milestoneType, milestoneType),
+        gte(milestones.milestoneDate, now)
+      ))
+      .orderBy(asc(milestones.milestoneDate))
+      .limit(limit);
+    
     return result;
-  }
-  
-  // For other types: show only upcoming
-  const result = await db
-    .select()
-    .from(milestones)
-    .where(and(
-      eq(milestones.milestoneType, milestoneType),
-      gte(milestones.milestoneDate, now)
-    ))
-    .orderBy(asc(milestones.milestoneDate))
-    .limit(limit);
-  
-  return result;
+  });
 }
 
 export async function getAllMilestonesByType(milestoneType: "pdp_gates" | "sdp_milestones" | "sw_milestones" | "hw_dates") {
@@ -276,18 +278,20 @@ export async function importMilestones(milestonesData: InsertMilestone[]) {
 
 // Software items queries
 export async function getAllSoftwareItems(): Promise<SoftwareItem[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get software items: database not available");
-    return [];
-  }
+  return cachedQuery('software:all', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get software items: database not available");
+      return [];
+    }
 
-  const result = await db
-    .select()
-    .from(softwareItems)
-    .orderBy(softwareItems.order);
+    const result = await db
+      .select()
+      .from(softwareItems)
+      .orderBy(softwareItems.order);
 
-  return result;
+    return result;
+  });
 }
 
 export async function getSoftwareItemsBySection(
@@ -312,17 +316,19 @@ export async function getSoftwareItemsBySection(
 // ============ Decisions Functions ============
 
 export async function getAllDecisions(): Promise<Decision[]> {
-  const db = await getDb();
-  if (!db) return [];
-  
-  try {
-    // Return all decisions sorted by week DESC (most recent first)
-    const results = await db.select().from(decisions).orderBy(desc(decisions.week));
-    return results;
-  } catch (error) {
-    console.error("[Database] Error fetching decisions:", error);
-    return [];
-  }
+  return cachedQuery('decisions:all', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    
+    try {
+      // Return all decisions sorted by week DESC (most recent first)
+      const results = await db.select().from(decisions).orderBy(desc(decisions.week));
+      return results;
+    } catch (error) {
+      console.error("[Database] Error fetching decisions:", error);
+      return [];
+    }
+  });
 }
 
 export async function clearDecisions(): Promise<void> {
@@ -351,9 +357,11 @@ export async function insertDecision(decision: InsertDecision): Promise<void> {
 // ===== Systems Items =====
 
 export async function getAllSystemsItems(): Promise<SystemsItem[]> {
-  const db = await getDb();
-  if (!db) return [];
-  return db.select().from(systemsItems).orderBy(asc(systemsItems.order));
+  return cachedQuery('systems:all', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    return db.select().from(systemsItems).orderBy(asc(systemsItems.order));
+  });
 }
 
 export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summary" | "help_needed"): Promise<SystemsItem[]> {
@@ -366,18 +374,34 @@ export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summa
 // ============ Upcoming Reviews Functions ============
 
 export async function getUpcomingReviews(): Promise<UpcomingReview[]> {
-  const db = await getDb();
-  if (!db) return [];
-  
-  try {
-    const { upcomingReviews } = await import("../drizzle/schema.js");
-    const { asc } = await import("drizzle-orm");
+  return cachedQuery('reviews:upcoming', async () => {
+    const db = await getDb();
+    if (!db) return [];
     
-    // Return all upcoming reviews sorted by date ASC (earliest first)
-    const results = await db.select().from(upcomingReviews).orderBy(asc(upcomingReviews.date));
-    return results;
-  } catch (error) {
-    console.error("[Database] Error fetching upcoming reviews:", error);
-    return [];
-  }
+    try {
+      const { upcomingReviews } = await import("../drizzle/schema.js");
+      const { asc } = await import("drizzle-orm");
+      
+      // Return all upcoming reviews sorted by date ASC (earliest first)
+      const results = await db.select().from(upcomingReviews).orderBy(asc(upcomingReviews.date));
+      return results;
+    } catch (error) {
+      console.error("[Database] Error fetching upcoming reviews:", error);
+      return [];
+    }
+  });
+}
+
+export async function getAllMilestones() {
+  return cachedQuery('milestones:all', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    
+    const result = await db
+      .select()
+      .from(milestones)
+      .orderBy(asc(milestones.milestoneDate));
+    
+    return result;
+  });
 }

@@ -31,99 +31,88 @@ log_timing() {
 trap 'log "❌ ERROR: Script failed at line $LINENO"' ERR
 
 log "========================================="
-log "Starting unified dashboard sync (optimized)"
+log "Starting unified dashboard sync (parallel optimized)"
 log "========================================="
 
 SYNC_START=$(date +%s)
 SYNC_ERRORS=0
 SYNC_WARNINGS=0
 
-# Sync Devices data
-log "📥 [1/6] Syncing Devices data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_from_gdrive.sh" > "$TEMP_DIR/devices.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Devices sync"
-    log "✅ Devices sync completed"
+# Run all independent syncs in parallel for maximum speed
+log "📥 Starting all syncs in parallel..."
+
+# Start all syncs in background
+bash "$SCRIPT_DIR/sync_from_gdrive.sh" > "$TEMP_DIR/devices.log" 2>&1 &
+PID_DEVICES=$!
+
+bash "$SCRIPT_DIR/sync_software.sh" > "$TEMP_DIR/software.log" 2>&1 &
+PID_SOFTWARE=$!
+
+bash "$SCRIPT_DIR/sync_systems.sh" > "$TEMP_DIR/systems.log" 2>&1 &
+PID_SYSTEMS=$!
+
+bash "$SCRIPT_DIR/sync_decisions.sh" > "$TEMP_DIR/decisions.log" 2>&1 &
+PID_DECISIONS=$!
+
+bash "$SCRIPT_DIR/sync_milestones.sh" > "$TEMP_DIR/milestones.log" 2>&1 &
+PID_MILESTONES=$!
+
+bash "$SCRIPT_DIR/sync_upcoming_reviews.sh" > "$TEMP_DIR/upcoming_reviews.log" 2>&1 &
+PID_REVIEWS=$!
+
+# Wait for all syncs to complete and check results
+log "⏳ Waiting for all syncs to complete..."
+
+# Check Devices sync
+if wait $PID_DEVICES; then
+    log "✅ [1/6] Devices sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Devices sync (FAILED)"
-    log "❌ Devices sync failed - check $TEMP_DIR/devices.log"
+    log "❌ [1/6] Devices sync failed - check $TEMP_DIR/devices.log"
     cat "$TEMP_DIR/devices.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
-# Sync Software data
-log "📥 [2/6] Syncing Software data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_software.sh" > "$TEMP_DIR/software.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Software sync"
-    log "✅ Software sync completed"
+# Check Software sync
+if wait $PID_SOFTWARE; then
+    log "✅ [2/6] Software sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Software sync (FAILED)"
-    log "❌ Software sync failed - check $TEMP_DIR/software.log"
+    log "❌ [2/6] Software sync failed - check $TEMP_DIR/software.log"
     cat "$TEMP_DIR/software.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
-# Sync Systems data
-log "📥 [3/6] Syncing Systems data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_systems.sh" > "$TEMP_DIR/systems.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Systems sync"
-    log "✅ Systems sync completed"
+# Check Systems sync
+if wait $PID_SYSTEMS; then
+    log "✅ [3/6] Systems sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Systems sync (FAILED)"
-    log "❌ Systems sync failed - check $TEMP_DIR/systems.log"
+    log "❌ [3/6] Systems sync failed - check $TEMP_DIR/systems.log"
     cat "$TEMP_DIR/systems.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
-# Sync Decisions data
-log "📥 [4/6] Syncing Decisions data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_decisions.sh" > "$TEMP_DIR/decisions.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Decisions sync"
-    log "✅ Decisions sync completed"
+# Check Decisions sync
+if wait $PID_DECISIONS; then
+    log "✅ [4/6] Decisions sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Decisions sync (FAILED)"
-    log "❌ Decisions sync failed - check $TEMP_DIR/decisions.log"
+    log "❌ [4/6] Decisions sync failed - check $TEMP_DIR/decisions.log"
     cat "$TEMP_DIR/decisions.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
-# Sync Milestones data
-log "📥 [5/6] Syncing Milestones data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_milestones.sh" > "$TEMP_DIR/milestones.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Milestones sync"
-    log "✅ Milestones sync completed"
+# Check Milestones sync
+if wait $PID_MILESTONES; then
+    log "✅ [5/6] Milestones sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Milestones sync (FAILED)"
-    log "❌ Milestones sync failed - check $TEMP_DIR/milestones.log"
+    log "❌ [5/6] Milestones sync failed - check $TEMP_DIR/milestones.log"
     cat "$TEMP_DIR/milestones.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
-# Sync Upcoming Reviews data
-log "📥 [6/6] Syncing Upcoming Reviews data..."
-TASK_START=$(date +%s)
-if bash "$SCRIPT_DIR/sync_upcoming_reviews.sh" > "$TEMP_DIR/upcoming_reviews.log" 2>&1; then
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Upcoming Reviews sync"
-    log "✅ Upcoming Reviews sync completed"
+# Check Upcoming Reviews sync
+if wait $PID_REVIEWS; then
+    log "✅ [6/6] Upcoming Reviews sync completed"
 else
-    TASK_END=$(date +%s)
-    log_timing $TASK_START $TASK_END "Upcoming Reviews sync (FAILED)"
-    log "❌ Upcoming Reviews sync failed - check $TEMP_DIR/upcoming_reviews.log"
+    log "❌ [6/6] Upcoming Reviews sync failed - check $TEMP_DIR/upcoming_reviews.log"
     cat "$TEMP_DIR/upcoming_reviews.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
