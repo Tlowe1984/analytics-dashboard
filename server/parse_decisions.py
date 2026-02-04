@@ -7,7 +7,7 @@ import sys
 import json
 from docx import Document
 from datetime import datetime, timedelta
-from rich_text_parser import extract_rich_text_from_cell
+from rich_text_parser_v2 import extract_rich_text_from_cell
 
 def parse_week_number(week_str):
     """Parse week string like 'W49 2025' or 'WW51' to get week and year"""

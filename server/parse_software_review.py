@@ -8,7 +8,7 @@ import sys
 import json
 from docx import Document
 from docx.shared import RGBColor
-from rich_text_parser import extract_rich_text
+from rich_text_parser_v2 import extract_rich_text
 
 def is_blue_text(run):
     """Check if text run has blue color (indicating new information)"""

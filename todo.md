@@ -564,3 +564,34 @@
 - [x] Verified last sync: 59s, 0 errors, 0 warnings, all 6 sources successful
 - [x] Verified data in database - bold text present, new items flagged correctly
 - [x] Confirmed format preservation working end-to-end
+
+## Hyperlink & Bold Text Preservation
+
+- [ ] Analyze current hyperlink loss issue (Google Docs → Word export strips links)
+- [ ] Evaluate solutions: Google Docs API vs improved Word parsing
+- [ ] Choose simplest approach that preserves stability
+- [ ] Implement Google Docs API parser for direct access
+- [ ] Test hyperlink extraction with bold text
+- [ ] Verify markdown output format [text](url) with **bold**
+- [ ] Update sync scripts to use new parser
+- [ ] Test full sync with hyperlinks preserved
+- [ ] Verify display in UI (links clickable, bold visible)
+- [ ] Document changes and update DATA_PIPELINE.md
+- [ ] Save checkpoint with hyperlink preservation
+
+## Hyperlink & Bold Text Preservation - Completed
+
+- [x] Analyzed hyperlink loss issue - Word documents DO contain hyperlinks in XML
+- [x] Evaluated solutions - Enhanced Word XML parsing (simplest approach)
+- [x] Created rich_text_parser_v2.py with improved hyperlink extraction
+- [x] Parser extracts hyperlinks from Word document relationships (part.rels)
+- [x] Parser processes hyperlink elements in paragraph XML structure
+- [x] Tested on sample document - successfully extracted 7 hyperlinks
+- [x] Updated all 4 parsers to use rich_text_parser_v2
+- [x] Ran full sync - 59 seconds, 0 errors, hyperlinks preserved
+- [x] Verified hyperlinks in database - markdown format [text](url)
+- [x] Verified hyperlinks display in UI - clickable blue links
+- [x] Bold text still preserved - **text** format working
+- [x] No architecture changes required - same pipeline, better parsing
+- [x] No new dependencies or authentication needed
+- [x] Stability maintained - sync performance unchanged

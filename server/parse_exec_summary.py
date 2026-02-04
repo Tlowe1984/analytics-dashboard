@@ -2,7 +2,7 @@
 import json
 import sys
 from docx import Document
-from rich_text_parser import extract_rich_text
+from rich_text_parser_v2 import extract_rich_text
 
 if len(sys.argv) < 2:
     print(json.dumps([]))

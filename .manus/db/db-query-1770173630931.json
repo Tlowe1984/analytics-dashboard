@@ -1,0 +1,25 @@
+{
+  "query": "SELECT content FROM dashboard_items WHERE content LIKE '%](%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT content FROM dashboard_items WHERE content LIKE '%](%' LIMIT 5;",
+  "rows": [
+    {
+      "content": "[Details](https://fb.workplace.com/groups/545599427782314/permalink/1191536749855242/)🎉Malibu2 exited Pre-Alpha 2, completing MIM11 and N16 convergence"
+    },
+    {
+      "content": "[link](https://fburl.com/unidash/oujdcak7)🟢 Dogfooding: we are recovering from holiday break and close to hitting our 1K weekly online users target"
+    },
+    {
+      "content": "[link](https://docs.google.com/presentation/d/1FTV7aV2XxAGR-SVZnbAh12Gkr5OcIBnLIARSCsOKJlo/edit?slide=id.g3b6e38c22f5_20_941#slide=id.g3b6e38c22f5_20_941)✅ Textile ID sprint: slides went to MZ on Friday"
+    },
+    {
+      "content": "[E2E schedule](https://docs.google.com/presentation/d/12i3Mz5ccLIFrh1uexGlniZzcoavqWX5ZDSZd022Qj00/edit?slide=id.g399e24d3b9f_0_5072#slide=id.g399e24d3b9f_0_5072)🎉Artemis  + Launch target (25k) aligned to meet Oct 2027 OSD."
+    },
+    {
+      "content": "[Link](https://fb.workplace.com/groups/312722567150221/permalink/1420600569695743/)[Link](https://fb.workplace.com/groups/OrionXRTechXFN/permalink/26058991710393009/)🎉Artemis has enabled world-lock-rendering experiences for phone companion , show excellent performance on 12MP Alberta camera , and made progress towards AROS ready"
+    }
+  ],
+  "messages": [],
+  "stdout": "content\n[Details](https://fb.workplace.com/groups/545599427782314/permalink/1191536749855242/)🎉Malibu2 exited Pre-Alpha 2, completing MIM11 and N16 convergence\n[link](https://fburl.com/unidash/oujdcak7)🟢 Dogfooding: we are recovering from holiday break and close to hitting our 1K weekly online users target\n[link](https://docs.google.com/presentation/d/1FTV7aV2XxAGR-SVZnbAh12Gkr5OcIBnLIARSCsOKJlo/edit?slide=id.g3b6e38c22f5_20_941#slide=id.g3b6e38c22f5_20_941)✅ Textile ID sprint: slides went to MZ on Friday\n[E2E schedule](https://docs.google.com/presentation/d/12i3Mz5ccLIFrh1uexGlniZzcoavqWX5ZDSZd022Qj00/edit?slide=id.g399e24d3b9f_0_5072#slide=id.g399e24d3b9f_0_5072)🎉Artemis  + Launch target (25k) aligned to meet Oct 2027 OSD.\n[Link](https://fb.workplace.com/groups/312722567150221/permalink/1420600569695743/)[Link](https://fb.workplace.com/groups/OrionXRTechXFN/permalink/26058991710393009/)🎉Artemis has enabled world-lock-rendering experiences for phone companion , show excellent performance on 12MP Alberta camera , and made progress towards AROS ready\n",
+  "stderr": "",
+  "execution_time_ms": 58
+}
