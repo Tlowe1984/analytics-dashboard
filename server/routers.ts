@@ -5,9 +5,11 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync";
+import { syncMonitoringRouter } from "./sync-monitoring";
 
 export const appRouter = router({
   system: systemRouter,
+  syncMonitoring: syncMonitoringRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
