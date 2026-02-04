@@ -170,7 +170,7 @@ function DevicesTab() {
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://drive.google.com/drive/folders/Wearables%20Everything/Reviews%20(Comment%20Only)/Device%20%26%20Growth%20Reviews" 
+          href="https://fburl.com/devicegrowthpr" 
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -277,7 +277,7 @@ function SoftwareTab() {
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://drive.google.com/drive/folders/Wearables%20Everything/Reviews%20(Comment%20Only)/Software%20(I%2BE%2C%20AI%2C%20Hearing)%20Reviews"
+          href="https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit?tab=t.ii083dwt776o"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"

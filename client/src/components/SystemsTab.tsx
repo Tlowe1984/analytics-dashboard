@@ -93,7 +93,7 @@ export function SystemsTab() {
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://drive.google.com/drive/folders/Wearables%20Everything/Reviews%20(Comment%20Only)/Systems%20Software%20Reviews"
+          href="https://docs.google.com/document/d/1pU0TrYDGOR4RemMKLh9p0XaBWQhOAGktNJAESmIBjLg/edit?tab=t.0"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"

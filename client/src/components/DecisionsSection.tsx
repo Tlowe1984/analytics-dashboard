@@ -5,7 +5,7 @@ import { MarkdownText } from "./MarkdownText";
 export default function DecisionsSection() {
   const { data: decisions, isLoading } = trpc.decisions.getAll.useQuery();
 
-  const GOOGLE_DOC_URL = "https://drive.google.com/drive/folders/[YOUR_FOLDER_ID]"; // Link to Wearables Everything folder
+  const GOOGLE_DOC_URL = "https://docs.google.com/document/d/1b0LPlOC9hw8l9og6sENOtzjCALQb38hFRyl7anfpVnY/edit?tab=t.0";
 
   if (isLoading) {
     return (

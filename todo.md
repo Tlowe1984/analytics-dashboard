@@ -330,3 +330,10 @@
 - [x] Test links across all sections (Devices, Software, Systems, Decisions)
 - [x] Fix any issues preventing links from working
 - [x] Remove empty parentheses from lost hyperlinks during Word export
+
+## Fix View Source Document Links
+- [x] Update Devices source link to https://fburl.com/devicegrowthpr
+- [x] Update Software source link to https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit?tab=t.ii083dwt776o
+- [x] Update Systems source link to https://docs.google.com/document/d/1pU0TrYDGOR4RemMKLh9p0XaBWQhOAGktNJAESmIBjLg/edit?tab=t.0
+- [x] Update Decisions source link to https://docs.google.com/document/d/1b0LPlOC9hw8l9og6sENOtzjCALQb38hFRyl7anfpVnY/edit?tab=t.0
+- [x] Test that all View Source Document links work correctly
