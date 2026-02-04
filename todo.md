@@ -513,3 +513,24 @@
 - [x] Verified sync failure scenarios handled with owner notifications
 - [x] Confirmed daily 6 AM sync is scheduled correctly in America/Los_Angeles timezone
 - [x] Architecture is stable, performant, and reliable
+
+## Fix Decisions Section for Mobile
+
+- [ ] Analyze current Decisions section layout
+- [ ] Identify mobile viewing issues
+- [ ] Implement mobile-responsive fixes
+- [ ] Test on mobile viewport (375px-414px)
+- [ ] Verify desktop layout unchanged
+- [ ] Save checkpoint with fixes
+
+## Decisions Section Mobile Fixes - Completed
+
+- [x] Analyzed current Decisions section layout - wide table with 5 columns
+- [x] Identified mobile viewing issues - table too wide for mobile screens
+- [x] Implemented mobile-responsive card layout (hidden on desktop)
+- [x] Desktop table view preserved (hidden on mobile with md:block)
+- [x] Mobile cards show: Week badge, Status badge, DRI, Forum, Decision text
+- [x] Reduced padding and spacing for mobile (p-3 vs p-8, text-xs vs text-sm)
+- [x] Smaller icons and buttons on mobile
+- [x] Tested on desktop - table view unchanged
+- [x] Ready for mobile testing
