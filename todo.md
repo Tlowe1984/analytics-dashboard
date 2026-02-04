@@ -796,3 +796,12 @@
 - [x] Render markdown bold formatting for ** markers in Decision Outcome text
 - [x] Verify Marianne Giesemann removal from spreadsheet is reflected in UI - Still in Google Doc, user needs to save changes
 - [x] Test Refresh Data button triggers proper cache invalidation - Working correctly
+
+## Inline Link Positioning Issue
+
+- [x] Investigate how parsers extract inline links from source documents
+- [x] Fix parsers to preserve inline link positions within text (not at beginning)
+- [x] Update parser for Executive Summary (Wins section)
+- [x] Update parser for Software/Systems sections if affected - Same parser used for all sections
+- [x] Resync all data to apply link position fixes
+- [x] Verify links appear inline in correct positions on dashboard

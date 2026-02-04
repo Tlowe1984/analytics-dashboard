@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, product_category, LEFT(content, 200) as content_preview FROM dashboard_items WHERE section_type = 'exec_summary' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, product_category, LEFT(content, 200) as content_preview FROM dashboard_items WHERE section_type = 'exec_summary' LIMIT 5;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 54
+}

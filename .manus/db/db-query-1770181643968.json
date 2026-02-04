@@ -1,0 +1,20 @@
+{
+  "query": "SELECT id, product_category, content FROM dashboard_items WHERE section_type = 'highlights' AND (content LIKE '%WA%' OR content LIKE '%shipped%' OR content LIKE '%source%' OR content LIKE '%rollout%') LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, product_category, content FROM dashboard_items WHERE section_type = 'highlights' AND (content LIKE '%WA%' OR content LIKE '%shipped%' OR content LIKE '%source%' OR content LIKE '%rollout%') LIMIT 5;",
+  "rows": [
+    {
+      "id": "31230",
+      "product_category": "arg_ssg",
+      "content": "🎉Artemis has enabled world-lock-rendering experiences for phone companion , show excellent performance on 12MP Alberta camera , and made progress towards AROS ready"
+    },
+    {
+      "id": "31231",
+      "product_category": "arg_ssg",
+      "content": "Odyssey Focus continues on Big-bets. February ‘26 readouts for Power, Cost, and Wearability. NTIs progress well with towards Concept commit"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tproduct_category\tcontent\n31230\targ_ssg\t🎉Artemis has enabled world-lock-rendering experiences for phone companion , show excellent performance on 12MP Alberta camera , and made progress towards AROS ready\n31231\targ_ssg\tOdyssey Focus continues on Big-bets. February ‘26 readouts for Power, Cost, and Wearability. NTIs progress well with towards Concept commit\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

@@ -1,0 +1,22 @@
+{
+  "query": "SELECT COUNT(*) as total_count, section_type FROM dashboard_items GROUP BY section_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT COUNT(*) as total_count, section_type FROM dashboard_items GROUP BY section_type;",
+  "rows": [
+    {
+      "total_count": "12",
+      "section_type": "highlights"
+    },
+    {
+      "total_count": "14",
+      "section_type": "risks"
+    },
+    {
+      "total_count": "14",
+      "section_type": "upcoming"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_count\tsection_type\n12\thighlights\n14\trisks\n14\tupcoming\n",
+  "stderr": "",
+  "execution_time_ms": 64
+}
