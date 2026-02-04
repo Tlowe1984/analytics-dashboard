@@ -126,13 +126,16 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
 async function parseDocument(name: string, localPath: string, parser: string, output: string): Promise<number> {
   try {
     console.log(`📊 [${name}] Parsing...`);
-    await execAsync(
-      `/home/ubuntu/analytics-dashboard/venv/bin/python ${parser} "${localPath}" > ${output}`,
+    const { stdout } = await execAsync(
+      `/home/ubuntu/analytics-dashboard/venv/bin/python ${parser} "${localPath}"`,
       {
-        env: { ...process.env, PYTHONPATH: "", PYTHONHOME: "" },
+        cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 30000
       }
     );
+    
+    // Write output to file
+    writeFileSync(output, stdout);
     
     // Count items from JSON
     if (existsSync(output)) {

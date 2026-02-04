@@ -836,3 +836,10 @@
 - [x] Add last updated timestamp below title
 - [x] Create backend procedure to query most recent update timestamp
 - [x] Display formatted date (e.g., "Feb 4, 2026, 5:25 AM") below section title
+
+## Fix Refresh Data Button Python Virtual Environment Error
+- [x] Investigate missing Python virtual environment
+- [x] Fix parseDocument function to properly execute Python scripts
+- [x] Remove problematic PYTHONPATH/PYTHONHOME environment variables
+- [x] Test all sync scripts (Devices, Software, Systems, Decisions, Reviews, Milestones)
+- [x] Verify Refresh Data button works without errors
