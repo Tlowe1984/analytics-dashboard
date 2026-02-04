@@ -789,3 +789,10 @@
 - [x] Add query result caching with stale-while-revalidate
 - [x] Optimize sync scripts for faster execution - Added parallel execution
 - [x] Test and measure performance improvements - Sync time reduced from 53s to 27s (50% faster)
+
+## Decisions Section Issues
+
+- [x] Fix Decisions data not refreshing after manual sync (cache invalidation issue) - Working correctly
+- [x] Render markdown bold formatting for ** markers in Decision Outcome text
+- [x] Verify Marianne Giesemann removal from spreadsheet is reflected in UI - Still in Google Doc, user needs to save changes
+- [x] Test Refresh Data button triggers proper cache invalidation - Working correctly

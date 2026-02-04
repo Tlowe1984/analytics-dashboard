@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface MarkdownTextProps {
   content: string;
@@ -9,6 +10,7 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
   return (
     <span className={className}>
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{
           // Render bold text
           strong: ({ children }) => <strong className="font-semibold">{children}</strong>,

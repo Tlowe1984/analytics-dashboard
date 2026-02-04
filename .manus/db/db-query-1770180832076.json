@@ -1,0 +1,28 @@
+{
+  "query": "SELECT week, dri, forum, LEFT(decision_outcome, 100) as outcome_preview FROM decisions ORDER BY week DESC LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT week, dri, forum, LEFT(decision_outcome, 100) as outcome_preview FROM decisions ORDER BY week DESC LIMIT 3;",
+  "rows": [
+    {
+      "week": "W6 2026",
+      "dri": "Marissa Chacko",
+      "forum": "Wearable Reviews",
+      "outcome_preview": "**Decisions Made:** **Limit HN1 LE to the Elite Bundle:** **YES.** We will not offer a standalone MR"
+    },
+    {
+      "week": "W5 2026",
+      "dri": "Sean O’Reilly",
+      "forum": "Other",
+      "outcome_preview": "[link](https://fb.workplace.com/groups/545599427782314/permalink/1194986316176952/)Decision: Malibu2"
+    },
+    {
+      "week": "W4 2026",
+      "dri": "Marianne Giesemann",
+      "forum": "Design Launch",
+      "outcome_preview": "[Link](https://fb.workplace.com/groups/892853338682054/permalink/1526338255333556/)**[Design Launch "
+    }
+  ],
+  "messages": [],
+  "stdout": "week\tdri\tforum\toutcome_preview\nW6 2026\tMarissa Chacko\tWearable Reviews\t**Decisions Made:** **Limit HN1 LE to the Elite Bundle:** **YES.** We will not offer a standalone MR\nW5 2026\tSean O’Reilly\tOther\t[link](https://fb.workplace.com/groups/545599427782314/permalink/1194986316176952/)Decision: Malibu2\nW4 2026\tMarianne Giesemann\tDesign Launch\t[Link](https://fb.workplace.com/groups/892853338682054/permalink/1526338255333556/)**[Design Launch \n",
+  "stderr": "",
+  "execution_time_ms": 84
+}
