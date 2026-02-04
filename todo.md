@@ -998,4 +998,12 @@
 - [x] Update getUpcomingMilestones function to show 5 weeks in the past (instead of 3)
 - [x] Keep 4 weeks in the future unchanged
 - [x] Test that older PDP gates now appear
-- [ ] Save checkpoint with change
+- [x] Save checkpoint with change
+
+## Fix Sync ENOENT Errors
+- [x] Investigate "spawn /bin/bash ENOENT" errors in parser execution - Actually timeout errors, not ENOENT
+- [x] Check shell configuration in googleDriveSync.ts - /bin/bash exists and is correct
+- [x] Fix shell path or execution method - Increased timeouts from 30s to 120s for parsers, 15s to 60s for database loading
+- [x] Test sync with user's "test1" text in ARG/SSG - Sync completed successfully, test1 appears
+- [x] Verify sync completes without errors - 750 items synced in 105s with no errors
+- [ ] Save checkpoint with fix

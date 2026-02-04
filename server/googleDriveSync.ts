@@ -124,7 +124,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     const result = await execAsync(
       `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini && ` +
       `rclone lsf "manus_google_drive:${gdrivePath}" --config /home/ubuntu/.gdrive-rclone.ini`,
-      { timeout: 30000, shell: "/bin/bash" }
+      { timeout: 120000, shell: "/bin/bash" }
     );
     
     // Get the actual filename from rclone lsf output
@@ -158,7 +158,7 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
       `/usr/bin/python3.11 ${parser} "${localPath}"`,
       {
         cwd: "/home/ubuntu/analytics-dashboard",
-        timeout: 30000,
+        timeout: 120000,
         shell: "/bin/bash",
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
@@ -257,7 +257,7 @@ async function loadAllDataToDatabase(): Promise<number> {
   try {
     const { stdout } = await execAsync(
       "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx load_data.mjs",
-      { timeout: 15000, shell: "/bin/bash" }
+      { timeout: 60000, shell: "/bin/bash" }
     );
     
     // Try to extract total count from output
@@ -459,7 +459,7 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       "/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py",
       {
         cwd: "/home/ubuntu/analytics-dashboard",
-        timeout: 30000,
+        timeout: 120000,
         shell: "/bin/bash",
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
@@ -512,14 +512,14 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       console.log("💾 Loading milestones to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx server/load_milestones.mjs",
-        { timeout: 15000, shell: "/bin/bash" }
+        { timeout: 60000, shell: "/bin/bash" }
       );
       
       // Load upcoming reviews
       console.log("💾 Loading upcoming reviews to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && node server/load_upcoming_reviews.mjs",
-        { timeout: 15000, shell: "/bin/bash" }
+        { timeout: 60000, shell: "/bin/bash" }
       );
     } catch (error) {
       console.error("Failed to load data to database:", error);
