@@ -1,6 +1,8 @@
+#!/usr/bin/env python3.11
 import json
 import sys
 from docx import Document
+from rich_text_parser import extract_rich_text
 
 if len(sys.argv) < 2:
     print(json.dumps([]))
@@ -76,11 +78,14 @@ try:
             if doc_level >= 3:
                 indent_level = doc_level - 2
         
+        # Extract rich text with bold and links
+        rich_content = extract_rich_text(para)
+        
         # Add the item
         items.append({
             'product': current_product,
             'section': current_section,
-            'content': text,
+            'content': rich_content,
             'is_new': 1 if is_new else 0,
             'indent_level': indent_level
         })

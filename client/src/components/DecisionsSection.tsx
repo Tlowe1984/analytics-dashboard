@@ -1,5 +1,6 @@
 import { trpc } from "@/lib/trpc";
 import { FileText, ExternalLink } from "lucide-react";
+import { MarkdownText } from "./MarkdownText";
 
 export default function DecisionsSection() {
   const { data: decisions, isLoading } = trpc.decisions.getAll.useQuery();
@@ -69,7 +70,7 @@ export default function DecisionsSection() {
                       <td className="py-3 px-4 text-sm whitespace-nowrap">{decision.dri}</td>
                       <td className="py-3 px-4 text-sm">{decision.forum || "—"}</td>
                       <td className="py-3 px-4 text-sm">{decision.status || "—"}</td>
-                      <td className="py-3 px-4 text-sm">{decision.decisionOutcome}</td>
+                      <td className="py-3 px-4 text-sm"><MarkdownText content={decision.decisionOutcome} /></td>
                     </tr>
                   ))}
                 </tbody>

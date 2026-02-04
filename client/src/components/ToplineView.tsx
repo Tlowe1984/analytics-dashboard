@@ -4,6 +4,7 @@ import { SystemsTab } from "./SystemsTab";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MarkdownText } from "./MarkdownText";
 
 interface DashboardItem {
   id: number;
@@ -12,6 +13,7 @@ interface DashboardItem {
   content: string;
   isNew: number; // 1 if new information (blue text), 0 otherwise
   order: number;
+  indentLevel?: number; // Indentation level for nested bullets
 }
 
 const sectionConfig = {
@@ -84,7 +86,7 @@ function SectionContent({
                     : "text-foreground/90"
                 )}
               >
-                {item.content}
+                <MarkdownText content={item.content} />
               </p>
             </div>
           ))
@@ -259,7 +261,7 @@ function SoftwareTab() {
                       : "text-foreground/90"
                   )}
                 >
-                  {item.content}
+                  <MarkdownText content={item.content} />
                 </p>
               </div>
             ))

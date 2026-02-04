@@ -291,3 +291,21 @@
 - [x] Update getReleaseDates query to filter for milestone_type = 'release_milestones' (12 months window)
 - [x] Change tile title from "Software Releases (Next Month)" to "Releases"
 - [x] Test that release milestones display correctly - showing 8 launch dates through Dec 2026
+
+## Update Releases to Show Version Releases (vXX.X)
+- [ ] Deferred - waiting for version release data from spreadsheet
+
+## Preserve Bold and Links from Word Documents
+- [x] Audit all parsers (Devices, Software, Systems, Decisions) for bold/link extraction
+- [x] Create rich_text_parser.py helper to extract bold and hyperlinks
+- [x] Update exec summary parser to extract rich text
+- [x] Update software parser to extract rich text
+- [x] Update systems parser to extract rich text
+- [x] Update decisions parser to extract rich text from table cells
+- [x] Install react-markdown library
+- [x] Create MarkdownText component to render markdown with bold and links
+- [x] Update ToplineView (Devices tab) to use MarkdownText
+- [x] Update SystemsTab to use MarkdownText
+- [x] Update DecisionsSection to use MarkdownText
+- [x] Resync all data sources (Devices: 40 items, Software: 29 items, Systems: 658 items, Decisions: 0 items)
+- [x] Test that bold and links display correctly across all tabs

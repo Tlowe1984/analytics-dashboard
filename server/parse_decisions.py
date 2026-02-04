@@ -7,6 +7,7 @@ import sys
 import json
 from docx import Document
 from datetime import datetime, timedelta
+from rich_text_parser import extract_rich_text_from_cell
 
 def parse_week_number(week_str):
     """Parse week string like 'W49 2025' or 'WW51' to get week and year"""
@@ -68,7 +69,8 @@ def parse_decisions(doc_path):
     decisions = []
     
     for i, row in enumerate(table.rows[1:]):  # Skip header row
-        cells = [cell.text.strip() for cell in row.cells]
+        # Extract rich text from cells
+        cells = [extract_rich_text_from_cell(cell).strip() for cell in row.cells]
         
         # Skip if not enough columns or empty DRI
         if len(cells) < 5 or not cells[0] or cells[0] == "DRI":

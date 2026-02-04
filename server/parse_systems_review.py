@@ -3,6 +3,7 @@ import sys
 import json
 from docx import Document
 from docx.shared import RGBColor
+from rich_text_parser import extract_rich_text
 
 def parse_systems_review(docx_path):
     """
@@ -70,9 +71,12 @@ def parse_systems_review(docx_path):
             if doc_level >= 2:
                 indent_level = doc_level - 1
         
+        # Extract rich text with bold and links
+        rich_content = extract_rich_text(para)
+        
         items.append({
             "section_type": current_section,
-            "content": text,
+            "content": rich_content,
             "is_new": is_new,
             "indent_level": indent_level,
             "order": order

@@ -1,0 +1,110 @@
+{
+  "query": "SELECT product, milestone_name, milestone_date FROM milestones WHERE milestone_type = 'sw_milestones' AND (milestone_name LIKE '%v%' OR milestone_name LIKE '%release%') ORDER BY milestone_date LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, milestone_date FROM milestones WHERE milestone_type = 'sw_milestones' AND (milestone_name LIKE '%v%' OR milestone_name LIKE '%release%') ORDER BY milestone_date LIMIT 20;",
+  "rows": [
+    {
+      "product": "Paloma",
+      "milestone_name": "Day 0 Branch Cut (v17)",
+      "milestone_date": "2025-06-18 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "EVT SMT F-FC",
+      "milestone_date": "2025-08-22 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "EVT SMT FMc",
+      "milestone_date": "2025-08-24 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "EVT FATP F-FC",
+      "milestone_date": "2025-09-12 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "EVT FATP LBU-OS",
+      "milestone_date": "2025-09-12 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "EVT FATP FMc",
+      "milestone_date": "2025-09-14 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PreEVT SMT F-FC",
+      "milestone_date": "2025-10-15 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "DVT FATP LBU-OS",
+      "milestone_date": "2025-10-26 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PreEVT SMT LBU-OS",
+      "milestone_date": "2025-11-17 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "DVT SIP FMc",
+      "milestone_date": "2025-11-17 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PreEVT FATP FMc",
+      "milestone_date": "2025-12-03 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PVT SIP LBU-OS",
+      "milestone_date": "2025-12-06 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PVT SIP F-FC",
+      "milestone_date": "2025-12-09 00:00:00"
+    },
+    {
+      "product": "Malibu2 ",
+      "milestone_name": "EDBv2 FATP FMc",
+      "milestone_date": "2025-12-12 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "DVT FATP FMc",
+      "milestone_date": "2025-12-12 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "EVT FATP LBU-OS",
+      "milestone_date": "2025-12-12 00:00:00"
+    },
+    {
+      "product": "Malibu2 ",
+      "milestone_name": "EDBv2 FATP F-FC",
+      "milestone_date": "2025-12-12 00:00:00"
+    },
+    {
+      "product": "Malibu2 ",
+      "milestone_name": "P1v2 SIP F-FC",
+      "milestone_date": "2025-12-18 00:00:00"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "PVT SIP FMc",
+      "milestone_date": "2025-12-23 00:00:00"
+    },
+    {
+      "product": "RBM3",
+      "milestone_name": "PVT FATP F-FC",
+      "milestone_date": "2025-12-28 00:00:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tmilestone_date\nPaloma\tDay 0 Branch Cut (v17)\t2025-06-18 00:00:00\nRBM3\tEVT SMT F-FC\t2025-08-22 00:00:00\nRBM3\tEVT SMT FMc\t2025-08-24 00:00:00\nRBM3\tEVT FATP F-FC\t2025-09-12 00:00:00\nRBM3\tEVT FATP LBU-OS\t2025-09-12 00:00:00\nRBM3\tEVT FATP FMc\t2025-09-14 00:00:00\nModelo\tPreEVT SMT F-FC\t2025-10-15 00:00:00\nRBM3\tDVT FATP LBU-OS\t2025-10-26 00:00:00\nModelo\tPreEVT SMT LBU-OS\t2025-11-17 00:00:00\nModelo\tDVT SIP FMc\t2025-11-17 00:00:00\nModelo\tPreEVT FATP FMc\t2025-12-03 00:00:00\nModelo\tPVT SIP LBU-OS\t2025-12-06 00:00:00\nModelo\tPVT SIP F-FC\t2025-12-09 00:00:00\nMalibu2 \tEDBv2 FATP FMc\t2025-12-12 00:00:00\nRBM3\tDVT FATP FMc\t2025-12-12 00:00:00\nModelo\tEVT FATP LBU-OS\t2025-12-12 00:00:00\nMalibu2 \tEDBv2 FATP F-FC\t2025-12-12 00:00:00\nMalibu2 \tP1v2 SIP F-FC\t2025-12-18 00:00:00\nModelo\tPVT SIP FMc\t2025-12-23 00:00:00\nRBM3\tPVT FATP F-FC\t2025-12-28 00:00:00\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

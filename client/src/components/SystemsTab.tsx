@@ -1,6 +1,7 @@
 import { trpc } from "@/lib/trpc";
-import { Trophy, FileText, AlertTriangle } from "lucide-react";
+import { Sparkles, AlertTriangle, HelpCircle, Trophy, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MarkdownText } from "./MarkdownText";
 
 const systemsSectionConfig = {
   wins: {
@@ -76,7 +77,7 @@ export function SystemsTab() {
                       : "text-foreground/90"
                   )}
                 >
-                  {item.content}
+                  <MarkdownText content={item.content} />
                 </p>
               </div>
             ))

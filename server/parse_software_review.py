@@ -8,6 +8,7 @@ import sys
 import json
 from docx import Document
 from docx.shared import RGBColor
+from rich_text_parser import extract_rich_text
 
 def is_blue_text(run):
     """Check if text run has blue color (indicating new information)"""
@@ -85,9 +86,12 @@ def parse_software_review(docx_path):
                 if doc_level >= 2:
                     indent_level = doc_level - 1
             
+            # Extract rich text with bold and links
+            rich_content = extract_rich_text(para)
+            
             items.append({
                 "section_type": current_section,
-                "content": text,
+                "content": rich_content,
                 "is_new": 1 if has_blue else 0,
                 "indent_level": indent_level,
                 "order": order
