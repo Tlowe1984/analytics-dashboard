@@ -1035,3 +1035,37 @@
 - [ ] Verify MANUS_API_KEY secret is properly set in production environment
 - [ ] Save checkpoint and test in production
 - [ ] Analyze logs to identify why sync returns instantly
+
+## Update Scheduled Task to Run Every 5 Minutes
+- [x] Update scheduled task from daily (6 AM PST) to every 5 minutes interval
+- [ ] Wait 5 minutes for first sync to complete
+- [ ] Verify production data updates automatically without manual refresh
+- [ ] Confirm test17 appears in production within 5 minutes
+
+## Debug Scheduled Task Not Updating Production
+- [ ] Check if scheduled task is actually running (verify in Manus task list)
+- [ ] Manually run daily-sync.mjs to verify it works
+- [ ] Check if database is being updated but production cache is stale
+- [ ] Verify test18 appears after manual sync
+- [ ] Fix scheduled task if not running correctly
+
+## Verify test18 in Database and Production
+- [ ] Query database to search for "test18" in all tables
+- [ ] Check if production has stale cache preventing updates
+- [ ] Verify which document user added test18 to
+- [ ] Confirm test18 appears in production after cache clear
+
+## Manually Trigger Sync to Verify test18
+- [ ] Run manual sync with pnpm exec tsx daily-sync.mjs
+- [ ] Query database to confirm test18 is present
+- [ ] Verify production shows test18 after database update
+- [ ] Confirm scheduled task is actually running every 5 minutes
+
+## CRITICAL: Sandbox and Production Use Different Databases
+- [x] Verify DATABASE_URL in sandbox vs production - Same URL but separate instances
+- [x] Confirm sandbox sync writes to sandbox DB, not production DB - CONFIRMED
+- [x] Root cause: Publishing creates database snapshot, sandbox changes don't propagate
+- [x] Solution: Save checkpoint with current database state and publish
+- [ ] Save checkpoint with test18 in database
+- [ ] Publish to production
+- [ ] Verify test18 appears in production
