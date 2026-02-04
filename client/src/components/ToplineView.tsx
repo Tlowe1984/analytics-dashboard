@@ -297,6 +297,10 @@ function SoftwareTab() {
 
 
 export default function ToplineView() {
+  // Get the most recent update timestamp from all dashboard items
+  const { data: lastUpdatedData } = trpc.dashboard.getLastUpdated.useQuery();
+  const lastUpdated = lastUpdatedData?.updatedAt;
+
   return (
     <div className="w-full">
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-6">
@@ -306,8 +310,16 @@ export default function ToplineView() {
             <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold">Exec Summary Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
-            <p className="text-xs text-muted-foreground hidden sm:block">Product category overview</p>
+            <h2 className="text-lg sm:text-xl font-bold">Executive Summary</h2>
+            <p className="text-xs text-muted-foreground hidden sm:block">
+              Last updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+              }) : 'Loading...'}
+            </p>
           </div>
         </div>
 

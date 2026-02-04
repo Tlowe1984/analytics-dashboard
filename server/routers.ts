@@ -27,6 +27,11 @@ export const appRouter = router({
       return await db.getAllDashboardItems();
     }),
 
+    // Get last updated timestamp
+    getLastUpdated: publicProcedure.query(async () => {
+      return await db.getLastUpdatedTimestamp();
+    }),
+
     // Get items by section and category
     getBySection: publicProcedure
       .input(

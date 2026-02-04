@@ -824,3 +824,15 @@
 - [x] Fix rich text parser to preserve link text and convert to markdown format [text](url)
 - [x] Ensure bold formatting works correctly for ** markers
 - [x] Resync data and verify all text displays correctly with links preserved
+
+## Executive Summary Header Update
+
+- [ ] Change title from "Exec Summary Week 5" to "Executive Summary"
+- [ ] Add last updated date below the title
+- [ ] Remove "Product category overview" subtitle
+
+## Executive Summary Title Update
+- [x] Update Executive Summary section header to show "Executive Summary" as title
+- [x] Add last updated timestamp below title
+- [x] Create backend procedure to query most recent update timestamp
+- [x] Display formatted date (e.g., "Feb 4, 2026, 5:25 AM") below section title

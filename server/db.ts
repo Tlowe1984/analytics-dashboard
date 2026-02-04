@@ -176,6 +176,24 @@ export async function clearAllDashboardItems() {
   return result;
 }
 
+export async function getLastUpdatedTimestamp() {
+  return cachedQuery('dashboard:lastUpdated', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get last updated timestamp: database not available");
+      return null;
+    }
+
+    const result = await db
+      .select({ updatedAt: dashboardItems.updatedAt })
+      .from(dashboardItems)
+      .orderBy(desc(dashboardItems.updatedAt))
+      .limit(1);
+
+    return result.length > 0 ? result[0] : null;
+  });
+}
+
 // Milestone queries
 export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_milestones" | "sw_milestones" | "hw_dates" | "release_milestones", limit = 50) {
   return cachedQuery(`milestones:${milestoneType}:${limit}`, async () => {
