@@ -936,3 +936,17 @@
 - [x] Verify both daily and manual sync use same code path
 - [x] Document the unified sync architecture (SYNC_ARCHITECTURE.md)
 - [x] Restart server and verify scheduler initialized correctly
+
+## Fix Critical Performance & Stability Issues
+- [x] Add transaction safety to load_data.mjs
+- [x] Add transaction safety to load_milestones.mjs
+- [x] Add transaction safety to load_upcoming_reviews.mjs
+- [x] Convert sequential inserts to batch inserts (all 3 files)
+- [x] Implement sync mutex lock in googleDriveSync.ts
+- [x] Add /tmp file cleanup after sync (15 files cleaned)
+- [x] Fix syntax error in googleDriveSync.ts (try-finally block)
+- [x] Restart server successfully
+- [x] Document all fixes in performance_fixes_summary.md
+- [ ] Improve Python error reporting with stderr capture (deferred - medium priority)
+- [ ] Test all fixes with manual sync (ready for testing)
+- [ ] Verify transaction rollback on error (ready for testing)

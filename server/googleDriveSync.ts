@@ -26,6 +26,9 @@ interface SourceConfig {
 const CACHE_DIR = "/tmp/dashboard-cache";
 const CACHE_METADATA = `${CACHE_DIR}/metadata.json`;
 
+// Sync mutex to prevent concurrent syncs
+let syncInProgress = false;
+
 // Ensure cache directory exists
 try {
   if (!existsSync(CACHE_DIR)) {
@@ -267,14 +270,31 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   milestones: SyncResult;
   upcomingReviews: SyncResult;
 }> {
-  if (forceRefresh) {
-    console.log("🔄 Starting FORCED sync (clearing cache)...");
-    clearCache();
-    console.log("✨ Cache cleared");
-  } else {
-    console.log("🚀 Starting optimized sync...");
+  // Check if sync is already in progress
+  if (syncInProgress) {
+    console.log("⚠️ Sync already in progress, skipping...");
+    return {
+      devices: { success: false, message: "Sync already in progress", timestamp: new Date() },
+      software: { success: false, message: "Sync already in progress", timestamp: new Date() },
+      systems: { success: false, message: "Sync already in progress", timestamp: new Date() },
+      decisions: { success: false, message: "Sync already in progress", timestamp: new Date() },
+      milestones: { success: false, message: "Sync already in progress", timestamp: new Date() },
+      upcomingReviews: { success: false, message: "Sync already in progress", timestamp: new Date() },
+    };
   }
-  const overallStart = Date.now();
+  
+  // Set mutex lock
+  syncInProgress = true;
+  
+  try {
+    if (forceRefresh) {
+      console.log("🔄 Starting FORCED sync (clearing cache)...");
+      clearCache();
+      console.log("✨ Cache cleared");
+    } else {
+      console.log("🚀 Starting optimized sync...");
+    }
+    const overallStart = Date.now();
   
   // Define all data sources
   const sources: SourceConfig[] = [
@@ -465,24 +485,67 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
     console.log("📦 No updates needed - all sources cached");
   }
   
-  const overallDuration = Date.now() - overallStart;
-  const allSuccess = results.every(r => r.success) && upcomingReviewsResult.success;
-  const cachedCount = results.filter(r => r.cached).length;
+  // Phase 5: Cleanup /tmp files
+  console.log("🧹 Cleaning up temporary files...");
+  try {
+    const tmpFiles = [
+      "/tmp/Device & Growth Canonical Program Review.docx",
+      "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx",
+      "/tmp/Wearables Systems Review.docx",
+      "/tmp/Wearable Decisions Canonical .docx",
+      "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
+      "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx",
+      "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx",
+      "/tmp/Systems Reviews Sign-Up Sheet .xlsx",
+      "/tmp/parsed_data.json",
+      "/tmp/software_data.json",
+      "/tmp/systems_data.json",
+      "/tmp/decisions_data.json",
+      "/tmp/milestones_parsed.json",
+      "/tmp/upcoming_reviews_parsed.json",
+      "/tmp/upcoming_reviews_data.json"
+    ];
+    
+    const { unlinkSync } = await import("fs");
+    let cleanedCount = 0;
+    for (const file of tmpFiles) {
+      try {
+        if (existsSync(file)) {
+          unlinkSync(file);
+          cleanedCount++;
+        }
+      } catch (e) {
+        // Ignore individual file cleanup errors
+      }
+    }
+    console.log(`✅ Cleaned up ${cleanedCount} temporary files`);
+  } catch (error) {
+    console.warn("Failed to cleanup temporary files:", error);
+  }
   
-  console.log(
-    allSuccess
-      ? `✅ Full sync complete! ${totalItems} items in ${(overallDuration / 1000).toFixed(1)}s (${cachedCount}/${results.length} cached)`
-      : `⚠️ Sync completed with errors. Check individual results.`
-  );
-  
-  return {
-    devices: results[0],
-    software: results[1],
-    systems: results[2],
-    decisions: results[3],
-    milestones: results[4],
-    upcomingReviews: upcomingReviewsResult
-  };
+    const overallDuration = Date.now() - overallStart;
+    const allSuccess = results.every(r => r.success) && upcomingReviewsResult.success;
+    const cachedCount = results.filter(r => r.cached).length;
+    
+    console.log(
+      allSuccess
+        ? `✅ Full sync complete! ${totalItems} items in ${(overallDuration / 1000).toFixed(1)}s (${cachedCount}/${results.length} cached)`
+        : `⚠️ Sync completed with errors. Check individual results.`
+    );
+    
+    return {
+      devices: results[0],
+      software: results[1],
+      systems: results[2],
+      decisions: results[3],
+      milestones: results[4],
+      upcomingReviews: upcomingReviewsResult
+    };
+    
+  } finally {
+    // Always release mutex lock
+    syncInProgress = false;
+  }
 }
 
 // Legacy exports for backward compatibility
