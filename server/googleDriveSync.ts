@@ -201,7 +201,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
 async function parseDocument(name: string, localPath: string, parser: string, output: string): Promise<number> {
   try {
     console.log(`📊 [${name}] Parsing...`);
-    const { stdout } = await spawnAsync("/usr/bin/python3.11", [parser, localPath], {
+    const { stdout} = await spawnAsync("python3", [parser, localPath], {
       cwd: "/home/ubuntu/analytics-dashboard",
       timeout: 120000,
       env: {
@@ -499,7 +499,7 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   const upcomingReviewsStart = Date.now();
   let upcomingReviewsResult: SyncResult;
   try {
-    const { stdout } = await spawnAsync("/usr/bin/python3.11", ["/home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py"], {
+    const { stdout } = await spawnAsync("python3", ["/home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py"], {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
         env: {

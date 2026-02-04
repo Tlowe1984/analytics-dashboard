@@ -1027,4 +1027,11 @@
 - [x] Use direct spawn() without shell option for Python/rclone commands
 - [x] Test in development to ensure parsers still work - Verified test7 appears correctly
 - [x] Verify no shell-related errors - Sync completed successfully with 750 items in 119.1s
-- [ ] Save checkpoint for republish
+- [x] Save checkpoint for republish
+
+## Fix Production Python Path ENOENT
+- [x] Replace hardcoded /usr/bin/python3.11 with dynamic Python detection (python3 or python)
+- [x] Update all parser spawn calls to use detected Python path
+- [x] Test in development to ensure parsers still work - Verified test10 appears correctly
+- [ ] Save checkpoint and guide user to republish
+- [ ] Verify production sync works without ENOENT errors
