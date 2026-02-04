@@ -44,7 +44,12 @@ def extract_rich_text(paragraph):
         else:
             result.append(text)
     
-    return ''.join(result)
+    # Join result and clean up empty parentheses from lost hyperlinks
+    text = ''.join(result)
+    # Remove empty parentheses that indicate lost hyperlinks
+    import re
+    text = re.sub(r'\s*\(\)\s*', ' ', text)
+    return text.strip()
 
 def extract_rich_text_from_cell(cell):
     """

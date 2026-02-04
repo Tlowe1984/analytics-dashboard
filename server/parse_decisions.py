@@ -53,8 +53,8 @@ def is_within_last_month(week_str):
     else:
         return False
     
-    # Include decisions from last 12 weeks (approximately 3 months)
-    return 0 <= week_diff <= 12
+    # Include decisions from last 4 weeks (approximately 1 month)
+    return 0 <= week_diff <= 4
 
 def parse_decisions(doc_path):
     """Extract decisions from the Consolidated Summary table"""

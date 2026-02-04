@@ -317,3 +317,16 @@
 - [x] Test manual sync script (sync_decisions.sh)
 - [x] Fix any issues found and resync data
 - [x] Verify Decisions display correctly in UI
+
+## Fix Decisions Ordering and Time Window
+- [x] Change Decisions time window from 12 weeks back to 4 weeks (1 month)
+- [x] Update database query to order decisions by week DESC (most recent first)
+- [x] Resync Decisions data with updated settings
+- [x] Verify Decisions display in correct order
+
+## Fix Link Rendering Issues
+- [x] Investigate why hyperlinks are not clickable in dashboard
+- [x] Check MarkdownText component link rendering
+- [x] Test links across all sections (Devices, Software, Systems, Decisions)
+- [x] Fix any issues preventing links from working
+- [x] Remove empty parentheses from lost hyperlinks during Word export

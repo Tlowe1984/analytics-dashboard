@@ -313,8 +313,9 @@ export async function getAllDecisions(): Promise<Decision[]> {
   
   try {
     // Return all decisions sorted by week (most recent first)
-    const results = await db.select().from(decisions);
-    return results;
+    const results = await db.select().from(decisions).orderBy(decisions.week);
+    // Reverse to get DESC order (most recent first)
+    return results.reverse();
   } catch (error) {
     console.error("[Database] Error fetching decisions:", error);
     return [];
