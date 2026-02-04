@@ -7,7 +7,7 @@ interface MarkdownTextProps {
 
 export function MarkdownText({ content, className }: MarkdownTextProps) {
   return (
-    <div className={className}>
+    <span className={className}>
       <ReactMarkdown
         components={{
           // Render bold text
@@ -29,6 +29,6 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
       >
         {content}
       </ReactMarkdown>
-    </div>
+    </span>
   );
 }

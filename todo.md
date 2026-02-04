@@ -337,3 +337,17 @@
 - [x] Update Systems source link to https://docs.google.com/document/d/1pU0TrYDGOR4RemMKLh9p0XaBWQhOAGktNJAESmIBjLg/edit?tab=t.0
 - [x] Update Decisions source link to https://docs.google.com/document/d/1b0LPlOC9hw8l9og6sENOtzjCALQb38hFRyl7anfpVnY/edit?tab=t.0
 - [x] Test that all View Source Document links work correctly
+
+## Update Releases Section with Milestones SOT Data
+- [ ] Locate "Wearable Program Milestones SOT - For AI / User Consumption" in Shared with me folder
+- [ ] Download the document from Google Drive
+- [ ] Create parser to extract in-market release dates
+- [ ] Update database schema to store milestone/release data
+- [ ] Create sync script for milestones data
+- [ ] Update UI to display next month of releases in chronological order
+- [ ] Test that releases display correctly
+
+## Fix HTML Nesting Error
+- [x] Locate where <p> tag contains nested <div> element
+- [x] Fix invalid HTML structure
+- [x] Test that error is resolved
