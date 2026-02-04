@@ -304,6 +304,30 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       console.log("🔄 Starting FORCED sync (clearing cache)...");
       clearCache();
       console.log("✨ Cache cleared");
+      
+      // Delete all tmp files to force fresh downloads
+      const tmpFiles = [
+        "/tmp/Device & Growth Canonical Program Review.docx",
+        "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx",
+        "/tmp/Wearables Systems Review.docx",
+        "/tmp/Wearable Decisions Canonical .docx",
+        "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
+        "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx",
+        "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx",
+        "/tmp/Systems Reviews Sign-Up Sheet .xlsx"
+      ];
+      
+      const { unlinkSync } = await import("fs");
+      for (const file of tmpFiles) {
+        try {
+          if (existsSync(file)) {
+            unlinkSync(file);
+            console.log(`🗑️  Deleted ${file}`);
+          }
+        } catch (e) {
+          // Ignore deletion errors
+        }
+      }
     } else {
       console.log("🚀 Starting optimized sync...");
     }

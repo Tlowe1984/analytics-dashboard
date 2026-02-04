@@ -984,4 +984,12 @@
 - [x] Add invalidateDashboardCache() call after sync completes in googleDriveSync.ts
 - [x] Test sync and verify dashboard shows updated data immediately
 - [x] Verify Wrist highlights now appear in correct section
-- [ ] Save checkpoint with fix
+- [x] Save checkpoint with fix
+
+## Fix Sync Not Pulling Updated Text and Refresh Errors
+- [x] Investigate why sync button doesn't pull latest changes from Google Drive
+- [x] Check sync logs for errors
+- [x] Investigate refresh errors reported by user
+- [x] Fix sync mechanism to properly download and parse updated documents - Added tmp file deletion before downloads when forceRefresh=true
+- [x] Test sync with user's updated Wrist text - Working correctly, shows updated dates and text
+- [x] Verify no errors on refresh - Sync completes successfully with 749 items
