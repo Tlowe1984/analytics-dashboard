@@ -1,4 +1,4 @@
-import { eq, and, gte, lte, asc, or, like } from "drizzle-orm";
+import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -312,10 +312,9 @@ export async function getAllDecisions(): Promise<Decision[]> {
   if (!db) return [];
   
   try {
-    // Return all decisions sorted by week (most recent first)
-    const results = await db.select().from(decisions).orderBy(decisions.week);
-    // Reverse to get DESC order (most recent first)
-    return results.reverse();
+    // Return all decisions sorted by week DESC (most recent first)
+    const results = await db.select().from(decisions).orderBy(desc(decisions.week));
+    return results;
   } catch (error) {
     console.error("[Database] Error fetching decisions:", error);
     return [];

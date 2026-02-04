@@ -1,84 +1,71 @@
 #!/bin/bash
+# Unified sync script for all dashboard data sources
+# Runs daily at 6 AM via Node.js cron scheduler
+
 set -e
 
-echo "📥 Syncing all dashboard data from Google Drive..."
+SCRIPT_DIR="/home/ubuntu/analytics-dashboard"
+LOG_FILE="$SCRIPT_DIR/.manus-logs/sync.log"
 
-# Download Devices doc
-echo "📥 Downloading Devices document..."
-rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/W5 2026 Device & Growth Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
+# Create log directory if it doesn't exist
+mkdir -p "$SCRIPT_DIR/.manus-logs"
 
-# Download Software doc  
-echo "📥 Downloading Software document..."
-rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/Software (I+E, AI, Hearing) Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
-
-# Parse Devices doc
-echo "📊 Parsing Devices executive summary..."
-/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/W5 2026 Device & Growth Canonical Program Review.docx" > /tmp/devices_data.json
-
-# Parse Software doc
-echo "📊 Parsing Software review..."
-/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_software_review.py "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx" > /tmp/software_data.json
-
-# Load Devices data
-echo "💾 Loading Devices data into database..."
-cd /home/ubuntu/analytics-dashboard
-cat > /tmp/load_devices.mjs << 'ENDSCRIPT'
-import { readFileSync } from 'fs';
-import { db } from './server/db.js';
-import { dashboardItems } from './drizzle/schema.js';
-
-const data = JSON.parse(readFileSync('/tmp/devices_data.json', 'utf8'));
-
-console.log(`Loading ${data.length} devices items into database...`);
-
-// Clear existing data
-await db.delete(dashboardItems);
-
-// Insert new data
-for (const item of data) {
-  await db.insert(dashboardItems).values({
-    sectionType: item.section_type,
-    productCategory: item.product_category,
-    content: item.content,
-    isNew: item.is_new,
-    order: item.order,
-  });
+# Function to log messages
+log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
-console.log('Devices data loaded successfully!');
-process.exit(0);
-ENDSCRIPT
+log "========================================="
+log "Starting unified dashboard sync"
+log "========================================="
 
-pnpm exec tsx /tmp/load_devices.mjs
+# Track sync status
+SYNC_ERRORS=0
 
-# Load Software data
-echo "💾 Loading Software data into database..."
-cat > /tmp/load_software.mjs << 'ENDSCRIPT'
-import { readFileSync } from 'fs';
-import { db } from './server/db.js';
-import { softwareItems } from './drizzle/schema.js';
+# Sync Devices data
+log "📥 Syncing Devices data..."
+if bash "$SCRIPT_DIR/sync_from_gdrive.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Devices sync completed"
+else
+    log "❌ Devices sync failed"
+    ((SYNC_ERRORS++))
+fi
 
-const data = JSON.parse(readFileSync('/tmp/software_data.json', 'utf8'));
+# Sync Software data
+log "📥 Syncing Software data..."
+if bash "$SCRIPT_DIR/sync_software.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Software sync completed"
+else
+    log "❌ Software sync failed"
+    ((SYNC_ERRORS++))
+fi
 
-console.log(`Loading ${data.length} software items into database...`);
+# Sync Systems data
+log "📥 Syncing Systems data..."
+if bash "$SCRIPT_DIR/sync_systems.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Systems sync completed"
+else
+    log "❌ Systems sync failed"
+    ((SYNC_ERRORS++))
+fi
 
-// Clear existing data
-await db.delete(softwareItems);
+# Sync Decisions data
+log "📥 Syncing Decisions data..."
+if bash "$SCRIPT_DIR/sync_decisions.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Decisions sync completed"
+else
+    log "❌ Decisions sync failed"
+    ((SYNC_ERRORS++))
+fi
 
-// Insert new data
-for (const item of data) {
-  await db.insert(softwareItems).values({
-    sectionType: item.section_type,
-    content: item.content,
-    isNew: item.is_new,
-    order: item.order,
-  });
-}
-
-console.log('Software data loaded successfully!');
-process.exit(0);
-ENDSCRIPT
-
-pnpm exec tsx /tmp/load_software.mjs
-
-echo "✅ Sync complete! Refresh your browser to see the updated data."
+# Summary
+log "========================================="
+if [ $SYNC_ERRORS -eq 0 ]; then
+    log "✅ All syncs completed successfully!"
+    log "========================================="
+    exit 0
+else
+    log "⚠️  Sync completed with $SYNC_ERRORS error(s)"
+    log "========================================="
+    exit 1
+fi

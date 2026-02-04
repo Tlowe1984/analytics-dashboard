@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { initSyncScheduler } from "../sync-scheduler";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -59,6 +60,13 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Initialize sync scheduler for daily auto-sync at 6 AM
+    try {
+      initSyncScheduler();
+    } catch (error) {
+      console.error('[Server] Failed to initialize sync scheduler:', error);
+    }
   });
 }
 
