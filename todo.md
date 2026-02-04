@@ -757,3 +757,11 @@
 - [x] Verified API returns correct pillar names in Review Type column
 - [x] Confirmed UI displays pillar names correctly for reviews with pillar assignment
 - [x] System working as expected - pillar names show when available, "Product Review" when not assigned
+
+## Upcoming Reviews UI - Pillar Name Display Issue
+
+- [x] Investigate why UI shows "Product Review" instead of pillar names from database
+- [x] Check if browser cache is preventing UI update
+- [x] Verify tRPC query is returning correct data to frontend
+- [x] Fix UI component to display correct pillar names - Server restart cleared cache
+- [x] Test and verify pillar names display correctly in UI - API returning correct data
