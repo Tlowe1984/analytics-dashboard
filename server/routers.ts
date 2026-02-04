@@ -5,6 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync";
+import { invalidateDashboardCache } from "./query-cache";
 import { syncMonitoringRouter } from "./sync-monitoring";
 
 export const appRouter = router({
@@ -239,6 +240,8 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
         const result = await syncAll(input?.forceRefresh ?? false);
+        // Invalidate cache after sync completes so frontend gets fresh data
+        invalidateDashboardCache();
         return result;
       }),
 

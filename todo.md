@@ -969,13 +969,19 @@
 - [ ] Verify all sections appear correctly on dashboard
 
 ## Fix Wrist Highlights/Decisions Section Detection
-- [ ] Investigate why "Highlights/ Decisions/" is categorized as upcoming instead of highlights
-- [ ] Update parser to recognize combined section names
-- [ ] Test parser with updated logic
-- [ ] Verify Wrist Highlights appear in correct section
+- [x] Investigate why "Highlights/ Decisions/" is categorized as upcoming instead of highlights
+- [x] Update parser to recognize combined section names
+- [x] Test parser with updated logic
+- [x] Verify Wrist Highlights appear in correct section - Parser works correctly, issue is cache not being invalidated
 
 ## Fix React Errors from HTML-like Tags in Content
 - [x] Update MarkdownText component to escape HTML-like tags (<priya>, <praveen>, <bradley>, <insert>)
 - [x] Test that errors are resolved (HMR applied)
 - [x] Verify content still displays correctly with bold formatting
 - [ ] Save checkpoint with all fixes
+
+## Fix Cache Invalidation After Sync
+- [x] Add invalidateDashboardCache() call after sync completes in googleDriveSync.ts
+- [x] Test sync and verify dashboard shows updated data immediately
+- [x] Verify Wrist highlights now appear in correct section
+- [ ] Save checkpoint with fix
