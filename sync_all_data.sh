@@ -58,6 +58,15 @@ else
     ((SYNC_ERRORS++))
 fi
 
+# Sync Milestones data
+log "📥 Syncing Milestones data..."
+if bash "$SCRIPT_DIR/sync_milestones.sh" >> "$LOG_FILE" 2>&1; then
+    log "✅ Milestones sync completed"
+else
+    log "❌ Milestones sync failed"
+    ((SYNC_ERRORS++))
+fi
+
 # Summary
 log "========================================="
 if [ $SYNC_ERRORS -eq 0 ]; then
