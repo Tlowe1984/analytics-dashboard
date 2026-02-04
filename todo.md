@@ -1021,3 +1021,10 @@
 - [x] Identify root cause and implement fix - Redesigned architecture to ALWAYS delete tmp files at start of every sync
 - [x] Test with user's test5 update in development - Verified test5 appears correctly
 - [ ] Save checkpoint for republish
+
+## Fix Python Package Dependencies in Manus Task Environment
+- [x] Update Manus API task prompt to install Python packages before running sync
+- [x] Add pip install commands for python-docx and openpyxl packages
+- [ ] Save checkpoint and publish to production
+- [ ] Test that task completes successfully without package errors
+- [ ] Verify test13 appears in production after sync completes

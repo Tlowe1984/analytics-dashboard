@@ -239,10 +239,62 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
-        const result = await syncAll(input?.forceRefresh ?? false);
-        // Invalidate cache after sync completes so frontend gets fresh data
-        invalidateDashboardCache();
-        return result;
+        // Check if we're in production (no Python available)
+        const isProduction = !process.env.PYTHONPATH && process.env.NODE_ENV === 'production';
+        
+        if (isProduction) {
+          // Production: Trigger Manus API to run sync in sandbox (has Python)
+          try {
+            const response = await fetch('https://api.manus.ai/v1/tasks', {
+              method: 'POST',
+              headers: {
+                'API_KEY': process.env.MANUS_API_KEY || '',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                prompt: 'Install Python packages and run dashboard sync:\n\nsudo pip3 install python-docx openpyxl && cd /home/ubuntu/analytics-dashboard && node daily-sync.mjs',
+                agentProfile: 'manus-1.6-lite',
+                hideInTaskList: true,
+              }),
+            });
+            
+            if (!response.ok) {
+              throw new Error(`Manus API error: ${response.status}`);
+            }
+            
+            const taskData = await response.json();
+            
+            // Return success message with task ID
+            const result = {
+              devices: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              software: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              systems: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              decisions: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              milestones: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              upcomingReviews: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+            };
+            
+            return result;
+          } catch (error) {
+            console.error('Failed to trigger sync task:', error);
+            // Fallback: return error message
+            const result = { 
+              devices: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              software: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              systems: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              decisions: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              milestones: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              upcomingReviews: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+            };
+            return result;
+          }
+        } else {
+          // Development/Sandbox: Run sync directly (Python available)
+          const result = await syncAll(input?.forceRefresh ?? false);
+          // Invalidate cache after sync completes so frontend gets fresh data
+          invalidateDashboardCache();
+          return result;
+        }
       }),
 
     // Sync only executive summary
