@@ -695,3 +695,9 @@
 - [x] Decisions table: Make Decision/Outcome column twice as wide (55% width)
 - [x] Upcoming Reviews: Make Week column wider (15% width)
 - [x] Upcoming Reviews: Update description to be a sentence describing the review (e.g., "Product Review for AI Glasses")
+
+- [x] Updated all 3 review parsers to use columns K (Review Title) and L (Topic Summary)
+- [x] Wearables Reviews: Column K=title, Column L=topic_summary
+- [x] Product Reviews: Column K=title, Column L=topic_summary  
+- [x] Systems Reviews: Column K=title (was J), Column L=topic_summary
+- [x] Description now uses topic_summary as primary source, with fallbacks

@@ -40,17 +40,18 @@ def parse_wearables_reviews(filepath):
         review_type = ws.cell(row_idx, 6).value  # Column F: Type of Review
         program = ws.cell(row_idx, 7).value  # Column G: Associated Program
         owner = ws.cell(row_idx, 10).value  # Column J: Driver/Requester
+        title = ws.cell(row_idx, 11).value  # Column K: Review Title
+        topic_summary = ws.cell(row_idx, 12).value  # Column L: Topic Summary
         scheduled_date = ws.cell(row_idx, 4).value  # Column D: Scheduled Date
         
         # Use scheduled date if available, otherwise first date
         review_date = scheduled_date if scheduled_date else first_date
         
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
-            # Extract topic from program or other columns
-            topic = program if program else "TBD"
-            # Generate descriptive sentence
-            review_type_str = review_type if review_type else "Review"
-            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
+            # Use title for topic, program as fallback
+            topic = title if title else program if program else "TBD"
+            # Use topic summary as description if available
+            description = topic_summary if topic_summary else title if title else program if program else "TBD"
             
             reviews.append({
                 'review_type': 'Wearables Review',
@@ -80,12 +81,14 @@ def parse_product_reviews(filepath):
         presenter = ws.cell(row_idx, 7).value  # Column G: Presenter(s)
         review_type = ws.cell(row_idx, 8).value  # Column H: Review Type
         device = ws.cell(row_idx, 10).value  # Column J: Device
+        title = ws.cell(row_idx, 11).value  # Column K: Review Title
+        topic_summary = ws.cell(row_idx, 12).value  # Column L: Topic Summary
         
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
-            topic = device if device else pillar if pillar else "TBD"
-            # Generate descriptive sentence
-            review_type_str = review_type if review_type else "Product Review"
-            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
+            # Use title for topic, device/pillar as fallback
+            topic = title if title else device if device else pillar if pillar else "TBD"
+            # Use topic summary as description if available
+            description = topic_summary if topic_summary else title if title else device if device else pillar if pillar else "TBD"
             owner = presenter if presenter else sponsor if sponsor else "TBD"
             
             reviews.append({
@@ -116,15 +119,15 @@ def parse_systems_reviews(filepath):
         program = ws.cell(row_idx, 6).value  # Column F: Associated Program
         owner = ws.cell(row_idx, 9).value  # Column I: Driver/Requester
         title = ws.cell(row_idx, 10).value  # Column J: Review Title
+        topic_summary = ws.cell(row_idx, 11).value  # Column K: Topic Summary
         
         # Use scheduled date if available, otherwise requested date
         review_date = scheduled_date if scheduled_date else requested_date
         
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
             topic = title if title else program if program else "TBD"
-            # Generate descriptive sentence
-            review_type_str = review_type if review_type else "Systems Review"
-            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
+            # Use topic summary as description if available, otherwise use title
+            description = topic_summary if topic_summary else title if title else program if program else "TBD"
             
             reviews.append({
                 'review_type': 'Systems Review',
