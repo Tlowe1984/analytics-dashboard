@@ -73,8 +73,9 @@ def parse_product_reviews(filepath):
     now = datetime.now()
     two_weeks = now + timedelta(days=14)
     
-    # Track current date (for merged cells)
+    # Track current date and pillar (for merged cells)
     current_date = None
+    current_pillar = None
     
     # Header is in row 2
     for row_idx in range(3, ws.max_row + 1):
@@ -90,6 +91,13 @@ def parse_product_reviews(filepath):
         # Update current_date if this row has a date (handles merged cells)
         if isinstance(date_cell, datetime):
             current_date = date_cell
+        
+        # Update current_pillar if this row has a pillar (handles merged cells)
+        if pillar:
+            current_pillar = pillar
+        # Use current_pillar if this row's pillar is empty
+        elif current_pillar:
+            pillar = current_pillar
         
         # Process row if we have a valid current date and it's within range
         if current_date and now <= current_date <= two_weeks:
@@ -108,7 +116,7 @@ def parse_product_reviews(filepath):
             owner = presenter if presenter else sponsor if sponsor else "TBD"
             
             reviews.append({
-                'review_type': pillar if pillar else 'Product Review',
+                'review_type': pillar if pillar else current_pillar if current_pillar else 'Product Review',
                 'week': get_week_string(current_date),
                 'date': current_date.isoformat(),
                 'topic': topic,

@@ -63,8 +63,9 @@ export function UpcomingReviewsSection() {
                 <td className="py-3 px-4">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                     review.reviewType === "Wearables Review" ? "bg-purple-500/10 text-purple-500" :
-                    review.reviewType === "Product Review" ? "bg-blue-500/10 text-blue-500" :
-                    "bg-green-500/10 text-green-500"
+                    review.reviewType === "Devices & Growth" ? "bg-blue-500/10 text-blue-500" :
+                    review.reviewType === "Systems Review" ? "bg-green-500/10 text-green-500" :
+                    "bg-orange-500/10 text-orange-500"
                   }`}>
                     {review.reviewType}
                   </span>

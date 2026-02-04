@@ -765,3 +765,14 @@
 - [x] Verify tRPC query is returning correct data to frontend
 - [x] Fix UI component to display correct pillar names - Server restart cleared cache
 - [x] Test and verify pillar names display correctly in UI - API returning correct data
+
+## Fix Devices & Growth Pillar Display in Product Reviews
+
+- [x] Check spreadsheet for all rows with "Devices & Growth" in Column B
+- [x] Verify parser is extracting "Devices & Growth" correctly for all rows
+- [x] Identify why some reviews show "Product Review" instead of "Devices & Growth"
+- [x] Fix parser to track current pillar across multiple topic rows
+- [x] Update parser to use pillar from Column B for all rows under same date/pillar
+- [x] Resync database with correct pillar names
+- [x] Update UI badge colors: Wearables=purple, Devices & Growth=blue, Systems=green, Everything else=orange
+- [x] Verify UI displays correct pillar names and colors for all reviews
