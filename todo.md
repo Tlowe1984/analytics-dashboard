@@ -993,3 +993,9 @@
 - [x] Fix sync mechanism to properly download and parse updated documents - Added tmp file deletion before downloads when forceRefresh=true
 - [x] Test sync with user's updated Wrist text - Working correctly, shows updated dates and text
 - [x] Verify no errors on refresh - Sync completes successfully with 749 items
+
+## Adjust PDP Gates Time Window
+- [x] Update getUpcomingMilestones function to show 5 weeks in the past (instead of 3)
+- [x] Keep 4 weeks in the future unchanged
+- [x] Test that older PDP gates now appear
+- [ ] Save checkpoint with change
