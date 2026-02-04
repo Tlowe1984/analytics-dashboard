@@ -950,3 +950,32 @@
 - [ ] Improve Python error reporting with stderr capture (deferred - medium priority)
 - [ ] Test all fixes with manual sync (ready for testing)
 - [ ] Verify transaction rollback on error (ready for testing)
+
+## Debug Refresh Data Button Not Showing Updates
+- [x] Check sync logs to verify sync executed when button clicked
+- [x] Verify Google Drive file path is correct for Device & Growth doc
+- [x] Identify root causes: Google Drive token expired + Python 3.13 env conflict
+- [x] Fix Python environment to use /usr/bin/python3.11 with clean PATH
+- [x] Restart server and test sync
+- [x] User reports Refresh Data still not working - check latest sync logs
+- [x] Identified issue: Upcoming Reviews parser using wrong Python path causing transaction rollback
+- [x] Fix upcoming reviews parser to use /usr/bin/python3.11 with clean environment
+- [x] Restart server and test sync again
+- [x] Sync completed successfully - AI Glasses data showing
+- [x] Fix parser to extract Wrist and ARG/SSG sections (currently only AI Glasses)
+- [x] Test parser recognizes all three product categories (42 items: 16 AI Glasses, 12 Wrist, 14 ARG/SSG)
+- [x] Fix downloadFile to rename files when rclone resolves shortcuts
+- [ ] Restart server and trigger sync
+- [ ] Verify all sections appear correctly on dashboard
+
+## Fix Wrist Highlights/Decisions Section Detection
+- [ ] Investigate why "Highlights/ Decisions/" is categorized as upcoming instead of highlights
+- [ ] Update parser to recognize combined section names
+- [ ] Test parser with updated logic
+- [ ] Verify Wrist Highlights appear in correct section
+
+## Fix React Errors from HTML-like Tags in Content
+- [x] Update MarkdownText component to escape HTML-like tags (<priya>, <praveen>, <bradley>, <insert>)
+- [x] Test that errors are resolved (HMR applied)
+- [x] Verify content still displays correctly with bold formatting
+- [ ] Save checkpoint with all fixes

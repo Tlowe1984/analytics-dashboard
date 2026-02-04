@@ -8,9 +8,13 @@ interface MarkdownTextProps {
 }
 
 export function MarkdownText({ content, className }: MarkdownTextProps) {
-  // Workaround: Manually replace **text** with <strong>text</strong>
+  // Step 1: Escape HTML-like tags that aren't real HTML (e.g., <priya>, <insert>)
+  // This prevents React from trying to render them as components
+  let processedContent = content.replace(/<(?!\/?(strong|a|b|i|em|u|br|p|div|span|ul|ol|li|h[1-6])\b)([^>]+)>/gi, '&lt;$2&gt;');
+  
+  // Step 2: Manually replace **text** with <strong>text</strong>
   // This handles cases where ReactMarkdown doesn't parse ** correctly
-  const processedContent = content.replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
+  processedContent = processedContent.replace(/\*\*([^\*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');
   
   return (
     <div className={className}>

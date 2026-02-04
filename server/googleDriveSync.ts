@@ -119,10 +119,22 @@ function clearCache() {
 async function downloadFile(name: string, gdrivePath: string, localPath: string): Promise<boolean> {
   try {
     console.log(`📥 [${name}] Downloading...`);
-    await execAsync(
-      `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini`,
+    
+    // Download to a temp location first to get the actual filename
+    const result = await execAsync(
+      `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini && ` +
+      `rclone lsf "manus_google_drive:${gdrivePath}" --config /home/ubuntu/.gdrive-rclone.ini`,
       { timeout: 30000, shell: "/bin/bash" }
     );
+    
+    // Get the actual filename from rclone lsf output
+    const actualFilename = result.stdout.trim();
+    const actualPath = `/tmp/${actualFilename}`;
+    
+    // If the actual downloaded file has a different name, rename it to match localPath
+    if (actualPath !== localPath && existsSync(actualPath)) {
+      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: "/bin/bash" });
+    }
     
     if (!existsSync(localPath)) {
       console.error(`❌ [${name}] File not found after download: ${localPath}`);
@@ -143,15 +155,16 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
   try {
     console.log(`📊 [${name}] Parsing...`);
     const { stdout } = await execAsync(
-      `python3.11 ${parser} "${localPath}"`,
+      `/usr/bin/python3.11 ${parser} "${localPath}"`,
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 30000,
         shell: "/bin/bash",
         env: {
-          ...process.env,
+          PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
           PYTHONHOME: "",
+          VIRTUAL_ENV: "",
         }
       }
     );
@@ -419,11 +432,17 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   let upcomingReviewsResult: SyncResult;
   try {
     const { stdout } = await execAsync(
-      "python3.11 /home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py",
+      "/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py",
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 30000,
-        shell: "/bin/bash"
+        shell: "/bin/bash",
+        env: {
+          PATH: "/usr/bin:/usr/local/bin:/bin",
+          PYTHONPATH: "",
+          PYTHONHOME: "",
+          VIRTUAL_ENV: "",
+        }
       }
     );
     

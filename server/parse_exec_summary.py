@@ -28,8 +28,8 @@ try:
             in_exec_summary = True
             continue
         
-        # Stop if we hit another major section
-        if 'Hotspots' in text or 'Decisions' in text:
+        # Stop if we hit another major section (but not "Highlights/ Decisions/" subsection)
+        if text == 'Hotspots' or (text == 'Decisions' and not current_product):
             break
         
         if not in_exec_summary:
@@ -42,11 +42,15 @@ try:
                 current_product = 'arg_ssg'
             continue
         
-        # Detect section types
-        if text in ['Highlights', 'Risks/Opens', 'Upcoming']:
-            current_section = text.lower().replace('/', '_').replace(' ', '_')
-            if current_section == 'risks_opens':
+        # Detect section types (match exact or prefix)
+        if text in ['Highlights', 'Risks/Opens', 'Upcoming'] or text.startswith('Highlights') or text.startswith('Risks') or text.startswith('Upcoming'):
+            # Map to canonical section names
+            if text.startswith('Highlights') or text == 'Highlights':
+                current_section = 'highlights'
+            elif text.startswith('Risks') or text == 'Risks/Opens':
                 current_section = 'risks'
+            elif text.startswith('Upcoming') or text == 'Upcoming':
+                current_section = 'upcoming'
             continue
         
         # Skip if we don't have both product and section
