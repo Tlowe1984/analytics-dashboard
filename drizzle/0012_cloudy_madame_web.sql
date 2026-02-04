@@ -1,0 +1,1 @@
+ALTER TABLE `milestones` MODIFY COLUMN `milestone_type` enum('pdp_gates','sw_milestones','hw_dates','release_milestones') NOT NULL;

@@ -29,4 +29,5 @@ console.log(`Successfully inserted ${insertCount} milestones`);
 console.log(`  - PDP Gates: ${data.pdp_gates.length}`);
 console.log(`  - SW Milestones: ${data.sw_milestones.length}`);
 console.log(`  - HW Dates: ${data.hw_dates.length}`);
+console.log(`  - Release Milestones: ${data.release_milestones?.length || 0}`);
 process.exit(0);

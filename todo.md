@@ -282,3 +282,12 @@
 - [x] Filter for milestone_type = 'sw_milestones' in next 1 month (changed from 12 months)
 - [x] Update tile title to "Software Releases (Next Month)"
 - [x] Test that software milestones display correctly - showing 8 software releases in next month
+
+## Add Release Milestones as 4th Category
+- [x] Find release milestones in Wearable Program Milestone SOT spreadsheet (same tab as other milestones)
+- [x] Add release_milestones to milestones_data.json as 4th category (9 launch dates added)
+- [x] Update database schema to support 'release_milestones' milestone_type
+- [x] Load release milestones into database (9 release milestones loaded)
+- [x] Update getReleaseDates query to filter for milestone_type = 'release_milestones' (12 months window)
+- [x] Change tile title from "Software Releases (Next Month)" to "Releases"
+- [x] Test that release milestones display correctly - showing 8 launch dates through Dec 2026
