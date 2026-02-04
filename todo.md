@@ -843,3 +843,9 @@
 - [x] Remove problematic PYTHONPATH/PYTHONHOME environment variables
 - [x] Test all sync scripts (Devices, Software, Systems, Decisions, Reviews, Milestones)
 - [x] Verify Refresh Data button works without errors
+
+## Fix "spawn /bin/sh ENOENT" Error in Refresh Data
+- [x] Investigate spawn /bin/sh ENOENT error occurring during sync
+- [x] Fix shell execution in parseDocument and downloadFile functions
+- [x] Add explicit shell: "/bin/bash" to all execAsync calls
+- [x] Test all sync operations work correctly

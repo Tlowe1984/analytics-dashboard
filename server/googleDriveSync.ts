@@ -105,7 +105,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     console.log(`📥 [${name}] Downloading...`);
     await execAsync(
       `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini`,
-      { timeout: 30000 }
+      { timeout: 30000, shell: "/bin/bash" }
     );
     
     if (!existsSync(localPath)) {
@@ -130,7 +130,8 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
       `/home/ubuntu/analytics-dashboard/venv/bin/python ${parser} "${localPath}"`,
       {
         cwd: "/home/ubuntu/analytics-dashboard",
-        timeout: 30000
+        timeout: 30000,
+        shell: "/bin/bash"
       }
     );
     
@@ -222,7 +223,7 @@ async function loadAllDataToDatabase(): Promise<number> {
   try {
     const { stdout } = await execAsync(
       "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx load_data.mjs",
-      { timeout: 15000 }
+      { timeout: 15000, shell: "/bin/bash" }
     );
     
     // Try to extract total count from output
