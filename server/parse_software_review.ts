@@ -170,20 +170,4 @@ function parseProductDecisionsTable(doc: any): ParsedItem[] {
   return decisions;
 }
 
-// CLI interface for compatibility
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const docPath = process.argv[2];
-  if (!docPath) {
-    console.log(JSON.stringify([]));
-    process.exit(0);
-  }
-  
-  parseSoftwareReview(docPath)
-    .then(items => {
-      console.log(JSON.stringify(items));
-    })
-    .catch(() => {
-      console.log(JSON.stringify([]));
-      process.exit(1);
-    });
-}
+

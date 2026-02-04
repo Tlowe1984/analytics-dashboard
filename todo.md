@@ -1046,3 +1046,10 @@
 - [x] Update googleDriveSync.ts to use TypeScript parsers
 - [x] Test full sync in development - ✅ 760 items synced successfully in 117s
 - [ ] Save checkpoint and verify production sync works
+
+## Fix Production Deployment Failure (Container Exit)
+- [x] Diagnose why container calls exit(0) during startup - CLI code was triggering on import
+- [x] Fix parser CLI detection code (import.meta.url check)
+- [x] Remove CLI interface that triggers on import from all 3 parsers
+- [x] Test parsers still work - ✅ 760 items synced in 115s
+- [ ] Test deployment succeeds in production

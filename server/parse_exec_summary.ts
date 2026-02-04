@@ -81,20 +81,4 @@ export async function parseExecSummary(docPath: string): Promise<ParsedItem[]> {
   }
 }
 
-// CLI interface for compatibility
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const docPath = process.argv[2];
-  if (!docPath) {
-    console.log(JSON.stringify([]));
-    process.exit(0);
-  }
-  
-  parseExecSummary(docPath)
-    .then(items => {
-      console.log(JSON.stringify(items));
-    })
-    .catch(() => {
-      console.log(JSON.stringify([]));
-      process.exit(1);
-    });
-}
+
