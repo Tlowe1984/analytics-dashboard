@@ -70,86 +70,21 @@ export const appRouter = router({
         return await db.deleteDashboardItem(input.id);
       }),
 
-    // Ask AI question about dashboard data - Enhanced with ALL data sources
+    // Ask AI question about dashboard data
     askQuestion: publicProcedure
       .input(z.object({ question: z.string().min(1) }))
       .mutation(async ({ input }) => {
         const { invokeLLM } = await import("./_core/llm");
         
-        // Get ALL data from all sources
-        const [dashboardItems, softwareItems, systemsItems, decisions, upcomingReviews, milestones] = await Promise.all([
-          db.getAllDashboardItems(),
-          db.getAllSoftwareItems(),
-          db.getAllSystemsItems(),
-          db.getAllDecisions(),
-          db.getUpcomingReviews(),
-          db.getAllMilestones(),
-        ]);
+        // Get all dashboard data
+        const allItems = await db.getAllDashboardItems();
         
-        // Format Exec Summary data
-        const execSummaryContext = dashboardItems.map(item => 
-          `[EXEC SUMMARY - ${item.productCategory.toUpperCase()}] ${item.sectionType}: ${item.content}`
+        // Format data for context
+        const dataContext = allItems.map(item => 
+          `[${item.productCategory.toUpperCase()}] ${item.sectionType}: ${item.content}`
         ).join("\n");
         
-        // Format Software Review data
-        const softwareContext = softwareItems.map(item => 
-          `[SOFTWARE REVIEW] ${item.sectionType}: ${item.content}`
-        ).join("\n");
-        
-        // Format Systems Review data
-        const systemsContext = systemsItems.map(item => 
-          `[SYSTEMS REVIEW] ${item.sectionType}: ${item.content}`
-        ).join("\n");
-        
-        // Format Decisions data
-        const decisionsContext = decisions.map(item => 
-          `[DECISION - Week ${item.week}] ${item.status} | DRI: ${item.dri} | Forum: ${item.forum} | ${item.decision}`
-        ).join("\n");
-        
-        // Format Upcoming Reviews data
-        const reviewsContext = upcomingReviews.map(item => 
-          `[UPCOMING REVIEW - ${item.reviewType}] Week ${item.week} (${item.date}) | Topic: ${item.topic} | Owner: ${item.owner}${item.description ? ' | ' + item.description : ''}`
-        ).join("\n");
-        
-        // Format Milestones data
-        const milestonesContext = milestones.map(item => 
-          `[MILESTONE - ${item.milestoneType}] ${item.date} | Product: ${item.product} | ${item.description}`
-        ).join("\n");
-        
-        // Combine all data
-        const fullDataContext = [
-          "=== EXECUTIVE SUMMARY ===",
-          execSummaryContext,
-          "",
-          "=== SOFTWARE REVIEWS ===",
-          softwareContext,
-          "",
-          "=== SYSTEMS REVIEWS ===",
-          systemsContext,
-          "",
-          "=== DECISIONS ===",
-          decisionsContext,
-          "",
-          "=== UPCOMING REVIEWS ===",
-          reviewsContext,
-          "",
-          "=== MILESTONES ===",
-          milestonesContext,
-        ].join("\n");
-        
-        const systemPrompt = `You are an AI assistant helping analyze a comprehensive executive dashboard for a wearables program. The dashboard contains:
-
-1. Executive Summary: Product highlights, risks, and upcoming items for AI Glasses, Wrist, and ARG/SSG
-2. Software Reviews: Software development updates and status
-3. Systems Reviews: Systems engineering updates and status
-4. Decisions: Recent program decisions with DRI (Directly Responsible Individual) and forum information
-5. Upcoming Reviews: Scheduled product, systems, and wearables reviews
-6. Milestones: Key dates for releases, launches, and program milestones
-
-Current dashboard data:
-${fullDataContext}
-
-Answer the user's question based on this comprehensive data. Be specific, cite relevant information, and provide actionable insights. If the data contains hyperlinks in markdown format [text](url), you can reference them in your answer.`;
+        const systemPrompt = `You are an AI assistant helping analyze an executive dashboard. The dashboard contains data organized by product categories (AI Glasses, Wrist, ARG/SSG) and section types (Highlights, Risks/Opens, Upcoming).\n\nCurrent dashboard data:\n${dataContext}\n\nAnswer the user's question based on this data. Be concise and specific.`;
         
         const response = await invokeLLM({
           messages: [
@@ -162,7 +97,6 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
           answer: response.choices[0]?.message?.content || "I couldn't generate an answer.",
         };
       }),
-
 
     // Seed sample data
     seedSampleData: protectedProcedure.mutation(async () => {

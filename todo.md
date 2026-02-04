@@ -595,3 +595,32 @@
 - [x] No architecture changes required - same pipeline, better parsing
 - [x] No new dependencies or authentication needed
 - [x] Stability maintained - sync performance unchanged
+
+## Verify AI Question Bar Data Access
+
+- [ ] Review AI question bar implementation (AIChatBox component)
+- [ ] Check what data sources are passed to the AI
+- [ ] Verify all 6 data sources are included in context
+- [ ] Test with sample questions across different data types
+- [ ] Test cross-data-source questions (e.g., "What are the risks for Wrist?")
+- [ ] Verify AI can access hyperlinks and source documents
+- [ ] Enhance data context if gaps found
+- [ ] Document AI question bar capabilities
+- [ ] Save checkpoint with any improvements
+
+## AI Question Bar Enhancement - Completed
+
+- [x] Reviewed AI question bar implementation (DashboardChat + AIChatBox)
+- [x] Identified limited data access - only dashboard_items table
+- [x] Enhanced askQuestion to query ALL 6 data sources in parallel
+- [x] Added Executive Summary data (dashboard_items)
+- [x] Added Software Reviews data (software_items)
+- [x] Added Systems Reviews data (systems_items)
+- [x] Added Decisions data (decisions)
+- [x] Added Upcoming Reviews data (upcoming_reviews)
+- [x] Added Milestones data (milestones)
+- [x] Formatted each data source with clear labels and structure
+- [x] Enhanced system prompt with comprehensive context
+- [x] AI can now answer cross-data-source questions
+- [x] AI can reference hyperlinks in markdown format
+- [x] Server restarted and verified working
