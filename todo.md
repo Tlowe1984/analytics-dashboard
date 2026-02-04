@@ -395,3 +395,11 @@
 - [x] Resync milestones data with updated classification
 - [x] Test and verify only SDP milestones display in Software section
 - [x] Parser now separates 227 SDP Milestones from 257 other SW milestones
+
+## Update Releases Section to Show Only In-Market Displayless
+- [x] Check current release milestones data to identify In-Market Displayless releases
+- [x] Update database query to filter for In-Market Displayless product only
+- [x] Set time window to next month (30 days)
+- [x] Ensure releases are sorted chronologically
+- [x] Test and verify only In-Market Displayless releases display
+- [x] Showing 8 In-Market Displayless releases from W7-W10 (Feb 11 - Mar 4)
