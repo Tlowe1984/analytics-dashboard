@@ -1069,3 +1069,13 @@
 - [ ] Save checkpoint with test18 in database
 - [ ] Publish to production
 - [ ] Verify test18 appears in production
+
+## Long-term Solution: Sandbox Sync → Production API
+- [x] Create tRPC endpoint in production: `sync.pushData`
+- [x] Implement proper Drizzle ORM database loading in pushData endpoint
+- [x] Create SYNC_SECRET environment variable for authentication
+- [x] Update daily-sync.mjs to POST parsed data to production API after parsing
+- [ ] Save checkpoint with API implementation
+- [ ] Publish to production so API endpoint is live
+- [ ] Test: Run sync in sandbox → verify production database updates via API
+- [ ] Verify: Change test20 in doc → wait 5min → see in production automatically
