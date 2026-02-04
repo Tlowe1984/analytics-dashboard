@@ -1,9 +1,47 @@
-import { exec } from "child_process";
-import { promisify } from "util";
+import { spawn } from "child_process";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, unlinkSync } from "fs";
 import { createHash } from "crypto";
 
-const execAsync = promisify(exec);
+/**
+ * Execute command without shell dependency
+ */
+function spawnAsync(command: string, args: string[], options: { cwd?: string; timeout?: number; env?: Record<string, string> } = {}): Promise<{ stdout: string; stderr: string }> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, {
+      cwd: options.cwd,
+      env: options.env || process.env,
+    });
+    
+    let stdout = "";
+    let stderr = "";
+    let timedOut = false;
+    
+    const timeout = options.timeout ? setTimeout(() => {
+      timedOut = true;
+      child.kill();
+      reject(new Error(`Command timed out after ${options.timeout}ms`));
+    }, options.timeout) : null;
+    
+    child.stdout?.on("data", (data) => { stdout += data.toString(); });
+    child.stderr?.on("data", (data) => { stderr += data.toString(); });
+    
+    child.on("error", (error) => {
+      if (timeout) clearTimeout(timeout);
+      if (!timedOut) reject(error);
+    });
+    
+    child.on("close", (code) => {
+      if (timeout) clearTimeout(timeout);
+      if (timedOut) return;
+      
+      if (code === 0) {
+        resolve({ stdout, stderr });
+      } else {
+        reject(new Error(`Command failed with code ${code}: ${stderr}`));
+      }
+    });
+  });
+}
 
 interface SyncResult {
   success: boolean;
@@ -120,20 +158,29 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
   try {
     console.log(`📥 [${name}] Downloading...`);
     
-    // Download to a temp location first to get the actual filename
-    const result = await execAsync(
-      `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini && ` +
-      `rclone lsf "manus_google_drive:${gdrivePath}" --config /home/ubuntu/.gdrive-rclone.ini`,
-      { timeout: 120000, shell: "/bin/sh" }
-    );
+    // First, get the actual filename using rclone lsf
+    const lsfResult = await spawnAsync("rclone", [
+      "lsf",
+      `manus_google_drive:${gdrivePath}`,
+      "--config",
+      "/home/ubuntu/.gdrive-rclone.ini"
+    ], { timeout: 120000 });
     
-    // Get the actual filename from rclone lsf output
-    const actualFilename = result.stdout.trim();
+    const actualFilename = lsfResult.stdout.trim();
     const actualPath = `/tmp/${actualFilename}`;
+    
+    // Download the file
+    await spawnAsync("rclone", [
+      "copy",
+      `manus_google_drive:${gdrivePath}`,
+      "/tmp/",
+      "--config",
+      "/home/ubuntu/.gdrive-rclone.ini"
+    ], { timeout: 120000 });
     
     // If the actual downloaded file has a different name, rename it to match localPath
     if (actualPath !== localPath && existsSync(actualPath)) {
-      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: "/bin/sh" });
+      await spawnAsync("mv", [actualPath, localPath], {});
     }
     
     if (!existsSync(localPath)) {
@@ -154,20 +201,16 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
 async function parseDocument(name: string, localPath: string, parser: string, output: string): Promise<number> {
   try {
     console.log(`📊 [${name}] Parsing...`);
-    const { stdout } = await execAsync(
-      `/usr/bin/python3.11 ${parser} "${localPath}"`,
-      {
-        cwd: "/home/ubuntu/analytics-dashboard",
-        timeout: 120000,
-        shell: "/bin/sh",
-        env: {
-          PATH: "/usr/bin:/usr/local/bin:/bin",
-          PYTHONPATH: "",
-          PYTHONHOME: "",
-          VIRTUAL_ENV: "",
-        }
+    const { stdout } = await spawnAsync("/usr/bin/python3.11", [parser, localPath], {
+      cwd: "/home/ubuntu/analytics-dashboard",
+      timeout: 120000,
+      env: {
+        PATH: "/usr/bin:/usr/local/bin:/bin",
+        PYTHONPATH: "",
+        PYTHONHOME: "",
+        VIRTUAL_ENV: "",
       }
-    );
+    });
     
     // Write output to file
     writeFileSync(output, stdout);
@@ -255,10 +298,10 @@ async function loadAllDataToDatabase(): Promise<number> {
   console.log("💾 Loading all data to database...");
   
   try {
-    const { stdout } = await execAsync(
-      "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx load_data.mjs",
-      { timeout: 60000, shell: "/bin/sh" }
-    );
+    const { stdout } = await spawnAsync("pnpm", ["exec", "tsx", "load_data.mjs"], {
+      cwd: "/home/ubuntu/analytics-dashboard",
+      timeout: 60000
+    });
     
     // Try to extract total count from output
     const match = stdout.match(/(\d+)\s+total/i);
@@ -456,12 +499,9 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   const upcomingReviewsStart = Date.now();
   let upcomingReviewsResult: SyncResult;
   try {
-    const { stdout } = await execAsync(
-      "/usr/bin/python3.11 /home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py",
-      {
+    const { stdout } = await spawnAsync("/usr/bin/python3.11", ["/home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py"], {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
-        shell: "/bin/sh",
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
@@ -511,17 +551,17 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       
       // Load milestones
       console.log("💾 Loading milestones to database...");
-      await execAsync(
-        "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx server/load_milestones.mjs",
-        { timeout: 60000, shell: "/bin/sh" }
-      );
+      await spawnAsync("pnpm", ["exec", "tsx", "server/load_milestones.mjs"], {
+        cwd: "/home/ubuntu/analytics-dashboard",
+        timeout: 60000
+      });
       
       // Load upcoming reviews
       console.log("💾 Loading upcoming reviews to database...");
-      await execAsync(
-        "cd /home/ubuntu/analytics-dashboard && node server/load_upcoming_reviews.mjs",
-        { timeout: 60000, shell: "/bin/sh" }
-      );
+      await spawnAsync("node", ["server/load_upcoming_reviews.mjs"], {
+        cwd: "/home/ubuntu/analytics-dashboard",
+        timeout: 60000
+      });
     } catch (error) {
       console.error("Failed to load data to database:", error);
     }

@@ -1020,4 +1020,11 @@
 - [x] Compare production vs development sync execution - Changed shell: true to shell: "/bin/sh"
 - [x] Identify root cause and implement fix - Redesigned architecture to ALWAYS delete tmp files at start of every sync
 - [x] Test with user's test5 update in development - Verified test5 appears correctly
+- [x] Save checkpoint for republish
+
+## Fix Production Shell Execution ENOENT
+- [x] Remove shell dependency from parser execution entirely
+- [x] Use direct spawn() without shell option for Python/rclone commands
+- [x] Test in development to ensure parsers still work - Verified test7 appears correctly
+- [x] Verify no shell-related errors - Sync completed successfully with 750 items in 119.1s
 - [ ] Save checkpoint for republish
