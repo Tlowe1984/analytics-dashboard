@@ -1,0 +1,34 @@
+{
+  "query": "SELECT 'dashboard_items' as table_name, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'milestones', COUNT(*) FROM milestones\nUNION ALL\nSELECT 'upcoming_reviews', COUNT(*) FROM upcoming_reviews;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT 'dashboard_items' as table_name, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'milestones', COUNT(*) FROM milestones\nUNION ALL\nSELECT 'upcoming_reviews', COUNT(*) FROM upcoming_reviews;",
+  "rows": [
+    {
+      "table_name": "software_items",
+      "count": "29"
+    },
+    {
+      "table_name": "dashboard_items",
+      "count": "40"
+    },
+    {
+      "table_name": "decisions",
+      "count": "6"
+    },
+    {
+      "table_name": "systems_items",
+      "count": "658"
+    },
+    {
+      "table_name": "upcoming_reviews",
+      "count": "9"
+    },
+    {
+      "table_name": "milestones",
+      "count": "1506"
+    }
+  ],
+  "messages": [],
+  "stdout": "table_name\tcount\nsoftware_items\t29\ndashboard_items\t40\ndecisions\t6\nsystems_items\t658\nupcoming_reviews\t9\nmilestones\t1506\n",
+  "stderr": "",
+  "execution_time_ms": 109
+}
