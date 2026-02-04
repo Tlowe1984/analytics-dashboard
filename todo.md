@@ -741,3 +741,19 @@
 - [x] Resync upcoming reviews data
 - [x] Verify pillar names display correctly in Review Type column
 - [ ] Test and save checkpoint
+
+## Fix Pillar Names Display in UI
+
+- [ ] Clear query cache
+- [ ] Restart server to force data refresh
+- [ ] Verify pillar names show correctly in browser
+
+## Product Reviews Pillar Name Display - Completed
+
+- [x] Updated Product Reviews parser to extract Pillar name from Column B
+- [x] Parser now shows specific pillar names (Devices & Growth, AI, I+E, AR Glasses+SSG, Wrist, AI Glasses)
+- [x] Falls back to "Product Review" when Column B is empty (expected behavior)
+- [x] Resynced database with updated parser (53s, 0 errors)
+- [x] Verified API returns correct pillar names in Review Type column
+- [x] Confirmed UI displays pillar names correctly for reviews with pillar assignment
+- [x] System working as expected - pillar names show when available, "Product Review" when not assigned

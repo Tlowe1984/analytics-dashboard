@@ -1,0 +1,58 @@
+{
+  "query": "SELECT id, review_type, topic, week FROM upcoming_reviews WHERE review_type LIKE '%Product%' OR review_type LIKE '%Devices%' OR review_type LIKE '%AI%' ORDER BY id LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, review_type, topic, week FROM upcoming_reviews WHERE review_type LIKE '%Product%' OR review_type LIKE '%Devices%' OR review_type LIKE '%AI%' ORDER BY id LIMIT 15;",
+  "rows": [
+    {
+      "id": "104",
+      "review_type": "Devices & Growth",
+      "topic": "Museum Pilot",
+      "week": "W7 (Feb 09)"
+    },
+    {
+      "id": "105",
+      "review_type": "Product Review",
+      "topic": "SpSu '26 Self Serve Retail Demo",
+      "week": "W7 (Feb 09)"
+    },
+    {
+      "id": "106",
+      "review_type": "Product Review",
+      "topic": "2026 Constellation Strategy",
+      "week": "W7 (Feb 09)"
+    },
+    {
+      "id": "108",
+      "review_type": "AI",
+      "topic": "Go/No-Go for LST Server-Side EAP Launch",
+      "week": "W7 (Feb 10)"
+    },
+    {
+      "id": "109",
+      "review_type": "Product Review",
+      "topic": "Speech Input Quality",
+      "week": "W7 (Feb 10)"
+    },
+    {
+      "id": "110",
+      "review_type": "Product Review",
+      "topic": "Project Harmony - Meta AI 2.0 convergence",
+      "week": "W7 (Feb 10)"
+    },
+    {
+      "id": "111",
+      "review_type": "Product Review",
+      "topic": "i18n and Voice - Migration to Avocado",
+      "week": "W7 (Feb 10)"
+    },
+    {
+      "id": "112",
+      "review_type": "Product Review",
+      "topic": "Ambient Camera Sensing",
+      "week": "W7 (Feb 10)"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\treview_type\ttopic\tweek\n104\tDevices & Growth\tMuseum Pilot\tW7 (Feb 09)\n105\tProduct Review\tSpSu '26 Self Serve Retail Demo\tW7 (Feb 09)\n106\tProduct Review\t2026 Constellation Strategy\tW7 (Feb 09)\n108\tAI\tGo/No-Go for LST Server-Side EAP Launch\tW7 (Feb 10)\n109\tProduct Review\tSpeech Input Quality\tW7 (Feb 10)\n110\tProduct Review\tProject Harmony - Meta AI 2.0 convergence\tW7 (Feb 10)\n111\tProduct Review\ti18n and Voice - Migration to Avocado\tW7 (Feb 10)\n112\tProduct Review\tAmbient Camera Sensing\tW7 (Feb 10)\n",
+  "stderr": "",
+  "execution_time_ms": 62
+}
