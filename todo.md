@@ -849,3 +849,21 @@
 - [x] Fix shell execution in parseDocument and downloadFile functions
 - [x] Add explicit shell: "/bin/bash" to all execAsync calls
 - [x] Test all sync operations work correctly
+
+## Extract and Display Product Decisions in Software Section
+- [ ] Investigate Software parser (parse_software_review.py) to understand current structure
+- [ ] Update parser to extract Product Decisions table (Pillar Decisions, FYI Sub-Pillar Decisions)
+- [ ] Extract columns: Topic, DRI, Forum, Status, Decision Doc, Decision Makers/Reviewers, Decision outcome, Post
+- [ ] Update database schema if needed to store decision data
+- [ ] Update frontend ToplineView to display decisions in Software DECISIONS section
+- [ ] Test with real data to verify Product Decisions appear correctly
+
+## Extract and Display Product Decisions from Software Review
+- [x] Update Python parser to extract Product Decisions table from Software doc
+- [x] Detect table structure with title row, header row, category rows, and data rows
+- [x] Add decision fields to database schema (category, topic, dri, forum, status, decision_doc, decision_makers, decision_outcome, post)
+- [x] Update load_data.mjs to insert decision data with all fields
+- [x] Update frontend to display decisions in structured format with borders
+- [x] Group decisions by Pillar and FYI categories
+- [x] Show decision outcome and DRI for each decision
+- [x] Test with real data - 10 decisions displaying correctly (1 Pillar, 9 FYI)

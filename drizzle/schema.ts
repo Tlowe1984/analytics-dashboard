@@ -88,6 +88,16 @@ export const softwareItems = mysqlTable("software_items", {
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
   indentLevel: int("indent_level").default(0).notNull(), // Indentation level from Word numbering (0=flush left, 1+=indented)
   order: int("order").default(0).notNull(),
+  // Decision-specific fields (only populated when sectionType = "decisions")
+  category: varchar("category", { length: 50 }), // "Pillar" or "FYI"
+  topic: text("topic"),
+  dri: text("dri"),
+  forum: text("forum"),
+  status: text("status"),
+  decisionDoc: text("decision_doc"),
+  decisionMakers: text("decision_makers"),
+  decisionOutcome: text("decision_outcome"),
+  post: text("post"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({

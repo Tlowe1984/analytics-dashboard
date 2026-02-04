@@ -239,6 +239,81 @@ function SoftwareTab() {
     const section = softwareSectionConfig[sectionType];
     const SectionIcon = section.icon;
 
+    // Special rendering for decisions
+    if (sectionType === "decisions") {
+      // Group decisions by category
+      const pillarDecisions = items?.filter(item => item.category === "Pillar") || [];
+      const fyiDecisions = items?.filter(item => item.category === "FYI") || [];
+
+      return (
+        <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <div className={cn("p-2 rounded", section.bgClass)}>
+              <SectionIcon className={cn("w-5 h-5", section.color)} />
+            </div>
+            <h3 className="font-bold text-base tracking-wide">{section.label}</h3>
+          </div>
+          <div className="space-y-4">
+            {items && items.length > 0 ? (
+              <>
+                {pillarDecisions.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">Pillar Decisions</h4>
+                    <div className="space-y-3">
+                      {pillarDecisions.map((item) => (
+                        <div key={item.id} className="border-l-2 border-orange-500/30 pl-3 space-y-1">
+                          <div className="text-sm font-medium text-foreground">
+                            <MarkdownText content={item.topic || ""} />
+                          </div>
+                          {item.decisionOutcome && (
+                            <div className="text-xs text-muted-foreground">
+                              <MarkdownText content={item.decisionOutcome} />
+                            </div>
+                          )}
+                          {item.dri && (
+                            <div className="text-xs text-muted-foreground/70">
+                              DRI: <MarkdownText content={item.dri} />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {fyiDecisions.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">FYI Sub-Pillar Decisions</h4>
+                    <div className="space-y-3">
+                      {fyiDecisions.map((item) => (
+                        <div key={item.id} className="border-l-2 border-blue-500/30 pl-3 space-y-1">
+                          <div className="text-sm font-medium text-foreground">
+                            <MarkdownText content={item.topic || ""} />
+                          </div>
+                          {item.decisionOutcome && (
+                            <div className="text-xs text-muted-foreground">
+                              <MarkdownText content={item.decisionOutcome} />
+                            </div>
+                          )}
+                          {item.dri && (
+                            <div className="text-xs text-muted-foreground/70">
+                              DRI: <MarkdownText content={item.dri} />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <p className="text-xs text-muted-foreground italic">No items yet</p>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // Default rendering for wins and exec_summary
     return (
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
@@ -247,7 +322,6 @@ function SoftwareTab() {
           </div>
           <h3 className="font-bold text-base tracking-wide">{section.label}</h3>
         </div>
-
         <div className="space-y-2.5">
           {items && items.length > 0 ? (
             items.map((item) => (
@@ -271,7 +345,7 @@ function SoftwareTab() {
         </div>
       </div>
     );
-  };
+  };;
 
   return (
     <div className="space-y-4">

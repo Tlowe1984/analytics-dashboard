@@ -1,0 +1,40 @@
+{
+  "query": "SELECT section_type, category, topic, decision_outcome FROM software_items WHERE section_type = 'decisions' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT section_type, category, topic, decision_outcome FROM software_items WHERE section_type = 'decisions' LIMIT 5;",
+  "rows": [
+    {
+      "section_type": "decisions",
+      "category": "Pillar",
+      "topic": "**[Core Apps]** PTT (Voice Chats) launch readiness for v24",
+      "decision_outcome": "Design is escalating 2 blocking requirements with voice chats experience: hands-free initiation and WA late group joiner voice chat access. Decision is needed on the craft bar, which will determine whether the product can launch in v24 or needs to be delayed, potentially indefinitely. From Core Apps review, Miron and Abhi aligned that holding indefinitely on a core OS limitation isn’t the right trade-off and recommended launching in v24 plus looking at options to pull in the WA fix, assuming it is common."
+    },
+    {
+      "section_type": "decisions",
+      "category": "FYI",
+      "topic": "**[CoreApps]** GNG For AI Link Previews",
+      "decision_outcome": "GO approval from Core Apps Lead, aligned with the team’s recommendation in the pre-read. Shared feedback."
+    },
+    {
+      "section_type": "decisions",
+      "category": "FYI",
+      "topic": "**[****Platform****]** Meta AI 2.0 / Architectural convergence",
+      "decision_outcome": "**Strategy - **Approved, reviews completed with Wearables and MSL. By Meta AI 2.0 (End of March), we will partially converge the architecture stack across models, tools, context and orchestration. Full convergence will follow post Meta AI 2.0. **Execution - **[Tight tracking](https://docs.google.com/document/d/1b3b48gsRy5sxt2lJYiAJoQTRf92SkfwAcB0mTtyFK-8/edit?tab=t.t2dveje9mx7n) towards exiting by Meta AI 2.0 (Harmony1 milestone) with [instructions and office hours](https://fb.workplace.com/groups/1436164824681830/posts/1443278533970459/). Demo checkins to follow."
+    },
+    {
+      "section_type": "decisions",
+      "category": "FYI",
+      "topic": "**[Platform]** 2P Music for Malibu 2LE",
+      "decision_outcome": "Malibu2LE will not support voice search for 2P music on Day0. Instead we will continue to invest in NextGenMusicFramework and once that migration is complete we can extend support for voice search to Malibu2LE"
+    },
+    {
+      "section_type": "decisions",
+      "category": "FYI",
+      "topic": "W06+ Upcoming I+E Decisions (For planned sub-pillar reviews see [here](https://docs.google.com/spreadsheets/d/1CMQHzrSLPMYX0dKpXO2I1qiucUNIKwyGvs-8Trt3SzA/edit?gid=638524564#gid=638524564))",
+      "decision_outcome": "W06+ Upcoming I+E Decisions (For planned sub-pillar reviews see [here](https://docs.google.com/spreadsheets/d/1CMQHzrSLPMYX0dKpXO2I1qiucUNIKwyGvs-8Trt3SzA/edit?gid=638524564#gid=638524564))"
+    }
+  ],
+  "messages": [],
+  "stdout": "section_type\tcategory\ttopic\tdecision_outcome\ndecisions\tPillar\t**[Core Apps]** PTT (Voice Chats) launch readiness for v24\tDesign is escalating 2 blocking requirements with voice chats experience: hands-free initiation and WA late group joiner voice chat access. Decision is needed on the craft bar, which will determine whether the product can launch in v24 or needs to be delayed, potentially indefinitely. From Core Apps review, Miron and Abhi aligned that holding indefinitely on a core OS limitation isn’t the right trade-off and recommended launching in v24 plus looking at options to pull in the WA fix, assuming it is common.\ndecisions\tFYI\t**[CoreApps]** GNG For AI Link Previews\tGO approval from Core Apps Lead, aligned with the team’s recommendation in the pre-read. Shared feedback.\ndecisions\tFYI\t**[****Platform****]** Meta AI 2.0 / Architectural convergence\t**Strategy - **Approved, reviews completed with Wearables and MSL. By Meta AI 2.0 (End of March), we will partially converge the architecture stack across models, tools, context and orchestration. Full convergence will follow post Meta AI 2.0. **Execution - **[Tight tracking](https://docs.google.com/document/d/1b3b48gsRy5sxt2lJYiAJoQTRf92SkfwAcB0mTtyFK-8/edit?tab=t.t2dveje9mx7n) towards exiting by Meta AI 2.0 (Harmony1 milestone) with [instructions and office hours](https://fb.workplace.com/groups/1436164824681830/posts/1443278533970459/). Demo checkins to follow.\ndecisions\tFYI\t**[Platform]** 2P Music for Malibu 2LE\tMalibu2LE will not support voice search for 2P music on Day0. Instead we will continue to invest in NextGenMusicFramework and once that migration is complete we can extend support for voice search to Malibu2LE\ndecisions\tFYI\tW06+ Upcoming I+E Decisions (For planned sub-pillar reviews see [here](https://docs.google.com/spreadsheets/d/1CMQHzrSLPMYX0dKpXO2I1qiucUNIKwyGvs-8Trt3SzA/edit?gid=638524564#gid=638524564))\tW06+ Upcoming I+E Decisions (For planned sub-pillar reviews see [here](https://docs.google.com/spreadsheets/d/1CMQHzrSLPMYX0dKpXO2I1qiucUNIKwyGvs-8Trt3SzA/edit?gid=638524564#gid=638524564))\n",
+  "stderr": "",
+  "execution_time_ms": 66
+}
