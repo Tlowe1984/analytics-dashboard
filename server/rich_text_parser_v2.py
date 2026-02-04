@@ -5,6 +5,8 @@ def extract_rich_text_with_links(paragraph):
     Extract text from a paragraph preserving bold and hyperlinks in their original order.
     Returns markdown-formatted text.
     """
+    from lxml import etree
+    
     result = []
     
     # Get hyperlink map from paragraph's part relationships
@@ -17,66 +19,60 @@ def extract_rich_text_with_links(paragraph):
     except:
         pass
     
-    # Build a map of run elements to their parent hyperlinks
-    run_to_hyperlink = {}
-    for child in paragraph._element:
-        if 'hyperlink' in child.tag.lower():
-            r_id = child.get('{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id')
-            if r_id and r_id in hyperlink_map:
-                hyperlink_url = hyperlink_map[r_id]
-                # Map all runs within this hyperlink
-                for run_elem in child:
-                    if 'r' in run_elem.tag.lower():
-                        run_to_hyperlink[id(run_elem)] = hyperlink_url
-    
-    # Process runs in order
-    current_hyperlink_url = None
-    hyperlink_text = []
-    
-    for run in paragraph.runs:
-        text = run.text
-        if not text:
-            continue
+    # Process the paragraph XML directly to preserve order
+    for element in paragraph._element:
+        # Handle hyperlinks
+        if element.tag.endswith('}hyperlink'):
+            # Get the hyperlink URL
+            r_id = element.get('{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id')
+            hyperlink_url = hyperlink_map.get(r_id, '')
+            
+            # Extract text from all runs within the hyperlink
+            link_text_parts = []
+            for run_elem in element.findall('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}r'):
+                # Get text from this run
+                text_elems = run_elem.findall('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t')
+                run_text = ''.join(t.text or '' for t in text_elems)
+                
+                if run_text:
+                    # Check if bold
+                    is_bold = False
+                    rpr = run_elem.find('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rPr')
+                    if rpr is not None:
+                        bold_elem = rpr.find('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}b')
+                        is_bold = bold_elem is not None
+                    
+                    if is_bold:
+                        link_text_parts.append(f'**{run_text}**')
+                    else:
+                        link_text_parts.append(run_text)
+            
+            # Add the complete hyperlink in markdown format
+            if link_text_parts:
+                link_text = ''.join(link_text_parts)
+                if hyperlink_url:
+                    result.append(f'[{link_text}]({hyperlink_url})')
+                else:
+                    result.append(link_text)
         
-        # Check if this run is part of a hyperlink
-        run_elem_id = id(run._element)
-        is_in_hyperlink = run_elem_id in run_to_hyperlink
-        
-        if is_in_hyperlink:
-            hyperlink_url = run_to_hyperlink[run_elem_id]
+        # Handle regular runs (not in hyperlinks)
+        elif element.tag.endswith('}r'):
+            # Get text from this run
+            text_elems = element.findall('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t')
+            run_text = ''.join(t.text or '' for t in text_elems)
             
-            # If starting a new hyperlink, flush the previous one
-            if current_hyperlink_url and current_hyperlink_url != hyperlink_url:
-                if hyperlink_text:
-                    link_text = ''.join(hyperlink_text)
-                    result.append(f'[{link_text}]({current_hyperlink_url})')
-                    hyperlink_text = []
-            
-            current_hyperlink_url = hyperlink_url
-            
-            # Add text to hyperlink buffer
-            if run.bold:
-                hyperlink_text.append(f'**{text}**')
-            else:
-                hyperlink_text.append(text)
-        else:
-            # Not in hyperlink - flush any pending hyperlink first
-            if current_hyperlink_url and hyperlink_text:
-                link_text = ''.join(hyperlink_text)
-                result.append(f'[{link_text}]({current_hyperlink_url})')
-                hyperlink_text = []
-                current_hyperlink_url = None
-            
-            # Add regular text
-            if run.bold:
-                result.append(f'**{text}**')
-            else:
-                result.append(text)
-    
-    # Flush any remaining hyperlink
-    if current_hyperlink_url and hyperlink_text:
-        link_text = ''.join(hyperlink_text)
-        result.append(f'[{link_text}]({current_hyperlink_url})')
+            if run_text:
+                # Check if bold
+                is_bold = False
+                rpr = element.find('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}rPr')
+                if rpr is not None:
+                    bold_elem = rpr.find('.//{http://schemas.openxmlformats.org/wordprocessingml/2006/main}b')
+                    is_bold = bold_elem is not None
+                
+                if is_bold:
+                    result.append(f'**{run_text}**')
+                else:
+                    result.append(run_text)
     
     # Join result and clean up
     text = ''.join(result)

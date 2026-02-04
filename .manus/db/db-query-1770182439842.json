@@ -1,0 +1,22 @@
+{
+  "query": "SELECT id, content FROM dashboard_items WHERE section_type = 'highlights' AND product_category = 'ai_glasses' LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, content FROM dashboard_items WHERE section_type = 'highlights' AND product_category = 'ai_glasses' LIMIT 3;",
+  "rows": [
+    {
+      "id": "31201",
+      "content": "Oakley Meta Superbowl teasers landed 1/26  (featuring both HSTN and Vanguard)."
+    },
+    {
+      "id": "31202",
+      "content": "🎉MRBD MAU increased +7.16% w/w following a surge in sales from unlocked supply."
+    },
+    {
+      "id": "31203",
+      "content": "**Hypernova2**"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcontent\n31201\tOakley Meta Superbowl teasers landed 1/26  (featuring both HSTN and Vanguard).\n31202\t🎉MRBD MAU increased +7.16% w/w following a surge in sales from unlocked supply.\n31203\t**Hypernova2**\n",
+  "stderr": "",
+  "execution_time_ms": 83
+}

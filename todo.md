@@ -817,3 +817,10 @@
 - [x] Investigate why ReactMarkdown is not rendering ** as bold - Fixed by restarting server
 - [x] Investigate why links are not showing in some sections - Fixed by restarting server
 - [x] Test and verify markdown rendering works correctly - Links and bold text rendering
+
+## Link Text Missing in Wins Section
+
+- [x] Investigate why link text is being removed from content (e.g., "Navigation to ." instead of "Navigation to WA State and NY today")
+- [x] Fix rich text parser to preserve link text and convert to markdown format [text](url)
+- [x] Ensure bold formatting works correctly for ** markers
+- [x] Resync data and verify all text displays correctly with links preserved
