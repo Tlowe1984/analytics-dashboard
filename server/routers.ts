@@ -203,7 +203,7 @@ export const appRouter = router({
     getUpcoming: publicProcedure
       .input(
         z.object({
-          milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+          milestoneType: z.enum(["pdp_gates", "sdp_milestones", "sw_milestones", "hw_dates"]),
           limit: z.number().default(10),
         })
       )
@@ -226,7 +226,7 @@ export const appRouter = router({
     getByType: publicProcedure
       .input(
         z.object({
-          milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+          milestoneType: z.enum(["pdp_gates", "sdp_milestones", "sw_milestones", "hw_dates"]),
         })
       )
       .query(async ({ input }) => {
@@ -242,7 +242,7 @@ export const appRouter = router({
               product: z.string(),
               milestoneName: z.string(),
               milestoneDate: z.date(),
-              milestoneType: z.enum(["pdp_gates", "sw_milestones", "hw_dates"]),
+              milestoneType: z.enum(["pdp_gates", "sdp_milestones", "sw_milestones", "hw_dates"]),
               originalType: z.string().optional(),
             })
           ),

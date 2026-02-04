@@ -4,7 +4,7 @@ import { format, getWeek, isPast } from "date-fns";
 
 export default function UpcomingDates() {
   const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 8 });
-  const swMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sw_milestones", limit: 8 });
+  const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 8 });
   const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 8 });
   const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 8 });
 
@@ -20,10 +20,10 @@ export default function UpcomingDates() {
     },
     {
       title: "Software Milestones",
-      type: "sw_milestones" as const,
+      type: "sdp_milestones" as const,
       icon: Code,
-      data: swMilestones.data || [],
-      isLoading: swMilestones.isLoading,
+      data: sdpMilestones.data || [],
+      isLoading: sdpMilestones.isLoading,
       color: "from-purple-500/20 to-pink-500/20",
       iconColor: "text-purple-400",
     },

@@ -174,7 +174,7 @@ export async function clearAllDashboardItems() {
 }
 
 // Milestone queries
-export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sw_milestones" | "hw_dates", limit = 10) {
+export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_milestones" | "sw_milestones" | "hw_dates" | "release_milestones", limit = 50) {
   const db = await getDb();
   if (!db) return [];
   
@@ -216,7 +216,7 @@ export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sw_mil
   return result;
 }
 
-export async function getAllMilestonesByType(milestoneType: "pdp_gates" | "sw_milestones" | "hw_dates") {
+export async function getAllMilestonesByType(milestoneType: "pdp_gates" | "sdp_milestones" | "sw_milestones" | "hw_dates") {
   const db = await getDb();
   if (!db) return [];
   

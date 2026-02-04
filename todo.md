@@ -385,3 +385,13 @@
 - [x] Test and verify upcoming PDP gates display correctly
 - [x] Parser now correctly filters to only 184 true PDP Milestones (down from 581)
 - [x] Showing 8 PDP gates in 7-week window (2 past, 6 upcoming)
+
+## Update Software Milestones to Show Only SDP
+- [x] Create separate milestone type for SDP (Software Development Program) milestones
+- [x] Update parser to classify SDP Milestones as sdp_milestones type
+- [x] Update database schema to add sdp_milestones enum value
+- [x] Update database query to filter for SDP milestones only
+- [x] Update UI to display SDP milestones in Software Milestones section
+- [x] Resync milestones data with updated classification
+- [x] Test and verify only SDP milestones display in Software section
+- [x] Parser now separates 227 SDP Milestones from 257 other SW milestones
