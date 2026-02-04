@@ -28,23 +28,23 @@ export default function Home() {
 
       {/* Header */}
       <header className="glass-card border-b sticky top-0 z-50">
-        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <BarChart3 className="w-6 h-6 text-primary" />
+        <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold">Wearable Live Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Real-time program insights • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span></p>
+                <h1 className="text-lg sm:text-2xl font-bold">Wearable Live Dashboard</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Real-time program insights • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span></p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {isAuthenticated ? (
                 <>
                   <SyncStatus />
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">{user?.name}</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground hidden md:inline">{user?.name}</span>
                     <Button variant="outline" size="sm" onClick={() => logout()} className="glass-card border-border/50">
                       Logout
                     </Button>
@@ -61,18 +61,18 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="pb-12">
+      <main className="pb-8 sm:pb-12">
         {/* AI Chat Interface */}
-        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto pt-6 pb-4">
+        <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto pt-4 sm:pt-6 pb-3 sm:pb-4">
           <DashboardChat />
         </div>
 
         {/* Dashboard Content */}
-        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-8">
+        <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-4 sm:space-y-8">
           <ToplineView />
           <UpcomingDates />
         </div>
-        <div className="px-4 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-8">
+        <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-4 sm:space-y-8">
           <DecisionsSection />
           <UpcomingReviewsSection />
         </div>

@@ -118,15 +118,15 @@ function ProductCard({
   );
 
   return (
-    <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5 hover:border-border/80 transition-colors">
+    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 h-full">
       {/* Product Header */}
-      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/30">
-        <div className="p-2 rounded-lg bg-primary/10">
-          <ProductIcon className="w-5 h-5 text-primary" />
+      <div className="flex items-center gap-2 sm:gap-3 pb-2 sm:pb-3 border-b border-border/30">
+        <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+          <ProductIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
         </div>
         <div>
-          <h3 className="text-base font-bold">{product.label}</h3>
-          <p className="text-xs text-muted-foreground">Executive Summary</p>
+          <h3 className="font-bold text-sm sm:text-base">{product.label}</h3>
+          <p className="text-xs text-muted-foreground hidden sm:block">Executive Summary</p>
         </div>
       </div>
 
@@ -299,24 +299,33 @@ function SoftwareTab() {
 export default function ToplineView() {
   return (
     <div className="w-full">
-      <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
+      <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-6">
         {/* Section Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 rounded-lg bg-blue-500/10">
-            <Cpu className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-blue-500/10">
+            <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-xl font-bold">Exec Summary Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
-            <p className="text-xs text-muted-foreground">Product category overview</p>
+            <h2 className="text-lg sm:text-xl font-bold">Exec Summary Week {String(Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / 604800000))}</h2>
+            <p className="text-xs text-muted-foreground hidden sm:block">Product category overview</p>
           </div>
         </div>
 
         {/* Tabbed Content */}
         <Tabs defaultValue="devices" className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="devices">Devices</TabsTrigger>
-            <TabsTrigger value="software">Software (I+E, AI, Hearing)</TabsTrigger>
-            <TabsTrigger value="systems">Systems</TabsTrigger>
+            <TabsTrigger value="devices" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Devices</span>
+              <span className="sm:hidden">Devices</span>
+            </TabsTrigger>
+            <TabsTrigger value="software" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Software (I+E, AI, Hearing)</span>
+              <span className="sm:hidden">Software</span>
+            </TabsTrigger>
+            <TabsTrigger value="systems" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Systems</span>
+              <span className="sm:hidden">Systems</span>
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="devices">
