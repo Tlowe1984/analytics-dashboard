@@ -899,3 +899,13 @@
 - [x] Switch to system Python 3.11 instead of venv
 - [x] Test all Python parsers work correctly
 - [x] Verify Refresh Data syncs successfully
+
+## Add Milestones and Upcoming Reviews to Refresh Data Button
+- [x] Add Milestones spreadsheet sync to googleDriveSync.ts
+- [x] Add Upcoming Reviews spreadsheets sync to googleDriveSync.ts
+- [x] Integrate sync_milestones.sh logic into main sync flow
+- [x] Integrate sync_upcoming_reviews.sh logic into main sync flow
+- [x] Create load_milestones.mjs for database loading
+- [x] Test Refresh Data button syncs all 6 data sources
+- [x] Verify Milestones and Upcoming Reviews update correctly
+- [x] Restart server to apply changes

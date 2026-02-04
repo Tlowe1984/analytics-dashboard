@@ -264,6 +264,8 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   software: SyncResult;
   systems: SyncResult;
   decisions: SyncResult;
+  milestones: SyncResult;
+  upcomingReviews: SyncResult;
 }> {
   if (forceRefresh) {
     console.log("🔄 Starting FORCED sync (clearing cache)...");
@@ -303,6 +305,34 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       localPath: "/tmp/Wearable Decisions Canonical .docx",
       parser: "/home/ubuntu/analytics-dashboard/server/parse_decisions.py",
       output: "/tmp/decisions_data.json"
+    },
+    {
+      name: "Milestones",
+      gdrivePath: "Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
+      localPath: "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
+      parser: "/home/ubuntu/analytics-dashboard/server/parse_milestones_xlsx.py",
+      output: "/tmp/milestones_parsed.json"
+    },
+    {
+      name: "Upcoming Reviews (Wearables)",
+      gdrivePath: "2026 Wearables Reviews Sign-Up Sheet .xlsx",
+      localPath: "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx",
+      parser: "",
+      output: ""
+    },
+    {
+      name: "Upcoming Reviews (Product)",
+      gdrivePath: "2026 Product Reviews Sign-Up Sheet.xlsx",
+      localPath: "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx",
+      parser: "",
+      output: ""
+    },
+    {
+      name: "Upcoming Reviews (Systems)",
+      gdrivePath: "Systems Reviews Sign-Up Sheet .xlsx",
+      localPath: "/tmp/Systems Reviews Sign-Up Sheet .xlsx",
+      parser: "",
+      output: ""
     }
   ];
   
@@ -314,11 +344,12 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   }
   console.log(`✅ Downloads complete (${((Date.now() - downloadStart) / 1000).toFixed(1)}s)`);
   
-  // Phase 2: Parse all documents in parallel
+  // Phase 2: Parse documents in parallel (only .docx files with parsers)
   console.log("📊 Phase 2: Parsing documents...");
   const parseStart = Date.now();
+  const docxSources = sources.filter(s => s.parser && s.output);
   const results = await Promise.all(
-    sources.map(async (source) => {
+    docxSources.map(async (source) => {
       const startTime = Date.now();
       
       try {
@@ -362,13 +393,71 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   );
   console.log(`✅ Parsing complete (${((Date.now() - parseStart) / 1000).toFixed(1)}s)`);
   
-  // Phase 3: Load all data to database
-  const hasUpdates = results.some(r => r.success && !r.cached);
+  // Phase 3: Parse upcoming reviews (special handling - single parser for 3 files)
+  console.log("📊 Phase 3: Parsing upcoming reviews...");
+  const upcomingReviewsStart = Date.now();
+  let upcomingReviewsResult: SyncResult;
+  try {
+    const { stdout } = await execAsync(
+      "python3.11 /home/ubuntu/analytics-dashboard/server/parse_upcoming_reviews.py",
+      {
+        cwd: "/home/ubuntu/analytics-dashboard",
+        timeout: 30000,
+        shell: "/bin/bash"
+      }
+    );
+    
+    // Write output to file
+    writeFileSync("/tmp/upcoming_reviews_parsed.json", stdout);
+    
+    // Count items
+    const data = JSON.parse(readFileSync("/tmp/upcoming_reviews_parsed.json", "utf8"));
+    const itemCount = Array.isArray(data) ? data.length : 0;
+    
+    upcomingReviewsResult = {
+      success: true,
+      message: `Synced ${itemCount} upcoming reviews`,
+      timestamp: new Date(),
+      itemsUpdated: itemCount,
+      cached: false,
+      duration: Date.now() - upcomingReviewsStart
+    };
+    console.log(`✅ Upcoming reviews parsed: ${itemCount} items`);
+  } catch (error) {
+    console.error("Failed to parse upcoming reviews:", error);
+    upcomingReviewsResult = {
+      success: false,
+      message: "Failed to parse upcoming reviews",
+      timestamp: new Date(),
+      itemsUpdated: 0,
+      cached: false,
+      duration: Date.now() - upcomingReviewsStart,
+      error: error instanceof Error ? error.message : "Unknown error"
+    };
+  }
+  
+  // Phase 4: Load all data to database
+  const hasUpdates = results.some(r => r.success && !r.cached) || upcomingReviewsResult.success;
   let totalItems = 0;
   
   if (hasUpdates) {
     try {
+      // Load main data (devices, software, systems, decisions)
       totalItems = await loadAllDataToDatabase();
+      
+      // Load milestones
+      console.log("💾 Loading milestones to database...");
+      await execAsync(
+        "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx server/load_milestones.mjs",
+        { timeout: 15000, shell: "/bin/bash" }
+      );
+      
+      // Load upcoming reviews
+      console.log("💾 Loading upcoming reviews to database...");
+      await execAsync(
+        "cd /home/ubuntu/analytics-dashboard && node server/load_upcoming_reviews.mjs",
+        { timeout: 15000, shell: "/bin/bash" }
+      );
     } catch (error) {
       console.error("Failed to load data to database:", error);
     }
@@ -377,7 +466,7 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   }
   
   const overallDuration = Date.now() - overallStart;
-  const allSuccess = results.every(r => r.success);
+  const allSuccess = results.every(r => r.success) && upcomingReviewsResult.success;
   const cachedCount = results.filter(r => r.cached).length;
   
   console.log(
@@ -390,7 +479,9 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
     devices: results[0],
     software: results[1],
     systems: results[2],
-    decisions: results[3]
+    decisions: results[3],
+    milestones: results[4],
+    upcomingReviews: upcomingReviewsResult
   };
 }
 
