@@ -124,7 +124,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     const result = await execAsync(
       `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini && ` +
       `rclone lsf "manus_google_drive:${gdrivePath}" --config /home/ubuntu/.gdrive-rclone.ini`,
-      { timeout: 120000, shell: true }
+      { timeout: 120000, shell: "/bin/sh" }
     );
     
     // Get the actual filename from rclone lsf output
@@ -133,7 +133,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     
     // If the actual downloaded file has a different name, rename it to match localPath
     if (actualPath !== localPath && existsSync(actualPath)) {
-      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: true });
+      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: "/bin/sh" });
     }
     
     if (!existsSync(localPath)) {
@@ -159,7 +159,7 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
-        shell: true,
+        shell: "/bin/sh",
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
@@ -257,7 +257,7 @@ async function loadAllDataToDatabase(): Promise<number> {
   try {
     const { stdout } = await execAsync(
       "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx load_data.mjs",
-      { timeout: 60000, shell: true }
+      { timeout: 60000, shell: "/bin/sh" }
     );
     
     // Try to extract total count from output
@@ -299,42 +299,41 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
   // Set mutex lock
   syncInProgress = true;
   
-  try {
+  // ALWAYS delete tmp files at start to ensure fresh downloads
+  console.log("🗑️  Deleting all tmp files to ensure fresh downloads...");
+    const tmpFiles = [
+      "/tmp/Device & Growth Canonical Program Review.docx",
+      "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx",
+      "/tmp/Wearables Systems Review.docx",
+      "/tmp/Wearable Decisions Canonical .docx",
+      "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
+      "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx",
+      "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx",
+      "/tmp/Systems Reviews Sign-Up Sheet .xlsx"
+    ];
+    
+    for (const file of tmpFiles) {
+      try {
+        if (existsSync(file)) {
+          unlinkSync(file);
+          console.log(`   ✓ Deleted ${file}`);
+        }
+      } catch (e) {
+        console.error(`   ❌ Failed to delete ${file}:`, e);
+      }
+    }
+    
+    // Clear cache if forced refresh
     if (forceRefresh) {
-      console.log("🔄 Starting FORCED sync (clearing cache)...");
+      console.log("🔄 FORCED sync - clearing query cache...");
       clearCache();
       console.log("✨ Cache cleared");
-      
-      // Delete all tmp files to force fresh downloads
-      const tmpFiles = [
-        "/tmp/Device & Growth Canonical Program Review.docx",
-        "/tmp/Software (I+E, AI, Hearing) Canonical Program Review.docx",
-        "/tmp/Wearables Systems Review.docx",
-        "/tmp/Wearable Decisions Canonical .docx",
-        "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
-        "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx",
-        "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx",
-        "/tmp/Systems Reviews Sign-Up Sheet .xlsx"
-      ];
-      
-      console.log(`🗑️  Attempting to delete ${tmpFiles.length} tmp files...`);
-      for (const file of tmpFiles) {
-        try {
-          if (existsSync(file)) {
-            unlinkSync(file);
-            console.log(`🗑️  Deleted ${file}`);
-          } else {
-            console.log(`ℹ️  File doesn't exist: ${file}`);
-          }
-        } catch (e) {
-          console.error(`❌ Failed to delete ${file}:`, e);
-        }
-      }
     } else {
-      console.log("🚀 Starting optimized sync...");
+      console.log("🚀 Starting sync with fresh downloads...");
     }
     const overallStart = Date.now();
   
+  try {
   // Define all data sources
   const sources: SourceConfig[] = [
     {
@@ -462,7 +461,7 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
-        shell: true,
+        shell: "/bin/sh",
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
@@ -514,14 +513,14 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       console.log("💾 Loading milestones to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx server/load_milestones.mjs",
-        { timeout: 60000, shell: true }
+        { timeout: 60000, shell: "/bin/sh" }
       );
       
       // Load upcoming reviews
       console.log("💾 Loading upcoming reviews to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && node server/load_upcoming_reviews.mjs",
-        { timeout: 60000, shell: true }
+        { timeout: 60000, shell: "/bin/sh" }
       );
     } catch (error) {
       console.error("Failed to load data to database:", error);
