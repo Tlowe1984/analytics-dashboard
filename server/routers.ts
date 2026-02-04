@@ -242,9 +242,19 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         // Check if we're in production (no Python available)
         const isProduction = !process.env.PYTHONPATH && process.env.NODE_ENV === 'production';
         
+        console.log('[SYNC] Environment detection:', {
+          PYTHONPATH: process.env.PYTHONPATH,
+          NODE_ENV: process.env.NODE_ENV,
+          isProduction,
+          hasManusApiKey: !!process.env.MANUS_API_KEY,
+          apiKeyLength: process.env.MANUS_API_KEY?.length || 0,
+        });
+        
         if (isProduction) {
           // Production: Trigger Manus API to run sync in sandbox (has Python)
+          console.log('[SYNC] Production mode: Triggering Manus API task');
           try {
+            console.log('[SYNC] Making API request to:', 'https://api.manus.ai/v1/tasks');
             const response = await fetch('https://api.manus.ai/v1/tasks', {
               method: 'POST',
               headers: {
@@ -258,11 +268,16 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
               }),
             });
             
+            console.log('[SYNC] API response status:', response.status);
+            
             if (!response.ok) {
-              throw new Error(`Manus API error: ${response.status}`);
+              const errorText = await response.text();
+              console.error('[SYNC] API error response:', errorText);
+              throw new Error(`Manus API error: ${response.status} - ${errorText}`);
             }
             
             const taskData = await response.json();
+            console.log('[SYNC] Task created successfully:', taskData);
             
             // Return success message with task ID
             const result = {
@@ -276,7 +291,11 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
             
             return result;
           } catch (error) {
-            console.error('Failed to trigger sync task:', error);
+            console.error('[SYNC] Failed to trigger sync task:', error);
+            console.error('[SYNC] Error details:', {
+              message: error instanceof Error ? error.message : String(error),
+              stack: error instanceof Error ? error.stack : undefined,
+            });
             // Fallback: return error message
             const result = { 
               devices: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
@@ -290,6 +309,7 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
           }
         } else {
           // Development/Sandbox: Run sync directly (Python available)
+          console.log('[SYNC] Development/Sandbox mode: Running sync directly with Python');
           const result = await syncAll(input?.forceRefresh ?? false);
           // Invalidate cache after sync completes so frontend gets fresh data
           invalidateDashboardCache();

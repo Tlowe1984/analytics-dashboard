@@ -1028,3 +1028,10 @@
 - [ ] Save checkpoint and publish to production
 - [ ] Test that task completes successfully without package errors
 - [ ] Verify test13 appears in production after sync completes
+
+## Add Logging to Diagnose Production Sync Issue
+- [x] Add detailed console.log statements to sync endpoint
+- [x] Log: production detection, API key presence, API request details, API response
+- [ ] Verify MANUS_API_KEY secret is properly set in production environment
+- [ ] Save checkpoint and test in production
+- [ ] Analyze logs to identify why sync returns instantly
