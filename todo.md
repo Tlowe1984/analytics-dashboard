@@ -919,3 +919,20 @@
 - [x] Test on mobile viewport sizes
 - [x] Verify description text is readable without scrolling
 - [x] Hot module reload applied changes successfully
+
+## Comprehensive Dashboard Audit
+- [x] Audit daily auto-sync at 6 AM PST (scheduler configuration)
+- [x] Audit manual Refresh Data button (all 6 sources)
+- [x] Audit AI search bar data coverage (searches all sources)
+- [x] Verify sync scripts pull from correct Google Drive paths
+- [x] Document findings and create fix plan if needed
+- [x] Create detailed audit report (dashboard_audit_report.md)
+
+## Fix Sync Path Mismatch and Unify Sync Mechanisms
+- [x] Update sync-scheduler.ts to call googleDriveSync.ts instead of shell scripts
+- [x] Remove dependency on sync_all_data.sh for daily auto-sync
+- [x] Remove unused imports (exec, promisify, SYNC_SCRIPT constant)
+- [x] Test daily sync mechanism uses canonical shortcuts
+- [x] Verify both daily and manual sync use same code path
+- [x] Document the unified sync architecture (SYNC_ARCHITECTURE.md)
+- [x] Restart server and verify scheduler initialized correctly

@@ -6,8 +6,6 @@
  */
 
 import cron from 'node-cron';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import { notifyOwner } from './_core/notification';
 import { appendFileSync } from 'fs';
 import { join, dirname } from 'path';
@@ -16,10 +14,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const execAsync = promisify(exec);
-
 const LOG_FILE = join(__dirname, '../.manus-logs/sync-scheduler.log');
-const SYNC_SCRIPT = '/home/ubuntu/analytics-dashboard/sync_all_data.sh';
 
 function log(message: string) {
   const timestamp = new Date().toISOString();
@@ -33,48 +28,58 @@ function log(message: string) {
 }
 
 /**
- * Run the sync script
+ * Run the sync using TypeScript sync function
  */
 async function runSync() {
-  log('========================================');
+  log('========================================')
   log('Starting scheduled sync');
-  log('========================================');
+  log('========================================')
   
   try {
-    const { stdout, stderr } = await execAsync(
-      `bash ${SYNC_SCRIPT}`,
-      { 
-        timeout: 600000, // 10 minute timeout
-        maxBuffer: 10 * 1024 * 1024 // 10MB buffer
+    // Import and call the TypeScript sync function
+    const { syncAll } = await import('./googleDriveSync');
+    
+    log('Syncing all 6 data sources...');
+    const result = await syncAll(true); // forceRefresh = true
+    
+    // Log results for each source
+    const sources = ['devices', 'software', 'systems', 'decisions', 'milestones', 'upcomingReviews'] as const;
+    let successCount = 0;
+    let failCount = 0;
+    
+    for (const source of sources) {
+      const sourceResult = result[source];
+      if (sourceResult.success) {
+        successCount++;
+        const status = sourceResult.cached ? '📦 (cached)' : '✅ (updated)';
+        log(`${status} ${source}: ${sourceResult.message}`);
+      } else {
+        failCount++;
+        log(`❌ ${source}: ${sourceResult.message}`);
       }
-    );
-    
-    log('Sync completed successfully');
-    
-    if (stdout) {
-      log('Output:');
-      log(stdout);
     }
     
-    if (stderr) {
-      log('Warnings:');
-      log(stderr);
+    log('========================================')
+    log(`Sync completed: ${successCount} succeeded, ${failCount} failed`);
+    log('========================================')
+    
+    if (failCount > 0) {
+      // Notify owner of partial failure
+      try {
+        await notifyOwner({
+          title: '⚠️ Dashboard Sync Completed with Errors',
+          content: `Daily sync at ${new Date().toLocaleString()}:\n\n${successCount} sources succeeded\n${failCount} sources failed\n\nCheck logs for details.`
+        });
+      } catch (notifyError) {
+        log('Failed to send notification: ' + notifyError);
+      }
     }
     
-    return { success: true };
+    return { success: failCount === 0 };
   } catch (error: any) {
     log('Sync failed with error:');
     log(error.message);
-    
-    if (error.stdout) {
-      log('Partial output:');
-      log(error.stdout);
-    }
-    
-    if (error.stderr) {
-      log('Error output:');
-      log(error.stderr);
-    }
+    log(error.stack || '');
     
     // Notify owner of failure
     try {
