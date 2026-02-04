@@ -50,11 +50,11 @@ export function UpcomingReviewsSection() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border/50">
-              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Review Type</th>
-              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Week</th>
-              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Topic</th>
-              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Description</th>
-              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">Owner</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground w-[15%]">Review Type</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground w-[15%]">Week</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground w-[20%]">Topic</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground w-[40%]">Description</th>
+              <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground w-[10%]">Owner</th>
             </tr>
           </thead>
           <tbody>

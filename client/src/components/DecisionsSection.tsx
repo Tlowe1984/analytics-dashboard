@@ -58,11 +58,11 @@ export default function DecisionsSection() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 font-semibold text-sm">Week</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm">DRI</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm">Forum</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm">Status</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm">Decision Outcome</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm w-[8%]">Week</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm w-[10%]">DRI</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm w-[15%]">Forum</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm w-[12%]">Status</th>
+                      <th className="text-left py-3 px-4 font-semibold text-sm w-[55%]">Decision Outcome</th>
                     </tr>
                   </thead>
                   <tbody>

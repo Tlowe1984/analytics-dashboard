@@ -683,3 +683,15 @@
 - [x] Query performance: ~69-89ms (excellent)
 - [x] Database size: <1 MB data, 0.02-0.03 MB indexes
 - [x] Cache overhead: Minimal (<1 MB memory)
+
+## Table Layout Adjustments
+
+- [ ] Decisions table: Make DRI column narrower
+- [ ] Decisions table: Make Decision/Outcome column twice as wide
+- [ ] Upcoming Reviews: Make Week column wider
+- [ ] Upcoming Reviews: Update description to be a sentence describing the review
+
+- [x] Decisions table: Make DRI column narrower (10% width)
+- [x] Decisions table: Make Decision/Outcome column twice as wide (55% width)
+- [x] Upcoming Reviews: Make Week column wider (15% width)
+- [x] Upcoming Reviews: Update description to be a sentence describing the review (e.g., "Product Review for AI Glasses")

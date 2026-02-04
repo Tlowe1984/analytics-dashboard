@@ -48,7 +48,9 @@ def parse_wearables_reviews(filepath):
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
             # Extract topic from program or other columns
             topic = program if program else "TBD"
-            description = f"{review_type or 'Review'}"
+            # Generate descriptive sentence
+            review_type_str = review_type if review_type else "Review"
+            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
             
             reviews.append({
                 'review_type': 'Wearables Review',
@@ -81,7 +83,9 @@ def parse_product_reviews(filepath):
         
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
             topic = device if device else pillar if pillar else "TBD"
-            description = f"{review_type or 'Product Review'}"
+            # Generate descriptive sentence
+            review_type_str = review_type if review_type else "Product Review"
+            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
             owner = presenter if presenter else sponsor if sponsor else "TBD"
             
             reviews.append({
@@ -118,7 +122,9 @@ def parse_systems_reviews(filepath):
         
         if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
             topic = title if title else program if program else "TBD"
-            description = f"{review_type or 'Systems Review'}"
+            # Generate descriptive sentence
+            review_type_str = review_type if review_type else "Systems Review"
+            description = f"{review_type_str} for {topic}" if topic and topic != "TBD" else review_type_str
             
             reviews.append({
                 'review_type': 'Systems Review',

@@ -1,0 +1,43 @@
+{
+  "query": "SELECT * FROM upcoming_reviews LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM upcoming_reviews LIMIT 3;",
+  "rows": [
+    {
+      "id": "28",
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "date": "2026-02-05",
+      "topic": "AR Glasses+SSG",
+      "description": "Product Review",
+      "owner": "Rahul Prasad (RL)",
+      "createdAt": "2026-02-04 02:53:29",
+      "updatedAt": "2026-02-04 02:53:29"
+    },
+    {
+      "id": "29",
+      "review_type": "Systems Review",
+      "week": "W6 (Feb 06)",
+      "date": "2026-02-06",
+      "topic": "Stage2 AI coprocessor update",
+      "description": "DISCUSS",
+      "owner": "Jeremy Snodgrass Stefano Cadario",
+      "createdAt": "2026-02-04 02:53:29",
+      "updatedAt": "2026-02-04 02:53:29"
+    },
+    {
+      "id": "30",
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "date": "2026-02-09",
+      "topic": "Growth/Retail",
+      "description": "Inform",
+      "owner": "Benjamin Brenner Chris Hogan Lana Ivory Caty Caldwell",
+      "createdAt": "2026-02-04 02:53:29",
+      "updatedAt": "2026-02-04 02:53:29"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\treview_type\tweek\tdate\ttopic\tdescription\towner\tcreatedAt\tupdatedAt\n28\tProduct Review\tW6 (Feb 05)\t2026-02-05\tAR Glasses+SSG\tProduct Review\tRahul Prasad (RL)\t2026-02-04 02:53:29\t2026-02-04 02:53:29\n29\tSystems Review\tW6 (Feb 06)\t2026-02-06\tStage2 AI coprocessor update\tDISCUSS\tJeremy Snodgrass Stefano Cadario\t2026-02-04 02:53:29\t2026-02-04 02:53:29\n30\tProduct Review\tW7 (Feb 09)\t2026-02-09\tGrowth/Retail\tInform\tBenjamin Brenner Chris Hogan Lana Ivory Caty Caldwell\t2026-02-04 02:53:29\t2026-02-04 02:53:29\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}
