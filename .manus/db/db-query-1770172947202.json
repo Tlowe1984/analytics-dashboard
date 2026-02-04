@@ -1,0 +1,28 @@
+{
+  "query": "SELECT 'dashboard_items' as table_name, COUNT(*) as total, \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END) as with_bold,\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END) as new_items\nFROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*), \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END),\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END)\nFROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*), \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END),\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END)\nFROM systems_items;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT 'dashboard_items' as table_name, COUNT(*) as total, \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END) as with_bold,\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END) as new_items\nFROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*), \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END),\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END)\nFROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*), \n  SUM(CASE WHEN content LIKE '%**%**%' THEN 1 ELSE 0 END),\n  SUM(CASE WHEN is_new = 1 THEN 1 ELSE 0 END)\nFROM systems_items;",
+  "rows": [
+    {
+      "table_name": "software_items",
+      "total": "29",
+      "with_bold": "29",
+      "new_items": "0"
+    },
+    {
+      "table_name": "dashboard_items",
+      "total": "40",
+      "with_bold": "13",
+      "new_items": "26"
+    },
+    {
+      "table_name": "systems_items",
+      "total": "658",
+      "with_bold": "285",
+      "new_items": "58"
+    }
+  ],
+  "messages": [],
+  "stdout": "table_name\ttotal\twith_bold\tnew_items\nsoftware_items\t29\t29\t0\ndashboard_items\t40\t13\t26\nsystems_items\t658\t285\t58\n",
+  "stderr": "",
+  "execution_time_ms": 106
+}
