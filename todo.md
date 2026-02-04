@@ -369,3 +369,9 @@
 - [x] Test milestones sync and verify milestone dates are updated
 - [x] Verify all upcoming dates display correctly in dashboard
 - [x] Load 1506 milestones from spreadsheet into database
+
+## Update PDP Gates Display
+- [x] Filter PDP Gates section to show only PDP milestones (not all milestone types)
+- [x] Adjust time window to show 3 weeks past + 4 weeks upcoming (7 weeks total)
+- [x] Style past milestones in grey color
+- [x] Test and verify correct milestones display
