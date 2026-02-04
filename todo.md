@@ -709,3 +709,5 @@
 - [x] Increased Decision Outcome to 72% (was 65%)
 - [x] Reduced padding from px-4 to px-2 for tighter layout
 - [x] Made Forum and Status text smaller (text-xs)
+
+- [x] Fix Product Reviews parser to read columns K (Review Title) and L (Topic Summary) correctly

@@ -1,0 +1,45 @@
+{
+  "query": "SELECT review_type, week, topic, description, owner FROM upcoming_reviews WHERE review_type = 'Product Review' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT review_type, week, topic, description, owner FROM upcoming_reviews WHERE review_type = 'Product Review' LIMIT 5;",
+  "rows": [
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "AR Glasses+SSG",
+      "description": "Product Review",
+      "owner": "Rahul Prasad (RL)"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "topic": "Growth/Retail",
+      "description": "Inform",
+      "owner": "Benjamin Brenner Chris Hogan Lana Ivory Caty Caldwell"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 10)",
+      "topic": "RBM",
+      "description": "Decide",
+      "owner": "Emerson Qin"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 12)",
+      "topic": "AR Glasses+SSG",
+      "description": "Product Review",
+      "owner": "Rahul Prasad (RL)"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W8 (Feb 16)",
+      "topic": "Devices & Growth",
+      "description": "Product Review",
+      "owner": "Presidents' Day"
+    }
+  ],
+  "messages": [],
+  "stdout": "review_type\tweek\ttopic\tdescription\towner\nProduct Review\tW6 (Feb 05)\tAR Glasses+SSG\tProduct Review\tRahul Prasad (RL)\nProduct Review\tW7 (Feb 09)\tGrowth/Retail\tInform\tBenjamin Brenner Chris Hogan Lana Ivory Caty Caldwell\nProduct Review\tW7 (Feb 10)\tRBM\tDecide\tEmerson Qin\nProduct Review\tW7 (Feb 12)\tAR Glasses+SSG\tProduct Review\tRahul Prasad (RL)\nProduct Review\tW8 (Feb 16)\tDevices & Growth\tProduct Review\tPresidents' Day\n",
+  "stderr": "",
+  "execution_time_ms": 87
+}

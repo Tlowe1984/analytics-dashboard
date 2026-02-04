@@ -65,7 +65,7 @@ def parse_wearables_reviews(filepath):
     return reviews
 
 def parse_product_reviews(filepath):
-    """Parse 2026 Product Reviews Sign-Up Sheet (tab 1)"""
+    """Parse 2026 Product Reviews Sign-Up Sheet"""
     wb = openpyxl.load_workbook(filepath, data_only=True)
     ws = wb['Wearables Product Reviews Start']
     
@@ -73,9 +73,12 @@ def parse_product_reviews(filepath):
     now = datetime.now()
     two_weeks = now + timedelta(days=14)
     
+    # Track current date (for merged cells)
+    current_date = None
+    
     # Header is in row 2
     for row_idx in range(3, ws.max_row + 1):
-        review_date = ws.cell(row_idx, 1).value  # Column A: Review Date
+        date_cell = ws.cell(row_idx, 1).value  # Column A: Review Date
         pillar = ws.cell(row_idx, 2).value  # Column B: Pillar
         sponsor = ws.cell(row_idx, 3).value  # Column C: Sponsor
         presenter = ws.cell(row_idx, 7).value  # Column G: Presenter(s)
@@ -84,17 +87,26 @@ def parse_product_reviews(filepath):
         title = ws.cell(row_idx, 11).value  # Column K: Review Title
         topic_summary = ws.cell(row_idx, 12).value  # Column L: Topic Summary
         
-        if isinstance(review_date, datetime) and now <= review_date <= two_weeks:
+        # Update current_date if this row has a date (handles merged cells)
+        if isinstance(date_cell, datetime):
+            current_date = date_cell
+        
+        # Process row if we have a valid current date and it's within range
+        if current_date and now <= current_date <= two_weeks:
+            # Skip rows with no pillar or presenter data (empty rows)
+            if not pillar and not presenter:
+                continue
+                
             # Use title for topic, device/pillar as fallback
             topic = title if title else device if device else pillar if pillar else "TBD"
-            # Use topic summary as description if available
-            description = topic_summary if topic_summary else title if title else device if device else pillar if pillar else "TBD"
+            # Use topic summary as description if available, otherwise use title
+            description = topic_summary if topic_summary else title if title else f"{pillar} review" if pillar else "TBD"
             owner = presenter if presenter else sponsor if sponsor else "TBD"
             
             reviews.append({
                 'review_type': 'Product Review',
-                'week': get_week_string(review_date),
-                'date': review_date.isoformat(),
+                'week': get_week_string(current_date),
+                'date': current_date.isoformat(),
                 'topic': topic,
                 'description': description,
                 'owner': owner

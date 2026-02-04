@@ -1,0 +1,43 @@
+{
+  "query": "SELECT review_type, week, topic, LEFT(description, 100) as description_preview, owner FROM upcoming_reviews WHERE review_type = 'Product Review' ORDER BY date LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT review_type, week, topic, LEFT(description, 100) as description_preview, owner FROM upcoming_reviews WHERE review_type = 'Product Review' ORDER BY date LIMIT 5;",
+  "rows": [
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "Wrist",
+      "description_preview": "Wrist review",
+      "owner": ""
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "AI Glasses",
+      "description_preview": "AI Glasses review",
+      "owner": "Ankit Brahmbhatt"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W6 (Feb 05)",
+      "topic": "AR Glasses+SSG",
+      "description_preview": "AR Glasses+SSG review",
+      "owner": "Rahul Prasad (RL)"
+    },
+    {
+      "review_type": "Product Review",
+      "week": "W7 (Feb 09)",
+      "topic": "SpSu '26 Self Serve Retail Demo",
+      "description_preview": "Inform + Discuss SpSu '26 Self Serve Retail Demo",
+      "owner": "Selena Salazar Palak Sood"
+    }
+  ],
+  "messages": [
+    "Marissa Chacko",
+    "Product Review\tW7 (Feb 09)\tMuseum Pilot\tDemo Objective:",
+    "- Demonstrate an MVP version of a RBM Tour Guide",
+    "- Seek feedback on critical user pa\tBenjamin Brenner Chris Hogan Lana Ivory Caty Caldwell"
+  ],
+  "stdout": "review_type\tweek\ttopic\tdescription_preview\towner\nProduct Review\tW6 (Feb 05)\tWrist\tWrist review\t\nMarissa Chacko\nProduct Review\tW6 (Feb 05)\tAI Glasses\tAI Glasses review\tAnkit Brahmbhatt\nProduct Review\tW6 (Feb 05)\tAR Glasses+SSG\tAR Glasses+SSG review\tRahul Prasad (RL)\nProduct Review\tW7 (Feb 09)\tSpSu '26 Self Serve Retail Demo\tInform + Discuss SpSu '26 Self Serve Retail Demo\tSelena Salazar Palak Sood\nProduct Review\tW7 (Feb 09)\tMuseum Pilot\tDemo Objective:\n- Demonstrate an MVP version of a RBM Tour Guide\n- Seek feedback on critical user pa\tBenjamin Brenner Chris Hogan Lana Ivory Caty Caldwell\n",
+  "stderr": "",
+  "execution_time_ms": 74
+}
