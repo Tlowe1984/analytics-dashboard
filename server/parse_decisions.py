@@ -53,8 +53,8 @@ def is_within_last_month(week_str):
     else:
         return False
     
-    # Include decisions from last 4 weeks (approximately 1 month)
-    return 0 <= week_diff <= 4
+    # Include decisions from last 12 weeks (approximately 3 months)
+    return 0 <= week_diff <= 12
 
 def parse_decisions(doc_path):
     """Extract decisions from the Consolidated Summary table"""
@@ -72,8 +72,12 @@ def parse_decisions(doc_path):
         # Extract rich text from cells
         cells = [extract_rich_text_from_cell(cell).strip() for cell in row.cells]
         
-        # Skip if not enough columns or empty DRI
-        if len(cells) < 5 or not cells[0] or cells[0] == "DRI":
+        # Skip if not enough columns, header row, or no decision outcome
+        if len(cells) < 5 or cells[0] == "DRI" or cells[0] == "Decisions" or "**DRI**" in cells[0]:
+            continue
+        
+        # Skip if no decision outcome (last column)
+        if not cells[4] or len(cells[4].strip()) < 10:
             continue
         
         week_str = cells[3]

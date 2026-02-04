@@ -309,3 +309,11 @@
 - [x] Update DecisionsSection to use MarkdownText
 - [x] Resync all data sources (Devices: 40 items, Software: 29 items, Systems: 658 items, Decisions: 0 items)
 - [x] Test that bold and links display correctly across all tabs
+
+## Fix Decisions Sync Issue
+- [x] Diagnose why Decisions data is no longer syncing
+- [x] Check Google Drive file path and permissions
+- [x] Verify parse_decisions.py parser is working correctly
+- [x] Test manual sync script (sync_decisions.sh)
+- [x] Fix any issues found and resync data
+- [x] Verify Decisions display correctly in UI

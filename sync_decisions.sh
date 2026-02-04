@@ -5,9 +5,9 @@ export PYTHONHOME=
 
 echo "🔄 Syncing Decisions from Google Drive..."
 
-# Download the Wearable Decisions Canonical document
+# Download the Wearable Decisions Canonical document (Google Doc, needs export)
 echo "📥 Downloading Wearable Decisions Canonical..."
-rclone copy "manus_google_drive:Wearables Everything/Wearable Decisions Canonical .docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
+rclone copy "manus_google_drive:Wearables Everything/Wearable Decisions Canonical .docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --drive-export-formats docx --drive-skip-gdocs=false
 
 # Parse decisions
 echo "📊 Parsing decisions..."
