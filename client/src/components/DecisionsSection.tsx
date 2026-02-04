@@ -58,21 +58,21 @@ export default function DecisionsSection() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 font-semibold text-sm w-[8%]">Week</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm w-[10%]">DRI</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm w-[15%]">Forum</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm w-[12%]">Status</th>
-                      <th className="text-left py-3 px-4 font-semibold text-sm w-[55%]">Decision Outcome</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[5%]">Week</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[8%]">DRI</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[8%]">Forum</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%]">Status</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[72%]">Decision Outcome</th>
                     </tr>
                   </thead>
                   <tbody>
                     {decisions.map((decision) => (
                       <tr key={decision.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                        <td className="py-3 px-4 text-sm font-medium whitespace-nowrap">{decision.week}</td>
-                        <td className="py-3 px-4 text-sm whitespace-nowrap">{decision.dri}</td>
-                        <td className="py-3 px-4 text-sm">{decision.forum || "—"}</td>
-                        <td className="py-3 px-4 text-sm">{decision.status || "—"}</td>
-                        <td className="py-3 px-4 text-sm"><MarkdownText content={decision.decisionOutcome} /></td>
+                        <td className="py-3 px-2 text-sm font-medium whitespace-nowrap">{decision.week}</td>
+                        <td className="py-3 px-2 text-sm">{decision.dri}</td>
+                        <td className="py-3 px-2 text-sm text-xs">{decision.forum || "—"}</td>
+                        <td className="py-3 px-2 text-sm text-xs">{decision.status || "—"}</td>
+                        <td className="py-3 px-2 text-sm"><MarkdownText content={decision.decisionOutcome} /></td>
                       </tr>
                     ))}
                   </tbody>

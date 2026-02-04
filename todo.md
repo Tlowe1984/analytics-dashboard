@@ -701,3 +701,11 @@
 - [x] Product Reviews: Column K=title, Column L=topic_summary  
 - [x] Systems Reviews: Column K=title (was J), Column L=topic_summary
 - [x] Description now uses topic_summary as primary source, with fallbacks
+
+- [x] Make Decision Outcome column significantly wider (now 65%, was 55%) (reduce other column widths)
+- [x] Reduced Forum column to 8% (was 10%)
+- [x] Reduced Status column to 7% (was 11%)
+- [x] Reduced Week column to 5% (was 6%)
+- [x] Increased Decision Outcome to 72% (was 65%)
+- [x] Reduced padding from px-4 to px-2 for tighter layout
+- [x] Made Forum and Status text smaller (text-xs)
