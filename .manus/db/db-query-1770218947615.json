@@ -1,0 +1,21 @@
+{
+  "query": "SELECT * FROM dashboard_items WHERE content LIKE '%super bowl%' COLLATE utf8mb4_general_ci LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM dashboard_items WHERE content LIKE '%super bowl%' COLLATE utf8mb4_general_ci LIMIT 1;",
+  "rows": [
+    {
+      "id": "90041",
+      "section_type": "highlights",
+      "product_category": "ai_glasses",
+      "content": "The Super Bowl spot for Oakley Meta is LIVE. Check it out here: [Oakley Meta | Athletic Intelligence is Here](https://www.youtube.com/watch?v=NerlyGrv7WM)",
+      "order": "0",
+      "createdAt": "2026-02-04 15:27:25",
+      "updatedAt": "2026-02-04 15:27:25",
+      "is_new": "1",
+      "indent_level": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsection_type\tproduct_category\tcontent\torder\tcreatedAt\tupdatedAt\tis_new\tindent_level\n90041\thighlights\tai_glasses\tThe Super Bowl spot for Oakley Meta is LIVE. Check it out here: [Oakley Meta | Athletic Intelligence is Here](https://www.youtube.com/watch?v=NerlyGrv7WM)\t0\t2026-02-04 15:27:25\t2026-02-04 15:27:25\t1\t0\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}

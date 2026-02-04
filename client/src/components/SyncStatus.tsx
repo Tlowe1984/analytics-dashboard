@@ -48,7 +48,7 @@ export default function SyncStatus() {
   // No auto-sync - manual refresh only for daily updates
 
   const handleManualSync = () => {
-    syncAll.mutate();
+    syncAll.mutate({ forceRefresh: true });
   };
 
   return (

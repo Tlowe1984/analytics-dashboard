@@ -98,6 +98,19 @@ function updateCacheMetadata(source: string, filePath: string) {
 }
 
 /**
+ * Clear all cache metadata
+ */
+function clearCache() {
+  try {
+    if (existsSync(CACHE_METADATA)) {
+      writeFileSync(CACHE_METADATA, JSON.stringify({}, null, 2));
+    }
+  } catch (e) {
+    console.warn("Could not clear cache:", e);
+  }
+}
+
+/**
  * Download a single file from Google Drive
  */
 async function downloadFile(name: string, gdrivePath: string, localPath: string): Promise<boolean> {
@@ -127,11 +140,16 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
   try {
     console.log(`📊 [${name}] Parsing...`);
     const { stdout } = await execAsync(
-      `/home/ubuntu/analytics-dashboard/venv/bin/python ${parser} "${localPath}"`,
+      `python3.11 ${parser} "${localPath}"`,
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 30000,
-        shell: "/bin/bash"
+        shell: "/bin/bash",
+        env: {
+          ...process.env,
+          PYTHONPATH: "",
+          PYTHONHOME: "",
+        }
       }
     );
     
@@ -241,21 +259,27 @@ async function loadAllDataToDatabase(): Promise<number> {
  * 2. Parse all documents in parallel (CPU-bound, benefits from parallelism)
  * 3. Load all data to database in single transaction
  */
-export async function syncAll(): Promise<{
+export async function syncAll(forceRefresh: boolean = false): Promise<{
   devices: SyncResult;
   software: SyncResult;
   systems: SyncResult;
   decisions: SyncResult;
 }> {
-  console.log("🚀 Starting optimized sync...");
+  if (forceRefresh) {
+    console.log("🔄 Starting FORCED sync (clearing cache)...");
+    clearCache();
+    console.log("✨ Cache cleared");
+  } else {
+    console.log("🚀 Starting optimized sync...");
+  }
   const overallStart = Date.now();
   
   // Define all data sources
   const sources: SourceConfig[] = [
     {
       name: "Devices",
-      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/W5 2026 Device & Growth Canonical Program Review.docx",
-      localPath: "/tmp/W5 2026 Device & Growth Canonical Program Review.docx",
+      gdrivePath: "Device & Growth Canonical Program Review.docx",
+      localPath: "/tmp/Device & Growth Canonical Program Review.docx",
       parser: "/home/ubuntu/analytics-dashboard/server/parse_exec_summary.py",
       output: "/tmp/parsed_data.json"
     },
@@ -298,8 +322,8 @@ export async function syncAll(): Promise<{
       const startTime = Date.now();
       
       try {
-        // Check if file changed
-        if (!hasFileChanged(source.name, source.localPath)) {
+        // Check if file changed (skip check if forceRefresh)
+        if (!forceRefresh && !hasFileChanged(source.name, source.localPath)) {
           console.log(`✅ [${source.name}] No changes (cached)`);
           return {
             success: true,

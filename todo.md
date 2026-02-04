@@ -867,3 +867,35 @@
 - [x] Group decisions by Pillar and FYI categories
 - [x] Show decision outcome and DRI for each decision
 - [x] Test with real data - 10 decisions displaying correctly (1 Pillar, 9 FYI)
+
+## Fix Python venv After Sandbox Reset
+- [ ] Recreate Python virtual environment with correct Python version
+- [ ] Install python-docx dependency
+- [ ] Test all parsers work correctly
+- [ ] Verify Refresh Data button pulls latest Google Drive content including Super Bowl update
+
+## Update Google Drive File Path to Correct Document
+- [ ] Change Devices sync path from "Wearables Everything/.../W5 2026 Device & Growth Canonical Program Review.docx" to "Device & Growth Canonical Program Review.docx" (shortcut in user's Drive)
+- [ ] Test that Refresh Data pulls from the correct file
+- [ ] Verify Super Bowl text appears after sync
+
+## Fix Refresh Data Button to Always Force Fresh Sync
+- [x] Investigate cache mechanism and why Refresh Data uses cached files
+- [x] Add forceRefresh parameter to sync endpoint
+- [x] Clear cache when forceRefresh is true
+- [x] Fix Python venv SRE module mismatch error
+- [x] Fix database schema to make week field nullable
+- [x] Test that Refresh Data forces fresh download from Google Drive
+- [x] Verify Super Bowl text appears after sync
+
+## Update Google Drive File Path to Use Canonical Shortcut
+- [x] Change Devices sync path from weekly snapshot to canonical shortcut
+- [x] Update googleDriveSync.ts to pull from "Device & Growth Canonical Program Review.docx"
+- [x] Test Refresh Data pulls correct file with Super Bowl update
+- [x] Verify Super Bowl text appears in dashboard
+
+## Fix Python venv After Sandbox Reset
+- [x] Recreate Python venv to fix SRE module mismatch
+- [x] Switch to system Python 3.11 instead of venv
+- [x] Test all Python parsers work correctly
+- [x] Verify Refresh Data syncs successfully

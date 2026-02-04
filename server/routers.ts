@@ -235,10 +235,12 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
 
   sync: router({
     // Sync all data from Google Drive
-    syncAll: protectedProcedure.mutation(async () => {
-      const result = await syncAll();
-      return result;
-    }),
+    syncAll: protectedProcedure
+      .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
+      .mutation(async ({ input }) => {
+        const result = await syncAll(input?.forceRefresh ?? false);
+        return result;
+      }),
 
     // Sync only executive summary
     syncExecSummary: protectedProcedure.mutation(async () => {

@@ -1,0 +1,15 @@
+{
+  "query": "SELECT product_category, section_type, SUBSTRING(content, 1, 100) as preview FROM dashboard_items WHERE content LIKE '%super bowl%' COLLATE utf8mb4_general_ci LIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product_category, section_type, SUBSTRING(content, 1, 100) as preview FROM dashboard_items WHERE content LIKE '%super bowl%' COLLATE utf8mb4_general_ci LIMIT 3;",
+  "rows": [
+    {
+      "product_category": "ai_glasses",
+      "section_type": "highlights",
+      "preview": "The Super Bowl spot for Oakley Meta is LIVE. Check it out here: [Oakley Meta | Athletic Intelligence"
+    }
+  ],
+  "messages": [],
+  "stdout": "product_category\tsection_type\tpreview\nai_glasses\thighlights\tThe Super Bowl spot for Oakley Meta is LIVE. Check it out here: [Oakley Meta | Athletic Intelligence\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}
