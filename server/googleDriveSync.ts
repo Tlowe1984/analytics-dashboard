@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import { promisify } from "util";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, unlinkSync } from "fs";
 import { createHash } from "crypto";
 
 const execAsync = promisify(exec);
@@ -124,7 +124,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     const result = await execAsync(
       `rclone copy "manus_google_drive:${gdrivePath}" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini && ` +
       `rclone lsf "manus_google_drive:${gdrivePath}" --config /home/ubuntu/.gdrive-rclone.ini`,
-      { timeout: 120000, shell: "/bin/bash" }
+      { timeout: 120000, shell: true }
     );
     
     // Get the actual filename from rclone lsf output
@@ -133,7 +133,7 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
     
     // If the actual downloaded file has a different name, rename it to match localPath
     if (actualPath !== localPath && existsSync(actualPath)) {
-      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: "/bin/bash" });
+      await execAsync(`mv "${actualPath}" "${localPath}"`, { shell: true });
     }
     
     if (!existsSync(localPath)) {
@@ -159,7 +159,7 @@ async function parseDocument(name: string, localPath: string, parser: string, ou
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
-        shell: "/bin/bash",
+        shell: true,
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
@@ -257,7 +257,7 @@ async function loadAllDataToDatabase(): Promise<number> {
   try {
     const { stdout } = await execAsync(
       "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx load_data.mjs",
-      { timeout: 60000, shell: "/bin/bash" }
+      { timeout: 60000, shell: true }
     );
     
     // Try to extract total count from output
@@ -317,15 +317,17 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
         "/tmp/Systems Reviews Sign-Up Sheet .xlsx"
       ];
       
-      const { unlinkSync } = await import("fs");
+      console.log(`🗑️  Attempting to delete ${tmpFiles.length} tmp files...`);
       for (const file of tmpFiles) {
         try {
           if (existsSync(file)) {
             unlinkSync(file);
             console.log(`🗑️  Deleted ${file}`);
+          } else {
+            console.log(`ℹ️  File doesn't exist: ${file}`);
           }
         } catch (e) {
-          // Ignore deletion errors
+          console.error(`❌ Failed to delete ${file}:`, e);
         }
       }
     } else {
@@ -460,7 +462,7 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       {
         cwd: "/home/ubuntu/analytics-dashboard",
         timeout: 120000,
-        shell: "/bin/bash",
+        shell: true,
         env: {
           PATH: "/usr/bin:/usr/local/bin:/bin",
           PYTHONPATH: "",
@@ -512,14 +514,14 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
       console.log("💾 Loading milestones to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && pnpm exec tsx server/load_milestones.mjs",
-        { timeout: 60000, shell: "/bin/bash" }
+        { timeout: 60000, shell: true }
       );
       
       // Load upcoming reviews
       console.log("💾 Loading upcoming reviews to database...");
       await execAsync(
         "cd /home/ubuntu/analytics-dashboard && node server/load_upcoming_reviews.mjs",
-        { timeout: 60000, shell: "/bin/bash" }
+        { timeout: 60000, shell: true }
       );
     } catch (error) {
       console.error("Failed to load data to database:", error);

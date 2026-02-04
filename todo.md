@@ -1006,4 +1006,10 @@
 - [x] Fix shell path or execution method - Increased timeouts from 30s to 120s for parsers, 15s to 60s for database loading
 - [x] Test sync with user's "test1" text in ARG/SSG - Sync completed successfully, test1 appears
 - [x] Verify sync completes without errors - 750 items synced in 105s with no errors
-- [ ] Save checkpoint with fix
+- [x] Save checkpoint with fix
+
+## Fix Production ENOENT Errors
+- [x] Remove hardcoded shell: "/bin/bash" from all execAsync calls in googleDriveSync.ts
+- [x] Use default shell execution (shell: true) instead of explicit path
+- [x] Test sync in development to ensure it still works - Verified test3 appears, files are downloaded fresh each time
+- [ ] Save checkpoint and guide user to republish
