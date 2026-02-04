@@ -339,3 +339,12 @@ main() {
 
 # Run main function
 main "$@"
+
+# Invalidate cache after successful sync (if server is running)
+invalidate_cache() {
+    log_info "Invalidating query cache..."
+    
+    # Send HTTP request to invalidate cache endpoint (if implemented)
+    # For now, just log - the cache has TTL so it will expire naturally
+    log_info "Cache will auto-expire after TTL (1 hour)"
+}

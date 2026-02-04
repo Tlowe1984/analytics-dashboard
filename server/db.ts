@@ -2,6 +2,7 @@ import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
+import { cachedQuery } from "./query-cache";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -91,14 +92,16 @@ export async function getUserByOpenId(openId: string) {
 
 // Dashboard data queries
 export async function getAllDashboardItems() {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get dashboard items: database not available");
-    return [];
-  }
+  return cachedQuery('dashboard:all', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get dashboard items: database not available");
+      return [];
+    }
 
-  const result = await db.select().from(dashboardItems).orderBy(dashboardItems.order);
-  return result;
+    const result = await db.select().from(dashboardItems).orderBy(dashboardItems.order);
+    return result;
+  });
 }
 
 export async function getDashboardItemsBySection(

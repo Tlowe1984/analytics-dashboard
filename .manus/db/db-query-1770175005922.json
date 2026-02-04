@@ -1,0 +1,57 @@
+{
+  "query": "-- Test 1: Item counts\nSELECT 'dashboard_items' as table_name, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'upcoming_reviews', COUNT(*) FROM upcoming_reviews\nUNION ALL\nSELECT 'milestones', COUNT(*) FROM milestones;\n\n-- Test 2: Bold text check\nSELECT 'Bold text items' as test, COUNT(*) as count \nFROM dashboard_items WHERE content LIKE '%**%';\n\n-- Test 3: Hyperlink check\nSELECT 'Hyperlink items' as test, COUNT(*) as count \nFROM dashboard_items WHERE content LIKE '%](%';\n\n-- Test 4: Sample data\nSELECT \n    SUBSTRING(content, 1, 100) as content_preview,\n    CASE WHEN content LIKE '%**%' THEN 'YES' ELSE 'NO' END as has_bold,\n    CASE WHEN content LIKE '%](%' THEN 'YES' ELSE 'NO' END as has_links\nFROM dashboard_items \nLIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute -- Test 1: Item counts\nSELECT 'dashboard_items' as table_name, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'software_items', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'systems_items', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'upcoming_reviews', COUNT(*) FROM upcoming_reviews\nUNION ALL\nSELECT 'milestones', COUNT(*) FROM milestones;\n\n-- Test 2: Bold text check\nSELECT 'Bold text items' as test, COUNT(*) as count \nFROM dashboard_items WHERE content LIKE '%**%';\n\n-- Test 3: Hyperlink check\nSELECT 'Hyperlink items' as test, COUNT(*) as count \nFROM dashboard_items WHERE content LIKE '%](%';\n\n-- Test 4: Sample data\nSELECT \n    SUBSTRING(content, 1, 100) as content_preview,\n    CASE WHEN content LIKE '%**%' THEN 'YES' ELSE 'NO' END as has_bold,\n    CASE WHEN content LIKE '%](%' THEN 'YES' ELSE 'NO' END as has_links\nFROM dashboard_items \nLIMIT 5;",
+  "rows": [
+    {
+      "table_name": "software_items",
+      "count": "29"
+    },
+    {
+      "table_name": "upcoming_reviews",
+      "count": "9"
+    },
+    {
+      "table_name": "dashboard_items",
+      "count": "40"
+    },
+    {
+      "table_name": "decisions",
+      "count": "6"
+    },
+    {
+      "table_name": "systems_items",
+      "count": "658"
+    },
+    {
+      "table_name": "milestones",
+      "count": "1506"
+    },
+    {
+      "table_name": "test",
+      "count": "count"
+    },
+    {
+      "table_name": "Bold text items",
+      "count": "13"
+    },
+    {
+      "table_name": "test",
+      "count": "count"
+    },
+    {
+      "table_name": "Hyperlink items",
+      "count": "7"
+    }
+  ],
+  "messages": [
+    "content_preview\thas_bold\thas_links",
+    "Oakley Meta Superbowl teasers landed 1/26  (featuring both HSTN and Vanguard).\tNO\tNO",
+    "🎉MRBD MAU increased +7.16% w/w following a surge in sales from unlocked supply.\tNO\tNO",
+    "**Hypernova2**\tYES\tNO",
+    "Monoc P2 build started this week\tNO\tNO",
+    "Contextual AI, Design system/coreUX, Health, Ecosystem apps,and Continuous Nav (Web) identified as k\tNO\tNO"
+  ],
+  "stdout": "table_name\tcount\nsoftware_items\t29\nupcoming_reviews\t9\ndashboard_items\t40\ndecisions\t6\nsystems_items\t658\nmilestones\t1506\ntest\tcount\nBold text items\t13\ntest\tcount\nHyperlink items\t7\ncontent_preview\thas_bold\thas_links\nOakley Meta Superbowl teasers landed 1/26  (featuring both HSTN and Vanguard).\tNO\tNO\n🎉MRBD MAU increased +7.16% w/w following a surge in sales from unlocked supply.\tNO\tNO\n**Hypernova2**\tYES\tNO\nMonoc P2 build started this week\tNO\tNO\nContextual AI, Design system/coreUX, Health, Ecosystem apps,and Continuous Nav (Web) identified as k\tNO\tNO\n",
+  "stderr": "",
+  "execution_time_ms": 89
+}

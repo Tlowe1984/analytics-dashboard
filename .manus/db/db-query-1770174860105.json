@@ -1,0 +1,46 @@
+{
+  "query": "SELECT \n    table_name,\n    table_rows,\n    ROUND(data_length / 1024 / 1024, 2) AS data_mb,\n    ROUND(index_length / 1024 / 1024, 2) AS index_mb\nFROM information_schema.tables\nWHERE table_schema = DATABASE()\nAND table_name IN ('dashboard_items', 'software_items', 'systems_items', 'decisions', 'upcoming_reviews', 'milestones')\nORDER BY table_name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT \n    table_name,\n    table_rows,\n    ROUND(data_length / 1024 / 1024, 2) AS data_mb,\n    ROUND(index_length / 1024 / 1024, 2) AS index_mb\nFROM information_schema.tables\nWHERE table_schema = DATABASE()\nAND table_name IN ('dashboard_items', 'software_items', 'systems_items', 'decisions', 'upcoming_reviews', 'milestones')\nORDER BY table_name;",
+  "rows": [
+    {
+      "table_name": "dashboard_items",
+      "table_rows": "40",
+      "data_mb": "0.01",
+      "index_mb": "0.00"
+    },
+    {
+      "table_name": "decisions",
+      "table_rows": "6",
+      "data_mb": "0.00",
+      "index_mb": "0.00"
+    },
+    {
+      "table_name": "milestones",
+      "table_rows": "0",
+      "data_mb": "0.00",
+      "index_mb": "0.00"
+    },
+    {
+      "table_name": "software_items",
+      "table_rows": "29",
+      "data_mb": "0.01",
+      "index_mb": "0.00"
+    },
+    {
+      "table_name": "systems_items",
+      "table_rows": "658",
+      "data_mb": "0.12",
+      "index_mb": "0.02"
+    },
+    {
+      "table_name": "upcoming_reviews",
+      "table_rows": "9",
+      "data_mb": "0.00",
+      "index_mb": "0.00"
+    }
+  ],
+  "messages": [],
+  "stdout": "table_name\ttable_rows\tdata_mb\tindex_mb\ndashboard_items\t40\t0.01\t0.00\ndecisions\t6\t0.00\t0.00\nmilestones\t0\t0.00\t0.00\nsoftware_items\t29\t0.01\t0.00\nsystems_items\t658\t0.12\t0.02\nupcoming_reviews\t9\t0.00\t0.00\n",
+  "stderr": "",
+  "execution_time_ms": 69
+}
