@@ -249,18 +249,51 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
           invalidateDashboardCache();
           return result;
         } else {
-          // Production environment: Python not available
-          // Sync happens via scheduled task in sandbox
-          const result = { 
-            devices: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-            software: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-            systems: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-            decisions: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-            milestones: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-            upcomingReviews: { success: true, message: 'Data synced via scheduled task (runs daily at 6 AM PST)', timestamp: new Date() },
-          };
-          invalidateDashboardCache();
-          return result;
+          // Production environment: Trigger sync via Manus API
+          // This creates a task in the sandbox where Python is available
+          try {
+            const response = await fetch('https://api.manus.ai/v1/tasks', {
+              method: 'POST',
+              headers: {
+                'API_KEY': process.env.BUILT_IN_FORGE_API_KEY || '',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                prompt: 'Run the dashboard sync: cd /home/ubuntu/analytics-dashboard && node daily-sync.mjs',
+                agentProfile: 'manus-1.6-lite',
+                hideInTaskList: true,
+              }),
+            });
+            
+            if (!response.ok) {
+              throw new Error(`Manus API error: ${response.statusText}`);
+            }
+            
+            const taskData = await response.json();
+            
+            const result = { 
+              devices: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              software: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              systems: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              decisions: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              milestones: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+              upcomingReviews: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
+            };
+            
+            return result;
+          } catch (error) {
+            console.error('Failed to trigger sync task:', error);
+            // Fallback: return cached message
+            const result = { 
+              devices: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              software: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              systems: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              decisions: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              milestones: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+              upcomingReviews: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
+            };
+            return result;
+          }
         }
       }),
 

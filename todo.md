@@ -1046,3 +1046,11 @@
 - [x] Verify dashboard displays data correctly in all 3 product slots
 - [ ] Save checkpoint and publish to production
 - [ ] Verify production works without Python runtime
+
+## Make Production Refresh Button Trigger Scheduled Task
+- [x] Research Manus API for triggering scheduled tasks programmatically - Found POST /v1/tasks
+- [x] Implement Manus API call in production sync endpoint
+- [x] Production endpoint now creates task in sandbox (has Python) via API
+- [x] Task runs daily-sync.mjs in sandbox, writes to shared database
+- [ ] Save checkpoint and test in production
+- [ ] Verify test13 appears in production dashboard after clicking Refresh Data
