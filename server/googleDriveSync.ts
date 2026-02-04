@@ -195,37 +195,46 @@ async function downloadFile(name: string, gdrivePath: string, localPath: string)
   }
 }
 
+// Import TypeScript parsers
+import { parseExecSummary } from './parse_exec_summary';
+import { parseSystemsReview } from './parse_systems_review';
+import { parseSoftwareReview } from './parse_software_review';
+
 /**
- * Parse a document file
+ * Parse a document file using TypeScript parsers
  */
 async function parseDocument(name: string, localPath: string, parser: string, output: string): Promise<number> {
   try {
     console.log(`📊 [${name}] Parsing...`);
-    const { stdout} = await spawnAsync("python3", [parser, localPath], {
-      cwd: "/home/ubuntu/analytics-dashboard",
-      timeout: 120000,
-      env: {
-        PATH: "/usr/bin:/usr/local/bin:/bin",
-        PYTHONPATH: "",
-        PYTHONHOME: "",
-        VIRTUAL_ENV: "",
-      }
-    });
     
-    // Write output to file
-    writeFileSync(output, stdout);
+    let data: any[] = [];
     
-    // Count items from JSON
-    if (existsSync(output)) {
-      try {
-        const data = JSON.parse(readFileSync(output, "utf8"));
-        return Array.isArray(data) ? data.length : Object.keys(data).length;
-      } catch {
-        return 0;
-      }
+    // Call appropriate TypeScript parser based on parser filename
+    if (parser.includes('parse_exec_summary')) {
+      data = await parseExecSummary(localPath);
+    } else if (parser.includes('parse_systems_review')) {
+      data = await parseSystemsReview(localPath);
+    } else if (parser.includes('parse_software_review')) {
+      data = await parseSoftwareReview(localPath);
+    } else {
+      // For other parsers (milestones, etc.), keep using Python for now
+      const { stdout } = await spawnAsync("python3", [parser, localPath], {
+        cwd: "/home/ubuntu/analytics-dashboard",
+        timeout: 120000,
+        env: {
+          PATH: "/usr/bin:/usr/local/bin:/bin",
+          PYTHONPATH: "",
+          PYTHONHOME: "",
+          VIRTUAL_ENV: "",
+        }
+      });
+      data = JSON.parse(stdout);
     }
     
-    return 0;
+    // Write output to file
+    writeFileSync(output, JSON.stringify(data, null, 2));
+    
+    return Array.isArray(data) ? data.length : Object.keys(data).length;
   } catch (error) {
     console.error(`❌ [${name}] Parsing failed:`, error);
     throw error;
