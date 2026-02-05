@@ -1,6 +1,6 @@
 import { Sparkles, Calendar, FileCheck, Smartphone, Code, Cpu } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import Markdown from "react-markdown";
+import { MarkdownText } from './MarkdownText';
 
 export default function AIExecutiveUpdates() {
   const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
@@ -46,10 +46,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.devices?.highlights?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No highlights available</div>}
                     </ul>
                   </div>
                   {/* Risks/Opens */}
@@ -57,10 +60,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.devices?.risks?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No risks available</div>}
                     </ul>
                   </div>
                 </div>
@@ -78,10 +84,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.software?.highlights?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No highlights available</div>}
                     </ul>
                   </div>
                   {/* Risks/Opens */}
@@ -89,10 +98,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.software?.risks?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No risks available</div>}
                     </ul>
                   </div>
                 </div>
@@ -110,10 +122,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.systems?.highlights?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No highlights available</div>}
                     </ul>
                   </div>
                   {/* Risks/Opens */}
@@ -121,10 +136,13 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
                     <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.systems?.risks?.map((item, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed">
-                          <span className="inline"><Markdown>{item}</Markdown></span>
-                        </li>
-                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                        <div key={idx} className="flex items-start gap-2">
+                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+                          <div className="text-sm leading-relaxed text-foreground/90">
+                            <MarkdownText content={item} />
+                          </div>
+                        </div>
+                      )) || <div className="text-sm text-muted-foreground italic">No risks available</div>}
                     </ul>
                   </div>
                 </div>
