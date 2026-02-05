@@ -333,6 +333,70 @@ export async function getSoftwareItemsBySection(
 
 // ============ Decisions Functions ============
 
+/**
+ * Get recent decisions for AI Executive Updates
+ * Returns up to 5 decisions from this week, combining Decisions table and Software Pillar decisions
+ * Note: Summaries are generated in the router using LLM to keep them concise (≤15 words)
+ */
+export async function getRecentDecisionsForAI(limit = 5) {
+  return cachedQuery('ai:decisions', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    
+    try {
+      const { desc } = await import("drizzle-orm");
+      
+      // Get current week number
+      const now = new Date();
+      const onejan = new Date(now.getFullYear(), 0, 1);
+      const currentWeek = Math.ceil((((now.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
+      const currentWeekStr = `W${currentWeek} ${now.getFullYear()}`;
+      
+      // Get decisions from Decisions table (this week)
+      const decisionsFromTable = await db
+        .select()
+        .from(decisions)
+        .where(eq(decisions.week, currentWeekStr))
+        .orderBy(desc(decisions.updatedAt))
+        .limit(limit);
+      
+      // Get Pillar decisions from Software items (category = "Pillar")
+      const pillarDecisions = await db
+        .select()
+        .from(softwareItems)
+        .where(and(
+          eq(softwareItems.sectionType, "decisions"),
+          eq(softwareItems.category, "Pillar")
+        ))
+        .orderBy(desc(softwareItems.updatedAt))
+        .limit(limit);
+      
+      // Combine and format (return raw data for LLM summarization)
+      const combined = [
+        ...decisionsFromTable.map(item => ({
+          type: 'decision' as const,
+          forum: item.forum || '',
+          outcome: item.decisionOutcome,
+          date: item.updatedAt,
+        })),
+        ...pillarDecisions.map(item => ({
+          type: 'pillar' as const,
+          forum: item.forum || '',
+          outcome: item.content,
+          date: item.updatedAt,
+        }))
+      ];
+      
+      // Sort by date (most recent first) and take top 5
+      combined.sort((a, b) => b.date.getTime() - a.date.getTime());
+      return combined.slice(0, limit);
+    } catch (error) {
+      console.error("[Database] Error fetching recent decisions for AI:", error);
+      return [];
+    }
+  });
+}
+
 export async function getAllDecisions(): Promise<Decision[]> {
   return cachedQuery('decisions:all', async () => {
     const db = await getDb();

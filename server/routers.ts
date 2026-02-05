@@ -316,6 +316,79 @@ Return ONLY valid JSON, no other text.`;
       return await db.getUpcomingItemsForAI(5);
     }),
 
+    // Get recent decisions for AI Executive Updates (Decisions table + Software Pillar decisions)
+    // Summaries are generated using LLM to keep them concise (≤15 words)
+    getRecentDecisions: publicProcedure.query(async () => {
+      const { invokeLLM } = await import("./_core/llm");
+      const rawDecisions = await db.getRecentDecisionsForAI(5);
+      
+      if (rawDecisions.length === 0) {
+        return [];
+      }
+      
+      // Prepare prompt for LLM to summarize decisions
+      const decisionsText = rawDecisions.map((d, idx) => 
+        `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
+      ).join('\n\n');
+      
+      const prompt = `Summarize each decision below in 15 words or less. Preserve any **bold text** and [links](url). Include the forum name and a brief outcome summary.
+
+Return as JSON array with this structure:
+[
+  { "forum": "Forum Name", "summary": "Brief outcome with **bold** preserved" }
+]
+
+${decisionsText}
+
+Return ONLY valid JSON, no other text.`;
+      
+      try {
+        const response = await invokeLLM({
+          messages: [{ role: "user", content: prompt }],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "decision_summaries",
+              strict: true,
+              schema: {
+                type: "object",
+                properties: {
+                  summaries: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        forum: { type: "string" },
+                        summary: { type: "string" },
+                      },
+                      required: ["forum", "summary"],
+                      additionalProperties: false,
+                    },
+                  },
+                },
+                required: ["summaries"],
+                additionalProperties: false,
+              },
+            },
+          },
+        });
+        
+        const content = response.choices[0]?.message?.content;
+        if (!content) {
+          return rawDecisions; // Fallback to raw data
+        }
+        
+        const parsed = JSON.parse(content);
+        return parsed.summaries.map((s: any) => ({
+          forum: s.forum,
+          outcome: s.summary,
+        }));
+      } catch (error) {
+        console.error("[LLM] Error summarizing decisions:", error);
+        return rawDecisions; // Fallback to raw data
+      }
+    }),
+
     // Seed sample data
     seedSampleData: protectedProcedure.mutation(async () => {
       // Clear existing data first

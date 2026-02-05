@@ -5,6 +5,7 @@ import { MarkdownText } from './MarkdownText';
 export default function AIExecutiveUpdates() {
   const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
   const { data: upcomingItems } = trpc.dashboard.getUpcomingItems.useQuery();
+  const { data: recentDecisions } = trpc.dashboard.getRecentDecisions.useQuery();
   
   // Helper function to format week number from date
   const getWeekNumber = (date: Date) => {
@@ -198,7 +199,21 @@ export default function AIExecutiveUpdates() {
               <FileCheck className="w-4 h-4 text-orange-500" />
               <h3 className="text-sm font-bold uppercase tracking-wide">Decisions</h3>
             </div>
-            <p className="text-xs text-muted-foreground italic">Recent decisions will appear here</p>
+            {recentDecisions && recentDecisions.length > 0 ? (
+              <ul className="space-y-2 text-sm">
+                {recentDecisions.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-orange-500" />
+                    <div className="leading-relaxed">
+                      {item.forum && <span className="font-semibold">{item.forum}:</span>}{' '}
+                      <MarkdownText content={item.outcome} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-xs text-muted-foreground italic">Recent decisions will appear here</p>
+            )}
           </div>
         </div>
       </div>

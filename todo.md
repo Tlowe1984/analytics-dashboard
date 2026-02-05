@@ -1220,4 +1220,13 @@
 ## Increase Font Size in Upcoming Section
 - [x] Change font size from text-xs to text-sm in Upcoming section
 - [x] Test and verify readability
+- [x] Save checkpoint
+
+## Populate Decisions Section in AI Executive Updates
+- [x] Review Decisions table structure and Software items for Pillar decisions
+- [x] Create query to fetch recent decisions from this week (Decisions + Software Pillar)
+- [x] Format output: Review forum + 1-sentence summary (≤15 words) with bold titles
+- [x] Sort chronologically and limit to 5 items
+- [x] Display in bulleted list format matching Upcoming section
+- [x] Test and verify correct data appears
 - [ ] Save checkpoint
