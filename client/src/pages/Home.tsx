@@ -8,6 +8,7 @@ import { UpcomingReviewsSection } from "@/components/UpcomingReviewsSection";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
 import SyncStatus from "@/components/SyncStatus";
+import AIExecutiveUpdates from "@/components/AIExecutiveUpdates";
 import { BarChart3 } from "lucide-react";
 
 export default function Home() {
@@ -69,6 +70,7 @@ export default function Home() {
 
         {/* Dashboard Content */}
         <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-4 sm:space-y-8">
+          <AIExecutiveUpdates />
           <ToplineView />
           <UpcomingDates />
         </div>

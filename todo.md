@@ -1156,4 +1156,12 @@
 
 ## Rename Executive Summary to Program Updates
 - [x] Update section title in ToplineView.tsx
+- [x] Save checkpoint
+
+## Create AI Executive Updates Tile
+- [x] Create new tile component above Program Updates section
+- [x] Implement 2/3 + 1/3 stacked layout (large left section, two stacked right sections)
+- [x] Add darker styling to distinguish from other tiles
+- [x] Add "Upcoming" section (top right)
+- [x] Add "Decisions" section (bottom right)
 - [ ] Save checkpoint
