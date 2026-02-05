@@ -169,11 +169,19 @@ export default function AIExecutiveUpdates() {
             )}
           </div>
 
-          {/* Decisions Section - Bottom Right */}
+          {/* Decisions Made Section - Bottom Right */}
           <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
-            <div className="flex items-center gap-2 mb-3">
-              <FileCheck className="w-4 h-4 text-orange-500" />
-              <h3 className="text-sm font-bold uppercase tracking-wide">Decisions</h3>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-orange-500" />
+                <h3 className="text-sm font-bold uppercase tracking-wide">Decisions Made</h3>
+              </div>
+              <a 
+                href="#decisions-made-section" 
+                className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium"
+              >
+                Details
+              </a>
             </div>
             {recentDecisions && recentDecisions.length > 0 ? (
               <ul className="space-y-2 text-sm">

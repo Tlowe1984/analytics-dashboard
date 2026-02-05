@@ -1296,4 +1296,13 @@
 ## Update Title Format to Include 'Week'
 - [x] Change title from "Wearable WX Update" to "Wearable Week X Updates"
 - [x] Test and verify correct format displays
+- [x] Save checkpoint
+
+## Update Upcoming Section and Decisions Sections
+- [x] Increase Upcoming section maximum from 5 to 6 items
+- [x] Update query to include PDP milestones from next 2 weeks (already included)
+- [x] Rename "Decisions" to "Decisions Made" in AI Executive Updates (top tile)
+- [x] Rename "Decisions" to "Decisions Made" in bottom Decisions tile
+- [x] Add "Details" link in top Decisions Made section that scrolls to bottom section
+- [x] Test all changes - Details link successfully scrolls to bottom section
 - [ ] Save checkpoint

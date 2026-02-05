@@ -460,9 +460,9 @@ export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summa
 
 /**
  * Get combined upcoming items for AI Executive Updates
- * Returns up to 5 items from current and next week, combining PDP gates and upcoming decisions
+ * Returns up to 6 items from current and next 2 weeks, combining PDP gates and upcoming decisions
  */
-export async function getUpcomingItemsForAI(limit = 5) {
+export async function getUpcomingItemsForAI(limit = 6) {
   return cachedQuery('ai:upcoming', async () => {
     const db = await getDb();
     if (!db) return [];
@@ -516,7 +516,7 @@ export async function getUpcomingItemsForAI(limit = 5) {
         }))
       ];
       
-      // Sort by date and take top 5
+      // Sort by date and take top items (up to limit)
       combined.sort((a, b) => a.date.getTime() - b.date.getTime());
       return combined.slice(0, limit);
     } catch (error) {

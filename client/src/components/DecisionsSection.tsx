@@ -25,7 +25,7 @@ export default function DecisionsSection() {
   }
 
   return (
-    <div className="w-full py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+    <div id="decisions-made-section" className="w-full py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
       <div className="max-w-[2000px] mx-auto">
         <div className="glass-card rounded-2xl p-4 sm:p-8">
           {/* Header */}
@@ -35,7 +35,7 @@ export default function DecisionsSection() {
                 <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
               </div>
               <div>
-                <h2 className="text-lg sm:text-2xl font-bold">Decisions</h2>
+                <h2 className="text-lg sm:text-2xl font-bold">Decisions Made</h2>
                 <p className="text-xs sm:text-sm text-muted-foreground">Strategic decisions from the last month</p>
               </div>
             </div>
