@@ -122,7 +122,7 @@ function ProductCard({
   );
 
   return (
-    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 h-full">
+    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-2 sm:space-y-3 h-full">
       {/* Product Header */}
       <div className="flex items-center gap-2 sm:gap-3 pb-2 sm:pb-3 border-b border-border/30">
         <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
@@ -135,7 +135,7 @@ function ProductCard({
       </div>
 
       {/* Sections */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <SectionContent sectionType="highlights" items={highlightItems} />
         <div className="border-t border-border/20 pt-4">
           <SectionContent sectionType="risks" items={riskItems} />
@@ -161,7 +161,7 @@ function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
   );
 
   return (
-    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 h-full">
+    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-2 sm:space-y-3 h-full">
       {/* Product Header */}
       <div className="flex items-center gap-2 sm:gap-3 pb-2 sm:pb-3 border-b border-border/30">
         <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
@@ -174,7 +174,7 @@ function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
       </div>
 
       {/* Sections - Only Highlights and Risks */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         <SectionContent sectionType="highlights" items={highlightItems} />
         <div className="border-t border-border/20 pt-4">
           <SectionContent sectionType="risks" items={riskItems} />
@@ -297,7 +297,7 @@ function SoftwareTab() {
             </div>
             <h3 className="font-bold text-base tracking-wide">{section.label}</h3>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {items && items.length > 0 ? (
               <>
                 {pillarDecisions.length > 0 && (

@@ -33,7 +33,7 @@ export default function AIExecutiveUpdates() {
         {/* Main Content - 2/3 width */}
         <div className="lg:col-span-2 bg-background/40 border border-border/40 rounded-xl p-6 min-h-[300px]">
           {isLoading ? (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {[1, 2, 3].map(i => (
                 <div key={i} className="space-y-3">
                   <div className="h-6 bg-muted/20 rounded w-1/4 animate-pulse" />
@@ -43,18 +43,18 @@ export default function AIExecutiveUpdates() {
               ))}
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Devices Section */}
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-blue-500" />
                   <h3 className="text-lg font-bold">Devices</h3>
                 </div>
-                <div className="space-y-4 ml-7">
+                <div className="space-y-3 ml-7">
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.devices?.highlights?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
@@ -68,7 +68,7 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.devices?.risks?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
@@ -88,11 +88,11 @@ export default function AIExecutiveUpdates() {
                   <Code className="w-5 h-5 text-green-500" />
                   <h3 className="text-lg font-bold">Software</h3>
                 </div>
-                <div className="space-y-4 ml-7">
+                <div className="space-y-3 ml-7">
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.software?.highlights?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
@@ -106,7 +106,7 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.software?.risks?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
@@ -126,11 +126,11 @@ export default function AIExecutiveUpdates() {
                   <Cpu className="w-5 h-5 text-orange-500" />
                   <h3 className="text-lg font-bold">Systems</h3>
                 </div>
-                <div className="space-y-4 ml-7">
+                <div className="space-y-3 ml-7">
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.systems?.highlights?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
@@ -144,7 +144,7 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5 list-disc list-inside">
+                    <ul className="space-y-1 list-disc list-inside">
                       {summaries?.systems?.risks?.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2">
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />

@@ -1250,4 +1250,11 @@
 - [x] Change tile background back to original bg-background/60
 - [x] Change border back to original border-border/50
 - [x] Test and verify
+- [x] Save checkpoint
+
+## Reduce Line Spacing in AI Executive Updates and Program Updates
+- [x] Reduce vertical spacing between sections in AI Executive Updates
+- [x] Reduce vertical spacing between sections in Program Updates
+- [x] Adjust space-y classes to make content more compact
+- [x] Test and verify readability is maintained
 - [ ] Save checkpoint
