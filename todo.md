@@ -1077,7 +1077,15 @@
 - [x] Update daily-sync.mjs to POST parsed data to production API after parsing
 - [x] Fix daily-sync.mjs to query database instead of reading JSON files
 - [x] Update daily-sync.mjs to use correct tRPC request format
-- [ ] Save final checkpoint with working API push implementation
+- [x] Save final checkpoint with working API push implementation
 - [ ] Publish to production so API endpoint is live
 - [ ] Test: Run sync in sandbox → verify production database updates via API
 - [ ] Verify: Change test20 in doc → wait 5min → see in production automatically
+
+## Fix tRPC API Endpoint Issue
+- [x] Diagnose why production API returns "expected object, received undefined"
+- [x] Check tRPC endpoint configuration and input validation
+- [x] Fix API request format to use query parameters with batch=1
+- [ ] Save checkpoint and publish to production
+- [ ] Test end-to-end: sandbox → production API → production DB
+- [ ] Verify test21 appears in production after sync
