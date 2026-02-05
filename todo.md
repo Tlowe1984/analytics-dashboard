@@ -1094,6 +1094,13 @@
 - [x] Change from query parameter format back to POST body (URL too long for 2,275 items)
 - [x] Use tRPC batch format in POST body with json wrapper: {"0":{"json":{...}}}
 - [x] Add SYNC_SECRET environment variable for authentication
-- [ ] Save checkpoint and republish to production
+- [x] Save checkpoint and republish to production
 - [ ] Test with production API
 - [ ] Verify test21 appears in production
+
+## Fix Product Categorization Bug in Production
+- [x] Check loadDataFromAPI function for category assignment logic
+- [x] Fix product category mapping (AI Glasses vs Wrist vs ARG/SSG)
+- [x] Fix decisions mapping (week and decision_outcome fields)
+- [ ] Test that items are correctly distributed across categories
+- [ ] Save checkpoint and republish to production

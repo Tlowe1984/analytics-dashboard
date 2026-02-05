@@ -30,7 +30,7 @@ export async function loadDataFromAPI(data: {
       
       const values = data.devices.map(item => ({
         sectionType: item.section,
-        productCategory: item.product,
+        productCategory: item.product_category || item.product,
         content: item.content,
         isNew: item.is_new,
         indentLevel: item.indent_level || 0,
@@ -117,12 +117,10 @@ export async function loadDataFromAPI(data: {
       await db.delete(decisions);
       
       const values = data.decisions.map(item => ({
-        topic: item.topic,
+        week: item.week || '',
         dri: item.dri || '',
         forum: item.forum || '',
         status: item.status || '',
-        decisionDoc: item.decision_doc || '',
-        decisionMakers: item.decision_makers || '',
         decisionOutcome: item.decision_outcome || ''
       }));
       await db.insert(decisions).values(values);
