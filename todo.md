@@ -1229,4 +1229,12 @@
 - [x] Sort chronologically and limit to 5 items
 - [x] Display in bulleted list format matching Upcoming section
 - [x] Test and verify correct data appears
+- [x] Save checkpoint
+
+## Update Decisions Section Format to "We decided X" Style
+- [x] Update LLM prompt to generate single-sentence summaries (≤20 words) in "We decided X" format
+- [x] Remove forum name and review title from display
+- [x] Preserve links in summaries
+- [x] Update frontend to display only the summary sentence + links
+- [x] Test and verify correct format
 - [ ] Save checkpoint

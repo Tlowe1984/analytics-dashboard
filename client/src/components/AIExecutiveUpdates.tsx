@@ -205,7 +205,6 @@ export default function AIExecutiveUpdates() {
                   <li key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-orange-500" />
                     <div className="leading-relaxed">
-                      {item.forum && <span className="font-semibold">{item.forum}:</span>}{' '}
                       <MarkdownText content={item.outcome} />
                     </div>
                   </li>

@@ -331,11 +331,15 @@ Return ONLY valid JSON, no other text.`;
         `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
       ).join('\n\n');
       
-      const prompt = `Summarize each decision below in 15 words or less. Preserve any **bold text** and [links](url). Include the forum name and a brief outcome summary.
+      const prompt = `For each decision below, write a single sentence (up to 20 words) starting with "We decided" that summarizes the outcome. Preserve any [links](url) at the end.
+
+Examples:
+- "We decided to limit HN1 LE to Elite Bundle only. [Post](url)"
+- "We decided Meta AI 2.0 architecture strategy is approved. [Post](url)"
 
 Return as JSON array with this structure:
 [
-  { "forum": "Forum Name", "summary": "Brief outcome with **bold** preserved" }
+  { "summary": "We decided X. [link](url)" }
 ]
 
 ${decisionsText}
@@ -358,10 +362,9 @@ Return ONLY valid JSON, no other text.`;
                     items: {
                       type: "object",
                       properties: {
-                        forum: { type: "string" },
                         summary: { type: "string" },
                       },
-                      required: ["forum", "summary"],
+                      required: ["summary"],
                       additionalProperties: false,
                     },
                   },
@@ -380,7 +383,6 @@ Return ONLY valid JSON, no other text.`;
         
         const parsed = JSON.parse(content);
         return parsed.summaries.map((s: any) => ({
-          forum: s.forum,
           outcome: s.summary,
         }));
       } catch (error) {
