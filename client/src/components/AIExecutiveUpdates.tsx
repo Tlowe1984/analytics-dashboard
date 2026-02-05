@@ -185,64 +185,80 @@ export default function AIExecutiveUpdates() {
 
         {/* Right Side - Stacked sections */}
         <div className="space-y-4">
-          {/* Upcoming PDP Milestones Section - Top Right */}
+          {/* Combined Upcoming Section */}
           <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-blue-500" />
-                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming PDP Milestones</h3>
+            {/* Upcoming PDP Milestones Subsection */}
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-blue-500" />
+                  <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming PDP Milestones</h3>
+                </div>
+                <a 
+                  href="#pdp-gates" 
+                  className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('pdp-gates')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Details
+                </a>
               </div>
+              {pdpMilestones && pdpMilestones.length > 0 ? (
+                <ul className="space-y-2 text-sm">
+                  {pdpMilestones.map((milestone, idx) => {
+                    const weekNum = getWeekNumber(new Date(milestone.milestoneDate));
+                    return (
+                      <li key={idx} className="flex items-start gap-2">
+                        <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
+                        <div className="leading-relaxed">
+                          <span className="font-semibold">{weekNum}</span> - {milestone.product} {milestone.milestoneName}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <p className="text-xs text-muted-foreground italic">No PDP milestones this/next week</p>
+              )}
             </div>
-            {pdpMilestones && pdpMilestones.length > 0 ? (
-              <ul className="space-y-2 text-sm">
-                {pdpMilestones.map((milestone, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
-                    <div className="leading-relaxed">
-                      <span className="font-semibold">{milestone.product}</span> - {milestone.milestoneName}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-xs text-muted-foreground italic">No PDP milestones this/next week</p>
-            )}
-          </div>
 
-          {/* Upcoming Decisions Section */}
-          <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-blue-500" />
-                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming Decisions</h3>
+            {/* Upcoming Decisions Subsection */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-blue-500" />
+                  <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming Decisions</h3>
+                </div>
+                <a 
+                  href="#upcoming-decisions" 
+                  className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('upcoming-decisions')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Details
+                </a>
               </div>
-              <a 
-                href="#upcoming-decisions" 
-                className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('upcoming-decisions')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                Details
-              </a>
+              {upcomingDecisions && upcomingDecisions.length > 0 ? (
+                <ul className="space-y-2 text-sm">
+                  {upcomingDecisions.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
+                      <div className="leading-relaxed">
+                        <span>
+                          <span className="font-semibold">{item.week}</span> - {item.reviewType}: {item.topic}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-xs text-muted-foreground italic">Upcoming decisions will appear here</p>
+              )}
             </div>
-            {upcomingDecisions && upcomingDecisions.length > 0 ? (
-              <ul className="space-y-2 text-sm">
-                {upcomingDecisions.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
-                    <div className="leading-relaxed">
-                      <span>
-                        <span className="font-semibold">{item.week}</span> - {item.reviewType}: {item.topic}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-xs text-muted-foreground italic">Upcoming decisions will appear here</p>
-            )}
           </div>
 
           {/* Decisions Made Section - Bottom Right */}

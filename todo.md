@@ -1344,3 +1344,9 @@
 ## Move PDP Milestones to Bulleted List
 - [x] Change PDP milestones display from top-right text to bulleted list below title
 - [x] Format similar to Upcoming Decisions section
+
+## Combine Upcoming Sections
+- [x] Merge Upcoming PDP Milestones and Upcoming Decisions into single tile
+- [x] Reduce spacing between the two subsections
+- [x] Add Details link to PDP Milestones that scrolls to PDP Gates section
+- [x] Format PDP milestones with bold week number (WX) before program name and gate
