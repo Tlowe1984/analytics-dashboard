@@ -61,11 +61,17 @@ async function startServer() {
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
     
-    // Initialize sync scheduler for daily auto-sync at 6 AM
-    try {
-      initSyncScheduler();
-    } catch (error) {
-      console.error('[Server] Failed to initialize sync scheduler:', error);
+    // Initialize sync scheduler only in development (sandbox has Python + rclone)
+    // Production reads from shared database that sandbox updates
+    if (process.env.NODE_ENV === 'development') {
+      try {
+        initSyncScheduler();
+        console.log('[Server] Sync scheduler initialized (development mode)');
+      } catch (error) {
+        console.error('[Server] Failed to initialize sync scheduler:', error);
+      }
+    } else {
+      console.log('[Server] Production mode: Sync disabled (reads from shared database updated by sandbox)');
     }
   });
 }

@@ -239,9 +239,25 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
-        // Production and sandbox share the same backend server (running in sandbox)
-        // and the same database, so we can always run sync directly
-        console.log('[SYNC] Running sync directly (shared backend + database)');
+        // Check if we're in production (no Python available)
+        const isProduction = process.env.NODE_ENV === 'production';
+        
+        if (isProduction) {
+          // Production: Cannot run sync (no Python/rclone), return message
+          console.log('[SYNC] Production mode: Manual sync disabled');
+          const message = 'Manual sync is not available in production. Data syncs automatically daily at 6 AM PST in the sandbox environment.';
+          return {
+            devices: { success: false, message, timestamp: new Date() },
+            software: { success: false, message, timestamp: new Date() },
+            systems: { success: false, message, timestamp: new Date() },
+            decisions: { success: false, message, timestamp: new Date() },
+            milestones: { success: false, message, timestamp: new Date() },
+            upcomingReviews: { success: false, message, timestamp: new Date() },
+          };
+        }
+        
+        // Development/Sandbox: Run sync directly (Python + rclone available)
+        console.log('[SYNC] Development mode: Running sync directly');
         const result = await syncAll(input?.forceRefresh ?? false);
         // Invalidate cache after sync completes so frontend gets fresh data
         invalidateDashboardCache();

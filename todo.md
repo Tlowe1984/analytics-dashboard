@@ -1110,3 +1110,11 @@
 - [x] Simplified sync to always run directly (shared backend + database)
 - [x] Test manual sync button works correctly (tested in sandbox)
 - [x] Verify data updates after manual sync completes (test25 appeared)
+
+## Production Sync Error Fix
+- [x] Fix "spawn /bin/sh ENOENT" error in production
+- [x] Production runs in separate container without Python
+- [x] Disabled sync in production (both manual and scheduled)
+- [x] Sandbox runs daily sync at 6 AM PST and writes to shared database
+- [x] Production reads from shared database (no sync needed)
+- [ ] Test solution in production
