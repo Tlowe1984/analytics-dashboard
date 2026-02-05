@@ -1257,4 +1257,10 @@
 - [x] Reduce vertical spacing between sections in Program Updates
 - [x] Adjust space-y classes to make content more compact
 - [x] Test and verify readability is maintained
+- [x] Save checkpoint
+
+## Move Blue Text Indicator to Program Updates Tile
+- [x] Remove "Blue text = New information" from top header
+- [x] Add "Blue text = New information" to Program Updates tile header
+- [x] Test and verify placement
 - [ ] Save checkpoint

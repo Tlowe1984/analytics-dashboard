@@ -37,7 +37,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className="text-lg sm:text-2xl font-bold">Wearable Live Dashboard</h1>
-                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Real-time program insights • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span></p>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Real-time program insights</p>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">

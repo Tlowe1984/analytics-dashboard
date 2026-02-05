@@ -436,7 +436,7 @@ export default function ToplineView() {
                 year: 'numeric',
                 hour: 'numeric',
                 minute: '2-digit'
-              }) : 'Loading...'}
+              }) : 'Loading...'} • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span>
             </p>
           </div>
         </div>
