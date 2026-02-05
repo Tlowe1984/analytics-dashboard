@@ -15,6 +15,9 @@ export default function AIExecutiveUpdates() {
     return `W${week}`;
   };
 
+  // Get current week number
+  const currentWeek = getWeekNumber(new Date());
+
   return (
     <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-lg">
       {/* Section Header */}
@@ -23,7 +26,7 @@ export default function AIExecutiveUpdates() {
           <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold">AI Executive Updates</h2>
+          <h2 className="text-xl font-bold">Wearable {currentWeek} Update</h2>
           <p className="text-sm text-muted-foreground">AI-generated insights and summaries</p>
         </div>
       </div>

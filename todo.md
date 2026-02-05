@@ -1283,4 +1283,12 @@
 - [x] Change Software section to show "Coming soon" placeholder
 - [x] Remove Highlights and Risks/Opens subsections from Software
 - [x] Test and verify changes
+- [x] Save checkpoint
+
+## Update Section Titles
+- [x] Calculate current week number dynamically
+- [x] Change "AI Executive Updates" title to "Wearable WX Update" (X = week number)
+- [x] Change "Program Updates" title to "Detailed Updates"
+- [x] Update subtitles if needed
+- [x] Test and verify correct titles display
 - [ ] Save checkpoint

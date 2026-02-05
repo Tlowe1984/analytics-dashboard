@@ -428,7 +428,7 @@ export default function ToplineView() {
             <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold">Program Updates</h2>
+            <h2 className="text-lg sm:text-xl font-bold">Detailed Updates</h2>
             <p className="text-xs text-muted-foreground hidden sm:block">
               Last updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-US', { 
                 month: 'short', 
