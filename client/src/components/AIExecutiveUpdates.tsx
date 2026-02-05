@@ -141,9 +141,21 @@ export default function AIExecutiveUpdates() {
         <div className="space-y-4">
           {/* Upcoming Section - Top Right */}
           <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-4 h-4 text-blue-500" />
-              <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-500" />
+                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
+              </div>
+              <a 
+                href="#upcoming-decisions" 
+                className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('upcoming-decisions')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Details
+              </a>
             </div>
             {upcomingItems && upcomingItems.length > 0 ? (
               <ul className="space-y-2 text-sm">

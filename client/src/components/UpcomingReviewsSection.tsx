@@ -37,7 +37,7 @@ export function UpcomingReviewsSection() {
   }
 
   return (
-    <div className="bg-background/40 border border-border/50 rounded-xl p-6">
+    <div id="upcoming-decisions" className="bg-background/40 border border-border/50 rounded-xl p-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-blue-500/10 rounded-lg">
           <Calendar className="w-5 h-5 text-blue-500" />

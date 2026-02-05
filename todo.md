@@ -1306,3 +1306,10 @@
 - [x] Add "Details" link in top Decisions Made section that scrolls to bottom section
 - [x] Test all changes - Details link successfully scrolls to bottom section
 - [ ] Save checkpoint
+
+## Add Link from Upcoming to Upcoming Decisions
+- [x] Add hyperlink in Upcoming section header that scrolls to Upcoming Decisions section
+- [x] Add id="upcoming-decisions" to Upcoming Decisions section
+- [x] Style link similar to Details link in Decisions Made
+- [x] Test and verify link works - Successfully scrolls to Upcoming Decisions
+- [ ] Save checkpoint
