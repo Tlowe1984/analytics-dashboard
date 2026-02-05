@@ -311,6 +311,11 @@ Return ONLY valid JSON, no other text.`;
       return JSON.parse(content);
     }),
 
+    // Get upcoming items for AI Executive Updates (PDP gates + upcoming decisions)
+    getUpcomingItems: publicProcedure.query(async () => {
+      return await db.getUpcomingItemsForAI(5);
+    }),
+
     // Seed sample data
     seedSampleData: protectedProcedure.mutation(async () => {
       // Clear existing data first

@@ -391,6 +391,74 @@ export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summa
 
 // ============ Upcoming Reviews Functions ============
 
+/**
+ * Get combined upcoming items for AI Executive Updates
+ * Returns up to 5 items from current and next week, combining PDP gates and upcoming decisions
+ */
+export async function getUpcomingItemsForAI(limit = 5) {
+  return cachedQuery('ai:upcoming', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    
+    try {
+      const { upcomingReviews } = await import("../drizzle/schema.js");
+      const { asc, and, gte, lte } = await import("drizzle-orm");
+      
+      const now = new Date();
+      const twoWeeksFromNow = new Date(now);
+      twoWeeksFromNow.setDate(twoWeeksFromNow.getDate() + 14);
+      
+      // Get PDP gates from current and next 2 weeks
+      const pdpGates = await db
+        .select()
+        .from(milestones)
+        .where(and(
+          eq(milestones.milestoneType, "pdp_gates"),
+          gte(milestones.milestoneDate, now),
+          lte(milestones.milestoneDate, twoWeeksFromNow)
+        ))
+        .orderBy(asc(milestones.milestoneDate))
+        .limit(limit);
+      
+      // Get upcoming reviews from next 2 weeks
+      const reviews = await db
+        .select()
+        .from(upcomingReviews)
+        .where(and(
+          gte(upcomingReviews.date, now),
+          lte(upcomingReviews.date, twoWeeksFromNow)
+        ))
+        .orderBy(asc(upcomingReviews.date))
+        .limit(limit);
+      
+      // Combine and sort by date
+      const combined = [
+        ...pdpGates.map(item => ({
+          type: 'pdp_gate' as const,
+          date: item.milestoneDate,
+          program: item.product,
+          gateName: item.milestoneName,
+          week: '', // Will be calculated in frontend
+        })),
+        ...reviews.map(item => ({
+          type: 'upcoming_decision' as const,
+          date: new Date(item.date),
+          week: item.week,
+          reviewType: item.reviewType,
+          topic: item.topic,
+        }))
+      ];
+      
+      // Sort by date and take top 5
+      combined.sort((a, b) => a.date.getTime() - b.date.getTime());
+      return combined.slice(0, limit);
+    } catch (error) {
+      console.error("[Database] Error fetching upcoming items for AI:", error);
+      return [];
+    }
+  });
+}
+
 export async function getUpcomingReviews(): Promise<UpcomingReview[]> {
   return cachedQuery('reviews:upcoming', async () => {
     const db = await getDb();

@@ -4,6 +4,15 @@ import { MarkdownText } from './MarkdownText';
 
 export default function AIExecutiveUpdates() {
   const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
+  const { data: upcomingItems } = trpc.dashboard.getUpcomingItems.useQuery();
+  
+  // Helper function to format week number from date
+  const getWeekNumber = (date: Date) => {
+    const d = new Date(date);
+    const onejan = new Date(d.getFullYear(), 0, 1);
+    const week = Math.ceil((((d.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
+    return `W${week}`;
+  };
 
   return (
     <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-lg">
@@ -159,7 +168,28 @@ export default function AIExecutiveUpdates() {
               <Calendar className="w-4 h-4 text-blue-500" />
               <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
             </div>
-            <p className="text-xs text-muted-foreground italic">Upcoming items will appear here</p>
+            {upcomingItems && upcomingItems.length > 0 ? (
+              <ul className="space-y-2 text-xs">
+                {upcomingItems.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
+                    <div className="leading-relaxed">
+                      {item.type === 'pdp_gate' ? (
+                        <span>
+                          <span className="font-semibold">{item.program}</span> - {item.gateName}
+                        </span>
+                      ) : (
+                        <span>
+                          <span className="font-semibold">{item.week}</span> - {item.reviewType}: {item.topic}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-xs text-muted-foreground italic">Upcoming items will appear here</p>
+            )}
           </div>
 
           {/* Decisions Section - Bottom Right */}

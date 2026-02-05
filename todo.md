@@ -1206,4 +1206,13 @@
 - [x] Apply same bold text workaround to AI Executive Updates
 - [x] Ensure bullet styling matches Program Updates sections
 - [x] Test and verify bold text displays correctly
+- [x] Save checkpoint
+
+## Populate Upcoming Section in AI Executive Updates
+- [x] Review current data structure for PDP gates and upcoming decisions
+- [x] Create query to fetch next 5 items from current and next week
+- [x] Combine PDP gates (program name + gate name) and upcoming decisions (week, review type, topic)
+- [x] Sort chronologically by date
+- [x] Display in bulleted list format
+- [x] Test and verify correct data appears
 - [ ] Save checkpoint
