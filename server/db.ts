@@ -346,19 +346,12 @@ export async function getRecentDecisionsForAI(limit = 5) {
     try {
       const { desc } = await import("drizzle-orm");
       
-      // Get current week number
-      const now = new Date();
-      const onejan = new Date(now.getFullYear(), 0, 1);
-      const currentWeek = Math.ceil((((now.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
-      const currentWeekStr = `W${currentWeek} ${now.getFullYear()}`;
-      
-      // Get decisions from Decisions table (this week)
+      // Get decisions from Decisions table (recent, not filtered by week)
       const decisionsFromTable = await db
         .select()
         .from(decisions)
-        .where(eq(decisions.week, currentWeekStr))
         .orderBy(desc(decisions.updatedAt))
-        .limit(limit);
+        .limit(limit * 2); // Get more to ensure we have enough after combining with pillar decisions
       
       // Get Pillar decisions from Software items (category = "Pillar")
       const pillarDecisions = await db

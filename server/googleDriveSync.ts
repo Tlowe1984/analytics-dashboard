@@ -577,6 +577,11 @@ export async function syncAll(forceRefresh: boolean = false): Promise<{
         : `⚠️ Sync completed with errors. Check individual results.`
     );
     
+    // Clear cache after sync completes to ensure AI summaries regenerate with fresh data
+    console.log("🔄 Clearing query cache after sync to refresh AI summaries...");
+    clearCache();
+    console.log("✨ Cache cleared - AI summaries will regenerate on next request");
+    
     return {
       devices: results[0],
       software: results[1],

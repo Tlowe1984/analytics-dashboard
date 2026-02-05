@@ -1263,4 +1263,12 @@
 - [x] Remove "Blue text = New information" from top header
 - [x] Add "Blue text = New information" to Program Updates tile header
 - [x] Test and verify placement
+- [x] Save checkpoint
+
+## Fix Decision Synchronization Between Tiles
+- [x] Investigate why new MZ decision appears in Decisions tile but not AI Executive Updates
+- [x] Ensure AI summary generation waits for all data to be loaded
+- [x] Fix timing issue where AI summaries are created before decisions are synced
+- [x] Verify cache invalidation order during data refresh - added cache clear AFTER sync completes
+- [x] Ready for user testing with refresh
 - [ ] Save checkpoint
