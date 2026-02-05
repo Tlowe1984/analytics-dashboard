@@ -36,23 +36,25 @@ try {
   
   console.log(`[DAILY-SYNC] Pushing data to production: ${productionUrl}`);
   
-  // tRPC v11 requires input as query parameter with batch=1
-  const inputData = {
-    secret: syncSecret,
-    devices: parsedData.devices,
-    software: parsedData.software,
-    systems: parsedData.systems,
-    decisions: parsedData.decisions,
-    milestones: parsedData.milestones,
-    upcomingReviews: parsedData.upcomingReviews
-  };
-  
-  const encodedInput = encodeURIComponent(JSON.stringify(inputData));
-  const response = await fetch(`${productionUrl}/api/trpc/sync.pushData?batch=1&input=${encodedInput}`, {
+  // tRPC batch format: wrap data in json key
+  const response = await fetch(`${productionUrl}/api/trpc/sync.pushData?batch=1`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-    }
+    },
+    body: JSON.stringify({
+      "0": {
+        "json": {
+          secret: syncSecret,
+          devices: parsedData.devices,
+          software: parsedData.software,
+          systems: parsedData.systems,
+          decisions: parsedData.decisions,
+          milestones: parsedData.milestones,
+          upcomingReviews: parsedData.upcomingReviews
+        }
+      }
+    })
   });
 
   if (!response.ok) {

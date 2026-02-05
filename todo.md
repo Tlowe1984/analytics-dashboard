@@ -1086,6 +1086,14 @@
 - [x] Diagnose why production API returns "expected object, received undefined"
 - [x] Check tRPC endpoint configuration and input validation
 - [x] Fix API request format to use query parameters with batch=1
-- [ ] Save checkpoint and publish to production
+- [x] Save checkpoint and publish to production
 - [ ] Test end-to-end: sandbox → production API → production DB
 - [ ] Verify test21 appears in production after sync
+
+## Fix 414 Request-URI Too Large Error
+- [x] Change from query parameter format back to POST body (URL too long for 2,275 items)
+- [x] Use tRPC batch format in POST body with json wrapper: {"0":{"json":{...}}}
+- [x] Add SYNC_SECRET environment variable for authentication
+- [ ] Save checkpoint and republish to production
+- [ ] Test with production API
+- [ ] Verify test21 appears in production
