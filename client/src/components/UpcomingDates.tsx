@@ -12,6 +12,7 @@ export default function UpcomingDates() {
     {
       title: "PDP Gates",
       type: "pdp_gates" as const,
+      id: "pdp-gates",
       icon: Calendar,
       data: pdpGates.data || [],
       isLoading: pdpGates.isLoading,
@@ -48,7 +49,7 @@ export default function UpcomingDates() {
   ];
 
   return (
-    <div className="w-full">
+    <div id="upcoming-dates" className="w-full">
       {/* Section Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground mb-2">Upcoming Dates</h2>
@@ -62,6 +63,7 @@ export default function UpcomingDates() {
           return (
             <div
               key={section.title}
+              id={section.id}
               className="glass-card p-6 rounded-xl border border-white/10"
             >
               {/* Section Title */}

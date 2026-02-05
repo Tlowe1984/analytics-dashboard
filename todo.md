@@ -1350,3 +1350,7 @@
 - [x] Reduce spacing between the two subsections
 - [x] Add Details link to PDP Milestones that scrolls to PDP Gates section
 - [x] Format PDP milestones with bold week number (WX) before program name and gate
+
+## Fix PDP Milestones Details Link
+- [x] Find correct ID for PDP Gates section in Upcoming Dates
+- [x] Update Details link to navigate to correct section
