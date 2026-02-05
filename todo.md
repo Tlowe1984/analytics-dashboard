@@ -1164,4 +1164,11 @@
 - [x] Add darker styling to distinguish from other tiles
 - [x] Add "Upcoming" section (top right)
 - [x] Add "Decisions" section (bottom right)
+- [x] Save checkpoint
+
+## Add AI Summaries to AI Executive Updates
+- [x] Create tRPC procedure to generate AI summary for Devices tab
+- [x] Implement 3-item bulleted list with larger font in main content area
+- [x] First item: "**Devices:**" + AI summary using specified prompt
+- [x] Test AI summary generation
 - [ ] Save checkpoint

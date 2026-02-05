@@ -172,6 +172,59 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       }),
 
 
+    // Generate AI summary for Devices tab
+    generateDevicesSummary: publicProcedure.query(async () => {      const { invokeLLM } = await import("./_core/llm");
+      
+      // Get Devices tab data (executive summary items)
+      const dashboardItems = await db.getAllDashboardItems();
+      
+      // Get upcoming milestones for next 3 weeks
+      const milestones = await db.getAllMilestones();
+      const threeWeeksFromNow = new Date();
+      threeWeeksFromNow.setDate(threeWeeksFromNow.getDate() + 21);
+      const upcomingMilestones = milestones.filter(m => 
+        new Date(m.milestoneDate) <= threeWeeksFromNow && new Date(m.milestoneDate) >= new Date()
+      );
+      
+      // Format context for AI
+      const highlightsContext = dashboardItems
+        .filter(item => item.sectionType === "highlights")
+        .map(item => `${item.productCategory}: ${item.content}`)
+        .join("\n");
+      
+      const risksContext = dashboardItems
+        .filter(item => item.sectionType === "risks")
+        .map(item => `${item.productCategory}: ${item.content}`)
+        .join("\n");
+      
+      const milestonesContext = upcomingMilestones
+        .map(item => `${item.product} - ${item.milestoneName} (${new Date(item.milestoneDate).toLocaleDateString()})`)
+        .join("\n");
+      
+      const prompt = `Based on the following Devices tab data, provide a 2 sentence summary of key highlights, risks, and upcoming milestones in the next 3 weeks. Use the sentence structure: This week X, Key risks/Opens include Y, Upcoming milestones include Z.
+
+Highlights:
+${highlightsContext}
+
+Risks/Opens:
+${risksContext}
+
+Upcoming Milestones (next 3 weeks):
+${milestonesContext}
+
+Provide ONLY the 2 sentence summary, no additional text.`;
+      
+      const response = await invokeLLM({
+        messages: [
+          { role: "user", content: prompt },
+        ],
+      });
+      
+      return {
+        summary: response.choices[0]?.message?.content || "Summary not available.",
+      };
+    }),
+
     // Seed sample data
     seedSampleData: protectedProcedure.mutation(async () => {
       // Clear existing data first
