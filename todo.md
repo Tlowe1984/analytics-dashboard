@@ -1312,4 +1312,13 @@
 - [x] Add id="upcoming-decisions" to Upcoming Decisions section
 - [x] Style link similar to Details link in Decisions Made
 - [x] Test and verify link works - Successfully scrolls to Upcoming Decisions
+- [x] Save checkpoint
+
+## Add Details Links to Devices, Software, Systems Section Titles
+- [x] Add "Details" link next to Devices title that navigates to Devices tab
+- [x] Add "Details" link next to Software title that navigates to Software tab
+- [x] Add "Details" link next to Systems title that navigates to Systems tab
+- [x] Style links smaller than title text (text-xs)
+- [x] Implement tab switching functionality
+- [ ] Test all three links
 - [ ] Save checkpoint

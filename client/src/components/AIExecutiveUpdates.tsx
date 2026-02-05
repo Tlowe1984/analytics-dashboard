@@ -52,6 +52,18 @@ export default function AIExecutiveUpdates() {
                 <div className="flex items-center gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-blue-500" />
                   <h3 className="text-lg font-bold">Devices</h3>
+                  <a 
+                    href="#detailed-updates-devices" 
+                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const tab = document.querySelector('[id="radix-_r_0_-trigger-devices"]') as HTMLButtonElement;
+                      tab?.click();
+                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Details
+                  </a>
                 </div>
                 <div className="space-y-3 ml-7">
                   {/* Highlights */}
@@ -90,6 +102,18 @@ export default function AIExecutiveUpdates() {
                 <div className="flex items-center gap-2 mb-3">
                   <Code className="w-5 h-5 text-green-500" />
                   <h3 className="text-lg font-bold">Software</h3>
+                  <a 
+                    href="#detailed-updates-software" 
+                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const tab = document.querySelector('[id="radix-_r_0_-trigger-software"]') as HTMLButtonElement;
+                      tab?.click();
+                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Details
+                  </a>
                 </div>
                 <div className="ml-7">
                   <p className="text-sm text-muted-foreground italic">Coming soon</p>
@@ -101,6 +125,18 @@ export default function AIExecutiveUpdates() {
                 <div className="flex items-center gap-2 mb-3">
                   <Cpu className="w-5 h-5 text-orange-500" />
                   <h3 className="text-lg font-bold">Systems</h3>
+                  <a 
+                    href="#detailed-updates-systems" 
+                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const tab = document.querySelector('[id="radix-_r_0_-trigger-systems"]') as HTMLButtonElement;
+                      tab?.click();
+                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
+                    Details
+                  </a>
                 </div>
                 <div className="space-y-3 ml-7">
                   {/* Highlights */}

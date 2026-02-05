@@ -420,7 +420,7 @@ export default function ToplineView() {
   const lastUpdated = lastUpdatedData?.updatedAt;
 
   return (
-    <div className="w-full">
+    <div id="detailed-updates" className="w-full">
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-6">
         {/* Section Header */}
         <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
