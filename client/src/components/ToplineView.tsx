@@ -9,7 +9,7 @@ import { MarkdownText } from "./MarkdownText";
 interface DashboardItem {
   id: number;
   sectionType: "highlights" | "risks" | "upcoming";
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
   content: string;
   isNew: number; // 1 if new information (blue text), 0 otherwise
   order: number;
@@ -49,6 +49,10 @@ const productConfig = {
   arg_ssg: {
     icon: Grid3x3,
     label: "ARG / SSG",
+  },
+  in_market: {
+    icon: Layers,
+    label: "In-Market",
   },
 };
 
@@ -100,7 +104,7 @@ function ProductCard({
   productCategory,
   allItems,
 }: {
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg";
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
   allItems: DashboardItem[];
 }) {
   const product = productConfig[productCategory];
@@ -144,6 +148,42 @@ function ProductCard({
   );
 }
 
+function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
+  const product = productConfig.in_market;
+  const ProductIcon = product.icon;
+
+  // Filter items for in_market category
+  const highlightItems = allItems.filter(
+    (item) => item.productCategory === "in_market" && item.sectionType === "highlights"
+  );
+  const riskItems = allItems.filter(
+    (item) => item.productCategory === "in_market" && item.sectionType === "risks"
+  );
+
+  return (
+    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 h-full">
+      {/* Product Header */}
+      <div className="flex items-center gap-2 sm:gap-3 pb-2 sm:pb-3 border-b border-border/30">
+        <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+          <ProductIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+        </div>
+        <div>
+          <h3 className="font-bold text-sm sm:text-base">{product.label}</h3>
+          <p className="text-xs text-muted-foreground hidden sm:block">Executive Summary</p>
+        </div>
+      </div>
+
+      {/* Sections - Only Highlights and Risks */}
+      <div className="space-y-4">
+        <SectionContent sectionType="highlights" items={highlightItems} />
+        <div className="border-t border-border/20 pt-4">
+          <SectionContent sectionType="risks" items={riskItems} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DevicesTab() {
   const { data: allItems, isLoading } = trpc.dashboard.getAll.useQuery();
 
@@ -164,7 +204,7 @@ function DevicesTab() {
     );
   }
 
-  const products: Array<"ai_glasses" | "wrist" | "arg_ssg"> = ["ai_glasses", "wrist", "arg_ssg"];
+  const products: Array<"ai_glasses" | "wrist" | "arg_ssg" | "in_market"> = ["ai_glasses", "wrist", "arg_ssg", "in_market"];
 
   return (
     <div className="space-y-4">
@@ -179,9 +219,13 @@ function DevicesTab() {
         </a>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {products.map((product) => (
-          <ProductCard key={product} productCategory={product} allItems={allItems || []} />
+        {["ai_glasses", "wrist", "arg_ssg"].map((product) => (
+          <ProductCard key={product} productCategory={product as "ai_glasses" | "wrist" | "arg_ssg"} allItems={allItems || []} />
         ))}
+      </div>
+      {/* In-Market tile below the other three */}
+      <div className="grid grid-cols-1 gap-4 mt-4">
+        <InMarketCard allItems={allItems || []} />
       </div>
     </div>
   );

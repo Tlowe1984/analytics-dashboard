@@ -1,0 +1,1 @@
+ALTER TABLE `dashboard_items` MODIFY COLUMN `product_category` enum('ai_glasses','wrist','arg_ssg','in_market') NOT NULL;

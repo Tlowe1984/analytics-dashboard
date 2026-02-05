@@ -25,7 +25,7 @@ export type InsertUser = typeof users.$inferInsert;
 export const dashboardItems = mysqlTable("dashboard_items", {
   id: int("id").autoincrement().primaryKey(),
   sectionType: mysqlEnum("section_type", ["highlights", "risks", "upcoming"]).notNull(),
-  productCategory: mysqlEnum("product_category", ["ai_glasses", "wrist", "arg_ssg"]).notNull(),
+  productCategory: mysqlEnum("product_category", ["ai_glasses", "wrist", "arg_ssg", "in_market"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
   indentLevel: int("indent_level").default(0).notNull(), // Indentation level from Word numbering (0=flush left, 1+=indented)

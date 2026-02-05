@@ -36,10 +36,12 @@ try:
             continue
         
         # Detect product categories
-        if text in ['AI Glasses', 'Wrist', 'ARG/SSG', 'ARG / SSG']:
-            current_product = text.replace(' / ', '_').replace('/', '_').replace(' ', '_').lower()
+        if text in ['AI Glasses', 'Wrist', 'ARG/SSG', 'ARG / SSG', 'In-Market', 'In Market']:
+            current_product = text.replace(' / ', '_').replace('/', '_').replace(' ', '_').replace('-', '_').lower()
             if current_product == 'arg_ssg':
                 current_product = 'arg_ssg'
+            elif current_product == 'in_market':
+                current_product = 'in_market'
             continue
         
         # Detect section types (match exact or prefix)

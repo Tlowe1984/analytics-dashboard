@@ -1118,3 +1118,28 @@
 - [x] Sandbox runs daily sync at 6 AM PST and writes to shared database
 - [x] Production reads from shared database (no sync needed)
 - [ ] Test solution in production
+
+## Scheduled Sync Not Running
+- [ ] Check sync-scheduler.log to see if 6 AM sync attempted
+- [ ] Check if sandbox server was running at 6 AM
+- [ ] Diagnose why cron job didn't trigger
+- [ ] Implement reliable scheduling solution
+- [ ] Test and verify automatic sync works
+
+## Add In-Market Tile to Executive Summary
+- [ ] Check Google Doc structure for in-market section data
+- [ ] Update Python parser to extract in-market highlights and risks
+- [ ] Update database schema to store in-market data
+- [ ] Update sync logic to load in-market data
+- [ ] Add In-Market tile to frontend (below AI Glasses, Wrist, ARG/SSG)
+- [ ] Format with HIGHLIGHTS and RISKS & OPENS sections (all caps with icons)
+- [ ] Apply same rich text formatting as other tiles
+- [ ] Test sync and display
+
+## Add In-Market Tile to Executive Summary
+- [x] Update Python parser to recognize "In-Market" as a product category
+- [x] Add "in_market" to database schema product_category enum
+- [x] Generate and apply database migration (ALTER TABLE dashboard_items MODIFY COLUMN product_category)
+- [x] Update frontend ToplineView component to add In-Market tile
+- [x] Create InMarketCard component with Highlights and Risks sections only (no Upcoming)
+- [ ] Test sync to verify In-Market data extraction (needs In-Market data in Google Doc first)
