@@ -124,12 +124,10 @@ try {
     // Batch insert instead of loop
     if (data.length > 0) {
       const values = data.map(item => ({
-        topic: item.topic,
+        week: item.week || '',
         dri: item.dri || '',
         forum: item.forum || '',
         status: item.status || '',
-        decisionDoc: item.decision_doc || '',
-        decisionMakers: item.decision_makers || '',
         decisionOutcome: item.decision_outcome || ''
       }));
       await db.insert(decisions).values(values);

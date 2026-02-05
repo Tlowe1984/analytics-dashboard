@@ -1,0 +1,82 @@
+{
+  "query": "SELECT id, week, dri, forum, status, LEFT(decision_outcome, 50) as decision_preview FROM decisions LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, week, dri, forum, status, LEFT(decision_outcome, 50) as decision_preview FROM decisions LIMIT 10;",
+  "rows": [
+    {
+      "id": "210019",
+      "week": "NULL",
+      "dri": "Marissa Chacko",
+      "forum": "Wearable Reviews",
+      "status": "Approved",
+      "decision_preview": "**Decisions:** **HN1 LE limited to Elite Bundle (Y"
+    },
+    {
+      "id": "210020",
+      "week": "NULL",
+      "dri": "Rupa Rao",
+      "forum": "Wearable Reviews",
+      "status": "Approved",
+      "decision_preview": "**Malibu2 LE Steer** [Post](https://fb.workplace.c"
+    },
+    {
+      "id": "210021",
+      "week": "NULL",
+      "dri": "Vita Vishnyakov",
+      "forum": "W06 Experiences & Interfaces Review",
+      "status": "Approved",
+      "decision_preview": "**W06 Experiences & Interfaces Review **[Post](htt"
+    },
+    {
+      "id": "210022",
+      "week": "NULL",
+      "dri": "Sean O’Reilly",
+      "forum": "Other",
+      "status": "Approved",
+      "decision_preview": "Decision: Malibu2 LE and Malibu2 Scale will both h"
+    },
+    {
+      "id": "210023",
+      "week": "NULL",
+      "dri": "Lei Yin",
+      "forum": "Systems Review",
+      "status": "Approved",
+      "decision_preview": "**[Decide] SN3/ Paloma2 Display SKU SoC and Displa"
+    },
+    {
+      "id": "210024",
+      "week": "NULL",
+      "dri": "Marianne Giesemann",
+      "forum": "Design Launch",
+      "status": "Approved",
+      "decision_preview": "**[Design Launch Review] AI Glasses | RBM2 Refresh"
+    },
+    {
+      "id": "210025",
+      "week": "NULL",
+      "dri": "Sarah Carne",
+      "forum": "Design Launch",
+      "status": "Approved",
+      "decision_preview": "**[Design Launch Review] HN2-M Product Commit Chec"
+    },
+    {
+      "id": "210026",
+      "week": "NULL",
+      "dri": "[Chris Hogan](mailto:chrishog@meta.com)",
+      "forum": "Devices & Growth",
+      "status": "Approved",
+      "decision_preview": "Shop in Shop design walkthrough - smart mirror & i"
+    },
+    {
+      "id": "210027",
+      "week": "NULL",
+      "dri": "Chris Hogan",
+      "forum": "Devices & Growth",
+      "status": "Approved",
+      "decision_preview": "Active Glasses & Museum Pilot: We aligned to conti"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tweek\tdri\tforum\tstatus\tdecision_preview\n210019\tNULL\tMarissa Chacko\tWearable Reviews\tApproved\t**Decisions:** **HN1 LE limited to Elite Bundle (Y\n210020\tNULL\tRupa Rao\tWearable Reviews\tApproved\t**Malibu2 LE Steer** [Post](https://fb.workplace.c\n210021\tNULL\tVita Vishnyakov\tW06 Experiences & Interfaces Review\tApproved\t**W06 Experiences & Interfaces Review **[Post](htt\n210022\tNULL\tSean O’Reilly\tOther\tApproved\tDecision: Malibu2 LE and Malibu2 Scale will both h\n210023\tNULL\tLei Yin\tSystems Review\tApproved\t**[Decide] SN3/ Paloma2 Display SKU SoC and Displa\n210024\tNULL\tMarianne Giesemann\tDesign Launch\tApproved\t**[Design Launch Review] AI Glasses | RBM2 Refresh\n210025\tNULL\tSarah Carne\tDesign Launch\tApproved\t**[Design Launch Review] HN2-M Product Commit Chec\n210026\tNULL\t[Chris Hogan](mailto:chrishog@meta.com)\tDevices & Growth\tApproved\tShop in Shop design walkthrough - smart mirror & i\n210027\tNULL\tChris Hogan\tDevices & Growth\tApproved\tActive Glasses & Museum Pilot: We aligned to conti\n",
+  "stderr": "",
+  "execution_time_ms": 102
+}
