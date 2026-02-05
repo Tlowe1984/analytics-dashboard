@@ -170,6 +170,7 @@ export function invalidateDashboardCache(): void {
   queryCache.invalidatePattern(/^decisions:/);
   queryCache.invalidatePattern(/^reviews:/);
   queryCache.invalidatePattern(/^milestones:/);
+  queryCache.invalidatePattern(/^ai:/);
   
   console.log(`[${new Date().toISOString()}] Dashboard cache invalidated`);
 }
