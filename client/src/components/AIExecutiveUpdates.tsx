@@ -44,10 +44,10 @@ export default function AIExecutiveUpdates() {
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.devices?.highlights?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
                     </ul>
@@ -55,10 +55,10 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.devices?.risks?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
                     </ul>
@@ -76,10 +76,10 @@ export default function AIExecutiveUpdates() {
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.software?.highlights?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
                     </ul>
@@ -87,10 +87,10 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.software?.risks?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
                     </ul>
@@ -108,10 +108,10 @@ export default function AIExecutiveUpdates() {
                   {/* Highlights */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.systems?.highlights?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
                     </ul>
@@ -119,10 +119,10 @@ export default function AIExecutiveUpdates() {
                   {/* Risks/Opens */}
                   <div>
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 list-disc list-inside">
                       {summaries?.systems?.risks?.map((item, idx) => (
                         <li key={idx} className="text-sm leading-relaxed">
-                          <Markdown>{item}</Markdown>
+                          <span className="inline"><Markdown>{item}</Markdown></span>
                         </li>
                       )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
                     </ul>

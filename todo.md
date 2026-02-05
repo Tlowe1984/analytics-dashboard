@@ -1187,4 +1187,16 @@
 - [x] Use Gemini to extract 2-3 bullets preserving emojis and links
 - [x] Include program names in bullets
 - [x] Test and verify display
+- [x] Save checkpoint
+
+## Fix AI Executive Updates Formatting
+- [ ] Add bullet points (•) to all line items in Highlights and Risks/Opens sections
+- [ ] Fix bold text rendering - ensure **text** displays as bold
+- [ ] Test formatting across all 3 sections (Devices, Software, Systems)
+- [ ] Save checkpoint
+
+## Fix AI Executive Updates Formatting
+- [x] Add bullet points to all line items
+- [x] Fix bold text rendering (** workaround)
+- [x] Test display in browser
 - [ ] Save checkpoint
