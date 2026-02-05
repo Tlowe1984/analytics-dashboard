@@ -1146,10 +1146,14 @@
 
 ## Move In-Market Tile Position
 - [x] Reorder In-Market tile to display above AI Glasses, Wrist, ARG/SSG tiles
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Fix Decisions Week Column
 - [x] Diagnose why week column is empty in Decisions section
 - [x] Fix parser or database query to populate week data correctly
 - [x] Test and verify week column displays data
+- [x] Save checkpoint
+
+## Rename Executive Summary to Program Updates
+- [x] Update section title in ToplineView.tsx
 - [ ] Save checkpoint
