@@ -1,75 +1,154 @@
-import { Sparkles, Calendar, FileCheck } from "lucide-react";
+import { Sparkles, Calendar, FileCheck, Smartphone, Code, Cpu } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import Markdown from "react-markdown";
 
 export default function AIExecutiveUpdates() {
-  const { data: devicesSummary, isLoading } = trpc.dashboard.generateDevicesSummary.useQuery();
+  const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
+
   return (
     <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-lg">
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 rounded-lg bg-purple-500/10">
-          <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-md">
+          <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div>
           <h2 className="text-xl font-bold">AI Executive Updates</h2>
-          <p className="text-xs text-muted-foreground">AI-generated insights and summaries</p>
+          <p className="text-sm text-muted-foreground">AI-generated insights and summaries</p>
         </div>
       </div>
 
       {/* Grid Layout: 2/3 left + 1/3 right stacked */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Main Content - 2/3 width */}
-        <div className="lg:col-span-2 bg-background/40 border border-border/40 rounded-xl p-5 min-h-[300px]">
+        <div className="lg:col-span-2 bg-background/40 border border-border/40 rounded-xl p-6 min-h-[300px]">
           {isLoading ? (
-            <div className="space-y-3">
-              <div className="h-6 bg-muted/20 rounded w-3/4 animate-pulse" />
-              <div className="h-6 bg-muted/20 rounded w-5/6 animate-pulse" />
-              <div className="h-6 bg-muted/20 rounded w-4/6 animate-pulse" />
+            <div className="space-y-6">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="space-y-3">
+                  <div className="h-6 bg-muted/20 rounded w-1/4 animate-pulse" />
+                  <div className="h-4 bg-muted/20 rounded w-full animate-pulse" />
+                  <div className="h-4 bg-muted/20 rounded w-5/6 animate-pulse" />
+                </div>
+              ))}
             </div>
           ) : (
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full mt-2.5 flex-shrink-0 bg-primary" />
-                <p className="text-base leading-relaxed">
-                  <span className="font-bold">Devices:</span> {devicesSummary?.summary || "Loading summary..."}
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full mt-2.5 flex-shrink-0 bg-primary" />
-                <p className="text-base leading-relaxed">
-                  <span className="font-bold">Software:</span> <span className="text-muted-foreground italic">Coming soon</span>
-                </p>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full mt-2.5 flex-shrink-0 bg-primary" />
-                <p className="text-base leading-relaxed">
-                  <span className="font-bold">Systems:</span> <span className="text-muted-foreground italic">Coming soon</span>
-                </p>
-              </li>
-            </ul>
+            <div className="space-y-6">
+              {/* Devices Section */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Smartphone className="w-5 h-5 text-blue-500" />
+                  <h3 className="text-lg font-bold">Devices</h3>
+                </div>
+                <div className="space-y-4 ml-7">
+                  {/* Highlights */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.devices?.highlights?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                    </ul>
+                  </div>
+                  {/* Risks/Opens */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.devices?.risks?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Software Section */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Code className="w-5 h-5 text-green-500" />
+                  <h3 className="text-lg font-bold">Software</h3>
+                </div>
+                <div className="space-y-4 ml-7">
+                  {/* Highlights */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.software?.highlights?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                    </ul>
+                  </div>
+                  {/* Risks/Opens */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.software?.risks?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Systems Section */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Cpu className="w-5 h-5 text-orange-500" />
+                  <h3 className="text-lg font-bold">Systems</h3>
+                </div>
+                <div className="space-y-4 ml-7">
+                  {/* Highlights */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.systems?.highlights?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No highlights available</li>}
+                    </ul>
+                  </div>
+                  {/* Risks/Opens */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
+                    <ul className="space-y-1.5">
+                      {summaries?.systems?.risks?.map((item, idx) => (
+                        <li key={idx} className="text-sm leading-relaxed">
+                          <Markdown>{item}</Markdown>
+                        </li>
+                      )) || <li className="text-sm text-muted-foreground italic">No risks available</li>}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 
         {/* Right Side - Stacked sections */}
         <div className="space-y-4">
           {/* Upcoming Section - Top Right */}
-          <div className="bg-background/40 border border-border/40 rounded-xl p-4">
+          <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded bg-blue-500/10">
-                <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="font-bold text-sm">UPCOMING</h3>
+              <Calendar className="w-4 h-4 text-blue-500" />
+              <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
             </div>
             <p className="text-xs text-muted-foreground italic">Upcoming items will appear here</p>
           </div>
 
           {/* Decisions Section - Bottom Right */}
-          <div className="bg-background/40 border border-border/40 rounded-xl p-4">
+          <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 rounded bg-orange-500/10">
-                <FileCheck className="w-4 h-4 text-orange-600 dark:text-orange-400" />
-              </div>
-              <h3 className="font-bold text-sm">DECISIONS</h3>
+              <FileCheck className="w-4 h-4 text-orange-500" />
+              <h3 className="text-sm font-bold uppercase tracking-wide">Decisions</h3>
             </div>
             <p className="text-xs text-muted-foreground italic">Recent decisions will appear here</p>
           </div>

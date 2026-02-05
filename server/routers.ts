@@ -172,57 +172,143 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       }),
 
 
-    // Generate AI summary for Devices tab
-    generateDevicesSummary: publicProcedure.query(async () => {      const { invokeLLM } = await import("./_core/llm");
+    // Generate AI summaries for all sections (Devices, Software, Systems)
+    generateExecutiveSummaries: publicProcedure.query(async () => {
+      const { invokeLLM } = await import("./_core/llm");
       
-      // Get Devices tab data (executive summary items)
-      const dashboardItems = await db.getAllDashboardItems();
+      // Get all data
+      const [dashboardItems, softwareItems, systemsItems] = await Promise.all([
+        db.getAllDashboardItems(),
+        db.getAllSoftwareItems(),
+        db.getAllSystemsItems(),
+      ]);
       
-      // Get upcoming milestones for next 3 weeks
-      const milestones = await db.getAllMilestones();
-      const threeWeeksFromNow = new Date();
-      threeWeeksFromNow.setDate(threeWeeksFromNow.getDate() + 21);
-      const upcomingMilestones = milestones.filter(m => 
-        new Date(m.milestoneDate) <= threeWeeksFromNow && new Date(m.milestoneDate) >= new Date()
-      );
-      
-      // Format context for AI
-      const highlightsContext = dashboardItems
+      // Format Devices data
+      const devicesHighlights = dashboardItems
         .filter(item => item.sectionType === "highlights")
-        .map(item => `${item.productCategory}: ${item.content}`)
+        .map(item => item.content)
         .join("\n");
       
-      const risksContext = dashboardItems
+      const devicesRisks = dashboardItems
         .filter(item => item.sectionType === "risks")
-        .map(item => `${item.productCategory}: ${item.content}`)
+        .map(item => item.content)
         .join("\n");
       
-      const milestonesContext = upcomingMilestones
-        .map(item => `${item.product} - ${item.milestoneName} (${new Date(item.milestoneDate).toLocaleDateString()})`)
+      // Format Software data (uses "wins" and "exec_summary")
+      const softwareHighlights = softwareItems
+        .filter(item => item.sectionType === "wins")
+        .map(item => item.content)
         .join("\n");
       
-      const prompt = `Based on the following Devices tab data, provide a 2 sentence summary of key highlights, risks, and upcoming milestones in the next 3 weeks. Use the sentence structure: This week X, Key risks/Opens include Y, Upcoming milestones include Z.
+      const softwareRisks = softwareItems
+        .filter(item => item.sectionType === "exec_summary")
+        .map(item => item.content)
+        .join("\n");
+      
+      // Format Systems data (uses "wins" and "help_needed")
+      const systemsHighlights = systemsItems
+        .filter(item => item.sectionType === "wins")
+        .map(item => item.content)
+        .join("\n");
+      
+      const systemsRisks = systemsItems
+        .filter(item => item.sectionType === "help_needed")
+        .map(item => item.content)
+        .join("\n");
+      
+      const prompt = `You are extracting key bullets from executive dashboard data. For each section (Devices, Software, Systems), select 2-3 most important bullets for Highlights and 2-3 for Risks/Opens.
 
+IMPORTANT RULES:
+1. Keep ALL emojis (🎉, ⚠️, 🔴, ✅, 🟢, etc.)
+2. Keep ALL markdown links [text](url)
+3. Include program names (e.g., RBM2, Luna, Artemis, Modelo)
+4. Return as JSON with this structure:
+{
+  "devices": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] },
+  "software": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] },
+  "systems": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] }
+}
+
+=== DEVICES DATA ===
 Highlights:
-${highlightsContext}
+${devicesHighlights}
 
 Risks/Opens:
-${risksContext}
+${devicesRisks}
 
-Upcoming Milestones (next 3 weeks):
-${milestonesContext}
+=== SOFTWARE DATA ===
+Highlights:
+${softwareHighlights}
 
-Provide ONLY the 2 sentence summary, no additional text.`;
+Risks/Opens:
+${softwareRisks}
+
+=== SYSTEMS DATA ===
+Highlights:
+${systemsHighlights}
+
+Risks/Opens:
+${systemsRisks}
+
+Return ONLY valid JSON, no other text.`;
       
       const response = await invokeLLM({
         messages: [
           { role: "user", content: prompt },
         ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "executive_summaries",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                devices: {
+                  type: "object",
+                  properties: {
+                    highlights: { type: "array", items: { type: "string" } },
+                    risks: { type: "array", items: { type: "string" } },
+                  },
+                  required: ["highlights", "risks"],
+                  additionalProperties: false,
+                },
+                software: {
+                  type: "object",
+                  properties: {
+                    highlights: { type: "array", items: { type: "string" } },
+                    risks: { type: "array", items: { type: "string" } },
+                  },
+                  required: ["highlights", "risks"],
+                  additionalProperties: false,
+                },
+                systems: {
+                  type: "object",
+                  properties: {
+                    highlights: { type: "array", items: { type: "string" } },
+                    risks: { type: "array", items: { type: "string" } },
+                  },
+                  required: ["highlights", "risks"],
+                  additionalProperties: false,
+                },
+              },
+              required: ["devices", "software", "systems"],
+              additionalProperties: false,
+            },
+          },
+        },
       });
       
-      return {
-        summary: response.choices[0]?.message?.content || "Summary not available.",
-      };
+      const content = response.choices[0]?.message?.content;
+      if (!content) {
+        return {
+          devices: { highlights: [], risks: [] },
+          software: { highlights: [], risks: [] },
+          systems: { highlights: [], risks: [] },
+        };
+      }
+      
+      return JSON.parse(content);
     }),
 
     // Seed sample data

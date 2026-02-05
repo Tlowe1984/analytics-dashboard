@@ -1171,4 +1171,20 @@
 - [x] Implement 3-item bulleted list with larger font in main content area
 - [x] First item: "**Devices:**" + AI summary using specified prompt
 - [x] Test AI summary generation
+- [x] Save checkpoint
+
+## Redesign AI Executive Updates with Icon Sections
+- [ ] Update backend to generate structured highlights and risks for Devices, Software, Systems
+- [ ] Use Gemini to extract 2-3 bullets per subsection with emojis and links preserved
+- [ ] Redesign frontend with 3 icon-based sections (Devices, Software, Systems)
+- [ ] Each section has Highlights and Risks/Opens subsections
+- [ ] Test and save checkpoint
+
+## Redesign AI Executive Updates Layout
+- [x] Remove bulleted list format
+- [x] Create 3 icon-based sections (Devices, Software, Systems)
+- [x] Add Highlights and Risks/Opens subsections to each
+- [x] Use Gemini to extract 2-3 bullets preserving emojis and links
+- [x] Include program names in bullets
+- [x] Test and verify display
 - [ ] Save checkpoint
