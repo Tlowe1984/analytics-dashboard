@@ -1340,3 +1340,7 @@
 - [x] Display PDP milestones chronologically with Name and milestone type
 - [x] Create "Upcoming Decisions" section with current review data
 - [x] Ensure PDP Gates data is loaded before creating summary
+
+## Move PDP Milestones to Bulleted List
+- [x] Change PDP milestones display from top-right text to bulleted list below title
+- [x] Format similar to Upcoming Decisions section
