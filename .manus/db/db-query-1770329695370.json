@@ -1,0 +1,15 @@
+{
+  "query": "SELECT product, milestone_name, milestone_date FROM milestones WHERE milestone_type = 'pdp_gates' AND milestone_date >= '2026-02-05' AND milestone_date <= '2026-02-19' ORDER BY milestone_date;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, milestone_date FROM milestones WHERE milestone_type = 'pdp_gates' AND milestone_date >= '2026-02-05' AND milestone_date <= '2026-02-19' ORDER BY milestone_date;",
+  "rows": [
+    {
+      "product": "RBM2 Refresh",
+      "milestone_name": "Product Commit RBM2 Refresh",
+      "milestone_date": "2026-02-13 00:00:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tmilestone_date\nRBM2 Refresh\tProduct Commit RBM2 Refresh\t2026-02-13 00:00:00\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

@@ -313,7 +313,7 @@ Return ONLY valid JSON, no other text.`;
 
     // Get upcoming items for AI Executive Updates (PDP gates + upcoming decisions)
     getUpcomingItems: publicProcedure.query(async () => {
-      return await db.getUpcomingItemsForAI(5);
+      return await db.getUpcomingItemsForAI(6);
     }),
 
     // Get recent decisions for AI Executive Updates (Decisions table + Software Pillar decisions)

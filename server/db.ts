@@ -469,7 +469,7 @@ export async function getUpcomingItemsForAI(limit = 6) {
     
     try {
       const { upcomingReviews } = await import("../drizzle/schema.js");
-      const { asc, and, gte, lte } = await import("drizzle-orm");
+      const { asc, and, eq, gte, lte } = await import("drizzle-orm");
       
       const now = new Date();
       const twoWeeksFromNow = new Date(now);
