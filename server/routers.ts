@@ -317,20 +317,6 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         }
       }),
 
-    // Import database from sandbox (production only)
-    importDatabase: protectedProcedure
-      .mutation(async () => {
-        const { importDatabase } = await import('./db-import.js');
-        try {
-          const result = await importDatabase();
-          invalidateDashboardCache();
-          return result;
-        } catch (error) {
-          console.error('[DB-IMPORT] Failed:', error);
-          throw new Error(`Database import failed: ${error instanceof Error ? error.message : String(error)}`);
-        }
-      }),
-
     // Sync only executive summary
     syncExecSummary: protectedProcedure.mutation(async () => {
       const result = await syncExecutiveSummary();

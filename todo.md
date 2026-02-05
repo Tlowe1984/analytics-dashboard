@@ -1098,3 +1098,9 @@
 - [ ] Test that production displays correct data after republish
 - [x] Decision: No scheduled sync - manual refresh only via Production button
 - [x] Saved checkpoint 31038adf with cache disabled
+
+## Fix Deployment Error
+- [ ] Find node-fetch import causing deployment failure
+- [ ] Remove or replace with built-in fetch
+- [ ] Save checkpoint and republish
+- [ ] Verify deployment succeeds
