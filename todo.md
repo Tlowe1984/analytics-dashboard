@@ -1244,4 +1244,10 @@
 - [x] Preserve links at the end of summaries
 - [x] Change AI Executive Updates tile background to darker blue for visual hierarchy
 - [x] Test both changes
+- [x] Save checkpoint
+
+## Revert AI Executive Updates Tile Color
+- [x] Change tile background back to original bg-background/60
+- [x] Change border back to original border-border/50
+- [x] Test and verify
 - [ ] Save checkpoint
