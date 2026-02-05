@@ -218,14 +218,14 @@ function DevicesTab() {
           📄 View Source Document
         </a>
       </div>
+      {/* In-Market tile above the other three */}
+      <div className="grid grid-cols-1 gap-4 mb-4">
+        <InMarketCard allItems={allItems || []} />
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {["ai_glasses", "wrist", "arg_ssg"].map((product) => (
           <ProductCard key={product} productCategory={product as "ai_glasses" | "wrist" | "arg_ssg"} allItems={allItems || []} />
         ))}
-      </div>
-      {/* In-Market tile below the other three */}
-      <div className="grid grid-cols-1 gap-4 mt-4">
-        <InMarketCard allItems={allItems || []} />
       </div>
     </div>
   );

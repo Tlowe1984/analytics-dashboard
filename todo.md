@@ -1143,3 +1143,7 @@
 - [x] Update frontend ToplineView component to add In-Market tile
 - [x] Create InMarketCard component with Highlights and Risks sections only (no Upcoming)
 - [ ] Test sync to verify In-Market data extraction (needs In-Market data in Google Doc first)
+
+## Move In-Market Tile Position
+- [x] Reorder In-Market tile to display above AI Glasses, Wrist, ARG/SSG tiles
+- [ ] Save checkpoint
