@@ -1237,4 +1237,11 @@
 - [x] Preserve links in summaries
 - [x] Update frontend to display only the summary sentence + links
 - [x] Test and verify correct format
+- [x] Save checkpoint
+
+## Update Decisions Format and AI Executive Updates Tile Color
+- [x] Update LLM prompt to remove "We decided" prefix and focus on outcome summaries (≤25 words)
+- [x] Preserve links at the end of summaries
+- [x] Change AI Executive Updates tile background to darker blue for visual hierarchy
+- [x] Test both changes
 - [ ] Save checkpoint

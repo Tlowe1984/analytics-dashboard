@@ -16,7 +16,7 @@ export default function AIExecutiveUpdates() {
   };
 
   return (
-    <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6 shadow-lg">
+    <div className="bg-blue-950/90 backdrop-blur-sm border border-blue-900/50 rounded-2xl p-6 shadow-lg">
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-md">

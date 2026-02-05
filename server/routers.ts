@@ -331,15 +331,16 @@ Return ONLY valid JSON, no other text.`;
         `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
       ).join('\n\n');
       
-      const prompt = `For each decision below, write a single sentence (up to 20 words) starting with "We decided" that summarizes the outcome. Preserve any [links](url) at the end.
+      const prompt = `For each decision below, write a concise summary (up to 25 words) focusing on the outcome. Preserve any [links](url) at the end.
 
 Examples:
-- "We decided to limit HN1 LE to Elite Bundle only. [Post](url)"
-- "We decided Meta AI 2.0 architecture strategy is approved. [Post](url)"
+- "Malibu2 LE steers on 3rd button follow-up with MZ, workshop, and watch-face experiences. [Post](url)"
+- "Meta AI 2.0 architecture strategy approved with GO for W06 Experiences & Interfaces Review. [Post](url)"
+- "HN1 LE limited to Elite Bundle; Ceres included with blue transparent frame. [Post](url)"
 
 Return as JSON array with this structure:
 [
-  { "summary": "We decided X. [link](url)" }
+  { "summary": "Outcome summary. [link](url)" }
 ]
 
 ${decisionsText}
