@@ -239,82 +239,13 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
-        // Import ENV to check production status
-        const { ENV } = await import('./_core/env');
-        const isProduction = ENV.isProduction;
-        
-        console.log('[SYNC] Environment detection:', {
-          NODE_ENV: process.env.NODE_ENV,
-          isProduction,
-          hasManusApiKey: !!process.env.MANUS_API_KEY,
-          apiKeyLength: process.env.MANUS_API_KEY?.length || 0,
-        });
-        
-        if (isProduction) {
-          // Production: Trigger Manus API to run sync in sandbox (has Python)
-          console.log('[SYNC] Production mode: Triggering Manus API task');
-          try {
-            console.log('[SYNC] Making API request to:', 'https://api.manus.ai/v1/tasks');
-            const response = await fetch('https://api.manus.ai/v1/tasks', {
-              method: 'POST',
-              headers: {
-                'API_KEY': process.env.MANUS_API_KEY || '',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                prompt: 'Install Python packages and run dashboard sync:\n\nsudo pip3 install python-docx openpyxl && cd /home/ubuntu/analytics-dashboard && node daily-sync.mjs',
-                agentProfile: 'manus-1.6-lite',
-                hideInTaskList: true,
-              }),
-            });
-            
-            console.log('[SYNC] API response status:', response.status);
-            
-            if (!response.ok) {
-              const errorText = await response.text();
-              console.error('[SYNC] API error response:', errorText);
-              throw new Error(`Manus API error: ${response.status} - ${errorText}`);
-            }
-            
-            const taskData = await response.json();
-            console.log('[SYNC] Task created successfully:', taskData);
-            
-            // Return success message with task ID
-            const result = {
-              devices: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-              software: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-              systems: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-              decisions: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-              milestones: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-              upcomingReviews: { success: true, message: `Sync task started (${taskData.task_id}). Data will update in ~2 minutes.`, timestamp: new Date() },
-            };
-            
-            return result;
-          } catch (error) {
-            console.error('[SYNC] Failed to trigger sync task:', error);
-            console.error('[SYNC] Error details:', {
-              message: error instanceof Error ? error.message : String(error),
-              stack: error instanceof Error ? error.stack : undefined,
-            });
-            // Fallback: return error message
-            const result = { 
-              devices: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-              software: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-              systems: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-              decisions: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-              milestones: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-              upcomingReviews: { success: false, message: 'Failed to start sync. Data syncs automatically at 6 AM PST daily.', timestamp: new Date() },
-            };
-            return result;
-          }
-        } else {
-          // Development/Sandbox: Run sync directly (Python available)
-          console.log('[SYNC] Development/Sandbox mode: Running sync directly with Python');
-          const result = await syncAll(input?.forceRefresh ?? false);
-          // Invalidate cache after sync completes so frontend gets fresh data
-          invalidateDashboardCache();
-          return result;
-        }
+        // Production and sandbox share the same backend server (running in sandbox)
+        // and the same database, so we can always run sync directly
+        console.log('[SYNC] Running sync directly (shared backend + database)');
+        const result = await syncAll(input?.forceRefresh ?? false);
+        // Invalidate cache after sync completes so frontend gets fresh data
+        invalidateDashboardCache();
+        return result;
       }),
 
     // Sync only executive summary
