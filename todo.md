@@ -1271,4 +1271,9 @@
 - [x] Fix timing issue where AI summaries are created before decisions are synced
 - [x] Verify cache invalidation order during data refresh - added cache clear AFTER sync completes
 - [x] Ready for user testing with refresh
+- [x] Save checkpoint
+
+## Prioritize MZ Decisions in AI Executive Updates
+- [x] Update getRecentDecisionsForAI to sort MZ decisions first
+- [x] Test and verify MZ decisions appear at top
 - [ ] Save checkpoint

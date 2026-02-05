@@ -380,8 +380,18 @@ export async function getRecentDecisionsForAI(limit = 5) {
         }))
       ];
       
-      // Sort by date (most recent first) and take top 5
-      combined.sort((a, b) => b.date.getTime() - a.date.getTime());
+      // Sort with MZ decisions first, then by date (most recent first)
+      combined.sort((a, b) => {
+        const aHasMZ = (a.outcome?.toLowerCase() || '').includes('mz') || (a.forum?.toLowerCase() || '').includes('mz');
+        const bHasMZ = (b.outcome?.toLowerCase() || '').includes('mz') || (b.forum?.toLowerCase() || '').includes('mz');
+        
+        // MZ decisions come first
+        if (aHasMZ && !bHasMZ) return -1;
+        if (!aHasMZ && bHasMZ) return 1;
+        
+        // Within same priority group, sort by date (most recent first)
+        return b.date.getTime() - a.date.getTime();
+      });
       return combined.slice(0, limit);
     } catch (error) {
       console.error("[Database] Error fetching recent decisions for AI:", error);
