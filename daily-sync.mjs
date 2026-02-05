@@ -1,38 +1,34 @@
 import { syncAll } from './server/googleDriveSync.ts';
-import { readFileSync, existsSync } from 'fs';
+import * as db from './server/db.ts';
 
 console.log("[DAILY-SYNC] Starting automatic sync with force refresh...");
 const startTime = Date.now();
 
 try {
-  // Step 1: Run sync to download and parse data
+  // Step 1: Run sync to download, parse, and load data into sandbox database
   const result = await syncAll(true); // forceRefresh = true
   const duration = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log(`[DAILY-SYNC] ✅ Sync complete in ${duration}s`);
   console.log(JSON.stringify(result, null, 2));
 
-  // Step 2: Read parsed data from temp files
-  const parsedData = {};
+  // Step 2: Query sandbox database to get all parsed data
+  console.log('[DAILY-SYNC] Querying sandbox database...');
+  const parsedData = {
+    devices: await db.getAllDashboardItems(),
+    software: await db.getAllSoftwareItems(),
+    systems: await db.getAllSystemsItems(),
+    decisions: await db.getAllDecisions(),
+    milestones: await db.getAllMilestones(),
+    upcomingReviews: await db.getUpcomingReviews()
+  };
   
-  if (existsSync('/tmp/parsed_data.json')) {
-    parsedData.devices = JSON.parse(readFileSync('/tmp/parsed_data.json', 'utf-8'));
-    console.log(`[DAILY-SYNC] Read ${parsedData.devices.length} devices`);
-  }
-  
-  if (existsSync('/tmp/software_data.json')) {
-    parsedData.software = JSON.parse(readFileSync('/tmp/software_data.json', 'utf-8'));
-    console.log(`[DAILY-SYNC] Read ${parsedData.software.length} software items`);
-  }
-  
-  if (existsSync('/tmp/systems_data.json')) {
-    parsedData.systems = JSON.parse(readFileSync('/tmp/systems_data.json', 'utf-8'));
-    console.log(`[DAILY-SYNC] Read ${parsedData.systems.length} systems items`);
-  }
-  
-  if (existsSync('/tmp/decisions_data.json')) {
-    parsedData.decisions = JSON.parse(readFileSync('/tmp/decisions_data.json', 'utf-8'));
-    console.log(`[DAILY-SYNC] Read ${parsedData.decisions.length} decisions`);
-  }
+  console.log(`[DAILY-SYNC] Retrieved from sandbox DB:`);
+  console.log(`  - ${parsedData.devices.length} devices`);
+  console.log(`  - ${parsedData.software.length} software items`);
+  console.log(`  - ${parsedData.systems.length} systems items`);
+  console.log(`  - ${parsedData.decisions.length} decisions`);
+  console.log(`  - ${parsedData.milestones.length} milestones`);
+  console.log(`  - ${parsedData.upcomingReviews.length} upcoming reviews`);
 
   // Step 3: POST data to production API
   const productionUrl = process.env.PRODUCTION_URL || 'https://execdash-qbejqjr6.manus.space';
@@ -46,8 +42,15 @@ try {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      secret: syncSecret,
-      ...parsedData
+      input: {
+        secret: syncSecret,
+        devices: parsedData.devices,
+        software: parsedData.software,
+        systems: parsedData.systems,
+        decisions: parsedData.decisions,
+        milestones: parsedData.milestones,
+        upcomingReviews: parsedData.upcomingReviews
+      }
     })
   });
 
