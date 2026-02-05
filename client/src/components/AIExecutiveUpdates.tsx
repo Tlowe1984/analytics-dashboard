@@ -88,35 +88,8 @@ export default function AIExecutiveUpdates() {
                   <Code className="w-5 h-5 text-green-500" />
                   <h3 className="text-lg font-bold">Software</h3>
                 </div>
-                <div className="space-y-3 ml-7">
-                  {/* Highlights */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-                    <ul className="space-y-1 list-disc list-inside">
-                      {summaries?.software?.highlights?.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-                          <div className="text-sm leading-relaxed text-foreground/90">
-                            <MarkdownText content={item} />
-                          </div>
-                        </div>
-                      )) || <div className="text-sm text-muted-foreground italic">No highlights available</div>}
-                    </ul>
-                  </div>
-                  {/* Risks/Opens */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-                    <ul className="space-y-1 list-disc list-inside">
-                      {summaries?.software?.risks?.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-                          <div className="text-sm leading-relaxed text-foreground/90">
-                            <MarkdownText content={item} />
-                          </div>
-                        </div>
-                      )) || <div className="text-sm text-muted-foreground italic">No risks available</div>}
-                    </ul>
-                  </div>
+                <div className="ml-7">
+                  <p className="text-sm text-muted-foreground italic">Coming soon</p>
                 </div>
               </div>
 

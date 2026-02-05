@@ -320,7 +320,7 @@ Return ONLY valid JSON, no other text.`;
     // Summaries are generated using LLM to keep them concise (≤15 words)
     getRecentDecisions: publicProcedure.query(async () => {
       const { invokeLLM } = await import("./_core/llm");
-      const rawDecisions = await db.getRecentDecisionsForAI(5);
+      const rawDecisions = await db.getRecentDecisionsForAI(7);
       
       if (rawDecisions.length === 0) {
         return [];

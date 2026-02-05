@@ -1276,4 +1276,11 @@
 ## Prioritize MZ Decisions in AI Executive Updates
 - [x] Update getRecentDecisionsForAI to sort MZ decisions first
 - [x] Test and verify MZ decisions appear at top
+- [x] Save checkpoint
+
+## Update Decisions Limit and Software Section
+- [x] Increase Decisions limit from 5 to 7 in AI Executive Updates
+- [x] Change Software section to show "Coming soon" placeholder
+- [x] Remove Highlights and Risks/Opens subsections from Software
+- [x] Test and verify changes
 - [ ] Save checkpoint
