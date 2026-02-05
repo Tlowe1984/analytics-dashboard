@@ -1291,4 +1291,9 @@
 - [x] Change "Program Updates" title to "Detailed Updates"
 - [x] Update subtitles if needed
 - [x] Test and verify correct titles display
+- [x] Save checkpoint
+
+## Update Title Format to Include 'Week'
+- [x] Change title from "Wearable WX Update" to "Wearable Week X Updates"
+- [x] Test and verify correct format displays
 - [ ] Save checkpoint
