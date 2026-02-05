@@ -5,7 +5,11 @@ import { MarkdownText } from './MarkdownText';
 export default function AIExecutiveUpdates() {
   const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
   const { data: upcomingItems } = trpc.dashboard.getUpcomingItems.useQuery();
+  const { data: pdpMilestones } = trpc.dashboard.getPDPMilestonesThisAndNextWeek.useQuery();
   const { data: recentDecisions } = trpc.dashboard.getRecentDecisions.useQuery();
+  
+  // Filter upcomingItems to only show upcoming_decision type (reviews)
+  const upcomingDecisions = upcomingItems?.filter(item => item.type === 'upcoming_decision') || [];
   
   // Helper function to format week number from date
   const getWeekNumber = (date: Date) => {
@@ -181,12 +185,34 @@ export default function AIExecutiveUpdates() {
 
         {/* Right Side - Stacked sections */}
         <div className="space-y-4">
-          {/* Upcoming Section - Top Right */}
+          {/* Upcoming PDP Milestones Section - Top Right */}
+          <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-500" />
+                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming PDP Milestones</h3>
+              </div>
+              <div className="text-xs text-muted-foreground max-w-[60%] text-right leading-tight">
+                {pdpMilestones && pdpMilestones.length > 0 ? (
+                  pdpMilestones.map((milestone, idx) => (
+                    <span key={idx}>
+                      {milestone.product} {milestone.milestoneName}
+                      {idx < pdpMilestones.length - 1 ? ', ' : ''}
+                    </span>
+                  ))
+                ) : (
+                  <span className="italic">None this/next week</span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Upcoming Decisions Section */}
           <div className="bg-background/40 border border-border/40 rounded-xl p-4 min-h-[140px]">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-blue-500" />
-                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming Decisions</h3>
               </div>
               <a 
                 href="#upcoming-decisions" 
@@ -199,27 +225,21 @@ export default function AIExecutiveUpdates() {
                 Details
               </a>
             </div>
-            {upcomingItems && upcomingItems.length > 0 ? (
+            {upcomingDecisions && upcomingDecisions.length > 0 ? (
               <ul className="space-y-2 text-sm">
-                {upcomingItems.map((item, idx) => (
+                {upcomingDecisions.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />
                     <div className="leading-relaxed">
-                      {item.type === 'pdp_gate' ? (
-                        <span>
-                          <span className="font-semibold">{item.program}</span> - {item.gateName}
-                        </span>
-                      ) : (
-                        <span>
-                          <span className="font-semibold">{item.week}</span> - {item.reviewType}: {item.topic}
-                        </span>
-                      )}
+                      <span>
+                        <span className="font-semibold">{item.week}</span> - {item.reviewType}: {item.topic}
+                      </span>
                     </div>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-xs text-muted-foreground italic">Upcoming items will appear here</p>
+              <p className="text-xs text-muted-foreground italic">Upcoming decisions will appear here</p>
             )}
           </div>
 

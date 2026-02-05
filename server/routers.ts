@@ -316,6 +316,11 @@ Return ONLY valid JSON, no other text.`;
       return await db.getUpcomingItemsForAI(6);
     }),
 
+    // Get PDP milestones for this week and next week
+    getPDPMilestonesThisAndNextWeek: publicProcedure.query(async () => {
+      return await db.getPDPMilestonesThisAndNextWeek();
+    }),
+
     // Get recent decisions for AI Executive Updates (Decisions table + Software Pillar decisions)
     // Summaries are generated using LLM to keep them concise (≤15 words)
     getRecentDecisions: publicProcedure.query(async () => {

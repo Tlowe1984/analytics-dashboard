@@ -1333,3 +1333,10 @@
 - [x] Fix Software Details link to properly activate Software tab
 - [x] Fix Systems Details link to properly activate Systems tab
 - [x] Test all three Details links work correctly
+
+## Restructure Upcoming Section
+- [x] Split Upcoming section into two separate sections
+- [x] Create "Upcoming PDP Milestones" section showing this week and next week's gates
+- [x] Display PDP milestones chronologically with Name and milestone type
+- [x] Create "Upcoming Decisions" section with current review data
+- [x] Ensure PDP Gates data is loaded before creating summary

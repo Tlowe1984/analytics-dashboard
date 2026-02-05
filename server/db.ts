@@ -558,3 +558,39 @@ export async function getAllMilestones() {
     return result;
   });
 }
+
+/**
+ * Get PDP milestones for this week and next week
+ * Returns chronologically sorted PDP gates
+ */
+export async function getPDPMilestonesThisAndNextWeek() {
+  return cachedQuery('pdp:this-next-week', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    
+    try {
+      const { asc, and, eq, gte, lte } = await import("drizzle-orm");
+      
+      const now = new Date();
+      // Calculate end of next week (14 days from now)
+      const endOfNextWeek = new Date(now);
+      endOfNextWeek.setDate(endOfNextWeek.getDate() + 14);
+      
+      // Get PDP gates from current date to end of next week
+      const pdpGates = await db
+        .select()
+        .from(milestones)
+        .where(and(
+          eq(milestones.milestoneType, "pdp_gates"),
+          gte(milestones.milestoneDate, now),
+          lte(milestones.milestoneDate, endOfNextWeek)
+        ))
+        .orderBy(asc(milestones.milestoneDate));
+      
+      return pdpGates;
+    } catch (error) {
+      console.error("[Database] Error fetching PDP milestones for this and next week:", error);
+      return [];
+    }
+  });
+}
