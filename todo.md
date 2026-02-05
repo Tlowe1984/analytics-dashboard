@@ -1097,4 +1097,4 @@
 - [x] Fix: Disabled cache by setting defaultTTL to 0
 - [ ] Test that production displays correct data after republish
 - [x] Decision: No scheduled sync - manual refresh only via Production button
-- [x] Save checkpoint and republish
+- [x] Saved checkpoint 31038adf with cache disabled
