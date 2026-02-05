@@ -5,7 +5,6 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync";
-import { loadDataFromAPI } from "./load-data-api";
 import { invalidateDashboardCache } from "./query-cache";
 import { syncMonitoringRouter } from "./sync-monitoring";
 
@@ -236,55 +235,6 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
   }),
 
   sync: router({
-    // Push parsed data from sandbox to production database
-    pushData: publicProcedure
-      .input(z.object({
-        secret: z.string(),
-        devices: z.array(z.any()).optional(),
-        software: z.array(z.any()).optional(),
-        systems: z.array(z.any()).optional(),
-        decisions: z.array(z.any()).optional(),
-        milestones: z.array(z.any()).optional(),
-        upcomingReviews: z.array(z.any()).optional(),
-      }))
-      .mutation(async ({ input }) => {
-        // Verify secret token
-        const expectedSecret = process.env.SYNC_SECRET || 'default-secret-change-me';
-        if (input.secret !== expectedSecret) {
-          throw new Error('Unauthorized: Invalid sync secret');
-        }
-
-        console.log('[PUSH_DATA] Received data from sandbox');
-        let totalUpdated = 0;
-
-        // Load data into production database
-        console.log('[PUSH_DATA] Data received:', {
-          devices: input.devices?.length || 0,
-          software: input.software?.length || 0,
-          systems: input.systems?.length || 0,
-          decisions: input.decisions?.length || 0,
-        });
-
-        const result = await loadDataFromAPI({
-          devices: input.devices,
-          software: input.software,
-          systems: input.systems,
-          decisions: input.decisions,
-        });
-
-        totalUpdated = result.totalItems;
-
-        // Invalidate cache
-        invalidateDashboardCache();
-        console.log('[PUSH_DATA] Cache invalidated');
-
-        return {
-          success: true,
-          message: `Updated ${totalUpdated} items in production database`,
-          itemsUpdated: totalUpdated,
-        };
-      }),
-
     // Sync all data from Google Drive
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
