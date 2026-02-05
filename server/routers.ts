@@ -239,11 +239,11 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
-        // Check if we're in production (no Python available)
-        const isProduction = !process.env.PYTHONPATH && process.env.NODE_ENV === 'production';
+        // Import ENV to check production status
+        const { ENV } = await import('./_core/env');
+        const isProduction = ENV.isProduction;
         
         console.log('[SYNC] Environment detection:', {
-          PYTHONPATH: process.env.PYTHONPATH,
           NODE_ENV: process.env.NODE_ENV,
           isProduction,
           hasManusApiKey: !!process.env.MANUS_API_KEY,

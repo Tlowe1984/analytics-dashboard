@@ -1104,3 +1104,8 @@
 - [ ] Remove or replace with built-in fetch
 - [ ] Save checkpoint and republish
 - [ ] Verify deployment succeeds
+
+## Production Sync Fix
+- [x] Fix production environment detection so manual sync works from production
+- [ ] Test manual sync button in production triggers Manus API task correctly
+- [ ] Verify data updates in production after manual sync completes
