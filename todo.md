@@ -1322,3 +1322,8 @@
 - [x] Implement tab switching functionality
 - [ ] Test all three links
 - [ ] Save checkpoint
+
+## Details Link Alignment and Tab Navigation Fix
+- [x] Adjust Details links vertical alignment to sit flush with section titles
+- [x] Verify Software Details link navigates to Software (I+E, AI, Hearing) tab
+- [x] Verify Systems Details link navigates to Systems tab

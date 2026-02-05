@@ -49,15 +49,15 @@ export default function AIExecutiveUpdates() {
             <div className="space-y-4">
               {/* Devices Section */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-baseline gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-blue-500" />
                   <h3 className="text-lg font-bold">Devices</h3>
                   <a 
                     href="#detailed-updates-devices" 
-                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[id="radix-_r_0_-trigger-devices"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[value="devices"]') as HTMLButtonElement;
                       tab?.click();
                       document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                     }}
@@ -99,15 +99,15 @@ export default function AIExecutiveUpdates() {
 
               {/* Software Section */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-baseline gap-2 mb-3">
                   <Code className="w-5 h-5 text-green-500" />
                   <h3 className="text-lg font-bold">Software</h3>
                   <a 
                     href="#detailed-updates-software" 
-                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[id="radix-_r_0_-trigger-software"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[value="software"]') as HTMLButtonElement;
                       tab?.click();
                       document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                     }}
@@ -122,15 +122,15 @@ export default function AIExecutiveUpdates() {
 
               {/* Systems Section */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-baseline gap-2 mb-3">
                   <Cpu className="w-5 h-5 text-orange-500" />
                   <h3 className="text-lg font-bold">Systems</h3>
                   <a 
                     href="#detailed-updates-systems" 
-                    className="text-xs text-blue-500 hover:text-blue-600 font-medium transition-colors ml-2"
+                    className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[id="radix-_r_0_-trigger-systems"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[value="systems"]') as HTMLButtonElement;
                       tab?.click();
                       document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                     }}
