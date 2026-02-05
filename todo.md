@@ -1327,3 +1327,9 @@
 - [x] Adjust Details links vertical alignment to sit flush with section titles
 - [x] Verify Software Details link navigates to Software (I+E, AI, Hearing) tab
 - [x] Verify Systems Details link navigates to Systems tab
+
+## Fix Tab Activation for Details Links
+- [x] Investigate why tab activation is not working correctly
+- [x] Fix Software Details link to properly activate Software tab
+- [x] Fix Systems Details link to properly activate Systems tab
+- [x] Test all three Details links work correctly

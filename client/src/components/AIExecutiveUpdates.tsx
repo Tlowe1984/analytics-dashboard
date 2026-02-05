@@ -57,9 +57,11 @@ export default function AIExecutiveUpdates() {
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[value="devices"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[id*="trigger-devices"]') as HTMLButtonElement;
                       tab?.click();
-                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => {
+                        document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
                     }}
                   >
                     Details
@@ -107,9 +109,11 @@ export default function AIExecutiveUpdates() {
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[value="software"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[id*="trigger-software"]') as HTMLButtonElement;
                       tab?.click();
-                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => {
+                        document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
                     }}
                   >
                     Details
@@ -130,9 +134,11 @@ export default function AIExecutiveUpdates() {
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
                     onClick={(e) => {
                       e.preventDefault();
-                      const tab = document.querySelector('[value="systems"]') as HTMLButtonElement;
+                      const tab = document.querySelector('[id*="trigger-systems"]') as HTMLButtonElement;
                       tab?.click();
-                      document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => {
+                        document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
                     }}
                   >
                     Details
