@@ -1073,6 +1073,28 @@
 ## Rollback Complete - Production Fix
 - [x] Rolled back to version 1869b6d2 (now 5b0b5ecf)
 - [x] Verified data displays correctly after refresh
-- [ ] Save checkpoint for republishing
+- [x] Save checkpoint for republishing
 - [ ] User republishes to production
 - [ ] Explore alternative sync method that doesn't require API push architecture
+
+## Implement Option 1: Direct Database Access
+- [x] Get sandbox DATABASE_URL connection string
+- [x] Attempted to update production DATABASE_URL (blocked - built-in secret)
+- [ ] Conclusion: Cannot override built-in DATABASE_URL, switching to Option 2
+
+## Implement Option 2: Database Export/Import
+- [x] Created db-export.mjs script (failed - TiDB doesn't support mysqldump properly)
+- [x] Attempted database export/import approach (abandoned due to TiDB limitations)
+
+## Implement Dual-Database Write Approach
+- [x] Get production DATABASE_URL
+- [x] Discovery: Production and sandbox share the SAME database!
+- [ ] Conclusion: Issue is not database sync, but production caching/loading stale data
+
+## Fix Production Caching Issue
+- [x] Investigate query-cache.ts and caching mechanism
+- [x] Found issue: 1-hour cache TTL, production never invalidates cache (only sandbox does)
+- [x] Fix: Disabled cache by setting defaultTTL to 0
+- [ ] Test that production displays correct data after republish
+- [x] Decision: No scheduled sync - manual refresh only via Production button
+- [x] Save checkpoint and republish

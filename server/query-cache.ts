@@ -15,7 +15,7 @@ interface CacheEntry<T> {
 
 class QueryCache {
   private cache: Map<string, CacheEntry<any>> = new Map();
-  private defaultTTL = 1000 * 60 * 60; // 1 hour default
+  private defaultTTL = 0; // Disabled - production and sandbox share same database
 
   /**
    * Get cached data if available and not expired
