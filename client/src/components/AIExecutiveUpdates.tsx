@@ -169,7 +169,7 @@ export default function AIExecutiveUpdates() {
               <h3 className="text-sm font-bold uppercase tracking-wide">Upcoming</h3>
             </div>
             {upcomingItems && upcomingItems.length > 0 ? (
-              <ul className="space-y-2 text-xs">
+              <ul className="space-y-2 text-sm">
                 {upcomingItems.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-blue-500" />

@@ -1215,4 +1215,9 @@
 - [x] Sort chronologically by date
 - [x] Display in bulleted list format
 - [x] Test and verify correct data appears
+- [x] Save checkpoint
+
+## Increase Font Size in Upcoming Section
+- [x] Change font size from text-xs to text-sm in Upcoming section
+- [x] Test and verify readability
 - [ ] Save checkpoint
