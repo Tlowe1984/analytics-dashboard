@@ -2,7 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers, Trophy, FileText } from "lucide-react";
 import { SystemsTab } from "./SystemsTab";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MarkdownText } from "./MarkdownText";
 
@@ -415,6 +415,27 @@ function SoftwareTab() {
 
 
 export default function ToplineView() {
+  // State for active tab - initialize from URL hash if present
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'detailed-updates-devices') return 'devices';
+    if (hash === 'detailed-updates-software') return 'software';
+    if (hash === 'detailed-updates-systems') return 'systems';
+    return 'devices';
+  });
+
+  // Listen for hash changes to update tab
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'detailed-updates-devices') setActiveTab('devices');
+      else if (hash === 'detailed-updates-software') setActiveTab('software');
+      else if (hash === 'detailed-updates-systems') setActiveTab('systems');
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   // Get the most recent update timestamp from all dashboard items
   const { data: lastUpdatedData } = trpc.dashboard.getLastUpdated.useQuery();
   const lastUpdated = lastUpdatedData?.updatedAt;
@@ -442,7 +463,7 @@ export default function ToplineView() {
         </div>
 
         {/* Tabbed Content */}
-        <Tabs defaultValue="devices" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" id="detailed-updates-tabs">
           <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="devices" className="text-xs sm:text-sm px-2 sm:px-4">
               <span className="hidden sm:inline">Devices</span>

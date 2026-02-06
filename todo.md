@@ -1380,3 +1380,10 @@
 - [x] Convert "Wearable Week X Updates" to uppercase
 - [x] Verify "Decisions Made" is uppercase (already uppercase)
 - [x] Test all titles display correctly
+
+## Fix Details Link Tab Navigation
+- [x] Investigate why Details links are not activating correct tabs
+- [x] Implement foolproof solution for tab navigation (URL hash-based navigation)
+- [x] Test Devices Details link → Devices tab
+- [x] Test Software Details link → Software tab
+- [x] Test Systems Details link → Systems tab

@@ -59,10 +59,8 @@ export default function AIExecutiveUpdates() {
                   <a 
                     href="#detailed-updates-devices" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const tab = document.querySelector('[id*="trigger-devices"]') as HTMLButtonElement;
-                      tab?.click();
+                    onClick={() => {
+                      // Scroll to detailed updates after hash change
                       setTimeout(() => {
                         document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                       }, 100);
@@ -111,10 +109,8 @@ export default function AIExecutiveUpdates() {
                   <a 
                     href="#detailed-updates-software" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const tab = document.querySelector('[id*="trigger-software"]') as HTMLButtonElement;
-                      tab?.click();
+                    onClick={() => {
+                      // Scroll to detailed updates after hash change
                       setTimeout(() => {
                         document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                       }, 100);
@@ -136,10 +132,8 @@ export default function AIExecutiveUpdates() {
                   <a 
                     href="#detailed-updates-systems" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const tab = document.querySelector('[id*="trigger-systems"]') as HTMLButtonElement;
-                      tab?.click();
+                    onClick={() => {
+                      // Scroll to detailed updates after hash change
                       setTimeout(() => {
                         document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
                       }, 100);
