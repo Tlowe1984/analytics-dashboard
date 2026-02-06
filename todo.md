@@ -1387,3 +1387,9 @@
 - [x] Test Devices Details link → Devices tab
 - [x] Test Software Details link → Software tab
 - [x] Test Systems Details link → Systems tab
+
+## Fix Broken Refresh Functionality in Sandbox
+- [x] Investigate what error occurs when clicking Refresh Data (ModuleNotFoundError: No module named 'docx')
+- [x] Identify root cause of refresh failure (sandbox reset cleared python-docx)
+- [x] Fix the issue (reinstalled python-docx)
+- [x] Test refresh works correctly (✅ Full sync complete! 583 items in 95.4s)
