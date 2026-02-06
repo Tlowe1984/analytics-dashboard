@@ -1374,3 +1374,9 @@
 - [x] Update all section titles in ToplineView to uppercase
 - [x] Update all section titles in UpcomingDates to uppercase
 - [x] Test and verify all titles display correctly
+
+## Fix Remaining Non-Uppercase Titles
+- [x] Convert "Wearable Live Dashboard" to uppercase
+- [x] Convert "Wearable Week X Updates" to uppercase
+- [x] Verify "Decisions Made" is uppercase (already uppercase)
+- [x] Test all titles display correctly

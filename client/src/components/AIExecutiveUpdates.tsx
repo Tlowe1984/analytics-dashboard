@@ -30,7 +30,7 @@ export default function AIExecutiveUpdates() {
           <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold">Wearable Week {currentWeek.substring(1)} Updates</h2>
+          <h2 className="text-xl font-bold">WEARABLE WEEK {currentWeek.substring(1)} UPDATES</h2>
           <p className="text-sm text-muted-foreground">AI-generated insights and summaries</p>
         </div>
       </div>
