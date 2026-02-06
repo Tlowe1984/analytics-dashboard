@@ -40,11 +40,11 @@ const sectionConfig = {
 const productConfig = {
   ai_glasses: {
     icon: Glasses,
-    label: "AI Glasses",
+    label: "AI GLASSES",
   },
   wrist: {
     icon: Watch,
-    label: "Wrist",
+    label: "WRIST",
   },
   arg_ssg: {
     icon: Grid3x3,
@@ -52,7 +52,7 @@ const productConfig = {
   },
   in_market: {
     icon: Layers,
-    label: "In-Market",
+    label: "IN-MARKET",
   },
 };
 
@@ -130,7 +130,7 @@ function ProductCard({
         </div>
         <div>
           <h3 className="font-bold text-sm sm:text-base">{product.label}</h3>
-          <p className="text-xs text-muted-foreground hidden sm:block">Program Updates</p>
+          <p className="text-xs text-muted-foreground hidden sm:block">PROGRAM UPDATES</p>
         </div>
       </div>
 
@@ -169,7 +169,7 @@ function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
         </div>
         <div>
           <h3 className="font-bold text-sm sm:text-base">{product.label}</h3>
-          <p className="text-xs text-muted-foreground hidden sm:block">Program Updates</p>
+          <p className="text-xs text-muted-foreground hidden sm:block">PROGRAM UPDATES</p>
         </div>
       </div>
 
@@ -302,7 +302,7 @@ function SoftwareTab() {
               <>
                 {pillarDecisions.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">Pillar Decisions</h4>
+                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">PILLAR DECISIONS</h4>
                     <div className="space-y-3">
                       {pillarDecisions.map((item) => (
                         <div key={item.id} className="border-l-2 border-orange-500/30 pl-3 space-y-1">
@@ -326,7 +326,7 @@ function SoftwareTab() {
                 )}
                 {fyiDecisions.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">FYI Sub-Pillar Decisions</h4>
+                    <h4 className="text-xs font-semibold text-muted-foreground mb-2">FYI SUB-PILLAR DECISIONS</h4>
                     <div className="space-y-3">
                       {fyiDecisions.map((item) => (
                         <div key={item.id} className="border-l-2 border-blue-500/30 pl-3 space-y-1">
@@ -428,7 +428,7 @@ export default function ToplineView() {
             <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold">Detailed Updates</h2>
+            <h2 className="text-lg sm:text-xl font-bold">DETAILED UPDATES</h2>
             <p className="text-xs text-muted-foreground hidden sm:block">
               Last updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-US', { 
                 month: 'short', 

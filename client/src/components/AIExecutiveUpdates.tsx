@@ -55,7 +55,7 @@ export default function AIExecutiveUpdates() {
               <div>
                 <div className="flex items-baseline gap-2 mb-3">
                   <Smartphone className="w-5 h-5 text-blue-500" />
-                  <h3 className="text-lg font-bold">Devices</h3>
+                  <h3 className="text-lg font-bold uppercase">DEVICES</h3>
                   <a 
                     href="#detailed-updates-devices" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
@@ -107,7 +107,7 @@ export default function AIExecutiveUpdates() {
               <div>
                 <div className="flex items-baseline gap-2 mb-3">
                   <Code className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-bold">Software</h3>
+                  <h3 className="text-lg font-bold uppercase">SOFTWARE</h3>
                   <a 
                     href="#detailed-updates-software" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
@@ -132,7 +132,7 @@ export default function AIExecutiveUpdates() {
               <div>
                 <div className="flex items-baseline gap-2 mb-3">
                   <Cpu className="w-5 h-5 text-orange-500" />
-                  <h3 className="text-lg font-bold">Systems</h3>
+                  <h3 className="text-lg font-bold uppercase">SYSTEMS</h3>
                   <a 
                     href="#detailed-updates-systems" 
                     className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"

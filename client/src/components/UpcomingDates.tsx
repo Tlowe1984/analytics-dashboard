@@ -10,7 +10,7 @@ export default function UpcomingDates() {
 
   const sections = [
     {
-      title: "PDP Gates",
+      title: "PDP GATES",
       type: "pdp_gates" as const,
       id: "pdp-gates",
       icon: Calendar,
@@ -20,7 +20,7 @@ export default function UpcomingDates() {
       iconColor: "text-blue-400",
     },
     {
-      title: "Software Milestones",
+      title: "SOFTWARE MILESTONES",
       type: "sdp_milestones" as const,
       icon: Code,
       data: sdpMilestones.data || [],
@@ -29,7 +29,7 @@ export default function UpcomingDates() {
       iconColor: "text-purple-400",
     },
     {
-      title: "Hardware Dates",
+      title: "HARDWARE DATES",
       type: "hw_dates" as const,
       icon: Cpu,
       data: hwDates.data || [],
@@ -38,7 +38,7 @@ export default function UpcomingDates() {
       iconColor: "text-orange-400",
     },
     {
-      title: "Releases",
+      title: "RELEASES",
       type: "release_dates" as const,
       icon: Rocket,
       data: releaseDates.data || [],
@@ -52,7 +52,7 @@ export default function UpcomingDates() {
     <div id="upcoming-dates" className="w-full">
       {/* Section Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Upcoming Dates</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">UPCOMING DATES</h2>
         <p className="text-sm text-muted-foreground">Program milestones and key dates</p>
       </div>
 

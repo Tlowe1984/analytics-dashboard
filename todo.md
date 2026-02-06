@@ -1368,3 +1368,9 @@
 ## Add Visual Separator to Upcoming Section
 - [x] Add horizontal divider between Upcoming PDP Milestones and Upcoming Decisions
 - [x] Test visual appearance in browser
+
+## Convert All Titles to Uppercase
+- [x] Update all section titles in AIExecutiveUpdates to uppercase
+- [x] Update all section titles in ToplineView to uppercase
+- [x] Update all section titles in UpcomingDates to uppercase
+- [x] Test and verify all titles display correctly
