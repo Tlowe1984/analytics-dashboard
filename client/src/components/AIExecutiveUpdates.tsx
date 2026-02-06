@@ -224,6 +224,9 @@ export default function AIExecutiveUpdates() {
               )}
             </div>
 
+            {/* Visual Separator */}
+            <div className="border-t border-border/30 my-4"></div>
+
             {/* Upcoming Decisions Subsection */}
             <div>
               <div className="flex items-center justify-between mb-3">

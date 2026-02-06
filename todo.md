@@ -1360,3 +1360,11 @@
 - [x] Identify root cause of sync failure (missing python-docx module)
 - [x] Fix sync error (installed python-docx)
 - [x] Verify sync is working correctly
+
+## Fix python-docx Dependency Error
+- [x] Install missing lxml package required by python-docx (already installed)
+- [x] Test sync to verify Word document parsing works (resolved after fresh sync)
+
+## Add Visual Separator to Upcoming Section
+- [x] Add horizontal divider between Upcoming PDP Milestones and Upcoming Decisions
+- [x] Test visual appearance in browser
