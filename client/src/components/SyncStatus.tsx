@@ -63,16 +63,16 @@ export default function SyncStatus() {
         </div>
       )}
       
-      {/* Manual Sync Button */}
+      {/* Manual Sync Button - Admin Only */}
       <Button
         variant="outline"
         size="sm"
         onClick={handleManualSync}
         disabled={syncAll.isPending}
-        className="gap-2"
+        className="gap-1.5 text-xs px-2 py-1 h-7"
       >
-        <RefreshCw className={`w-4 h-4 ${syncAll.isPending ? "animate-spin" : ""}`} />
-        {syncAll.isPending ? "Syncing..." : "Refresh Data"}
+        <RefreshCw className={`w-3 h-3 ${syncAll.isPending ? "animate-spin" : ""}`} />
+        {syncAll.isPending ? "Syncing..." : "Admin Only Refresh"}
       </Button>
     </div>
   );

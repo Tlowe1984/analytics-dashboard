@@ -1393,3 +1393,14 @@
 - [x] Identify root cause of refresh failure (sandbox reset cleared python-docx)
 - [x] Fix the issue (reinstalled python-docx)
 - [x] Test refresh works correctly (✅ Full sync complete! 583 items in 95.4s)
+
+## Set Up Automated Daily Sync with GitHub
+- [x] Identify GitHub repository URL from export (Tlowe1984/analytics-dashboard)
+- [x] Create scheduled task for daily sync at 2 AM
+- [ ] Test scheduled task execution (running now)
+- [ ] Verify sync updates production database
+
+## Update Refresh Button for Admin Use
+- [x] Make Refresh Data button smaller
+- [x] Retitle button to "Admin Only Refresh"
+- [x] Test button appearance and functionality
