@@ -338,6 +338,7 @@ export async function getAllSoftwareItems(): Promise<SoftwareItem[]> {
 }
 
 export async function getSoftwareItemsBySection(
+  softwareCategory: "software_ie" | "software_ai" | "software_hearing",
   sectionType: "wins" | "exec_summary" | "decisions"
 ): Promise<SoftwareItem[]> {
   const db = await getDb();
@@ -349,7 +350,10 @@ export async function getSoftwareItemsBySection(
   const result = await db
     .select()
     .from(softwareItems)
-    .where(eq(softwareItems.sectionType, sectionType))
+    .where(and(
+      eq(softwareItems.softwareCategory, softwareCategory),
+      eq(softwareItems.sectionType, sectionType)
+    ))
     .orderBy(softwareItems.order);
 
   return result;

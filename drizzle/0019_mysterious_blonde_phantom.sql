@@ -1,0 +1,1 @@
+ALTER TABLE `software_items` ADD `software_category` enum('software_ie','software_ai','software_hearing') NOT NULL;

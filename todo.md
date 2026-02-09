@@ -1425,4 +1425,16 @@
 - [x] Test sync script with actual spreadsheet data
 - [x] Verify GTM milestones appear in database
 - [x] Verify GTM tile displays milestones correctly
+- [x] Save checkpoint with changes
+
+## Replace Software Tab with Three Separate Tabs
+- [x] Download and examine W06 Experiences & Interfaces Review document structure
+- [x] Identify the three sections: Experiences & Interfaces, AI, Hearing
+- [x] Create sync script to parse the weekly I+E review document
+- [x] Update database schema to support three software categories (software_ie, software_ai, software_hearing)
+- [x] Create and test I+E review sync script
+- [x] Update backend queries to fetch data for each category separately
+- [x] Update frontend tabs from 1 Software tab to 3 separate tabs
+- [x] Implement automatic week detection to pull most recent WXX file
+- [x] Test all three tabs display correct data with Wins, Exec Summary, Decisions
 - [ ] Save checkpoint with changes

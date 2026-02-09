@@ -508,15 +508,16 @@ Return ONLY valid JSON, no other text.`;
       return await db.getAllSoftwareItems();
     }),
 
-    // Get items by section
+    // Get items by section and category
     getBySection: publicProcedure
       .input(
         z.object({
+          softwareCategory: z.enum(["software_ie", "software_ai", "software_hearing"]),
           sectionType: z.enum(["wins", "exec_summary", "decisions"]),
         })
       )
       .query(async ({ input }) => {
-        return await db.getSoftwareItemsBySection(input.sectionType);
+        return await db.getSoftwareItemsBySection(input.softwareCategory, input.sectionType);
       }),
   }),
 

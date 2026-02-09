@@ -252,8 +252,13 @@ const softwareSectionConfig = {
   },
 };
 
-function SoftwareTab() {
-  const { data: allItems, isLoading } = trpc.software.getAll.useQuery();
+function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "software_hearing" }) {
+  // Query data for each section separately
+  const { data: winsItems, isLoading: winsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "wins" });
+  const { data: execSummaryItems, isLoading: execLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "exec_summary" });
+  const { data: decisionsItems, isLoading: decisionsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "decisions" });
+  
+  const isLoading = winsLoading || execLoading || decisionsLoading;
 
   if (isLoading) {
     return (
@@ -272,13 +277,11 @@ function SoftwareTab() {
     );
   }
 
-  const winsItems = allItems?.filter(item => item.sectionType === "wins") || [];
-  const execSummaryItems = allItems?.filter(item => item.sectionType === "exec_summary") || [];
-  const decisionsItems = allItems?.filter(item => item.sectionType === "decisions") || [];
+  // Items are already filtered by category and section from the queries
 
   const renderTile = (
     sectionType: "wins" | "exec_summary" | "decisions",
-    items: typeof allItems
+    items: typeof winsItems
   ) => {
     const section = softwareSectionConfig[sectionType];
     const SectionIcon = section.icon;
@@ -464,14 +467,22 @@ export default function ToplineView() {
 
         {/* Tabbed Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" id="detailed-updates-tabs">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsList className="grid w-full grid-cols-5 mb-6">
             <TabsTrigger value="devices" className="text-xs sm:text-sm px-2 sm:px-4">
               <span className="hidden sm:inline">Devices</span>
               <span className="sm:hidden">Devices</span>
             </TabsTrigger>
-            <TabsTrigger value="software" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Software (I+E, AI, Hearing)</span>
-              <span className="sm:hidden">Software</span>
+            <TabsTrigger value="software_ie" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Software: Experiences & Interfaces</span>
+              <span className="sm:hidden">SW: I+E</span>
+            </TabsTrigger>
+            <TabsTrigger value="software_ai" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Software: AI</span>
+              <span className="sm:hidden">SW: AI</span>
+            </TabsTrigger>
+            <TabsTrigger value="software_hearing" className="text-xs sm:text-sm px-2 sm:px-4">
+              <span className="hidden sm:inline">Software: Hearing</span>
+              <span className="sm:hidden">SW: Hearing</span>
             </TabsTrigger>
             <TabsTrigger value="systems" className="text-xs sm:text-sm px-2 sm:px-4">
               <span className="hidden sm:inline">Systems</span>
@@ -483,8 +494,16 @@ export default function ToplineView() {
             <DevicesTab />
           </TabsContent>
           
-          <TabsContent value="software">
-            <SoftwareTab />
+          <TabsContent value="software_ie">
+            <SoftwareTab category="software_ie" />
+          </TabsContent>
+          
+          <TabsContent value="software_ai">
+            <SoftwareTab category="software_ai" />
+          </TabsContent>
+          
+          <TabsContent value="software_hearing">
+            <SoftwareTab category="software_hearing" />
           </TabsContent>
           
           <TabsContent value="systems">
