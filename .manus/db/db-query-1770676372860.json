@@ -1,0 +1,124 @@
+{
+  "query": "SELECT product, milestone_name, DATE(milestone_date) as date, WEEK(milestone_date) as week\nFROM milestones \nWHERE milestone_type = 'gtm_milestones'\nAND milestone_date >= CURDATE()\nAND milestone_date <= DATE_ADD(CURDATE(), INTERVAL 3 MONTH)\nORDER BY milestone_date\nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, DATE(milestone_date) as date, WEEK(milestone_date) as week\nFROM milestones \nWHERE milestone_type = 'gtm_milestones'\nAND milestone_date >= CURDATE()\nAND milestone_date <= DATE_ADD(CURDATE(), INTERVAL 3 MONTH)\nORDER BY milestone_date\nLIMIT 20;",
+  "rows": [
+    {
+      "product": "Modelo",
+      "milestone_name": "GTM2",
+      "date": "2026-02-11",
+      "week": "6"
+    },
+    {
+      "product": "SSG",
+      "milestone_name": "GTM0",
+      "date": "2026-02-12",
+      "week": "6"
+    },
+    {
+      "product": "SSG",
+      "milestone_name": "GTM3",
+      "date": "2026-02-12",
+      "week": "6"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM1",
+      "date": "2026-02-13",
+      "week": "6"
+    },
+    {
+      "product": "Mojito",
+      "milestone_name": "GTM1",
+      "date": "2026-02-24",
+      "week": "8"
+    },
+    {
+      "product": "Luna 2P",
+      "milestone_name": "GTM2",
+      "date": "2026-02-25",
+      "week": "8"
+    },
+    {
+      "product": "RBM2 Optics",
+      "milestone_name": "GTM2",
+      "date": "2026-02-25",
+      "week": "8"
+    },
+    {
+      "product": "RBM2 Refresh",
+      "milestone_name": "GTM2",
+      "date": "2026-03-12",
+      "week": "10"
+    },
+    {
+      "product": "Mojito",
+      "milestone_name": "GTM2",
+      "date": "2026-03-25",
+      "week": "12"
+    },
+    {
+      "product": "RBM2 Optics",
+      "milestone_name": "GTM3",
+      "date": "2026-03-25",
+      "week": "12"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM2",
+      "date": "2026-03-31",
+      "week": "13"
+    },
+    {
+      "product": "RBM2 Optics",
+      "milestone_name": "Announce",
+      "date": "2026-03-31",
+      "week": "13"
+    },
+    {
+      "product": "Malibu2 - LE",
+      "milestone_name": "GTM1",
+      "date": "2026-04-03",
+      "week": "13"
+    },
+    {
+      "product": "Malibu",
+      "milestone_name": "Announce",
+      "date": "2026-04-14",
+      "week": "15"
+    },
+    {
+      "product": "Ceres2",
+      "milestone_name": "GTM1",
+      "date": "2026-04-15",
+      "week": "15"
+    },
+    {
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "GTM1",
+      "date": "2026-04-15",
+      "week": "15"
+    },
+    {
+      "product": "Malibu2 - Scale",
+      "milestone_name": "GTM1",
+      "date": "2026-04-21",
+      "week": "16"
+    },
+    {
+      "product": "Modelo",
+      "milestone_name": "GTM3",
+      "date": "2026-05-04",
+      "week": "18"
+    },
+    {
+      "product": "SSG",
+      "milestone_name": "GTM1",
+      "date": "2026-05-07",
+      "week": "18"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tdate\tweek\nModelo\tGTM2\t2026-02-11\t6\nSSG\tGTM0\t2026-02-12\t6\nSSG\tGTM3\t2026-02-12\t6\nDaiquiri\tGTM1\t2026-02-13\t6\nMojito\tGTM1\t2026-02-24\t8\nLuna 2P\tGTM2\t2026-02-25\t8\nRBM2 Optics\tGTM2\t2026-02-25\t8\nRBM2 Refresh\tGTM2\t2026-03-12\t10\nMojito\tGTM2\t2026-03-25\t12\nRBM2 Optics\tGTM3\t2026-03-25\t12\nDaiquiri\tGTM2\t2026-03-31\t13\nRBM2 Optics\tAnnounce\t2026-03-31\t13\nMalibu2 - LE\tGTM1\t2026-04-03\t13\nMalibu\tAnnounce\t2026-04-14\t15\nCeres2\tGTM1\t2026-04-15\t15\nHypernova2 Monoc\tGTM1\t2026-04-15\t15\nMalibu2 - Scale\tGTM1\t2026-04-21\t16\nModelo\tGTM3\t2026-05-04\t18\nSSG\tGTM1\t2026-05-07\t18\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}

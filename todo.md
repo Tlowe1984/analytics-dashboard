@@ -1418,4 +1418,11 @@
 - [x] Update UpcomingDates component to add 5th tile for GTM
 - [x] Adjust grid layout to accommodate 5 tiles
 - [x] Test that GTM milestones display correctly
+- [x] Save checkpoint with changes
+
+## Update Sync Script to Import GTM Milestones
+- [x] Modify categorize_milestone function to recognize "GTM Milestones" type
+- [x] Test sync script with actual spreadsheet data
+- [x] Verify GTM milestones appear in database
+- [x] Verify GTM tile displays milestones correctly
 - [ ] Save checkpoint with changes

@@ -70,8 +70,8 @@ def categorize_milestone(milestone_type_str):
     elif "sdp" in type_lower and "milestone" in type_lower:
         return "sdp_milestones"
     # GTM (Go-To-Market) milestones  
-    elif "gtm" in type_lower:
-        return "sw_milestones"
+    elif "gtm" in type_lower or "go-to-market" in type_lower or "go to market" in type_lower:
+        return "gtm_milestones"
     # Factory SW milestones
     elif "factory" in type_lower and "sw" in type_lower:
         return "sw_milestones"

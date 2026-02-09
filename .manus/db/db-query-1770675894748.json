@@ -1,0 +1,9 @@
+{
+  "query": "SELECT product, milestone_name, DATE(milestone_date) as date, WEEK(milestone_date) as week\nFROM milestones \nWHERE milestone_type = 'gtm_milestones'\nAND milestone_date >= CURDATE()\nAND milestone_date <= DATE_ADD(CURDATE(), INTERVAL 3 MONTH)\nORDER BY milestone_date\nLIMIT 50;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, DATE(milestone_date) as date, WEEK(milestone_date) as week\nFROM milestones \nWHERE milestone_type = 'gtm_milestones'\nAND milestone_date >= CURDATE()\nAND milestone_date <= DATE_ADD(CURDATE(), INTERVAL 3 MONTH)\nORDER BY milestone_date\nLIMIT 50;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 377
+}
