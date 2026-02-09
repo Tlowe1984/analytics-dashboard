@@ -497,22 +497,22 @@ export default function ToplineView() {
     <div id="detailed-updates" className="w-full">
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-6">
         {/* Section Header */}
-        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-          <div className="p-1.5 sm:p-2 rounded-lg bg-blue-500/10">
-            <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
-          </div>
-          <div>
+        <div className="mb-4 sm:mb-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-blue-500/10">
+              <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
+            </div>
             <h2 className="text-lg sm:text-xl font-bold">DETAILED UPDATES</h2>
-            <p className="text-xs text-muted-foreground hidden sm:block">
-              Last updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit'
-              }) : 'Loading...'} • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span>
-            </p>
           </div>
+          <p className="text-xs text-muted-foreground ml-0 sm:ml-11">
+            Last updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric', 
+              year: 'numeric',
+              hour: 'numeric',
+              minute: '2-digit'
+            }) : 'Loading...'} • <span className="text-blue-600 dark:text-blue-400 font-medium">Blue text = New information</span>
+          </p>
         </div>
 
         {/* Tabbed Content */}

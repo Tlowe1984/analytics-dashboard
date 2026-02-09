@@ -1471,3 +1471,11 @@
 - [x] Fix field name mismatch (camelCase vs snake_case) in frontend
 - [x] Verify Decision Makers and Decision Outcome display correctly in browser
 - [ ] Save checkpoint with fix
+
+## Fix DETAILED UPDATES Section Layout Overlap
+- [x] Investigate overlap between "Last updated" text and tab buttons
+- [x] Fix layout to prevent overlap on desktop (separated title and subtitle into two rows)
+- [x] Ensure mobile responsiveness (subtitle aligns left on mobile, indented on desktop)
+- [x] Test in browser on desktop view (verified - no overlap, proper spacing)
+- [x] Test in browser on mobile view (verified - responsive layout works correctly)
+- [ ] Save checkpoint with layout fix
