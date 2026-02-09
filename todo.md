@@ -1437,4 +1437,12 @@
 - [x] Update frontend tabs from 1 Software tab to 3 separate tabs
 - [x] Implement automatic week detection to pull most recent WXX file
 - [x] Test all three tabs display correct data with Wins, Exec Summary, Decisions
+- [x] Save checkpoint with changes
+
+## Update Parser to Read from Document Tabs
+- [x] Examine the W06 document to understand tab structure (Experiences & Interfaces, AI, Hearing tabs)
+- [x] Update parse_ie_review.py to read from separate document tabs instead of sections
+- [x] Test parser with all three tabs
+- [x] Run sync to populate AI and Hearing data
+- [x] Verify all three software tabs display data correctly
 - [ ] Save checkpoint with changes

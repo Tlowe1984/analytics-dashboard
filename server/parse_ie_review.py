@@ -106,29 +106,33 @@ def parse_section(doc, start_idx, end_idx, section_name):
         if not text:
             continue
         
-        # Detect subsections
-        if re.search(r'Wins?\s*\[', text, re.IGNORECASE):
+        # Detect subsections (flexible patterns to handle spacing/capitalization variations)
+        # Wins section: 🏆 + (Wins|Launches) + optional (Async|/)
+        if re.search(r'🏆\s*(Wins?|Launches?)', text, re.IGNORECASE):
             current_subsection = 'wins'
             continue
-        elif re.search(r'Exec\s+Summary|FYIs?', text, re.IGNORECASE):
+        # Exec Summary section: 🚀 + Exec Summary + optional (FYIs|Async)
+        elif re.search(r'(🚀|📣)\s*(Exec\s+Summary|FYIs?)', text, re.IGNORECASE):
             current_subsection = 'exec_summary'
             continue
-        elif re.search(r'^(Product\s+)?Decisions?\s*\[', text, re.IGNORECASE):
+        # Decisions section
+        elif re.search(r'(Product\s+)?Decisions?\s*\[', text, re.IGNORECASE):
             current_subsection = 'decisions'
             continue
-        elif re.search(r'(Leadership\s+)?Help\s+Needed', text, re.IGNORECASE):
+        # Help Needed / Flags section
+        elif re.search(r'🚩\s*(Help\s+Needed|Flag)', text, re.IGNORECASE):
             current_subsection = 'help_needed'
             continue
         
         # Extract content based on current subsection
         if current_subsection == 'wins':
-            # Look for bullet points with category tags (format: [Category] content)
-            if text.startswith('['):
+            # Accept both [Category] format and plain text with category: format
+            if text.startswith('[') or (len(text) > 20 and ':' in text[:50]):
                 wins.append(text.strip())
         
         elif current_subsection == 'exec_summary':
-            # Collect exec summary items (format: [Category] content)
-            if text.startswith('['):
+            # Accept both [Category] format and plain text with category: format
+            if text.startswith('[') or (len(text) > 20 and ':' in text[:50]):
                 exec_summary.append(text.strip())
         
         elif current_subsection == 'help_needed':
