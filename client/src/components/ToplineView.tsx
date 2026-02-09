@@ -428,10 +428,10 @@ function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "
                     <MarkdownText content={item.dri || '-'} />
                   </td>
                   <td className="py-2 px-2 align-top">
-                    <MarkdownText content={item.decision_makers || '-'} />
+                    <MarkdownText content={item.decisionMakers || '-'} />
                   </td>
                   <td className="py-2 px-2 align-top">
-                    <MarkdownText content={item.decision_outcome || '-'} />
+                    <MarkdownText content={item.decisionOutcome || '-'} />
                   </td>
                 </tr>
               ))}

@@ -1462,3 +1462,12 @@
 - [x] Update frontend to display decisions in structured table format
 - [x] Test that decisions display correctly for all three software tabs
 - [x] Save checkpoint with decision table support
+
+## Fix Decision Makers and Decision Outcome Display
+- [x] Investigate why Decision Makers and Decision Outcome columns show only bullet points
+- [x] Check database to see if data is being stored
+- [x] Fix parser to extract Decision Makers and Decision Outcome content from Word tables (now extracts all paragraphs, not just first)
+- [x] Re-sync data from Google Drive
+- [x] Fix field name mismatch (camelCase vs snake_case) in frontend
+- [x] Verify Decision Makers and Decision Outcome display correctly in browser
+- [ ] Save checkpoint with fix

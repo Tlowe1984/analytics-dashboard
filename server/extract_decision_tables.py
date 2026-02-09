@@ -105,15 +105,27 @@ def extract_decision_table(doc, table_keywords):
             else:
                 decision['decision_doc'] = ''
             
-            # Decision Makers
+            # Decision Makers - extract all paragraphs
             if 'decision_makers' in column_map:
-                decision['decision_makers'] = extract_rich_text_with_links(cells[column_map['decision_makers']].paragraphs[0]) if len(cells[column_map['decision_makers']].paragraphs) > 0 else ''
+                cell = cells[column_map['decision_makers']]
+                paragraphs_text = []
+                for para in cell.paragraphs:
+                    text = extract_rich_text_with_links(para)
+                    if text.strip():
+                        paragraphs_text.append(text)
+                decision['decision_makers'] = '\n\n'.join(paragraphs_text) if paragraphs_text else ''
             else:
                 decision['decision_makers'] = ''
             
-            # Decision Outcome
+            # Decision Outcome - extract all paragraphs
             if 'decision_outcome' in column_map:
-                decision['decision_outcome'] = extract_rich_text_with_links(cells[column_map['decision_outcome']].paragraphs[0]) if len(cells[column_map['decision_outcome']].paragraphs) > 0 else ''
+                cell = cells[column_map['decision_outcome']]
+                paragraphs_text = []
+                for para in cell.paragraphs:
+                    text = extract_rich_text_with_links(para)
+                    if text.strip():
+                        paragraphs_text.append(text)
+                decision['decision_outcome'] = '\n\n'.join(paragraphs_text) if paragraphs_text else ''
             else:
                 decision['decision_outcome'] = ''
             

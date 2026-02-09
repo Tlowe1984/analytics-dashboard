@@ -1,0 +1,28 @@
+{
+  "query": "SELECT topic, dri, decision_makers, decision_outcome \nFROM software_items \nWHERE section_type = 'decisions' AND software_category = 'software_ai'\nLIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT topic, dri, decision_makers, decision_outcome \nFROM software_items \nWHERE section_type = 'decisions' AND software_category = 'software_ai'\nLIMIT 3;",
+  "rows": [
+    {
+      "topic": "[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)",
+      "dri": "[Troels Smit](mailto:troels@meta.com)",
+      "decision_makers": "[Jackie Hung](mailto:jacquelinehung@meta.com)",
+      "decision_outcome": "Proposal: Ship the new media viewer with AI media editing."
+    },
+    {
+      "topic": "[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)",
+      "dri": "[Matthijs Schellekens](mailto:mjhs@meta.com)",
+      "decision_makers": "[Jackie Hung](mailto:jacquelinehung@meta.com)",
+      "decision_outcome": "Pre-flight on Live Notes escalation"
+    },
+    {
+      "topic": "[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)",
+      "dri": "[Abdallah Abu Ghazaleh](mailto:abug@meta.com)",
+      "decision_makers": "[Ming Hua](mailto:arceehua@meta.com)",
+      "decision_outcome": "The wrist team [decided](https://fb.alpha.workplace.com/groups/545599427782314/permalink/1194986316176952/) that there will be 1 mic on both LE and Scaled models. This clarifies the hardware availability for key AI features such as AIPC and Live Notes."
+    }
+  ],
+  "messages": [],
+  "stdout": "topic\tdri\tdecision_makers\tdecision_outcome\n[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)\t[Troels Smit](mailto:troels@meta.com)\t[Jackie Hung](mailto:jacquelinehung@meta.com)\tProposal: Ship the new media viewer with AI media editing.\n[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)\t[Matthijs Schellekens](mailto:mjhs@meta.com)\t[Jackie Hung](mailto:jacquelinehung@meta.com)\tPre-flight on Live Notes escalation\n[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)\t[Abdallah Abu Ghazaleh](mailto:abug@meta.com)\t[Ming Hua](mailto:arceehua@meta.com)\tThe wrist team [decided](https://fb.alpha.workplace.com/groups/545599427782314/permalink/1194986316176952/) that there will be 1 mic on both LE and Scaled models. This clarifies the hardware availability for key AI features such as AIPC and Live Notes.\n",
+  "stderr": "",
+  "execution_time_ms": 353
+}

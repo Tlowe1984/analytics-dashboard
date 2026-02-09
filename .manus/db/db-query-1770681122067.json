@@ -1,0 +1,18 @@
+{
+  "query": "SELECT topic, LENGTH(decision_makers) as makers_len, LENGTH(decision_outcome) as outcome_len, \nSUBSTRING(decision_makers, 1, 100) as makers_preview,\nSUBSTRING(decision_outcome, 1, 100) as outcome_preview\nFROM software_items \nWHERE section_type = 'decisions' AND software_category = 'software_ai'\nLIMIT 3;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT topic, LENGTH(decision_makers) as makers_len, LENGTH(decision_outcome) as outcome_len, \nSUBSTRING(decision_makers, 1, 100) as makers_preview,\nSUBSTRING(decision_outcome, 1, 100) as outcome_preview\nFROM software_items \nWHERE section_type = 'decisions' AND software_category = 'software_ai'\nLIMIT 3;",
+  "rows": [],
+  "messages": [
+    "[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)\t90\t241\t[Jackie Hung](mailto:jacquelinehung@meta.com)",
+    "[Deepali Tamhane](mailto:dtamhane@meta.com)\tProposal: Ship the new media viewer with AI media editing.",
+    "Why: In the C50 experiment, **AI media e",
+    "[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)\t82\t35\t[Jackie Hung](mailto:jacquelinehung@meta.com)",
+    "[Anuj Kumar](mailto:anujk@meta.com)\tPre-flight on Live Notes escalation",
+    "[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)\t125\t252\t[Ming Hua](mailto:arceehua@meta.com)",
+    "[Sean O'Reilly](mailto:smoreilly@meta.com)",
+    "[Rupa Rao](mailto:\tThe wrist team [decided](https://fb.alpha.workplace.com/groups/545599427782314/permalink/11949863161"
+  ],
+  "stdout": "topic\tmakers_len\toutcome_len\tmakers_preview\toutcome_preview\n[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)\t90\t241\t[Jackie Hung](mailto:jacquelinehung@meta.com)\n\n[Deepali Tamhane](mailto:dtamhane@meta.com)\tProposal: Ship the new media viewer with AI media editing.\n\nWhy: In the C50 experiment, **AI media e\n[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)\t82\t35\t[Jackie Hung](mailto:jacquelinehung@meta.com)\n\n[Anuj Kumar](mailto:anujk@meta.com)\tPre-flight on Live Notes escalation\n[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)\t125\t252\t[Ming Hua](mailto:arceehua@meta.com)\n\n[Sean O'Reilly](mailto:smoreilly@meta.com)\n\n[Rupa Rao](mailto:\tThe wrist team [decided](https://fb.alpha.workplace.com/groups/545599427782314/permalink/11949863161\n",
+  "stderr": "",
+  "execution_time_ms": 350
+}
