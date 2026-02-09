@@ -111,17 +111,20 @@ def sync_to_database(data):
                 )
                 total_inserted += 1
             
-            # Insert decisions
-            for idx, decision in enumerate(section_data.get('decisions', [])):
+            # Insert structured decisions
+            for idx, decision in enumerate(section_data.get('structured_decisions', [])):
                 cursor.execute(
                     """INSERT INTO software_items 
-                    (software_category, section_type, content, is_new, indent_level, `order`)
-                    VALUES (%s, %s, %s, %s, %s, %s)""",
-                    (db_category, 'decisions', decision, 0, 0, idx)
+                    (software_category, section_type, content, topic, dri, forum, status, decision_doc, decision_makers, decision_outcome, post, is_new, indent_level, `order`)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                    (db_category, 'decisions', '', decision.get('topic', ''), decision.get('dri', ''), 
+                     decision.get('forum', ''), decision.get('status', ''), decision.get('decision_doc', ''),
+                     decision.get('decision_makers', ''), decision.get('decision_outcome', ''), 
+                     decision.get('post', ''), 0, 0, idx)
                 )
                 total_inserted += 1
             
-            print(f"Synced {section_name}: {len(section_data.get('wins', []))} wins, {len(section_data.get('exec_summary', []))} exec items, {len(section_data.get('decisions', []))} decisions")
+            print(f"Synced {section_name}: {len(section_data.get('wins', []))} wins, {len(section_data.get('exec_summary', []))} exec items, {len(section_data.get('structured_decisions', []))} decisions")
         
         conn.commit()
         cursor.close()

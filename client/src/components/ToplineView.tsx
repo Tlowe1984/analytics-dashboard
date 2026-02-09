@@ -394,6 +394,54 @@ function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "
     );
   };;
 
+  // Render decisions as a structured table
+  const renderDecisionsTable = () => {
+    if (!decisionsItems || decisionsItems.length === 0) {
+      return (
+        <div className="bg-card/50 border border-border/50 rounded-xl p-4">
+          <h3 className="text-sm font-semibold mb-3 text-foreground">DECISIONS</h3>
+          <p className="text-xs text-muted-foreground italic">No decisions yet</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-card/50 border border-border/50 rounded-xl p-4">
+        <h3 className="text-sm font-semibold mb-3 text-foreground">DECISIONS</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-border/50">
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Topic / Decision Doc</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">DRI</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Decision Makers</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Decision Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              {decisionsItems.map((item, idx) => (
+                <tr key={idx} className="border-b border-border/30 last:border-0">
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.topic || item.decision_doc || '-'} />
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.dri || '-'} />
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.decision_makers || '-'} />
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.decision_outcome || '-'} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
@@ -406,10 +454,12 @@ function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "
           📄 View Source Document
         </a>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {renderTile("wins", winsItems)}
         {renderTile("exec_summary", execSummaryItems)}
-        {renderTile("decisions", decisionsItems)}
+      </div>
+      <div className="mt-4">
+        {renderDecisionsTable()}
       </div>
     </div>
   );

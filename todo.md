@@ -1453,3 +1453,12 @@
 - [x] Handle missing wins in AI section (Live AI, Proactive Live AI, Accessibility items)
 - [x] Test that formatted content displays correctly in dashboard
 - [x] Save checkpoint with rich text support
+
+## Add Decision Table Parsing for Software Sections
+- [x] Examine decision table structures in W06 document for all three sections
+- [x] Update parser to extract decisions from tables with topic, decision maker, outcome, and links
+- [x] Update database schema to support decision fields (topic, decision_maker, decision_outcome, links)
+- [x] Update backend to store and retrieve decision data
+- [x] Update frontend to display decisions in structured table format
+- [x] Test that decisions display correctly for all three software tabs
+- [x] Save checkpoint with decision table support

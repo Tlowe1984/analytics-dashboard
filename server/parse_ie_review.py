@@ -11,6 +11,7 @@ import re
 from docx import Document
 from datetime import datetime, timedelta
 from rich_text_parser_v2 import extract_rich_text_with_links
+from extract_decision_tables import extract_ie_decisions, extract_ai_decisions, extract_hearing_decisions
 
 def get_current_week():
     """Get current week number (ISO week)"""
@@ -248,6 +249,18 @@ def main():
         if len(sections) < 3:
             print(f"Warning: Only found {len(sections)} sections, expected 3", file=sys.stderr)
         
+        # Extract decisions from tables
+        print("Extracting decision tables...", file=sys.stderr)
+        ie_decisions = extract_ie_decisions(doc)
+        ai_decisions = extract_ai_decisions(doc)
+        hearing_decisions = extract_hearing_decisions(doc)
+        
+        decisions_map = {
+            'Experiences & Interfaces': ie_decisions,
+            'AI': ai_decisions,
+            'Hearing': hearing_decisions
+        }
+        
         # Parse each section
         results = []
         for idx, section in enumerate(sections):
@@ -255,9 +268,14 @@ def main():
             end = sections[idx + 1]['index'] if idx + 1 < len(sections) else len(doc.paragraphs)
             
             section_data = parse_section(doc, start, end, section['name'])
+            
+            # Add structured decisions
+            section_decisions = decisions_map.get(section['name'], [])
+            section_data['structured_decisions'] = section_decisions
+            
             results.append(section_data)
             
-            print(f"Parsed {section['name']}: {len(section_data['wins'])} wins, {len(section_data['exec_summary'])} exec items", file=sys.stderr)
+            print(f"Parsed {section['name']}: {len(section_data['wins'])} wins, {len(section_data['exec_summary'])} exec items, {len(section_decisions)} decisions", file=sys.stderr)
         
         # Output as JSON
         print(json.dumps(results, indent=2))
