@@ -98,6 +98,7 @@ def parse_section(doc, start_idx, end_idx, section_name):
     help_needed = []
     
     current_subsection = None
+    current_item_parts = []  # Collect parts of current win/exec item
     
     for i in range(start_idx, end_idx):
         para = doc.paragraphs[i]
@@ -109,31 +110,81 @@ def parse_section(doc, start_idx, end_idx, section_name):
         # Detect subsections (flexible patterns to handle spacing/capitalization variations)
         # Wins section: 🏆 + (Wins|Launches) + optional (Async|/)
         if re.search(r'🏆\s*(Wins?|Launches?)', text, re.IGNORECASE):
+            # Save previous item if any
+            if current_item_parts:
+                if current_subsection == 'wins':
+                    wins.append('\n'.join(current_item_parts))
+                elif current_subsection == 'exec_summary':
+                    exec_summary.append('\n'.join(current_item_parts))
+                current_item_parts = []
             current_subsection = 'wins'
             continue
         # Exec Summary section: 🚀 + Exec Summary + optional (FYIs|Async)
         elif re.search(r'(🚀|📣)\s*(Exec\s+Summary|FYIs?)', text, re.IGNORECASE):
+            # Save previous item if any
+            if current_item_parts:
+                if current_subsection == 'wins':
+                    wins.append('\n'.join(current_item_parts))
+                elif current_subsection == 'exec_summary':
+                    exec_summary.append('\n'.join(current_item_parts))
+                current_item_parts = []
             current_subsection = 'exec_summary'
             continue
         # Decisions section
         elif re.search(r'(Product\s+)?Decisions?\s*\[', text, re.IGNORECASE):
+            # Save previous item if any
+            if current_item_parts:
+                if current_subsection == 'wins':
+                    wins.append('\n'.join(current_item_parts))
+                elif current_subsection == 'exec_summary':
+                    exec_summary.append('\n'.join(current_item_parts))
+                current_item_parts = []
             current_subsection = 'decisions'
             continue
         # Help Needed / Flags section
         elif re.search(r'🚩\s*(Help\s+Needed|Flag)', text, re.IGNORECASE):
+            # Save previous item if any
+            if current_item_parts:
+                if current_subsection == 'wins':
+                    wins.append('\n'.join(current_item_parts))
+                elif current_subsection == 'exec_summary':
+                    exec_summary.append('\n'.join(current_item_parts))
+                current_item_parts = []
             current_subsection = 'help_needed'
             continue
         
         # Extract content based on current subsection
         if current_subsection == 'wins':
-            # Accept both [Category] format and plain text with category: format
-            if text.startswith('[') or (len(text) > 20 and ':' in text[:50]):
-                wins.append(text.strip())
+            # Check if this is a top-level item (category header)
+            is_top_level = (
+                text.startswith('[') or 
+                (len(text) > 20 and ':' in text[:50]) or
+                (len(text) < 50 and not para.style.name.startswith('List Bullet 2'))
+            )
+            
+            if is_top_level and current_item_parts:
+                # Save previous item and start new one
+                wins.append('\n'.join(current_item_parts))
+                current_item_parts = [text]
+            else:
+                # Add to current item (sub-bullet or continuation)
+                current_item_parts.append(text)
         
         elif current_subsection == 'exec_summary':
-            # Accept both [Category] format and plain text with category: format
-            if text.startswith('[') or (len(text) > 20 and ':' in text[:50]):
-                exec_summary.append(text.strip())
+            # Check if this is a top-level item
+            is_top_level = (
+                text.startswith('[') or 
+                (len(text) > 20 and ':' in text[:50]) or
+                (len(text) < 50 and not para.style.name.startswith('List Bullet 2'))
+            )
+            
+            if is_top_level and current_item_parts:
+                # Save previous item and start new one
+                exec_summary.append('\n'.join(current_item_parts))
+                current_item_parts = [text]
+            else:
+                # Add to current item
+                current_item_parts.append(text)
         
         elif current_subsection == 'help_needed':
             if text.startswith('[') or text.startswith('-') or text.startswith('•') or text.startswith('○'):
@@ -143,6 +194,13 @@ def parse_section(doc, start_idx, end_idx, section_name):
             # Decisions are often in tables, capture text that looks like decision items
             if text and len(text) > 10:
                 decisions.append(text)
+    
+    # Save last item if any
+    if current_item_parts:
+        if current_subsection == 'wins':
+            wins.append('\n'.join(current_item_parts))
+        elif current_subsection == 'exec_summary':
+            exec_summary.append('\n'.join(current_item_parts))
     
     return {
         'section': section_name,
