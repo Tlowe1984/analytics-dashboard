@@ -1,0 +1,19 @@
+{
+  "query": "SELECT content FROM dashboard_items WHERE section_type = 'highlights' LIMIT 3",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT content FROM dashboard_items WHERE section_type = 'highlights' LIMIT 3",
+  "rows": [
+    {
+      "content": "Start to report in-market devices: top-SEV/issues (prod) and top-blockers (next release)."
+    },
+    {
+      "content": "The Super Bowl spot for Oakley Meta is LIVE. Check it out [here](https://www.youtube.com/watch?v=NerlyGrv7WM): [Oakley Meta | Athletic Intelligence is Here](https://www.youtube.com/watch?v=NerlyGrv7WM)"
+    },
+    {
+      "content": "MRBD MAU continues to grow at the highest rate (+6.34%)"
+    }
+  ],
+  "messages": [],
+  "stdout": "content\nStart to report in-market devices: top-SEV/issues (prod) and top-blockers (next release).\nThe Super Bowl spot for Oakley Meta is LIVE. Check it out [here](https://www.youtube.com/watch?v=NerlyGrv7WM): [Oakley Meta | Athletic Intelligence is Here](https://www.youtube.com/watch?v=NerlyGrv7WM)\nMRBD MAU continues to grow at the highest rate (+6.34%)\n",
+  "stderr": "",
+  "execution_time_ms": 368
+}

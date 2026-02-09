@@ -10,6 +10,7 @@ import subprocess
 import re
 from docx import Document
 from datetime import datetime, timedelta
+from rich_text_parser_v2 import extract_rich_text_with_links
 
 def get_current_week():
     """Get current week number (ISO week)"""
@@ -103,6 +104,7 @@ def parse_section(doc, start_idx, end_idx, section_name):
     for i in range(start_idx, end_idx):
         para = doc.paragraphs[i]
         text = para.text.strip()
+        rich_text = extract_rich_text_with_links(para)  # Get markdown-formatted text
         
         if not text:
             continue
@@ -165,10 +167,10 @@ def parse_section(doc, start_idx, end_idx, section_name):
             if is_top_level and current_item_parts:
                 # Save previous item and start new one
                 wins.append('\n'.join(current_item_parts))
-                current_item_parts = [text]
+                current_item_parts = [rich_text]
             else:
                 # Add to current item (sub-bullet or continuation)
-                current_item_parts.append(text)
+                current_item_parts.append(rich_text)
         
         elif current_subsection == 'exec_summary':
             # Check if this is a top-level item
@@ -181,19 +183,19 @@ def parse_section(doc, start_idx, end_idx, section_name):
             if is_top_level and current_item_parts:
                 # Save previous item and start new one
                 exec_summary.append('\n'.join(current_item_parts))
-                current_item_parts = [text]
+                current_item_parts = [rich_text]
             else:
                 # Add to current item
-                current_item_parts.append(text)
+                current_item_parts.append(rich_text)
         
         elif current_subsection == 'help_needed':
             if text.startswith('[') or text.startswith('-') or text.startswith('•') or text.startswith('○'):
-                help_needed.append(text.lstrip('-•○ ').strip())
+                help_needed.append(rich_text.lstrip('-•○ ').strip())
         
         elif current_subsection == 'decisions':
             # Decisions are often in tables, capture text that looks like decision items
             if text and len(text) > 10:
-                decisions.append(text)
+                decisions.append(rich_text)
     
     # Save last item if any
     if current_item_parts:
