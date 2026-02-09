@@ -1404,3 +1404,9 @@
 - [x] Make Refresh Data button smaller
 - [x] Retitle button to "Admin Only Refresh"
 - [x] Test button appearance and functionality
+
+## Update Releases Section in Upcoming Dates
+- [x] Change title from "Releases" to "In-Market Releases"
+- [x] Add Hypernova milestones to the releases display
+- [x] Test that Hypernova milestones appear correctly
+- [ ] Save checkpoint with changes

@@ -267,7 +267,10 @@ export async function getReleaseDates(limit = 10) {
       gte(milestones.milestoneDate, now),
       lte(milestones.milestoneDate, oneMonthFromNow),
       eq(milestones.milestoneType, 'release_milestones'),
-      eq(milestones.product, 'In-Market Displayless')
+      or(
+        eq(milestones.product, 'In-Market Displayless'),
+        eq(milestones.product, 'Hypernova')
+      )
     ))
     .orderBy(asc(milestones.milestoneDate))
     .limit(limit);

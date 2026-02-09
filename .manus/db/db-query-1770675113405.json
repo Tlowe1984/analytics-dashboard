@@ -1,0 +1,1940 @@
+{
+  "query": "SELECT product, milestone_name, DATE(milestone_date) as date\nFROM milestones \nWHERE milestone_type = 'release_milestones' \nAND (product LIKE '%Hypernova%' OR product LIKE '%In-Market%')\nORDER BY milestone_date;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, DATE(milestone_date) as date\nFROM milestones \nWHERE milestone_type = 'release_milestones' \nAND (product LIKE '%Hypernova%' OR product LIKE '%In-Market%')\nORDER BY milestone_date;",
+  "rows": [
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Feature Complete",
+      "date": "2025-05-07"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 30%",
+      "date": "2025-05-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Branch Cut",
+      "date": "2025-05-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 1 - Release Internal",
+      "date": "2025-05-15"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 60%",
+      "date": "2025-05-15"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 100%",
+      "date": "2025-05-19"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Release Internal",
+      "date": "2025-05-19"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Feature Complete",
+      "date": "2025-05-20"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Branch Cut",
+      "date": "2025-05-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - Branch Cut",
+      "date": "2025-05-28"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - ZBB",
+      "date": "2025-05-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "MP - Golden Master",
+      "date": "2025-06-02"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Roadmap Tasks In-Take",
+      "date": "2025-06-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Feature Complete",
+      "date": "2025-06-11"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Roadmap Tasks In-Take",
+      "date": "2025-06-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 30%",
+      "date": "2025-06-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Branch Cut",
+      "date": "2025-06-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 60%",
+      "date": "2025-06-19"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Release Internal",
+      "date": "2025-06-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 100%",
+      "date": "2025-06-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Release Internal",
+      "date": "2025-06-23"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "MP - OTA 1 100%",
+      "date": "2025-06-24"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 3 - Roadmap Tasks In-Take",
+      "date": "2025-06-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 3 - Release Internal",
+      "date": "2025-07-02"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Golden Master",
+      "date": "2025-07-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - Roadmap Tasks In-Take",
+      "date": "2025-07-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - ZBB",
+      "date": "2025-07-16"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - Feature Complete",
+      "date": "2025-07-16"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - OTA 1 30%",
+      "date": "2025-07-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - Branch Cut",
+      "date": "2025-07-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - OTA 1 100%",
+      "date": "2025-07-28"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - Release Internal",
+      "date": "2025-07-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - Golden Master",
+      "date": "2025-08-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - ZBB",
+      "date": "2025-08-06"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "MP - Roadmap Tasks In-Take",
+      "date": "2025-08-12"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - Roadmap Tasks In-Take",
+      "date": "2025-08-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - Golden Master",
+      "date": "2025-08-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - OTA 1 100%",
+      "date": "2025-08-20"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v19 - Feature Complete",
+      "date": "2025-08-20"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - Feature Complete",
+      "date": "2025-08-20"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v19 - Branch Cut",
+      "date": "2025-08-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - Branch Cut",
+      "date": "2025-08-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - OTA 1 30%",
+      "date": "2025-08-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v19 - Release Internal",
+      "date": "2025-09-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - OTA 1 60%",
+      "date": "2025-09-02"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v18.0 - OTA 1 100%",
+      "date": "2025-09-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - Release Internal",
+      "date": "2025-09-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - ZBB",
+      "date": "2025-09-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - Roadmap Tasks In-Take",
+      "date": "2025-09-15"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - Roadmap Tasks In-Take",
+      "date": "2025-09-17"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - Golden Master",
+      "date": "2025-09-17"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - Feature Complete",
+      "date": "2025-09-24"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - Feature Complete",
+      "date": "2025-09-24"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - OTA 1 100%",
+      "date": "2025-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - Branch Cut",
+      "date": "2025-10-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - Branch Cut",
+      "date": "2025-10-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - OTA 1 30%",
+      "date": "2025-10-02"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - Release Internal",
+      "date": "2025-10-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - Release Internal",
+      "date": "2025-10-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - OTA 1 60%",
+      "date": "2025-10-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v19.0 - OTA 1 100%",
+      "date": "2025-10-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - ZBB",
+      "date": "2025-10-16"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - Golden Master",
+      "date": "2025-10-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - Feature Complete",
+      "date": "2025-10-29"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - Feature Complete",
+      "date": "2025-10-29"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - Roadmap Tasks In-Take",
+      "date": "2025-10-31"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v20 - OTA 1 100%",
+      "date": "2025-11-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - Branch Cut",
+      "date": "2025-11-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - Golden Master",
+      "date": "2025-11-06"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - Release Internal",
+      "date": "2025-11-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - OTA 1 10%",
+      "date": "2025-11-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - OTA 1 30%",
+      "date": "2025-11-17"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - Release Internal",
+      "date": "2025-11-19"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - OTA 1 60%",
+      "date": "2025-11-20"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - Feature Complete",
+      "date": "2025-12-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v20.0 - OTA 1 100%",
+      "date": "2025-12-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - Feature Complete",
+      "date": "2025-12-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - Roadmap Tasks In-Take",
+      "date": "2025-12-03"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - Roadmap Tasks In-Take",
+      "date": "2025-12-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - Golden Master",
+      "date": "2025-12-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - Feature Complete",
+      "date": "2025-12-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - Feature Complete",
+      "date": "2025-12-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - OTA 1 20%",
+      "date": "2025-12-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - Branch Cut",
+      "date": "2025-12-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - Branch Cut",
+      "date": "2025-12-11"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - Release Internal",
+      "date": "2025-12-15"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - OTA 1 60%",
+      "date": "2025-12-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v21.0 - OTA 1 100%",
+      "date": "2025-12-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - Release Internal",
+      "date": "2025-12-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - OTA 1 30%",
+      "date": "2026-01-06"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - OTA 1 100%",
+      "date": "2026-01-07"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - Roadmap Tasks In-Take",
+      "date": "2026-01-07"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - OTA 1 60%",
+      "date": "2026-01-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - ZBB",
+      "date": "2026-01-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v21 - OTA 1 100%",
+      "date": "2026-01-12"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - Golden Master",
+      "date": "2026-01-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - Roadmap Tasks In-Take",
+      "date": "2026-01-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - Feature Complete",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - Feature Complete",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - Roadmap Tasks In-Take",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - Golden Master",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - Feature Complete",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - Roadmap Tasks In-Take",
+      "date": "2026-01-21"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - Branch Cut",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - Branch Cut",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - OTA 1 100%",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - OTA 1 20%",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - OTA 1 30%",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - Branch Cut",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - OTA 1 30%",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - Branch Cut",
+      "date": "2026-01-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v22 - OTA 1 60%",
+      "date": "2026-01-29"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v22.0 - OTA 1 60%",
+      "date": "2026-01-29"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - Release Internal",
+      "date": "2026-02-02"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - Release Internal",
+      "date": "2026-02-02"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - Release Internal",
+      "date": "2026-02-02"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - Roadmap Tasks In-Take",
+      "date": "2026-02-11"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - Roadmap Tasks In-Take",
+      "date": "2026-02-11"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - ZBB",
+      "date": "2026-02-11"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - ZBB",
+      "date": "2026-02-11"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - Roadmap Tasks In-Take",
+      "date": "2026-02-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - Golden Master",
+      "date": "2026-02-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - Golden Master",
+      "date": "2026-02-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - Feature Complete",
+      "date": "2026-02-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - Feature Complete",
+      "date": "2026-02-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - Feature Complete",
+      "date": "2026-02-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - Feature Complete",
+      "date": "2026-02-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - Roadmap Tasks In-Take",
+      "date": "2026-02-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - OTA 1 100%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - OTA 1 30%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - Branch Cut",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - OTA 1 100%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - OTA 1 30%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - Branch Cut",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - OTA 1 30%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - Branch Cut",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - OTA 1 30%",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - Branch Cut",
+      "date": "2026-03-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - OTA 1 60%",
+      "date": "2026-03-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - OTA 1 60%",
+      "date": "2026-03-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v123 - OTA 1 60%",
+      "date": "2026-03-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - OTA 1 60%",
+      "date": "2026-03-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v123 - OTA 1 100%",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - Release Internal",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v23 - OTA 1 100%",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - Release Internal",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - Release Internal",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - Release Internal",
+      "date": "2026-03-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v23.0 - OTA 1 100%",
+      "date": "2026-03-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - Roadmap Tasks In-Take",
+      "date": "2026-03-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - Roadmap Tasks In-Take",
+      "date": "2026-03-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - ZBB",
+      "date": "2026-03-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - Golden Master",
+      "date": "2026-03-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - Golden Master",
+      "date": "2026-03-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - Roadmap Tasks In-Take",
+      "date": "2026-03-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - Golden Master",
+      "date": "2026-03-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - Golden Master",
+      "date": "2026-03-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - Feature Complete",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - Feature Complete",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - Feature Complete",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - Roadmap Tasks In-Take",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - Feature Complete",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - Roadmap Tasks In-Take",
+      "date": "2026-04-01"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - OTA 1 100%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - OTA 1 30%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - Branch Cut",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - OTA 1 100%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - OTA 1 30%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - Branch Cut",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - OTA 1 30%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - Branch Cut",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - OTA 1 30%",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - Branch Cut",
+      "date": "2026-04-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - OTA 1 60%",
+      "date": "2026-04-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v24 - OTA 1 60%",
+      "date": "2026-04-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - OTA 1 60%",
+      "date": "2026-04-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - OTA 1 60%",
+      "date": "2026-04-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v124 - OTA 1 100%",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - Release Internal",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - Release Internal",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v124 - OTA 1 100%",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - Release Internal",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v24.0 - OTA 1 100%",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - Release Internal",
+      "date": "2026-04-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - Roadmap Tasks In-Take",
+      "date": "2026-04-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - Roadmap Tasks In-Take",
+      "date": "2026-04-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - ZBB",
+      "date": "2026-04-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - ZBB",
+      "date": "2026-04-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - Golden Master",
+      "date": "2026-04-29"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - Roadmap Tasks In-Take",
+      "date": "2026-04-29"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - Golden Master",
+      "date": "2026-04-29"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - Roadmap Tasks In-Take",
+      "date": "2026-04-29"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - Golden Master",
+      "date": "2026-04-29"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - Feature Complete",
+      "date": "2026-05-06"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - Feature Complete",
+      "date": "2026-05-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - Feature Complete",
+      "date": "2026-05-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - Roadmap Tasks In-Take",
+      "date": "2026-05-06"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - Roadmap Tasks In-Take",
+      "date": "2026-05-06"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - OTA 1 100%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - OTA 1 30%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - Branch Cut",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - OTA 1 100%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - OTA 1 30%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - Branch Cut",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - OTA 1 30%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - OTA 1 30%",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - Branch Cut",
+      "date": "2026-05-13"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - OTA 1 60%",
+      "date": "2026-05-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - OTA 1 60%",
+      "date": "2026-05-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - OTA 1 60%",
+      "date": "2026-05-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - OTA 1 60%",
+      "date": "2026-05-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v125 - OTA 1 100%",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - Release Internal",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v25 - OTA 1 100%",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v125 - OTA 1 100%",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - Release Internal",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v25.0 - OTA 1 100%",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - Release Internal",
+      "date": "2026-05-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - Roadmap Tasks In-Take",
+      "date": "2026-05-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - ZBB",
+      "date": "2026-05-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - ZBB",
+      "date": "2026-05-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - Golden Master",
+      "date": "2026-06-03"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - Golden Master",
+      "date": "2026-06-03"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - Roadmap Tasks In-Take",
+      "date": "2026-06-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - Golden Master",
+      "date": "2026-06-03"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - Golden Master",
+      "date": "2026-06-03"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - Feature Complete",
+      "date": "2026-06-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - Feature Complete",
+      "date": "2026-06-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - Feature Complete",
+      "date": "2026-06-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - OTA 1 100%",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - OTA 1 100%",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - OTA 1 30%",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - Branch Cut",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - OTA 1 30%",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - Branch Cut",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - OTA 1 30%",
+      "date": "2026-06-17"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - OTA 1 60%",
+      "date": "2026-06-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - OTA 1 60%",
+      "date": "2026-06-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - OTA 1 60%",
+      "date": "2026-06-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v126 - OTA 1 100%",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - Release Internal",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v26 - OTA 1 100%",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - Release Internal",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v126 - OTA 1 100%",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - Release Internal",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v26.0 - OTA 1 100%",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - Release Internal",
+      "date": "2026-06-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - Golden Master",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - Golden Master",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - Roadmap Tasks In-Take",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - Golden Master",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - Roadmap Tasks In-Take",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - Golden Master",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - Roadmap Tasks In-Take",
+      "date": "2026-07-08"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - Feature Complete",
+      "date": "2026-07-15"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - Feature Complete",
+      "date": "2026-07-15"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - Feature Complete",
+      "date": "2026-07-15"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - OTA 1 30%",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - Branch Cut",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - OTA 1 100%",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - OTA 1 30%",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - Branch Cut",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - OTA 1 30%",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - Branch Cut",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - OTA 1 30%",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - Branch Cut",
+      "date": "2026-07-22"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - OTA 1 60%",
+      "date": "2026-07-23"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - OTA 1 60%",
+      "date": "2026-07-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - OTA 1 60%",
+      "date": "2026-07-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - OTA 1 60%",
+      "date": "2026-07-23"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v127 - OTA 1 100%",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - Release Internal",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - Release Internal",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v127 - OTA 1 100%",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - Release Internal",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v27.0 - OTA 1 100%",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - Release Internal",
+      "date": "2026-07-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - Roadmap Tasks In-Take",
+      "date": "2026-08-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - ZBB",
+      "date": "2026-08-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - ZBB",
+      "date": "2026-08-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - Golden Master",
+      "date": "2026-08-12"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - Golden Master",
+      "date": "2026-08-12"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - Golden Master",
+      "date": "2026-08-12"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - Roadmap Tasks In-Take",
+      "date": "2026-08-12"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - Roadmap Tasks In-Take",
+      "date": "2026-08-12"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - Feature Complete",
+      "date": "2026-08-19"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - Feature Complete",
+      "date": "2026-08-19"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - Feature Complete",
+      "date": "2026-08-19"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - Feature Complete",
+      "date": "2026-08-19"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - OTA 1 100%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - OTA 1 30%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - Branch Cut",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - OTA 1 100%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - OTA 1 30%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - OTA 1 30%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - OTA 1 30%",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - Branch Cut",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - OTA 1 60%",
+      "date": "2026-08-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v28 - OTA 1 60%",
+      "date": "2026-08-27"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - OTA 1 60%",
+      "date": "2026-08-27"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v128 - OTA 1 100%",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - Release Internal",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - Release Internal",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v128 - OTA 1 100%",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - Release Internal",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v28.0 - OTA 1 100%",
+      "date": "2026-08-31"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - Roadmap Tasks In-Take",
+      "date": "2026-09-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - Golden Master",
+      "date": "2026-09-16"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - Golden Master",
+      "date": "2026-09-16"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - Golden Master",
+      "date": "2026-09-16"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - Roadmap Tasks In-Take",
+      "date": "2026-09-16"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - Golden Master",
+      "date": "2026-09-16"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - Feature Complete",
+      "date": "2026-09-23"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - Feature Complete",
+      "date": "2026-09-23"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - Feature Complete",
+      "date": "2026-09-23"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - OTA 1 100%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - OTA 1 30%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - Branch Cut",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - OTA 1 100%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - OTA 1 30%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - Branch Cut",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - OTA 1 30%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - Branch Cut",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - OTA 1 30%",
+      "date": "2026-09-30"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - OTA 1 60%",
+      "date": "2026-10-01"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - OTA 1 60%",
+      "date": "2026-10-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - OTA 1 60%",
+      "date": "2026-10-01"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - OTA 1 60%",
+      "date": "2026-10-01"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v129 - OTA 1 100%",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v29 - OTA 1 100%",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - Release Internal",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v129 - OTA 1 100%",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - Release Internal",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v29.0 - OTA 1 100%",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - Release Internal",
+      "date": "2026-10-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - Roadmap Tasks In-Take",
+      "date": "2026-10-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - Roadmap Tasks In-Take",
+      "date": "2026-10-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - ZBB",
+      "date": "2026-10-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - ZBB",
+      "date": "2026-10-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - Golden Master",
+      "date": "2026-10-21"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - Golden Master",
+      "date": "2026-10-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - Golden Master",
+      "date": "2026-10-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - Roadmap Tasks In-Take",
+      "date": "2026-10-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - Golden Master",
+      "date": "2026-10-21"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - Feature Complete",
+      "date": "2026-10-28"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - OTA 1 100%",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - OTA 1 30%",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - Branch Cut",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - OTA 1 100%",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - OTA 1 30%",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - Branch Cut",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - OTA 1 30%",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - Branch Cut",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - Branch Cut",
+      "date": "2026-11-04"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - OTA 1 60%",
+      "date": "2026-11-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - OTA 1 60%",
+      "date": "2026-11-05"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - OTA 1 60%",
+      "date": "2026-11-05"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v130 - OTA 1 100%",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - Release Internal",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v30 - OTA 1 100%",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - Release Internal",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v130 - OTA 1 100%",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - Release Internal",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v30.0 - OTA 1 100%",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - Release Internal",
+      "date": "2026-11-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - Roadmap Tasks In-Take",
+      "date": "2026-11-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - ZBB",
+      "date": "2026-11-18"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - ZBB",
+      "date": "2026-11-18"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - Golden Master",
+      "date": "2026-11-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - Golden Master",
+      "date": "2026-11-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - Golden Master",
+      "date": "2026-11-25"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - Golden Master",
+      "date": "2026-11-25"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - OTA 1 100%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - OTA 1 30%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - OTA 1 100%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - OTA 1 30%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - OTA 1 30%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - OTA 1 30%",
+      "date": "2026-12-09"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - OTA 1 60%",
+      "date": "2026-12-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - OTA 1 60%",
+      "date": "2026-12-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v131 - OTA 1 60%",
+      "date": "2026-12-10"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - OTA 1 60%",
+      "date": "2026-12-10"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v131 - OTA 1 100%",
+      "date": "2026-12-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v31 - OTA 1 100%",
+      "date": "2026-12-14"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v31.0 - OTA 1 100%",
+      "date": "2026-12-14"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "v27 - OTA 1 100%",
+      "date": "2027-07-27"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tdate\nIn-Market Displayless\tv16.0 - Feature Complete\t2025-05-07\nIn-Market Displayless\tv15.0 - OTA 1 30%\t2025-05-14\nIn-Market Displayless\tv16.0 - Branch Cut\t2025-05-14\nHypernova\tBeta 1 - Release Internal\t2025-05-15\nIn-Market Displayless\tv15.0 - OTA 1 60%\t2025-05-15\nIn-Market Displayless\tv15.0 - OTA 1 100%\t2025-05-19\nIn-Market Displayless\tv16.0 - Release Internal\t2025-05-19\nHypernova\tBeta 2 - Feature Complete\t2025-05-20\nHypernova\tBeta 2 - Branch Cut\t2025-05-28\nHypernova\tDay0 - Branch Cut\t2025-05-28\nIn-Market Displayless\tv16.0 - ZBB\t2025-05-28\nHypernova\tMP - Golden Master\t2025-06-02\nIn-Market Displayless\tv17.0 - Roadmap Tasks In-Take\t2025-06-04\nIn-Market Displayless\tv17.0 - Feature Complete\t2025-06-11\nHypernova\tBeta 2 - Roadmap Tasks In-Take\t2025-06-13\nIn-Market Displayless\tv16.0 - OTA 1 30%\t2025-06-18\nIn-Market Displayless\tv17.0 - Branch Cut\t2025-06-18\nIn-Market Displayless\tv16.0 - OTA 1 60%\t2025-06-19\nHypernova\tBeta 2 - Release Internal\t2025-06-23\nIn-Market Displayless\tv16.0 - OTA 1 100%\t2025-06-23\nIn-Market Displayless\tv17.0 - Release Internal\t2025-06-23\nHypernova\tMP - OTA 1 100%\t2025-06-24\nHypernova\tBeta 3 - Roadmap Tasks In-Take\t2025-06-25\nHypernova\tBeta 3 - Release Internal\t2025-07-02\nIn-Market Displayless\tv17.0 - Golden Master\t2025-07-09\nIn-Market Displayless\tv18.0 - Roadmap Tasks In-Take\t2025-07-09\nHypernova\tDay0 - ZBB\t2025-07-16\nIn-Market Displayless\tv18.0 - Feature Complete\t2025-07-16\nIn-Market Displayless\tv17.0 - OTA 1 30%\t2025-07-23\nIn-Market Displayless\tv18.0 - Branch Cut\t2025-07-23\nIn-Market Displayless\tv17.0 - OTA 1 100%\t2025-07-28\nIn-Market Displayless\tv18.0 - Release Internal\t2025-07-28\nHypernova\tDay0 - Golden Master\t2025-08-06\nIn-Market Displayless\tv18.0 - ZBB\t2025-08-06\nHypernova\tMP - Roadmap Tasks In-Take\t2025-08-12\nIn-Market Displayless\tv19.0 - Roadmap Tasks In-Take\t2025-08-13\nIn-Market Displayless\tv18.0 - Golden Master\t2025-08-18\nHypernova\tDay0 - OTA 1 100%\t2025-08-20\nHypernova\tv19 - Feature Complete\t2025-08-20\nIn-Market Displayless\tv19.0 - Feature Complete\t2025-08-20\nHypernova\tv19 - Branch Cut\t2025-08-27\nIn-Market Displayless\tv19.0 - Branch Cut\t2025-08-27\nIn-Market Displayless\tv18.0 - OTA 1 30%\t2025-08-28\nHypernova\tv19 - Release Internal\t2025-09-01\nIn-Market Displayless\tv18.0 - OTA 1 60%\t2025-09-02\nIn-Market Displayless\tv18.0 - OTA 1 100%\t2025-09-03\nIn-Market Displayless\tv19.0 - Release Internal\t2025-09-03\nIn-Market Displayless\tv19.0 - ZBB\t2025-09-10\nHypernova\tDay0 - Roadmap Tasks In-Take\t2025-09-15\nHypernova\tv20 - Roadmap Tasks In-Take\t2025-09-17\nIn-Market Displayless\tv19.0 - Golden Master\t2025-09-17\nHypernova\tv20 - Feature Complete\t2025-09-24\nIn-Market Displayless\tv20.0 - Feature Complete\t2025-09-24\nHypernova\tDay0 - OTA 1 100%\t2025-09-30\nHypernova\tv20 - Branch Cut\t2025-10-01\nIn-Market Displayless\tv20.0 - Branch Cut\t2025-10-01\nIn-Market Displayless\tv19.0 - OTA 1 30%\t2025-10-02\nHypernova\tv20 - Release Internal\t2025-10-06\nIn-Market Displayless\tv20.0 - Release Internal\t2025-10-06\nIn-Market Displayless\tv19.0 - OTA 1 60%\t2025-10-08\nIn-Market Displayless\tv19.0 - OTA 1 100%\t2025-10-09\nIn-Market Displayless\tv20.0 - ZBB\t2025-10-16\nHypernova\tv20 - Golden Master\t2025-10-22\nHypernova\tv21 - Feature Complete\t2025-10-29\nIn-Market Displayless\tv21.0 - Feature Complete\t2025-10-29\nIn-Market Displayless\tv21.0 - Roadmap Tasks In-Take\t2025-10-31\nHypernova\tv20 - OTA 1 100%\t2025-11-05\nHypernova\tv21 - Branch Cut\t2025-11-05\nIn-Market Displayless\tv20.0 - Golden Master\t2025-11-06\nHypernova\tv21 - Release Internal\t2025-11-10\nIn-Market Displayless\tv20.0 - OTA 1 10%\t2025-11-13\nIn-Market Displayless\tv20.0 - OTA 1 30%\t2025-11-17\nIn-Market Displayless\tv21.0 - Release Internal\t2025-11-19\nIn-Market Displayless\tv20.0 - OTA 1 60%\t2025-11-20\nHypernova\tv22 - Feature Complete\t2025-12-03\nIn-Market Displayless\tv20.0 - OTA 1 100%\t2025-12-03\nIn-Market Displayless\tv22.0 - Feature Complete\t2025-12-03\nIn-Market Displayless\tv22.0 - Roadmap Tasks In-Take\t2025-12-03\nHypernova\tv21 - Roadmap Tasks In-Take\t2025-12-05\nIn-Market Displayless\tv21.0 - Golden Master\t2025-12-08\nHypernova\tv123 - Feature Complete\t2025-12-10\nHypernova\tv23 - Feature Complete\t2025-12-10\nHypernova\tv21 - OTA 1 20%\t2025-12-10\nHypernova\tv22 - Branch Cut\t2025-12-10\nIn-Market Displayless\tv22.0 - Branch Cut\t2025-12-11\nHypernova\tv22 - Release Internal\t2025-12-15\nIn-Market Displayless\tv21.0 - OTA 1 60%\t2025-12-18\nIn-Market Displayless\tv21.0 - OTA 1 100%\t2025-12-22\nIn-Market Displayless\tv22.0 - Release Internal\t2025-12-22\nHypernova\tv21 - OTA 1 30%\t2026-01-06\nHypernova\tv21 - OTA 1 100%\t2026-01-07\nHypernova\tv22 - Roadmap Tasks In-Take\t2026-01-07\nHypernova\tv21 - OTA 1 60%\t2026-01-08\nIn-Market Displayless\tv22.0 - ZBB\t2026-01-08\nHypernova\tv21 - OTA 1 100%\t2026-01-12\nHypernova\tv22 - Golden Master\t2026-01-14\nHypernova\tv23 - Roadmap Tasks In-Take\t2026-01-14\nHypernova\tv124 - Feature Complete\t2026-01-21\nIn-Market Displayless\tv123 - Feature Complete\t2026-01-21\nIn-Market Displayless\tv123 - Roadmap Tasks In-Take\t2026-01-21\nIn-Market Displayless\tv22.0 - Golden Master\t2026-01-21\nIn-Market Displayless\tv23.0 - Feature Complete\t2026-01-21\nIn-Market Displayless\tv23.0 - Roadmap Tasks In-Take\t2026-01-21\nHypernova\tv123 - Branch Cut\t2026-01-28\nHypernova\tv23 - Branch Cut\t2026-01-28\nHypernova\tv22 - OTA 1 100%\t2026-01-28\nHypernova\tv22 - OTA 1 20%\t2026-01-28\nHypernova\tv22 - OTA 1 30%\t2026-01-28\nIn-Market Displayless\tv123 - Branch Cut\t2026-01-28\nIn-Market Displayless\tv22.0 - OTA 1 30%\t2026-01-28\nIn-Market Displayless\tv23.0 - Branch Cut\t2026-01-28\nHypernova\tv22 - OTA 1 60%\t2026-01-29\nIn-Market Displayless\tv22.0 - OTA 1 60%\t2026-01-29\nHypernova\tv123 - Release Internal\t2026-02-02\nHypernova\tv23 - Release Internal\t2026-02-02\nIn-Market Displayless\tv123 - Release Internal\t2026-02-02\nHypernova\tv123 - Roadmap Tasks In-Take\t2026-02-11\nHypernova\tv23 - Roadmap Tasks In-Take\t2026-02-11\nIn-Market Displayless\tv123 - ZBB\t2026-02-11\nIn-Market Displayless\tv23.0 - ZBB\t2026-02-11\nHypernova\tv24 - Roadmap Tasks In-Take\t2026-02-18\nIn-Market Displayless\tv123 - Golden Master\t2026-02-18\nIn-Market Displayless\tv23.0 - Golden Master\t2026-02-18\nHypernova\tv125 - Feature Complete\t2026-02-25\nHypernova\tv25 - Feature Complete\t2026-02-25\nIn-Market Displayless\tv124 - Feature Complete\t2026-02-25\nIn-Market Displayless\tv24.0 - Feature Complete\t2026-02-25\nIn-Market Displayless\tv24.0 - Roadmap Tasks In-Take\t2026-02-25\nHypernova\tv123 - OTA 1 100%\t2026-03-04\nHypernova\tv123 - OTA 1 30%\t2026-03-04\nHypernova\tv124 - Branch Cut\t2026-03-04\nHypernova\tv23 - OTA 1 100%\t2026-03-04\nHypernova\tv23 - OTA 1 30%\t2026-03-04\nHypernova\tv24 - Branch Cut\t2026-03-04\nIn-Market Displayless\tv123 - OTA 1 30%\t2026-03-04\nIn-Market Displayless\tv124 - Branch Cut\t2026-03-04\nIn-Market Displayless\tv23.0 - OTA 1 30%\t2026-03-04\nIn-Market Displayless\tv24.0 - Branch Cut\t2026-03-04\nHypernova\tv123 - OTA 1 60%\t2026-03-05\nHypernova\tv23 - OTA 1 60%\t2026-03-05\nIn-Market Displayless\tv123 - OTA 1 60%\t2026-03-05\nIn-Market Displayless\tv23.0 - OTA 1 60%\t2026-03-05\nHypernova\tv123 - OTA 1 100%\t2026-03-09\nHypernova\tv124 - Release Internal\t2026-03-09\nHypernova\tv23 - OTA 1 100%\t2026-03-09\nHypernova\tv24 - Release Internal\t2026-03-09\nIn-Market Displayless\tv124 - Release Internal\t2026-03-09\nIn-Market Displayless\tv24.0 - Release Internal\t2026-03-09\nIn-Market Displayless\tv23.0 - OTA 1 100%\t2026-03-10\nHypernova\tv124 - Roadmap Tasks In-Take\t2026-03-18\nHypernova\tv24 - Roadmap Tasks In-Take\t2026-03-18\nIn-Market Displayless\tv24.0 - ZBB\t2026-03-18\nHypernova\tv124 - Golden Master\t2026-03-25\nHypernova\tv24 - Golden Master\t2026-03-25\nHypernova\tv26 - Roadmap Tasks In-Take\t2026-03-25\nIn-Market Displayless\tv124 - Golden Master\t2026-03-25\nIn-Market Displayless\tv24.0 - Golden Master\t2026-03-25\nHypernova\tv126 - Feature Complete\t2026-04-01\nHypernova\tv26 - Feature Complete\t2026-04-01\nIn-Market Displayless\tv125 - Feature Complete\t2026-04-01\nIn-Market Displayless\tv125 - Roadmap Tasks In-Take\t2026-04-01\nIn-Market Displayless\tv25.0 - Feature Complete\t2026-04-01\nIn-Market Displayless\tv25.0 - Roadmap Tasks In-Take\t2026-04-01\nHypernova\tv124 - OTA 1 100%\t2026-04-08\nHypernova\tv124 - OTA 1 30%\t2026-04-08\nHypernova\tv125 - Branch Cut\t2026-04-08\nHypernova\tv24 - OTA 1 100%\t2026-04-08\nHypernova\tv24 - OTA 1 30%\t2026-04-08\nHypernova\tv25 - Branch Cut\t2026-04-08\nIn-Market Displayless\tv124 - OTA 1 30%\t2026-04-08\nIn-Market Displayless\tv125 - Branch Cut\t2026-04-08\nIn-Market Displayless\tv24.0 - OTA 1 30%\t2026-04-08\nIn-Market Displayless\tv25.0 - Branch Cut\t2026-04-08\nHypernova\tv124 - OTA 1 60%\t2026-04-09\nHypernova\tv24 - OTA 1 60%\t2026-04-09\nIn-Market Displayless\tv124 - OTA 1 60%\t2026-04-09\nIn-Market Displayless\tv24.0 - OTA 1 60%\t2026-04-09\nHypernova\tv124 - OTA 1 100%\t2026-04-13\nHypernova\tv125 - Release Internal\t2026-04-13\nHypernova\tv25 - Release Internal\t2026-04-13\nIn-Market Displayless\tv124 - OTA 1 100%\t2026-04-13\nIn-Market Displayless\tv125 - Release Internal\t2026-04-13\nIn-Market Displayless\tv24.0 - OTA 1 100%\t2026-04-13\nIn-Market Displayless\tv25.0 - Release Internal\t2026-04-13\nHypernova\tv125 - Roadmap Tasks In-Take\t2026-04-22\nHypernova\tv25 - Roadmap Tasks In-Take\t2026-04-22\nIn-Market Displayless\tv125 - ZBB\t2026-04-22\nIn-Market Displayless\tv25.0 - ZBB\t2026-04-22\nHypernova\tv125 - Golden Master\t2026-04-29\nHypernova\tv127 - Roadmap Tasks In-Take\t2026-04-29\nHypernova\tv25 - Golden Master\t2026-04-29\nHypernova\tv27 - Roadmap Tasks In-Take\t2026-04-29\nIn-Market Displayless\tv125 - Golden Master\t2026-04-29\nHypernova\tv127 - Feature Complete\t2026-05-06\nHypernova\tv27 - Feature Complete\t2026-05-06\nIn-Market Displayless\tv126 - Feature Complete\t2026-05-06\nIn-Market Displayless\tv126 - Roadmap Tasks In-Take\t2026-05-06\nIn-Market Displayless\tv26.0 - Roadmap Tasks In-Take\t2026-05-06\nHypernova\tv125 - OTA 1 100%\t2026-05-13\nHypernova\tv125 - OTA 1 30%\t2026-05-13\nHypernova\tv126 - Branch Cut\t2026-05-13\nHypernova\tv25 - OTA 1 100%\t2026-05-13\nHypernova\tv25 - OTA 1 30%\t2026-05-13\nHypernova\tv26 - Branch Cut\t2026-05-13\nIn-Market Displayless\tv125 - OTA 1 30%\t2026-05-13\nIn-Market Displayless\tv25.0 - OTA 1 30%\t2026-05-13\nIn-Market Displayless\tv26.0 - Branch Cut\t2026-05-13\nHypernova\tv125 - OTA 1 60%\t2026-05-14\nHypernova\tv25 - OTA 1 60%\t2026-05-14\nIn-Market Displayless\tv125 - OTA 1 60%\t2026-05-14\nIn-Market Displayless\tv25.0 - OTA 1 60%\t2026-05-14\nHypernova\tv125 - OTA 1 100%\t2026-05-18\nHypernova\tv126 - Release Internal\t2026-05-18\nHypernova\tv25 - OTA 1 100%\t2026-05-18\nIn-Market Displayless\tv125 - OTA 1 100%\t2026-05-18\nIn-Market Displayless\tv126 - Release Internal\t2026-05-18\nIn-Market Displayless\tv25.0 - OTA 1 100%\t2026-05-18\nIn-Market Displayless\tv26.0 - Release Internal\t2026-05-18\nHypernova\tv126 - Roadmap Tasks In-Take\t2026-05-27\nIn-Market Displayless\tv126 - ZBB\t2026-05-27\nIn-Market Displayless\tv26.0 - ZBB\t2026-05-27\nHypernova\tv126 - Golden Master\t2026-06-03\nHypernova\tv26 - Golden Master\t2026-06-03\nHypernova\tv28 - Roadmap Tasks In-Take\t2026-06-03\nIn-Market Displayless\tv126 - Golden Master\t2026-06-03\nIn-Market Displayless\tv26.0 - Golden Master\t2026-06-03\nHypernova\tv28 - Feature Complete\t2026-06-10\nIn-Market Displayless\tv127 - Feature Complete\t2026-06-10\nIn-Market Displayless\tv27.0 - Feature Complete\t2026-06-10\nHypernova\tv126 - OTA 1 100%\t2026-06-17\nHypernova\tv26 - OTA 1 100%\t2026-06-17\nHypernova\tv26 - OTA 1 30%\t2026-06-17\nHypernova\tv27 - Branch Cut\t2026-06-17\nIn-Market Displayless\tv126 - OTA 1 30%\t2026-06-17\nIn-Market Displayless\tv127 - Branch Cut\t2026-06-17\nIn-Market Displayless\tv26.0 - OTA 1 30%\t2026-06-17\nHypernova\tv126 - OTA 1 60%\t2026-06-18\nHypernova\tv26 - OTA 1 60%\t2026-06-18\nIn-Market Displayless\tv126 - OTA 1 60%\t2026-06-18\nHypernova\tv126 - OTA 1 100%\t2026-06-22\nHypernova\tv127 - Release Internal\t2026-06-22\nHypernova\tv26 - OTA 1 100%\t2026-06-22\nHypernova\tv27 - Release Internal\t2026-06-22\nIn-Market Displayless\tv126 - OTA 1 100%\t2026-06-22\nIn-Market Displayless\tv127 - Release Internal\t2026-06-22\nIn-Market Displayless\tv26.0 - OTA 1 100%\t2026-06-22\nIn-Market Displayless\tv27.0 - Release Internal\t2026-06-22\nHypernova\tv127 - Golden Master\t2026-07-08\nHypernova\tv27 - Golden Master\t2026-07-08\nHypernova\tv29 - Roadmap Tasks In-Take\t2026-07-08\nIn-Market Displayless\tv127 - Golden Master\t2026-07-08\nIn-Market Displayless\tv128 - Roadmap Tasks In-Take\t2026-07-08\nIn-Market Displayless\tv27.0 - Golden Master\t2026-07-08\nIn-Market Displayless\tv28.0 - Roadmap Tasks In-Take\t2026-07-08\nHypernova\tv29 - Feature Complete\t2026-07-15\nIn-Market Displayless\tv128 - Feature Complete\t2026-07-15\nIn-Market Displayless\tv28.0 - Feature Complete\t2026-07-15\nHypernova\tv127 - OTA 1 30%\t2026-07-22\nHypernova\tv128 - Branch Cut\t2026-07-22\nHypernova\tv27 - OTA 1 100%\t2026-07-22\nHypernova\tv27 - OTA 1 30%\t2026-07-22\nHypernova\tv28 - Branch Cut\t2026-07-22\nIn-Market Displayless\tv127 - OTA 1 30%\t2026-07-22\nIn-Market Displayless\tv128 - Branch Cut\t2026-07-22\nIn-Market Displayless\tv27.0 - OTA 1 30%\t2026-07-22\nIn-Market Displayless\tv28.0 - Branch Cut\t2026-07-22\nHypernova\tv127 - OTA 1 60%\t2026-07-23\nHypernova\tv27 - OTA 1 60%\t2026-07-23\nIn-Market Displayless\tv127 - OTA 1 60%\t2026-07-23\nIn-Market Displayless\tv27.0 - OTA 1 60%\t2026-07-23\nHypernova\tv127 - OTA 1 100%\t2026-07-27\nHypernova\tv128 - Release Internal\t2026-07-27\nHypernova\tv28 - Release Internal\t2026-07-27\nIn-Market Displayless\tv127 - OTA 1 100%\t2026-07-27\nIn-Market Displayless\tv128 - Release Internal\t2026-07-27\nIn-Market Displayless\tv27.0 - OTA 1 100%\t2026-07-27\nIn-Market Displayless\tv28.0 - Release Internal\t2026-07-27\nHypernova\tv128 - Roadmap Tasks In-Take\t2026-08-05\nIn-Market Displayless\tv128 - ZBB\t2026-08-05\nIn-Market Displayless\tv28.0 - ZBB\t2026-08-05\nHypernova\tv128 - Golden Master\t2026-08-12\nHypernova\tv28 - Golden Master\t2026-08-12\nIn-Market Displayless\tv128 - Golden Master\t2026-08-12\nIn-Market Displayless\tv129 - Roadmap Tasks In-Take\t2026-08-12\nIn-Market Displayless\tv29.0 - Roadmap Tasks In-Take\t2026-08-12\nHypernova\tv130 - Feature Complete\t2026-08-19\nHypernova\tv30 - Feature Complete\t2026-08-19\nIn-Market Displayless\tv129 - Feature Complete\t2026-08-19\nIn-Market Displayless\tv29.0 - Feature Complete\t2026-08-19\nHypernova\tv128 - OTA 1 100%\t2026-08-26\nHypernova\tv128 - OTA 1 30%\t2026-08-26\nHypernova\tv129 - Branch Cut\t2026-08-26\nHypernova\tv28 - OTA 1 100%\t2026-08-26\nHypernova\tv28 - OTA 1 30%\t2026-08-26\nIn-Market Displayless\tv128 - OTA 1 30%\t2026-08-26\nIn-Market Displayless\tv28.0 - OTA 1 30%\t2026-08-26\nIn-Market Displayless\tv29.0 - Branch Cut\t2026-08-26\nHypernova\tv128 - OTA 1 60%\t2026-08-27\nHypernova\tv28 - OTA 1 60%\t2026-08-27\nIn-Market Displayless\tv128 - OTA 1 60%\t2026-08-27\nHypernova\tv128 - OTA 1 100%\t2026-08-31\nHypernova\tv129 - Release Internal\t2026-08-31\nHypernova\tv29 - Release Internal\t2026-08-31\nIn-Market Displayless\tv128 - OTA 1 100%\t2026-08-31\nIn-Market Displayless\tv129 - Release Internal\t2026-08-31\nIn-Market Displayless\tv28.0 - OTA 1 100%\t2026-08-31\nHypernova\tv129 - Roadmap Tasks In-Take\t2026-09-09\nHypernova\tv129 - Golden Master\t2026-09-16\nHypernova\tv29 - Golden Master\t2026-09-16\nIn-Market Displayless\tv129 - Golden Master\t2026-09-16\nIn-Market Displayless\tv130 - Roadmap Tasks In-Take\t2026-09-16\nIn-Market Displayless\tv29.0 - Golden Master\t2026-09-16\nHypernova\tv131 - Feature Complete\t2026-09-23\nHypernova\tv31 - Feature Complete\t2026-09-23\nIn-Market Displayless\tv30.0 - Feature Complete\t2026-09-23\nHypernova\tv129 - OTA 1 100%\t2026-09-30\nHypernova\tv129 - OTA 1 30%\t2026-09-30\nHypernova\tv130 - Branch Cut\t2026-09-30\nHypernova\tv29 - OTA 1 100%\t2026-09-30\nHypernova\tv29 - OTA 1 30%\t2026-09-30\nHypernova\tv30 - Branch Cut\t2026-09-30\nIn-Market Displayless\tv129 - OTA 1 30%\t2026-09-30\nIn-Market Displayless\tv130 - Branch Cut\t2026-09-30\nIn-Market Displayless\tv29.0 - OTA 1 30%\t2026-09-30\nHypernova\tv129 - OTA 1 60%\t2026-10-01\nHypernova\tv29 - OTA 1 60%\t2026-10-01\nIn-Market Displayless\tv129 - OTA 1 60%\t2026-10-01\nIn-Market Displayless\tv29.0 - OTA 1 60%\t2026-10-01\nHypernova\tv129 - OTA 1 100%\t2026-10-05\nHypernova\tv29 - OTA 1 100%\t2026-10-05\nHypernova\tv30 - Release Internal\t2026-10-05\nIn-Market Displayless\tv129 - OTA 1 100%\t2026-10-05\nIn-Market Displayless\tv130 - Release Internal\t2026-10-05\nIn-Market Displayless\tv29.0 - OTA 1 100%\t2026-10-05\nIn-Market Displayless\tv30.0 - Release Internal\t2026-10-05\nHypernova\tv130 - Roadmap Tasks In-Take\t2026-10-14\nHypernova\tv30 - Roadmap Tasks In-Take\t2026-10-14\nIn-Market Displayless\tv130 - ZBB\t2026-10-14\nIn-Market Displayless\tv30.0 - ZBB\t2026-10-14\nHypernova\tv130 - Golden Master\t2026-10-21\nHypernova\tv30 - Golden Master\t2026-10-21\nIn-Market Displayless\tv130 - Golden Master\t2026-10-21\nIn-Market Displayless\tv131 - Roadmap Tasks In-Take\t2026-10-21\nIn-Market Displayless\tv30.0 - Golden Master\t2026-10-21\nIn-Market Displayless\tv131 - Feature Complete\t2026-10-28\nHypernova\tv130 - OTA 1 100%\t2026-11-04\nHypernova\tv130 - OTA 1 30%\t2026-11-04\nHypernova\tv131 - Branch Cut\t2026-11-04\nHypernova\tv30 - OTA 1 100%\t2026-11-04\nHypernova\tv30 - OTA 1 30%\t2026-11-04\nHypernova\tv31 - Branch Cut\t2026-11-04\nIn-Market Displayless\tv130 - OTA 1 30%\t2026-11-04\nIn-Market Displayless\tv131 - Branch Cut\t2026-11-04\nIn-Market Displayless\tv31.0 - Branch Cut\t2026-11-04\nHypernova\tv130 - OTA 1 60%\t2026-11-05\nIn-Market Displayless\tv130 - OTA 1 60%\t2026-11-05\nIn-Market Displayless\tv30.0 - OTA 1 60%\t2026-11-05\nHypernova\tv130 - OTA 1 100%\t2026-11-09\nHypernova\tv131 - Release Internal\t2026-11-09\nHypernova\tv30 - OTA 1 100%\t2026-11-09\nHypernova\tv31 - Release Internal\t2026-11-09\nIn-Market Displayless\tv130 - OTA 1 100%\t2026-11-09\nIn-Market Displayless\tv131 - Release Internal\t2026-11-09\nIn-Market Displayless\tv30.0 - OTA 1 100%\t2026-11-09\nIn-Market Displayless\tv31.0 - Release Internal\t2026-11-09\nHypernova\tv31 - Roadmap Tasks In-Take\t2026-11-18\nIn-Market Displayless\tv131 - ZBB\t2026-11-18\nIn-Market Displayless\tv31.0 - ZBB\t2026-11-18\nHypernova\tv131 - Golden Master\t2026-11-25\nHypernova\tv31 - Golden Master\t2026-11-25\nIn-Market Displayless\tv131 - Golden Master\t2026-11-25\nIn-Market Displayless\tv31.0 - Golden Master\t2026-11-25\nHypernova\tv131 - OTA 1 100%\t2026-12-09\nHypernova\tv131 - OTA 1 30%\t2026-12-09\nHypernova\tv31 - OTA 1 100%\t2026-12-09\nHypernova\tv31 - OTA 1 30%\t2026-12-09\nIn-Market Displayless\tv131 - OTA 1 30%\t2026-12-09\nIn-Market Displayless\tv31.0 - OTA 1 30%\t2026-12-09\nHypernova\tv131 - OTA 1 60%\t2026-12-10\nHypernova\tv31 - OTA 1 60%\t2026-12-10\nIn-Market Displayless\tv131 - OTA 1 60%\t2026-12-10\nIn-Market Displayless\tv31.0 - OTA 1 60%\t2026-12-10\nHypernova\tv131 - OTA 1 100%\t2026-12-14\nHypernova\tv31 - OTA 1 100%\t2026-12-14\nIn-Market Displayless\tv31.0 - OTA 1 100%\t2026-12-14\nHypernova\tv27 - OTA 1 100%\t2027-07-27\n",
+  "stderr": "",
+  "execution_time_ms": 359
+}

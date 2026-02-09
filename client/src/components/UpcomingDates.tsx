@@ -38,7 +38,7 @@ export default function UpcomingDates() {
       iconColor: "text-orange-400",
     },
     {
-      title: "RELEASES",
+      title: "IN-MARKET RELEASES",
       type: "release_dates" as const,
       icon: Rocket,
       data: releaseDates.data || [],

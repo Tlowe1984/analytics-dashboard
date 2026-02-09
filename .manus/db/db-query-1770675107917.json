@@ -1,0 +1,130 @@
+{
+  "query": "SELECT DISTINCT product, milestone_name, milestone_date, milestone_type \nFROM milestones \nWHERE milestone_type = 'release_milestones' \nAND (product LIKE '%Hypernova%' OR product LIKE '%In-Market%')\nORDER BY milestone_date\nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT DISTINCT product, milestone_name, milestone_date, milestone_type \nFROM milestones \nWHERE milestone_type = 'release_milestones' \nAND (product LIKE '%Hypernova%' OR product LIKE '%In-Market%')\nORDER BY milestone_date\nLIMIT 20;",
+  "rows": [
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Feature Complete",
+      "milestone_date": "2025-05-07 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 30%",
+      "milestone_date": "2025-05-14 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Branch Cut",
+      "milestone_date": "2025-05-14 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 60%",
+      "milestone_date": "2025-05-15 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 1 - Release Internal",
+      "milestone_date": "2025-05-15 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - Release Internal",
+      "milestone_date": "2025-05-19 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v15.0 - OTA 1 100%",
+      "milestone_date": "2025-05-19 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Feature Complete",
+      "milestone_date": "2025-05-20 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Branch Cut",
+      "milestone_date": "2025-05-28 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Day0 - Branch Cut",
+      "milestone_date": "2025-05-28 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - ZBB",
+      "milestone_date": "2025-05-28 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "MP - Golden Master",
+      "milestone_date": "2025-06-02 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Roadmap Tasks In-Take",
+      "milestone_date": "2025-06-04 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Feature Complete",
+      "milestone_date": "2025-06-11 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "Beta 2 - Roadmap Tasks In-Take",
+      "milestone_date": "2025-06-13 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Branch Cut",
+      "milestone_date": "2025-06-18 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 30%",
+      "milestone_date": "2025-06-18 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 60%",
+      "milestone_date": "2025-06-19 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v17.0 - Release Internal",
+      "milestone_date": "2025-06-23 00:00:00",
+      "milestone_type": "release_milestones"
+    },
+    {
+      "product": "In-Market Displayless",
+      "milestone_name": "v16.0 - OTA 1 100%",
+      "milestone_date": "2025-06-23 00:00:00",
+      "milestone_type": "release_milestones"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tmilestone_date\tmilestone_type\nIn-Market Displayless\tv16.0 - Feature Complete\t2025-05-07 00:00:00\trelease_milestones\nIn-Market Displayless\tv15.0 - OTA 1 30%\t2025-05-14 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - Branch Cut\t2025-05-14 00:00:00\trelease_milestones\nIn-Market Displayless\tv15.0 - OTA 1 60%\t2025-05-15 00:00:00\trelease_milestones\nHypernova\tBeta 1 - Release Internal\t2025-05-15 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - Release Internal\t2025-05-19 00:00:00\trelease_milestones\nIn-Market Displayless\tv15.0 - OTA 1 100%\t2025-05-19 00:00:00\trelease_milestones\nHypernova\tBeta 2 - Feature Complete\t2025-05-20 00:00:00\trelease_milestones\nHypernova\tBeta 2 - Branch Cut\t2025-05-28 00:00:00\trelease_milestones\nHypernova\tDay0 - Branch Cut\t2025-05-28 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - ZBB\t2025-05-28 00:00:00\trelease_milestones\nHypernova\tMP - Golden Master\t2025-06-02 00:00:00\trelease_milestones\nIn-Market Displayless\tv17.0 - Roadmap Tasks In-Take\t2025-06-04 00:00:00\trelease_milestones\nIn-Market Displayless\tv17.0 - Feature Complete\t2025-06-11 00:00:00\trelease_milestones\nHypernova\tBeta 2 - Roadmap Tasks In-Take\t2025-06-13 00:00:00\trelease_milestones\nIn-Market Displayless\tv17.0 - Branch Cut\t2025-06-18 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - OTA 1 30%\t2025-06-18 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - OTA 1 60%\t2025-06-19 00:00:00\trelease_milestones\nIn-Market Displayless\tv17.0 - Release Internal\t2025-06-23 00:00:00\trelease_milestones\nIn-Market Displayless\tv16.0 - OTA 1 100%\t2025-06-23 00:00:00\trelease_milestones\n",
+  "stderr": "",
+  "execution_time_ms": 396
+}
