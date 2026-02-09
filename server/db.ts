@@ -278,6 +278,28 @@ export async function getReleaseDates(limit = 10) {
   return result;
 }
 
+export async function getGTMMilestones(limit = 10) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const now = new Date();
+  const fourWeeksFromNow = new Date(now);
+  fourWeeksFromNow.setDate(fourWeeksFromNow.getDate() + 28); // 4 weeks
+  
+  const result = await db
+    .select()
+    .from(milestones)
+    .where(and(
+      gte(milestones.milestoneDate, now),
+      lte(milestones.milestoneDate, fourWeeksFromNow),
+      eq(milestones.milestoneType, 'gtm_milestones')
+    ))
+    .orderBy(asc(milestones.milestoneDate))
+    .limit(limit);
+  
+  return result;
+}
+
 export async function importMilestones(milestonesData: InsertMilestone[]) {
   const db = await getDb();
   if (!db) return { success: false, count: 0 };

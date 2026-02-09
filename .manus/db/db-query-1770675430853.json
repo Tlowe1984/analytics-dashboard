@@ -1,0 +1,130 @@
+{
+  "query": "SELECT product, milestone_name, milestone_type, DATE(milestone_date) as date \nFROM milestones \nWHERE milestone_name LIKE '%GTM%' OR milestone_name LIKE '%Go-to-Market%' OR milestone_name LIKE '%Market%'\nLIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product, milestone_name, milestone_type, DATE(milestone_date) as date \nFROM milestones \nWHERE milestone_name LIKE '%GTM%' OR milestone_name LIKE '%Go-to-Market%' OR milestone_name LIKE '%Market%'\nLIMIT 20;",
+  "rows": [
+    {
+      "product": "Artemis",
+      "milestone_name": "GTM0",
+      "milestone_type": "sw_milestones",
+      "date": "2026-06-04"
+    },
+    {
+      "product": "Artemis",
+      "milestone_name": "GTM1",
+      "milestone_type": "sw_milestones",
+      "date": "2027-02-18"
+    },
+    {
+      "product": "Artemis",
+      "milestone_name": "GTM2",
+      "milestone_type": "sw_milestones",
+      "date": "2027-06-24"
+    },
+    {
+      "product": "Artemis",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2027-08-12"
+    },
+    {
+      "product": "Ceres",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2025-07-31"
+    },
+    {
+      "product": "Ceres2",
+      "milestone_name": "GTM0",
+      "milestone_type": "sw_milestones",
+      "date": "2026-01-30"
+    },
+    {
+      "product": "Ceres2",
+      "milestone_name": "GTM1",
+      "milestone_type": "sw_milestones",
+      "date": "2026-04-15"
+    },
+    {
+      "product": "Ceres2",
+      "milestone_name": "GTM2",
+      "milestone_type": "sw_milestones",
+      "date": "2026-10-15"
+    },
+    {
+      "product": "Ceres2",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2027-02-15"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM1",
+      "milestone_type": "sw_milestones",
+      "date": "2026-02-13"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM2",
+      "milestone_type": "sw_milestones",
+      "date": "2026-03-31"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM2.5",
+      "milestone_type": "sw_milestones",
+      "date": "2026-06-08"
+    },
+    {
+      "product": "Daiquiri",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2026-08-26"
+    },
+    {
+      "product": "Hypernova",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2025-08-04"
+    },
+    {
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "GTM0",
+      "milestone_type": "sw_milestones",
+      "date": "2026-01-30"
+    },
+    {
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "GTM1",
+      "milestone_type": "sw_milestones",
+      "date": "2026-04-15"
+    },
+    {
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "GTM2",
+      "milestone_type": "sw_milestones",
+      "date": "2026-10-15"
+    },
+    {
+      "product": "Hypernova2 Monoc",
+      "milestone_name": "GTM3",
+      "milestone_type": "sw_milestones",
+      "date": "2027-02-15"
+    },
+    {
+      "product": "Hypernova3",
+      "milestone_name": "GTM0",
+      "milestone_type": "sw_milestones",
+      "date": "2028-03-21"
+    },
+    {
+      "product": "Hypernova3",
+      "milestone_name": "GTM1",
+      "milestone_type": "sw_milestones",
+      "date": "2028-11-20"
+    }
+  ],
+  "messages": [],
+  "stdout": "product\tmilestone_name\tmilestone_type\tdate\nArtemis\tGTM0\tsw_milestones\t2026-06-04\nArtemis\tGTM1\tsw_milestones\t2027-02-18\nArtemis\tGTM2\tsw_milestones\t2027-06-24\nArtemis\tGTM3\tsw_milestones\t2027-08-12\nCeres\tGTM3\tsw_milestones\t2025-07-31\nCeres2\tGTM0\tsw_milestones\t2026-01-30\nCeres2\tGTM1\tsw_milestones\t2026-04-15\nCeres2\tGTM2\tsw_milestones\t2026-10-15\nCeres2\tGTM3\tsw_milestones\t2027-02-15\nDaiquiri\tGTM1\tsw_milestones\t2026-02-13\nDaiquiri\tGTM2\tsw_milestones\t2026-03-31\nDaiquiri\tGTM2.5\tsw_milestones\t2026-06-08\nDaiquiri\tGTM3\tsw_milestones\t2026-08-26\nHypernova\tGTM3\tsw_milestones\t2025-08-04\nHypernova2 Monoc\tGTM0\tsw_milestones\t2026-01-30\nHypernova2 Monoc\tGTM1\tsw_milestones\t2026-04-15\nHypernova2 Monoc\tGTM2\tsw_milestones\t2026-10-15\nHypernova2 Monoc\tGTM3\tsw_milestones\t2027-02-15\nHypernova3\tGTM0\tsw_milestones\t2028-03-21\nHypernova3\tGTM1\tsw_milestones\t2028-11-20\n",
+  "stderr": "",
+  "execution_time_ms": 362
+}

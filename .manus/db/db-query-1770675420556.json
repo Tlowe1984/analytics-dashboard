@@ -1,0 +1,25 @@
+{
+  "query": "SELECT DISTINCT milestone_type FROM milestones;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT DISTINCT milestone_type FROM milestones;",
+  "rows": [
+    {
+      "milestone_type": "pdp_gates"
+    },
+    {
+      "milestone_type": "sdp_milestones"
+    },
+    {
+      "milestone_type": "sw_milestones"
+    },
+    {
+      "milestone_type": "hw_dates"
+    },
+    {
+      "milestone_type": "release_milestones"
+    }
+  ],
+  "messages": [],
+  "stdout": "milestone_type\npdp_gates\nsdp_milestones\nsw_milestones\nhw_dates\nrelease_milestones\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}

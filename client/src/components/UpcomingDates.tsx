@@ -1,5 +1,5 @@
 import { trpc } from "@/lib/trpc";
-import { Calendar, Cpu, Code, CheckCircle2, Rocket } from "lucide-react";
+import { Calendar, Cpu, Code, CheckCircle2, Rocket, TrendingUp } from "lucide-react";
 import { format, getWeek, isPast } from "date-fns";
 
 export default function UpcomingDates() {
@@ -7,6 +7,7 @@ export default function UpcomingDates() {
   const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 8 });
   const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 8 });
   const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 8 });
+  const gtmMilestones = trpc.milestones.getGTMMilestones.useQuery({ limit: 8 });
 
   const sections = [
     {
@@ -46,6 +47,15 @@ export default function UpcomingDates() {
       color: "from-green-500/20 to-emerald-500/20",
       iconColor: "text-green-400",
     },
+    {
+      title: "GO-TO-MARKET DATES",
+      type: "gtm_dates" as const,
+      icon: TrendingUp,
+      data: gtmMilestones.data || [],
+      isLoading: gtmMilestones.isLoading,
+      color: "from-yellow-500/20 to-amber-500/20",
+      iconColor: "text-yellow-400",
+    },
   ];
 
   return (
@@ -56,8 +66,8 @@ export default function UpcomingDates() {
         <p className="text-sm text-muted-foreground">Program milestones and key dates</p>
       </div>
 
-      {/* Four Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+      {/* Five Column Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-6">
         {sections.map((section) => {
           const Icon = section.icon;
           return (

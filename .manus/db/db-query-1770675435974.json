@@ -1,0 +1,35 @@
+{
+  "query": "SELECT milestone_type, COUNT(*) as count, \nGROUP_CONCAT(DISTINCT product SEPARATOR ', ') as products\nFROM milestones \nGROUP BY milestone_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT milestone_type, COUNT(*) as count, \nGROUP_CONCAT(DISTINCT product SEPARATOR ', ') as products\nFROM milestones \nGROUP BY milestone_type;",
+  "rows": [
+    {
+      "milestone_type": "hw_dates",
+      "count": "167",
+      "products": "Artemis, Artemis Case, Ceres, Ceres2, Daiquiri, Daiquiri Case, Hypernova, Hypernova Case, Hypernova2 Binoc, Hypernova2 Case, Hypernova2 Monoc, Luna 2P, Luna 2P Case, Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Modelo Case, Mojito, Mojito Case, Odyssey Glasses, Paloma, Paloma Case, Paloma Lifestyle, Paloma Lifestyle Case, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Optics, RBM2 Refresh, RBM3, RBM3 Case, SSG, SSG Case"
+    },
+    {
+      "milestone_type": "pdp_gates",
+      "count": "183",
+      "products": "Artemis, Ceres, Ceres2, Daiquiri, Daiquiri Case, Hypernova, Hypernova Case, Hypernova2 Binoc, Hypernova2 Monoc, Hypernova3, Luna 2P, Lyra (Gen 2 EMG + PMP), Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Mojito, Mojito Case, Odyssey Glasses, Paloma, Paloma Case, Paloma Lifestyle, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Case, RBM2 Optics, RBM2 Refresh, RBM3, SSG"
+    },
+    {
+      "milestone_type": "sw_milestones",
+      "count": "261",
+      "products": "Artemis, Ceres, Ceres2, Daiquiri, Hypernova, Hypernova2 Monoc, Hypernova2M, Hypernova3, In-Market Displayless, Luna, Luna 2P, Luna SKU2, Malibu, Malibu2, Malibu2 - LE, Malibu2 - Scale, Modelo, Mojito, Odyssey Glasses, Paloma, Paloma Lifestyle, RBM2, RBM2 Optics, RBM2 Refresh, RBM3, SSG, Stage2"
+    },
+    {
+      "milestone_type": "sdp_milestones",
+      "count": "226",
+      "products": "Artemis, Ceres, Ceres2, Hypernova, Hypernova Case, Luna 2P, Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Odyssey Glasses, Paloma, Paloma Lifestyle, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Optics, RBM2 Refresh, SSG"
+    },
+    {
+      "milestone_type": "release_milestones",
+      "count": "671",
+      "products": "Artemis, Ceres, Hypernova, In-Market Displayless, Malibu, RBM2"
+    }
+  ],
+  "messages": [],
+  "stdout": "milestone_type\tcount\tproducts\nhw_dates\t167\tArtemis, Artemis Case, Ceres, Ceres2, Daiquiri, Daiquiri Case, Hypernova, Hypernova Case, Hypernova2 Binoc, Hypernova2 Case, Hypernova2 Monoc, Luna 2P, Luna 2P Case, Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Modelo Case, Mojito, Mojito Case, Odyssey Glasses, Paloma, Paloma Case, Paloma Lifestyle, Paloma Lifestyle Case, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Optics, RBM2 Refresh, RBM3, RBM3 Case, SSG, SSG Case\npdp_gates\t183\tArtemis, Ceres, Ceres2, Daiquiri, Daiquiri Case, Hypernova, Hypernova Case, Hypernova2 Binoc, Hypernova2 Monoc, Hypernova3, Luna 2P, Lyra (Gen 2 EMG + PMP), Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Mojito, Mojito Case, Odyssey Glasses, Paloma, Paloma Case, Paloma Lifestyle, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Case, RBM2 Optics, RBM2 Refresh, RBM3, SSG\nsw_milestones\t261\tArtemis, Ceres, Ceres2, Daiquiri, Hypernova, Hypernova2 Monoc, Hypernova2M, Hypernova3, In-Market Displayless, Luna, Luna 2P, Luna SKU2, Malibu, Malibu2, Malibu2 - LE, Malibu2 - Scale, Modelo, Mojito, Odyssey Glasses, Paloma, Paloma Lifestyle, RBM2, RBM2 Optics, RBM2 Refresh, RBM3, SSG, Stage2\nsdp_milestones\t226\tArtemis, Ceres, Ceres2, Hypernova, Hypernova Case, Luna 2P, Malibu, Malibu2 - LE, Malibu2 - Scale, Modelo, Odyssey Glasses, Paloma, Paloma Lifestyle, Paloma2 (No Display), Paloma2 (w/ Display), RBM2, RBM2 Optics, RBM2 Refresh, SSG\nrelease_milestones\t671\tArtemis, Ceres, Hypernova, In-Market Displayless, Malibu, RBM2\n",
+  "stderr": "",
+  "execution_time_ms": 358
+}

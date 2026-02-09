@@ -1409,4 +1409,13 @@
 - [x] Change title from "Releases" to "In-Market Releases"
 - [x] Add Hypernova milestones to the releases display
 - [x] Test that Hypernova milestones appear correctly
+- [x] Save checkpoint with changes
+
+## Add Go-to-Market Dates Tile to Upcoming Dates
+- [x] Query database to find GTM milestone data
+- [x] Create backend function to get GTM milestones for next 4 weeks
+- [x] Add tRPC endpoint for GTM milestones
+- [x] Update UpcomingDates component to add 5th tile for GTM
+- [x] Adjust grid layout to accommodate 5 tiles
+- [x] Test that GTM milestones display correctly
 - [ ] Save checkpoint with changes

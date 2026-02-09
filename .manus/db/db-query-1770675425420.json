@@ -1,0 +1,30 @@
+{
+  "query": "SELECT milestone_type, COUNT(*) as count FROM milestones GROUP BY milestone_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT milestone_type, COUNT(*) as count FROM milestones GROUP BY milestone_type;",
+  "rows": [
+    {
+      "milestone_type": "pdp_gates",
+      "count": "183"
+    },
+    {
+      "milestone_type": "sdp_milestones",
+      "count": "226"
+    },
+    {
+      "milestone_type": "sw_milestones",
+      "count": "261"
+    },
+    {
+      "milestone_type": "hw_dates",
+      "count": "167"
+    },
+    {
+      "milestone_type": "release_milestones",
+      "count": "671"
+    }
+  ],
+  "messages": [],
+  "stdout": "milestone_type\tcount\npdp_gates\t183\nsdp_milestones\t226\nsw_milestones\t261\nhw_dates\t167\nrelease_milestones\t671\n",
+  "stderr": "",
+  "execution_time_ms": 354
+}

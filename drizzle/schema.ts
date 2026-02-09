@@ -65,7 +65,7 @@ export const milestones = mysqlTable("milestones", {
   product: varchar("product", { length: 100 }).notNull(),
   milestoneName: text("milestone_name").notNull(),
   milestoneDate: timestamp("milestone_date").notNull(),
-  milestoneType: mysqlEnum("milestone_type", ["pdp_gates", "sdp_milestones", "sw_milestones", "hw_dates", "release_milestones"]).notNull(),
+  milestoneType: mysqlEnum("milestone_type", ["pdp_gates", "sdp_milestones", "sw_milestones", "hw_dates", "release_milestones", "gtm_milestones"]).notNull(),
   originalType: varchar("original_type", { length: 100 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
