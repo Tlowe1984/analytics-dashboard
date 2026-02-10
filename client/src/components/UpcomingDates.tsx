@@ -4,9 +4,9 @@ import { format, getWeek, isPast } from "date-fns";
 
 export default function UpcomingDates() {
   const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 50 });
-  const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 8 });
-  const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 8 });
-  const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 8 });
+  const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 50 });
+  const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 50 });
+  const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 50 });
   const gtmMilestones = trpc.milestones.getGTMMilestones.useQuery({ limit: 8 });
 
   const sections = [
@@ -98,7 +98,9 @@ export default function UpcomingDates() {
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
                 <div className={`space-y-1.5 ${
-                  section.type === "pdp_gates" ? "max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" : ""
+                  ["pdp_gates", "sdp_milestones", "hw_dates", "release_dates"].includes(section.type) 
+                    ? "max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" 
+                    : ""
                 }`}>
                   {section.data.map((milestone) => {
                     const milestoneDate = new Date(milestone.milestoneDate);

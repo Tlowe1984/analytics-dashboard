@@ -1559,3 +1559,11 @@
 - [x] Ensure tile height is consistent with Software/Hardware/Release tiles
 - [x] Test that scrolling works and tile height matches
 - [x] Save checkpoint with fix
+
+## Expand Software, Hardware, and Release Milestones to 10 Weeks
+- [x] Update backend filters to show 10 weeks for sdp_milestones, hw_dates, release_milestones
+- [x] Increase frontend query limits from 8 to 50 for these milestone types
+- [x] Add max-height and scrolling to Software, Hardware, and Release tiles
+- [x] Ensure all milestone tiles have consistent heights
+- [x] Test scrolling works correctly for all expanded tiles
+- [x] Save checkpoint with milestone expansion

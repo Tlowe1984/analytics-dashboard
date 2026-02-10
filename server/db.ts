@@ -224,13 +224,17 @@ export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_mi
       return result;
     }
     
-    // For other types: show only upcoming
+    // For other types: show next 10 weeks
+    const tenWeeksFromNow = new Date(now);
+    tenWeeksFromNow.setDate(tenWeeksFromNow.getDate() + 70);
+    
     const result = await db
       .select()
       .from(milestones)
       .where(and(
         eq(milestones.milestoneType, milestoneType),
-        gte(milestones.milestoneDate, now)
+        gte(milestones.milestoneDate, now),
+        lte(milestones.milestoneDate, tenWeeksFromNow)
       ))
       .orderBy(asc(milestones.milestoneDate))
       .limit(limit);
