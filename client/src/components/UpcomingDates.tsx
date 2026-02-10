@@ -3,7 +3,7 @@ import { Calendar, Cpu, Code, CheckCircle2, Rocket, TrendingUp } from "lucide-re
 import { format, getWeek, isPast } from "date-fns";
 
 export default function UpcomingDates() {
-  const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 8 });
+  const pdpGates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "pdp_gates", limit: 50 });
   const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 8 });
   const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 8 });
   const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 8 });
@@ -97,7 +97,9 @@ export default function UpcomingDates() {
               ) : section.data.length === 0 ? (
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
-                <div className="space-y-1.5">
+                <div className={`space-y-1.5 ${
+                  section.type === "pdp_gates" ? "max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" : ""
+                }`}>
                   {section.data.map((milestone) => {
                     const milestoneDate = new Date(milestone.milestoneDate);
                     const year = milestoneDate.getFullYear();
@@ -122,7 +124,7 @@ export default function UpcomingDates() {
                               <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                             )}
                             <div className="flex-1 min-w-0">
-                              <p className={`text-sm font-semibold mb-1 truncate ${
+                              <p className={`text-sm font-semibold mb-1 ${
                                 isComplete ? "text-foreground/70" : "text-foreground"
                               }`}>
                                 {milestone.product}

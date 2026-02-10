@@ -202,21 +202,21 @@ export async function getUpcomingMilestones(milestoneType: "pdp_gates" | "sdp_mi
   
   const now = new Date();
   
-  // For PDP gates: show past 5 weeks and next 4 weeks
+  // For PDP gates: show past 4 weeks and next 10 weeks
   if (milestoneType === "pdp_gates") {
-    const fiveWeeksAgo = new Date(now);
-    fiveWeeksAgo.setDate(fiveWeeksAgo.getDate() - 35);
+    const fourWeeksAgo = new Date(now);
+    fourWeeksAgo.setDate(fourWeeksAgo.getDate() - 28);
     
-    const fourWeeksFromNow = new Date(now);
-    fourWeeksFromNow.setDate(fourWeeksFromNow.getDate() + 28);
+    const tenWeeksFromNow = new Date(now);
+    tenWeeksFromNow.setDate(tenWeeksFromNow.getDate() + 70);
     
     const result = await db
       .select()
       .from(milestones)
       .where(and(
         eq(milestones.milestoneType, milestoneType),
-        gte(milestones.milestoneDate, fiveWeeksAgo),
-        lte(milestones.milestoneDate, fourWeeksFromNow)
+        gte(milestones.milestoneDate, fourWeeksAgo),
+        lte(milestones.milestoneDate, tenWeeksFromNow)
       ))
       .orderBy(asc(milestones.milestoneDate))
       .limit(limit);

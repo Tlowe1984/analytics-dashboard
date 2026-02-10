@@ -1531,11 +1531,24 @@
 - [x] Update sync_systems.sh to find latest weekly archive file
 - [x] Test sync to verify correct Systems document is detected and parsed
 - [x] Verify Systems tab displays data from correct weekly document (e.g., WK06-2026)
-- [ ] Save checkpoint with Systems weekly document fix
+- [x] Save checkpoint with Systems weekly document fix
 
 ## Fix Hearing Tab Blank Data Issue
 - [x] Investigate why Hearing tab shows "No items yet" for all sections
 - [x] Check database for software_hearing category data
 - [x] Re-sync Software data to restore Hearing section
 - [x] Verify Hearing tab displays WINS, EXEC SUMMARY, and DECISIONS correctly
-- [ ] Save checkpoint with fix
+- [x] Save checkpoint with fix
+
+## Expand PDP Gates Date Range
+- [x] Update PDP Gates filter to show 4 weeks in the past and 10 weeks in the future
+- [x] Add scrolling to PDP Gates tile while keeping tile size fixed
+- [x] Ensure chronological ordering (oldest to newest)
+- [x] Test that scrolling works correctly
+- [x] Save checkpoint with PDP Gates expansion
+
+## Fix PDP Gates Text Truncation
+- [x] Remove truncate class from milestone names in PDP Gates tile
+- [x] Ensure full milestone names are visible with text wrapping
+- [x] Test that all milestone details display correctly
+- [x] Save checkpoint with truncation fix
