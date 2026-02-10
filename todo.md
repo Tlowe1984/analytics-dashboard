@@ -1579,3 +1579,8 @@
 - [x] Test refresh button with new implementation
 - [x] Verify data persists after refresh
 - [x] Save checkpoint with permanent solution
+
+## Fix Software Tabs Source Document Link
+- [x] Update source document URL for Experiences & Interfaces, AI, and Hearing tabs
+- [x] Change from current URL to https://drive.google.com/drive/folders/1JY78rUBZquuOd2kCVzTU6_t_ozM3DH7I
+- [x] Save checkpoint with fix

@@ -42,7 +42,7 @@ export const appRouter = router({
         // Fallback URLs by section
         const fallbackUrls = {
           devices: 'https://fburl.com/devicegrowthpr', // Keep existing Devices link
-          software: 'https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h',
+          software: 'https://drive.google.com/drive/folders/1JY78rUBZquuOd2kCVzTU6_t_ozM3DH7I',
           systems: 'https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw',
         };
         try {
