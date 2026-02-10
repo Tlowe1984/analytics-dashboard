@@ -78,6 +78,19 @@ for (const section of sections) {
     totalInserted++;
   }
   
+  // Insert help_needed
+  for (let idx = 0; idx < section.help_needed.length; idx++) {
+    await db.insert(softwareItems).values({
+      softwareCategory: dbCategory,
+      sectionType: 'help_needed',
+      content: section.help_needed[idx],
+      isNew: 0,
+      indentLevel: 0,
+      order: idx,
+    });
+    totalInserted++;
+  }
+  
   // Insert structured decisions
   for (let idx = 0; idx < section.structured_decisions.length; idx++) {
     const decision = section.structured_decisions[idx];
@@ -100,7 +113,7 @@ for (const section of sections) {
     totalInserted++;
   }
   
-  console.log(`Synced ${sectionName}: ${section.wins.length} wins, ${section.exec_summary.length} exec items, ${section.structured_decisions.length} decisions`);
+  console.log(`Synced ${sectionName}: ${section.wins.length} wins, ${section.exec_summary.length} exec items, ${section.help_needed.length} help needed, ${section.structured_decisions.length} decisions`);
 }
 
 console.log(`✅ Loaded ${totalInserted} Software items total`);

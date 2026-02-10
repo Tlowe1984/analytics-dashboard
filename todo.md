@@ -1594,3 +1594,12 @@
 - [x] Display Highlights and Risks/Opens sections with same format as Devices/Systems
 - [x] Test extraction with example: "Personal Timeline: [Flag] Live Notes continue to be blocked..."
 - [x] Save checkpoint with Wearables-tag extraction feature
+
+## Fix Personal Timeline Wearables-tagged Item Not Appearing
+- [x] Debug why "Personal Timeline: [Flag] Live Notes..." from AI tab isn't showing in Risks/Opens (help_needed section wasn't in schema)
+- [x] Check if item is in database with correct category and section_type
+- [x] Verify backend query is finding both Wearables-tagged items
+- [x] Fix UI rendering to display both items correctly (added help_needed to database schema enum)
+- [x] Test that both items appear: Maps in Highlights, Personal Timeline in Risks/Opens
+- [x] Verify fix applies to all three tabs (I+E, AI, Hearing) - confirmed via sync output
+- [ ] Save checkpoint with fix
