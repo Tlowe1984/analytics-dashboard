@@ -1670,4 +1670,9 @@
 - [x] Audit Hearing sync - verify it finds latest WK## file dynamically (✅ DYNAMIC - same doc as I+E)
 - [x] Fix Devices sync - point to living document instead of archive file (now uses Device & Growth Canonical Program Review.docx)
 - [x] Test all syncs with dynamic file finding (5/5 main syncs working: Devices, Software, Systems, Decisions, Milestones)
-- [ ] Save checkpoint with all syncs using dynamic file finding
+- [x] Save checkpoint with all syncs using dynamic file finding (version d5e98487)
+
+## Make Admin Refresh Run in Parallel
+- [x] Update syncAllBash.ts to run all 5 syncs in parallel using Promise.all
+- [ ] Test Admin Refresh to verify parallel execution is faster
+- [ ] Save checkpoint with parallel Admin Refresh

@@ -59,16 +59,19 @@ export async function syncAllBash(): Promise<{
       milestones: { success: false, message: "", timestamp: new Date() },
     };
 
-    // Run all sync scripts sequentially
+    // Run all sync scripts in parallel for speed
     const scripts = [
-      { name: "devices", script: "sync_devices.sh" },
+      { name: "devices", script: "sync_from_gdrive.sh" },
       { name: "software", script: "sync_software.sh" },
       { name: "systems", script: "sync_systems.sh" },
       { name: "decisions", script: "sync_decisions.sh" },
       { name: "milestones", script: "sync_milestones.sh" },
     ];
 
-    for (const { name, script } of scripts) {
+    console.log(`📥 Starting ${scripts.length} syncs in parallel...`);
+
+    // Run all scripts in parallel
+    const syncPromises = scripts.map(async ({ name, script }) => {
       const startTime = Date.now();
       try {
         console.log(`📥 Running ${script}...`);
@@ -83,7 +86,7 @@ export async function syncAllBash(): Promise<{
         const match = stdout.match(/Loaded (\d+)/i) || stdout.match(/(\d+)\s+items/i);
         const itemsUpdated = match ? parseInt(match[1]) : 0;
 
-        results[name as keyof typeof results] = {
+        const result: SyncResult = {
           success: true,
           message: `Synced successfully (${itemsUpdated} items)`,
           timestamp: new Date(),
@@ -92,11 +95,12 @@ export async function syncAllBash(): Promise<{
         };
 
         console.log(`✅ ${name} sync complete (${(duration / 1000).toFixed(1)}s, ${itemsUpdated} items)`);
+        return { name, result };
       } catch (error) {
         const duration = Date.now() - startTime;
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
         
-        results[name as keyof typeof results] = {
+        const result: SyncResult = {
           success: false,
           message: `Failed to sync ${name}`,
           timestamp: new Date(),
@@ -106,7 +110,16 @@ export async function syncAllBash(): Promise<{
         };
 
         console.error(`❌ ${name} sync failed:`, errorMessage);
+        return { name, result };
       }
+    });
+
+    // Wait for all syncs to complete
+    const syncResults = await Promise.all(syncPromises);
+    
+    // Map results back to the results object
+    for (const { name, result } of syncResults) {
+      results[name as keyof typeof results] = result;
     }
 
     const overallDuration = Date.now() - overallStart;
