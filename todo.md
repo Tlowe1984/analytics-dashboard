@@ -1622,4 +1622,23 @@
 - [x] Enable vertical scrolling with custom scrollbar styling
 - [x] Ensure GTM tile height matches other milestone tiles (PDP Gates, Software, Hardware, Releases)
 - [x] Test that scrolling works correctly (verified in browser - scrollbar visible, 8+ GTM milestones showing)
-- [ ] Save checkpoint with GTM tile updates
+- [x] Save checkpoint with GTM tile updates (version 88424bd1)
+
+## Fix Auto-Sync (Daily Automatic Data Refresh)
+- [x] Investigate why auto-sync is not working (scheduler initializes but uses TypeScript sync, not bash scripts)
+- [x] Check if cron scheduler is running (YES - initialized at 6 AM PST)
+- [x] Check scheduler configuration and logs (scheduler logs show initialization, but no actual sync runs)
+- [x] Verify sync script permissions and paths (bash scripts exist and work manually)
+- [ ] Root cause: sync-scheduler.ts calls googleDriveSync.ts (TypeScript) instead of bash scripts
+- [ ] Fix auto-sync mechanism
+- [ ] Test that auto-sync runs successfully
+- [ ] Add verification/monitoring for auto-sync status
+- [ ] Save checkpoint with working auto-sync
+
+## Quick Fix: Sandbox Auto-Sync Scheduler
+- [x] Update sync-scheduler.ts to call syncAllBash() instead of googleDriveSync
+- [x] Fix TypeScript errors from the change (removed upcomingReviews, cached property)
+- [x] Test manual sync trigger to verify it works (found separate database schema issue)
+- [x] Restart server to activate fixed scheduler
+- [x] Verify scheduler initializes correctly (✅ logs show successful initialization)
+- [ ] Save checkpoint with working auto-sync

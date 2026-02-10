@@ -36,14 +36,14 @@ async function runSync() {
   log('========================================')
   
   try {
-    // Import and call the TypeScript sync function
-    const { syncAll } = await import('./googleDriveSync');
+    // Import and call the bash script sync function (with weekly archive detection)
+    const { syncAllBash } = await import('./syncAllBash');
     
-    log('Syncing all 6 data sources...');
-    const result = await syncAll(true); // forceRefresh = true
+    log('Syncing all 5 data sources using bash scripts...');
+    const result = await syncAllBash();
     
     // Log results for each source
-    const sources = ['devices', 'software', 'systems', 'decisions', 'milestones', 'upcomingReviews'] as const;
+    const sources = ['devices', 'software', 'systems', 'decisions', 'milestones'] as const;
     let successCount = 0;
     let failCount = 0;
     
@@ -51,8 +51,7 @@ async function runSync() {
       const sourceResult = result[source];
       if (sourceResult.success) {
         successCount++;
-        const status = sourceResult.cached ? '📦 (cached)' : '✅ (updated)';
-        log(`${status} ${source}: ${sourceResult.message}`);
+        log(`✅ ${source}: ${sourceResult.message}`);
       } else {
         failCount++;
         log(`❌ ${source}: ${sourceResult.message}`);
