@@ -97,7 +97,9 @@ export default function UpcomingDates() {
               ) : section.data.length === 0 ? (
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
-                <div className="space-y-1.5">
+                <div className={`space-y-1.5 ${
+                  section.type === "pdp_gates" ? "max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" : ""
+                }`}>
                   {section.data.map((milestone) => {
                     const milestoneDate = new Date(milestone.milestoneDate);
                     const year = milestoneDate.getFullYear();

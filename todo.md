@@ -1553,8 +1553,9 @@
 - [x] Test that all milestone details display correctly
 - [x] Save checkpoint with truncation fix
 
-## Fix PDP Gates Tile Empty Space
-- [x] Remove fixed max-height to let tile adjust to content naturally
-- [x] Ensure tile fills properly without empty white space at bottom
-- [x] Test that tile displays correctly
+## Fix PDP Gates Tile Height to Match Other Tiles
+- [x] Add max-height to PDP Gates content area to match other tiles
+- [x] Enable scrolling for extended content (4 weeks past + 10 weeks future)
+- [x] Ensure tile height is consistent with Software/Hardware/Release tiles
+- [x] Test that scrolling works and tile height matches
 - [x] Save checkpoint with fix
