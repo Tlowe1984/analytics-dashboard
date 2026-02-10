@@ -1567,3 +1567,15 @@
 - [x] Ensure all milestone tiles have consistent heights
 - [x] Test scrolling works correctly for all expanded tiles
 - [x] Save checkpoint with milestone expansion
+
+## Systematically Fix AI and Hearing Data Loss
+- [x] Check database for software_items table data
+- [x] Verify sync_software.sh script is working correctly
+- [x] Identify why Software data keeps disappearing (root cause: syncAll uses old canonical paths)
+- [x] Re-sync Software data (I+E, AI, Hearing)
+- [x] Scrub codebase for all old canonical document paths
+- [x] Replace old paths with weekly archive detection logic
+- [x] Update syncAll to use bash scripts with weekly detection
+- [x] Test refresh button with new implementation
+- [x] Verify data persists after refresh
+- [x] Save checkpoint with permanent solution

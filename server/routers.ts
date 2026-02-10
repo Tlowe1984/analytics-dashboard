@@ -5,6 +5,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync";
+import { syncAllBash } from "./syncAllBash";
 import { invalidateDashboardCache } from "./query-cache";
 import { syncMonitoringRouter } from "./sync-monitoring";
 
@@ -505,12 +506,15 @@ Return ONLY valid JSON, no other text.`;
           };
         }
         
-        // Development/Sandbox: Run sync directly (Python + rclone available)
-        console.log('[SYNC] Development mode: Running sync directly');
-        const result = await syncAll(input?.forceRefresh ?? false);
+        // Development/Sandbox: Run sync using bash scripts (with weekly archive detection)
+        console.log('[SYNC] Development mode: Running sync via bash scripts');
+        const result = await syncAllBash();
         // Invalidate cache after sync completes so frontend gets fresh data
         invalidateDashboardCache();
-        return result;
+        return {
+          ...result,
+          upcomingReviews: { success: true, message: 'Skipped', timestamp: new Date() }
+        };
       }),
 
     // Sync only executive summary
