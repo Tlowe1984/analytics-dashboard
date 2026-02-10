@@ -1552,3 +1552,9 @@
 - [x] Ensure full milestone names are visible with text wrapping
 - [x] Test that all milestone details display correctly
 - [x] Save checkpoint with truncation fix
+
+## Fix PDP Gates Tile Empty Space
+- [x] Remove fixed max-height to let tile adjust to content naturally
+- [x] Ensure tile fills properly without empty white space at bottom
+- [x] Test that tile displays correctly
+- [x] Save checkpoint with fix
