@@ -1,6 +1,7 @@
-import { Sparkles, Calendar, FileCheck, Smartphone, Code, Cpu } from "lucide-react";
+import { Sparkles, Smartphone, Code, Cpu, Calendar, FileText, FileCheck } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { MarkdownText } from './MarkdownText';
+import SoftwareWearablesSection from './SoftwareWearablesSection';
 
 export default function AIExecutiveUpdates() {
   const { data: summaries, isLoading } = trpc.dashboard.generateExecutiveSummaries.useQuery();
@@ -102,27 +103,7 @@ export default function AIExecutiveUpdates() {
               </div>
 
               {/* Software Section */}
-              <div>
-                <div className="flex items-baseline gap-2 mb-3">
-                  <Code className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-bold uppercase">SOFTWARE</h3>
-                  <a 
-                    href="#detailed-updates-software" 
-                    className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
-                    onClick={() => {
-                      // Scroll to detailed updates after hash change
-                      setTimeout(() => {
-                        document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }}
-                  >
-                    Details
-                  </a>
-                </div>
-                <div className="ml-7">
-                  <p className="text-sm text-muted-foreground italic">Coming soon</p>
-                </div>
-              </div>
+              <SoftwareWearablesSection />
 
               {/* Systems Section */}
               <div>

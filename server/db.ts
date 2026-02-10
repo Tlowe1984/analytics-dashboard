@@ -324,6 +324,24 @@ export async function importMilestones(milestonesData: InsertMilestone[]) {
 }
 
 // Software items queries
+export async function getSoftwareItemsWithWearablesTag(): Promise<SoftwareItem[]> {
+  return cachedQuery('software:wearables-tag', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get software items: database not available");
+      return [];
+    }
+
+    const result = await db
+      .select()
+      .from(softwareItems)
+      .where(like(softwareItems.content, '%Wearables-tag%'))
+      .orderBy(softwareItems.order);
+
+    return result;
+  });
+}
+
 export async function getAllSoftwareItems(): Promise<SoftwareItem[]> {
   return cachedQuery('software:all', async () => {
     const db = await getDb();

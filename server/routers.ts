@@ -341,6 +341,11 @@ Return ONLY valid JSON, no other text.`;
       return await db.getUpcomingItemsForAI(6);
     }),
 
+    // Get Software items tagged with [Wearables-tag]
+    getWearablesTaggedItems: publicProcedure.query(async () => {
+      return await db.getSoftwareItemsWithWearablesTag();
+    }),
+
     // Get PDP milestones for this week and next week
     getPDPMilestonesThisAndNextWeek: publicProcedure.query(async () => {
       return await db.getPDPMilestonesThisAndNextWeek();

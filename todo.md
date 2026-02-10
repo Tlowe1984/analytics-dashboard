@@ -1584,3 +1584,13 @@
 - [x] Update source document URL for Experiences & Interfaces, AI, and Hearing tabs
 - [x] Change from current URL to https://drive.google.com/drive/folders/1JY78rUBZquuOd2kCVzTU6_t_ozM3DH7I
 - [x] Save checkpoint with fix
+
+## Create Software Section in Wearable Week X Updates with Wearables-tag Extraction
+- [x] Analyze how [Wearables-tag] markers are stored in Software data (I+E, AI, Hearing)
+- [x] Create backend query to extract all bullets containing [Wearables-tag]
+- [x] Implement logic to categorize tagged items into Highlights vs Risks/Opens (categorization happens in UI based on section_type)
+- [x] Preserve rich text formatting (bold titles, links, etc.) when extracting
+- [x] Build UI component for Software section in Week X Updates
+- [x] Display Highlights and Risks/Opens sections with same format as Devices/Systems
+- [x] Test extraction with example: "Personal Timeline: [Flag] Live Notes continue to be blocked..."
+- [x] Save checkpoint with Wearables-tag extraction feature
