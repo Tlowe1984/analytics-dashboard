@@ -33,6 +33,15 @@ export const appRouter = router({
       return await db.getLastUpdatedTimestamp();
     }),
 
+    // Get source document URL
+    getSourceDocumentUrl: publicProcedure.query(async () => {
+      const result = await db.query.syncMetadata.findFirst({
+        where: (syncMetadata, { eq }) => eq(syncMetadata.documentId, 'canonical_program_review'),
+        columns: { sourceUrl: true },
+      });
+      return result?.sourceUrl || 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit';
+    }),
+
     // Get items by section and category
     getBySection: publicProcedure
       .input(

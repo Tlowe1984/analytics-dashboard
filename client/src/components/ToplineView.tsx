@@ -184,7 +184,7 @@ function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
   );
 }
 
-function DevicesTab() {
+function DevicesTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: allItems, isLoading } = trpc.dashboard.getAll.useQuery();
 
   if (isLoading) {
@@ -210,7 +210,7 @@ function DevicesTab() {
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://fburl.com/devicegrowthpr" 
+          href={sourceDocumentUrl || "https://fburl.com/devicegrowthpr"} 
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -252,7 +252,7 @@ const softwareSectionConfig = {
   },
 };
 
-function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "software_hearing" }) {
+function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" | "software_ai" | "software_hearing"; sourceDocumentUrl?: string }) {
   // Query data for each section separately
   const { data: winsItems, isLoading: winsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "wins" });
   const { data: execSummaryItems, isLoading: execLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "exec_summary" });
@@ -446,7 +446,7 @@ function SoftwareTab({ category }: { category: "software_ie" | "software_ai" | "
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit?tab=t.ii083dwt776o"
+          href={sourceDocumentUrl || "https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit"}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -493,6 +493,9 @@ export default function ToplineView() {
   const { data: lastUpdatedData } = trpc.dashboard.getLastUpdated.useQuery();
   const lastUpdated = lastUpdatedData?.updatedAt;
 
+  // Get source document URL
+  const { data: sourceDocumentUrl } = trpc.dashboard.getSourceDocumentUrl.useQuery();
+
   return (
     <div id="detailed-updates" className="w-full">
       <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-2xl p-3 sm:p-6">
@@ -517,43 +520,54 @@ export default function ToplineView() {
 
         {/* Tabbed Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" id="detailed-updates-tabs">
-          <TabsList className="grid w-full grid-cols-5 mb-6">
-            <TabsTrigger value="devices" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Devices</span>
-              <span className="sm:hidden">Devices</span>
+          <TabsList className="flex flex-wrap w-full gap-2 mb-6 h-auto bg-transparent p-0">
+            <TabsTrigger 
+              value="devices" 
+              className="text-xs sm:text-sm px-3 sm:px-4 py-2 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 dark:data-[state=active]:bg-blue-900/30 dark:data-[state=active]:text-blue-300"
+            >
+              Devices
             </TabsTrigger>
-            <TabsTrigger value="software_ie" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Software: Experiences & Interfaces</span>
-              <span className="sm:hidden">SW: I+E</span>
+            <TabsTrigger 
+              value="software_ie" 
+              className="text-xs sm:text-sm px-3 sm:px-4 py-2 data-[state=active]:bg-green-100 data-[state=active]:text-green-900 dark:data-[state=active]:bg-green-900/30 dark:data-[state=active]:text-green-300"
+            >
+              <span className="hidden sm:inline">Experiences & Interfaces</span>
+              <span className="sm:hidden">I+E</span>
             </TabsTrigger>
-            <TabsTrigger value="software_ai" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Software: AI</span>
-              <span className="sm:hidden">SW: AI</span>
+            <TabsTrigger 
+              value="software_ai" 
+              className="text-xs sm:text-sm px-3 sm:px-4 py-2 data-[state=active]:bg-green-100 data-[state=active]:text-green-900 dark:data-[state=active]:bg-green-900/30 dark:data-[state=active]:text-green-300"
+            >
+              AI
             </TabsTrigger>
-            <TabsTrigger value="software_hearing" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Software: Hearing</span>
-              <span className="sm:hidden">SW: Hearing</span>
+            <TabsTrigger 
+              value="software_hearing" 
+              className="text-xs sm:text-sm px-3 sm:px-4 py-2 data-[state=active]:bg-green-100 data-[state=active]:text-green-900 dark:data-[state=active]:bg-green-900/30 dark:data-[state=active]:text-green-300"
+            >
+              Hearing
             </TabsTrigger>
-            <TabsTrigger value="systems" className="text-xs sm:text-sm px-2 sm:px-4">
-              <span className="hidden sm:inline">Systems</span>
-              <span className="sm:hidden">Systems</span>
+            <TabsTrigger 
+              value="systems" 
+              className="text-xs sm:text-sm px-3 sm:px-4 py-2 data-[state=active]:bg-orange-100 data-[state=active]:text-orange-900 dark:data-[state=active]:bg-orange-900/30 dark:data-[state=active]:text-orange-300"
+            >
+              Systems
             </TabsTrigger>
           </TabsList>
           
           <TabsContent value="devices">
-            <DevicesTab />
+            <DevicesTab sourceDocumentUrl={sourceDocumentUrl} />
           </TabsContent>
           
           <TabsContent value="software_ie">
-            <SoftwareTab category="software_ie" />
+            <SoftwareTab category="software_ie" sourceDocumentUrl={sourceDocumentUrl} />
           </TabsContent>
           
           <TabsContent value="software_ai">
-            <SoftwareTab category="software_ai" />
+            <SoftwareTab category="software_ai" sourceDocumentUrl={sourceDocumentUrl} />
           </TabsContent>
           
           <TabsContent value="software_hearing">
-            <SoftwareTab category="software_hearing" />
+            <SoftwareTab category="software_hearing" sourceDocumentUrl={sourceDocumentUrl} />
           </TabsContent>
           
           <TabsContent value="systems">

@@ -1,0 +1,39 @@
+{
+  "query": "SELECT id, topic, dri, LENGTH(decision_makers) as makers_len, LENGTH(decision_outcome) as outcome_len, SUBSTR(decision_makers, 1, 50) as makers_preview, SUBSTR(decision_outcome, 1, 50) as outcome_preview FROM software_items WHERE software_category = 'software_ai' AND section_type = 'decisions' ORDER BY `order` LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, topic, dri, LENGTH(decision_makers) as makers_len, LENGTH(decision_outcome) as outcome_len, SUBSTR(decision_makers, 1, 50) as makers_preview, SUBSTR(decision_outcome, 1, 50) as outcome_preview FROM software_items WHERE software_category = 'software_ai' AND section_type = 'decisions' ORDER BY `order` LIMIT 10;",
+  "rows": [
+    {
+      "id": "390584",
+      "topic": "[Project Harmony: Wearables AI Convergence Plan](https://docs.google.com/document/d/1xkIxxWX9evfq0ZYA86rKxd-5ICP6EdwB6GgfTXMdoSY/edit?tab=t.5o7nivsddt3h)",
+      "dri": "[Ram Kumar Hariharan](mailto:ramkumarh@meta.com)[Dave Reed](mailto:davereed@meta.com)[George Ortiz](mailto:grgortiz@meta.com)[Mike Fan](mailto:mikefan@meta.com)[Ling Wang](mailto:lwang2@fb.com)[Aaron Colak](mailto:aaroncolak@meta.com)[Pinar Donmez](mailto:pinared@fb.com)",
+      "makers_len": "75",
+      "outcome_len": "275",
+      "makers_preview": "[Brijesh Bhatia](mailto:brijeshb@fb.com)[Anuj Kuma",
+      "outcome_preview": "Wearables will aggressively move to a converged ar"
+    },
+    {
+      "id": "390585",
+      "topic": "[Meta AI 2.0 In C50 Quick Experiment](https://docs.google.com/document/d/1SqQMF0ynucnuYY9E_HROXkPp9BMZmPWMaCVVHNxxkVM/edit?tab=t.0)",
+      "dri": "[Mike Fan](mailto:mikefan@meta.com)",
+      "makers_len": "169",
+      "outcome_len": "462",
+      "makers_preview": "[Amanda Jefson](mailto:amandaje@meta.com)[Deepali ",
+      "outcome_preview": "Aligned to open Meta AI 2.0 GK in C50 to wearable "
+    }
+  ],
+  "messages": [
+    "390581\t[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)\t[Troels Smit](mailto:troels@meta.com)\t90\t241\t[Jackie Hung](mailto:jacquelinehung@meta.com)",
+    "[De\tProposal: Ship the new media viewer with AI media ",
+    "390582\t[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)\t[Matthijs Schellekens](mailto:mjhs@meta.com)\t82\t35\t[Jackie Hung](mailto:jacquelinehung@meta.com)",
+    "[An\tPre-flight on Live Notes escalation",
+    "390583\t[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)\t[Abdallah Abu Ghazaleh](mailto:abug@meta.com)\t125\t252\t[Ming Hua](mailto:arceehua@meta.com)",
+    "[Sean O'Reil\tThe wrist team [decided](https://fb.alpha.workplac",
+    "390586\tN/A\t[Anand Dass](mailto:dass@meta.com) et al.\t118\t340\t[Alex Himel](mailto:ahimel@meta.com)",
+    "[Nat Friedma\tAgreed to merge wearable features into MSL subscri",
+    "390587\t[Project Harmony: Wearables AI Convergence Plan](https://docs.google.com/document/d/1xkIxxWX9evfq0ZYA86rKxd-5ICP6EdwB6GgfTXMdoSY/edit?tab=t.5o7nivsddt3h)\t[Mike Fan](mailto:mikefan@meta.com)\t82\t132\t[Jackie Hung](mailto:jacquelinehung@meta.com)",
+    "[An\tInform on: (1) why convergence, (2) what’s being c"
+  ],
+  "stdout": "id\ttopic\tdri\tmakers_len\toutcome_len\tmakers_preview\toutcome_preview\n390581\t[AI Editing in C50 drives device usage: Ship Decision](https://docs.google.com/document/d/1cACUArR1iR7F3_zeql32ctF-7YAydYJ8JEk-h83SylM/edit?tab=t.0)\t[Troels Smit](mailto:troels@meta.com)\t90\t241\t[Jackie Hung](mailto:jacquelinehung@meta.com)\n\n[De\tProposal: Ship the new media viewer with AI media \n390582\t[Live Notes Feature Release Update and New Timeline](https://docs.google.com/document/d/1Yfy7RHj1adsp8izCFl6JbLs8K1D69xZNt3J0jWFerTA/edit?tab=t.88a138bif8vo#heading=h.suzlzwl7cup0)\t[Matthijs Schellekens](mailto:mjhs@meta.com)\t82\t35\t[Jackie Hung](mailto:jacquelinehung@meta.com)\n\n[An\tPre-flight on Live Notes escalation\n390583\t[Malibu2 LE - Audio Trade-offs for Extra Button](https://docs.google.com/document/d/1Bcjpq6_pVyglu37xitegmuL8Ugnd4umDVUSsvhi5IyU/edit?tab=t.0)\t[Abdallah Abu Ghazaleh](mailto:abug@meta.com)\t125\t252\t[Ming Hua](mailto:arceehua@meta.com)\n\n[Sean O'Reil\tThe wrist team [decided](https://fb.alpha.workplac\n390584\t[Project Harmony: Wearables AI Convergence Plan](https://docs.google.com/document/d/1xkIxxWX9evfq0ZYA86rKxd-5ICP6EdwB6GgfTXMdoSY/edit?tab=t.5o7nivsddt3h)\t[Ram Kumar Hariharan](mailto:ramkumarh@meta.com)[Dave Reed](mailto:davereed@meta.com)[George Ortiz](mailto:grgortiz@meta.com)[Mike Fan](mailto:mikefan@meta.com)[Ling Wang](mailto:lwang2@fb.com)[Aaron Colak](mailto:aaroncolak@meta.com)[Pinar Donmez](mailto:pinared@fb.com)\t75\t275\t[Brijesh Bhatia](mailto:brijeshb@fb.com)[Anuj Kuma\tWearables will aggressively move to a converged ar\n390585\t[Meta AI 2.0 In C50 Quick Experiment](https://docs.google.com/document/d/1SqQMF0ynucnuYY9E_HROXkPp9BMZmPWMaCVVHNxxkVM/edit?tab=t.0)\t[Mike Fan](mailto:mikefan@meta.com)\t169\t462\t[Amanda Jefson](mailto:amandaje@meta.com)[Deepali \tAligned to open Meta AI 2.0 GK in C50 to wearable \n390586\tN/A\t[Anand Dass](mailto:dass@meta.com) et al.\t118\t340\t[Alex Himel](mailto:ahimel@meta.com)\n\n[Nat Friedma\tAgreed to merge wearable features into MSL subscri\n390587\t[Project Harmony: Wearables AI Convergence Plan](https://docs.google.com/document/d/1xkIxxWX9evfq0ZYA86rKxd-5ICP6EdwB6GgfTXMdoSY/edit?tab=t.5o7nivsddt3h)\t[Mike Fan](mailto:mikefan@meta.com)\t82\t132\t[Jackie Hung](mailto:jacquelinehung@meta.com)\n\n[An\tInform on: (1) why convergence, (2) what’s being c\n",
+  "stderr": "",
+  "execution_time_ms": 352
+}

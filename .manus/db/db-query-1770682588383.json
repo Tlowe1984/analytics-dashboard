@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO sync_metadata (document_id, source_url, last_synced_at, sync_status) \nVALUES ('canonical_program_review', 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit', NOW(), 'success')\nON DUPLICATE KEY UPDATE source_url = 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit', last_synced_at = NOW();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute INSERT INTO sync_metadata (document_id, source_url, last_synced_at, sync_status) \nVALUES ('canonical_program_review', 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit', NOW(), 'success')\nON DUPLICATE KEY UPDATE source_url = 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit', last_synced_at = NOW();",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 374
+}

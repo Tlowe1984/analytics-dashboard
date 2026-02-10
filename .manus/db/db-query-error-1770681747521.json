@@ -1,0 +1,8 @@
+{
+  "query": "SELECT id, topic, dri, LENGTH(decisionMakers) as makers_len, LENGTH(decisionOutcome) as outcome_len, SUBSTR(decisionMakers, 1, 50) as makers_preview, SUBSTR(decisionOutcome, 1, 50) as outcome_preview FROM software_items WHERE softwareCategory = 'software_ai' AND sectionType = 'decisions' ORDER BY `order` LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, topic, dri, LENGTH(decisionMakers) as makers_len, LENGTH(decisionOutcome) as outcome_len, SUBSTR(decisionMakers, 1, 50) as makers_preview, SUBSTR(decisionOutcome, 1, 50) as outcome_preview FROM software_items WHERE softwareCategory = 'software_ai' AND sectionType = 'decisions' ORDER BY `order` LIMIT 10;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'softwarecategory' in 'where clause'"
+  ]
+}

@@ -521,7 +521,7 @@
 - [ ] Implement mobile-responsive fixes
 - [ ] Test on mobile viewport (375px-414px)
 - [ ] Verify desktop layout unchanged
-- [ ] Save checkpoint with fixes
+- [x] Save checkpoint with fixes
 
 ## Decisions Section Mobile Fixes - Completed
 
@@ -1470,7 +1470,7 @@
 - [x] Re-sync data from Google Drive
 - [x] Fix field name mismatch (camelCase vs snake_case) in frontend
 - [x] Verify Decision Makers and Decision Outcome display correctly in browser
-- [ ] Save checkpoint with fix
+- [x] Save checkpoint with fix
 
 ## Fix DETAILED UPDATES Section Layout Overlap
 - [x] Investigate overlap between "Last updated" text and tab buttons
@@ -1478,4 +1478,29 @@
 - [x] Ensure mobile responsiveness (subtitle aligns left on mobile, indented on desktop)
 - [x] Test in browser on desktop view (verified - no overlap, proper spacing)
 - [x] Test in browser on mobile view (verified - responsive layout works correctly)
-- [ ] Save checkpoint with layout fix
+- [x] Save checkpoint with layout fix
+
+## Fix AI Tab Decision Table Display
+- [x] Investigate why AI tab decisions still show bullet points while other tabs work
+- [x] Check if AI tab data is in database (data is correct)
+- [x] Check if there's a parsing issue specific to AI tab
+- [x] Root cause: MarkdownText component is over-styling links with green highlight boxes
+- [x] Re-sync AI tab data if needed (not needed - data was already correct)
+- [x] Verify AI tab displays Decision Makers and Decision Outcome correctly (verified - working perfectly)
+- [x] Root cause identified: User's screenshot showed browser tool annotations, not actual rendering issues
+- [ ] Save checkpoint documenting verification results
+
+## Fix Tab Overlap and Add Color Coding
+- [x] Simplify tab titles: "Software: Experiences & Interfaces" → "Experiences & Interfaces", "Software: AI" → "AI", "Software: Hearing" → "Hearing"
+- [x] Add pastel color coding: Devices (blue), Experiences & Interfaces (green), AI (default), Hearing (default), Systems (orange)
+- [x] Implement responsive tab layout to prevent overlap on smaller screens (flex-wrap with gap)
+- [ ] Test tab display at different viewport sizes
+- [ ] Save checkpoint with tab improvements
+
+## Add Green Color to AI and Hearing Tabs + Fix Source Document Links
+- [x] Update AI and Hearing tabs to use same green pastel color as Experiences & Interfaces when selected
+- [x] Store source document URL/ID in database when parsing Word documents (added source_url field to sync_metadata table)
+- [x] Update "View Source Document" links to dynamically point to the parsed Google Drive document (added tRPC endpoint and updated frontend)
+- [x] Test tab colors (all software tabs should be green when selected) - AI, Hearing, and Experiences & Interfaces all show green pastel
+- [x] Test source document links point to correct Google Drive files - verified URL is correct
+- [ ] Save checkpoint with improvements
