@@ -7,7 +7,7 @@ export default function UpcomingDates() {
   const sdpMilestones = trpc.milestones.getUpcoming.useQuery({ milestoneType: "sdp_milestones", limit: 50 });
   const hwDates = trpc.milestones.getUpcoming.useQuery({ milestoneType: "hw_dates", limit: 50 });
   const releaseDates = trpc.milestones.getReleaseDates.useQuery({ limit: 50 });
-  const gtmMilestones = trpc.milestones.getGTMMilestones.useQuery({ limit: 8 });
+  const gtmMilestones = trpc.milestones.getGTMMilestones.useQuery({ limit: 50 });
 
   const sections = [
     {
@@ -98,7 +98,7 @@ export default function UpcomingDates() {
                 <p className="text-sm text-muted-foreground italic">No upcoming milestones</p>
               ) : (
                 <div className={`space-y-1.5 ${
-                  ["pdp_gates", "sdp_milestones", "hw_dates", "release_dates"].includes(section.type) 
+                  ["pdp_gates", "sdp_milestones", "hw_dates", "release_dates", "gtm_dates"].includes(section.type) 
                     ? "max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" 
                     : ""
                 }`}>

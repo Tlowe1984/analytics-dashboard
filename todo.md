@@ -1613,4 +1613,13 @@
 - [x] Make regex flexible enough to handle future variations
 - [x] Test parser with all three Software tabs (I+E, AI, Hearing)
 - [x] Re-sync data and verify all help_needed items are captured (Hearing now has 7 help_needed items!)
-- [ ] Save checkpoint with improved parser
+- [x] Save checkpoint with improved parser (version 4f0dcb02)
+
+## Update GTM Tile to Show 10 Weeks with Scrolling
+- [x] Update backend query to show 10 weeks (70 days) of GTM dates
+- [x] Increase query limit to 50 items to accommodate more data
+- [x] Add max-height (500px) to GTM tile content area
+- [x] Enable vertical scrolling with custom scrollbar styling
+- [x] Ensure GTM tile height matches other milestone tiles (PDP Gates, Software, Hardware, Releases)
+- [x] Test that scrolling works correctly (verified in browser - scrollbar visible, 8+ GTM milestones showing)
+- [ ] Save checkpoint with GTM tile updates

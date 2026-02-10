@@ -287,15 +287,15 @@ export async function getGTMMilestones(limit = 10) {
   if (!db) return [];
   
   const now = new Date();
-  const fourWeeksFromNow = new Date(now);
-  fourWeeksFromNow.setDate(fourWeeksFromNow.getDate() + 28); // 4 weeks
+  const tenWeeksFromNow = new Date(now);
+  tenWeeksFromNow.setDate(tenWeeksFromNow.getDate() + 70); // 10 weeks
   
   const result = await db
     .select()
     .from(milestones)
     .where(and(
       gte(milestones.milestoneDate, now),
-      lte(milestones.milestoneDate, fourWeeksFromNow),
+      lte(milestones.milestoneDate, tenWeeksFromNow),
       eq(milestones.milestoneType, 'gtm_milestones')
     ))
     .orderBy(asc(milestones.milestoneDate))

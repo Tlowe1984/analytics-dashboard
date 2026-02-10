@@ -578,11 +578,11 @@ Return ONLY valid JSON, no other text.`;
         return await db.getReleaseDates(input.limit);
       }),
 
-    // Get upcoming GTM milestones (next 4 weeks)
+    // Get upcoming GTM milestones (next 10 weeks)
     getGTMMilestones: publicProcedure
       .input(
         z.object({
-          limit: z.number().default(10),
+          limit: z.number().default(50),
         })
       )
       .query(async ({ input }) => {
