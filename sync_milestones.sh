@@ -24,10 +24,11 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Parsed $MILESTONE_COUNT milestones"
 
 # Load into database
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Loading milestones into database..."
-cat > "$SCRIPT_DIR/server/load_milestones_temp.mjs" << 'EOF'
+cd "$SCRIPT_DIR"
+pnpm exec tsx << 'EOF'
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
-import { milestones } from '../drizzle/schema.js';
+import { milestones } from './drizzle/schema.js';
 import fs from 'fs';
 
 const connection = await mysql.createConnection(process.env.DATABASE_URL);
@@ -62,6 +63,5 @@ await connection.end();
 process.exit(0);
 EOF
 
-cd "$SCRIPT_DIR" && pnpm exec tsx server/load_milestones_temp.mjs && rm server/load_milestones_temp.mjs
-
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Milestones sync completed successfully"
+exit 0

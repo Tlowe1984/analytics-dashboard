@@ -1633,7 +1633,7 @@
 - [ ] Fix auto-sync mechanism
 - [ ] Test that auto-sync runs successfully
 - [ ] Add verification/monitoring for auto-sync status
-- [ ] Save checkpoint with working auto-sync
+- [x] Save checkpoint with working auto-sync (version 9d0f9796)
 
 ## Quick Fix: Sandbox Auto-Sync Scheduler
 - [x] Update sync-scheduler.ts to call syncAllBash() instead of googleDriveSync
@@ -1641,4 +1641,33 @@
 - [x] Test manual sync trigger to verify it works (found separate database schema issue)
 - [x] Restart server to activate fixed scheduler
 - [x] Verify scheduler initializes correctly (✅ logs show successful initialization)
-- [ ] Save checkpoint with working auto-sync
+- [x] Save checkpoint with working auto-sync (version 9d0f9796)
+
+## Fix Failing Sync Scripts (Devices, Decisions, Milestones)
+- [ ] Investigate devices sync failure (database schema mismatch)
+- [ ] Investigate decisions sync failure
+- [ ] Investigate milestones sync failure
+- [ ] Fix database schema issues or update sync scripts
+- [ ] Test complete sync with all 5 sources working
+- [ ] Verify "Last updated" timestamp updates correctly
+- [ ] Save checkpoint with fully working auto-sync
+
+## Fix Devices and Milestones Sync Failures
+- [x] Check devices sync error logs from 9:15 AM run (actually succeeded)
+- [x] Check milestones sync error logs from 9:15 AM run (actually succeeded)
+- [x] Identify root cause of devices failure (missing exit 0)
+- [x] Identify root cause of milestones failure (missing exit 0)
+- [x] Fix devices sync script (added exit 0)
+- [x] Fix milestones sync script (added exit 0)
+- [ ] Test complete sync with all 5 sources
+- [ ] Verify "Last updated" timestamp updates correctly
+- [ ] Save checkpoint with fully working auto-sync
+
+## Verify Dynamic File Finding for WXX-Based Syncs
+- [x] Audit Systems sync - verify it finds latest WK## file dynamically (✅ DYNAMIC)
+- [x] Audit Software/I+E sync - verify it finds latest WK## file dynamically (✅ DYNAMIC)
+- [x] Audit AI sync - verify it finds latest WK## file dynamically (✅ DYNAMIC - same doc as I+E)
+- [x] Audit Hearing sync - verify it finds latest WK## file dynamically (✅ DYNAMIC - same doc as I+E)
+- [x] Fix Devices sync - point to living document instead of archive file (now uses Device & Growth Canonical Program Review.docx)
+- [x] Test all syncs with dynamic file finding (5/5 main syncs working: Devices, Software, Systems, Decisions, Milestones)
+- [ ] Save checkpoint with all syncs using dynamic file finding

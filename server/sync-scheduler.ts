@@ -98,13 +98,13 @@ async function runSync() {
  * Initialize the cron scheduler
  */
 export function initSyncScheduler() {
-  // Run daily at 6:00 AM (0 6 * * *)
+  // Run daily at 9:15 AM (15 9 * * *) - Changed for testing
   // Cron format: second minute hour day month weekday
   // node-cron uses 5-field format (no seconds): minute hour day month weekday
-  const schedule = '0 6 * * *'; // 6:00 AM every day
+  const schedule = '15 9 * * *'; // 9:15 AM every day
   
   log('Initializing sync scheduler');
-  log(`Schedule: Daily at 6:00 AM (cron: ${schedule})`);
+  log(`Schedule: Daily at 9:15 AM (cron: ${schedule})`);
   
   cron.schedule(schedule, async () => {
     await runSync();
@@ -113,11 +113,11 @@ export function initSyncScheduler() {
   });
   
   log('✅ Sync scheduler initialized successfully');
-  log('Next sync will run at 6:00 AM PST');
+  log('Next sync will run at 9:15 AM PST');
   
   // Optional: Run sync on startup (commented out by default)
   // Uncomment if you want to sync immediately when server starts
-  // log('Running initial sync on startup...');
+  // log('Running initial sync on startup to test fixes...');
   // runSync();
 }
 
