@@ -454,11 +454,9 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
           📄 View Source Document
         </a>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {renderTile("wins", winsItems)}
         {renderTile("exec_summary", execSummaryItems)}
-      </div>
-      <div className="mt-4">
         {renderDecisionsTable()}
       </div>
     </div>
