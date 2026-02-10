@@ -1,0 +1,34 @@
+{
+  "query": "SELECT section, document_id, source_url, source_file_path FROM sync_metadata;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT section, document_id, source_url, source_file_path FROM sync_metadata;",
+  "rows": [
+    {
+      "section": "software",
+      "document_id": "canonical_program_review",
+      "source_url": "https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit",
+      "source_file_path": "NULL"
+    },
+    {
+      "section": "devices",
+      "document_id": "device-growth-canonical",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/"
+    },
+    {
+      "section": "software",
+      "document_id": "software-weekly-archive",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/"
+    },
+    {
+      "section": "systems",
+      "document_id": "systems-weekly-archive",
+      "source_url": "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/"
+    }
+  ],
+  "messages": [],
+  "stdout": "section\tdocument_id\tsource_url\tsource_file_path\nsoftware\tcanonical_program_review\thttps://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit\tNULL\ndevices\tdevice-growth-canonical\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\tWearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/\nsoftware\tsoftware-weekly-archive\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\tWearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/\nsystems\tsystems-weekly-archive\thttps://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw\tWearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/\n",
+  "stderr": "",
+  "execution_time_ms": 352
+}

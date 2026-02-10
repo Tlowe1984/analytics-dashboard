@@ -1,9 +1,98 @@
-#!/usr/bin/python3.11
+#!/usr/bin/env python3
+"""
+Parse Wearables Systems Review document (weekly WK## file)
+Extracts Wins, Exec Summary, and Help Needed sections
+"""
+
 import sys
 import json
+import subprocess
+import re
 from docx import Document
-from docx.shared import RGBColor
+from datetime import datetime
 from rich_text_parser_v2 import extract_rich_text
+
+def find_latest_systems_review_file():
+    """Find the most recent WK## Wearables Systems Review file based on modification time"""
+    try:
+        # List files with metadata in the Systems Software Reviews/Archive folder
+        result = subprocess.run(
+            [
+                "rclone", "lsjson",
+                "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/",
+                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        
+        if result.returncode != 0:
+            print(f"rclone error: {result.stderr}", file=sys.stderr)
+            return None
+        
+        # Parse JSON and find WK## Wearables Systems Review files
+        files_data = json.loads(result.stdout)
+        review_files = []
+        
+        for item in files_data:
+            name = item.get('Name', '')
+            # Match pattern: "Wearables Systems Review-WK##-2026.docx" or "Wearables Systems Review WK## 2026.docx"
+            if re.match(r'Wearables\s+Systems\s+Review[-\s]+WK?\d+[-\s]+2026\.docx', name, re.IGNORECASE):
+                mod_time = item.get('ModTime', '')
+                review_files.append({
+                    'name': name,
+                    'modified': mod_time
+                })
+        
+        if not review_files:
+            print("No Systems review files found", file=sys.stderr)
+            return None
+        
+        # Sort by modification time (most recent first)
+        review_files.sort(key=lambda x: x['modified'], reverse=True)
+        latest_file = review_files[0]['name']
+        
+        print(f"Found latest Systems review file: {latest_file} (modified {review_files[0]['modified']})", file=sys.stderr)
+        return latest_file
+    
+    except Exception as e:
+        print(f"Error finding latest Systems review file: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        return None
+
+def download_systems_review_file(filename):
+    """Download the Systems review file from Google Drive"""
+    try:
+        # Clear cache first
+        subprocess.run(
+            ["rm", "-f", f"/tmp/{filename}"],
+            capture_output=True,
+            timeout=5
+        )
+        
+        result = subprocess.run(
+            [
+                "rclone", "copy",
+                f"manus_google_drive:Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/{filename}",
+                "/tmp/",
+                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        
+        if result.returncode != 0:
+            print(f"rclone error: {result.stderr}", file=sys.stderr)
+            return None
+        
+        return f"/tmp/{filename}"
+    
+    except Exception as e:
+        print(f"Error downloading Systems review file: {e}", file=sys.stderr)
+        return None
 
 def parse_systems_review(docx_path):
     """
@@ -86,10 +175,25 @@ def parse_systems_review(docx_path):
     return items
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: parse_systems_review.py <docx_path>")
+    # Find latest weekly archive file
+    print("Finding latest Systems review file...", file=sys.stderr)
+    latest_file = find_latest_systems_review_file()
+    
+    if not latest_file:
+        print("Error: Could not find latest Systems review file", file=sys.stderr)
         sys.exit(1)
     
-    docx_path = sys.argv[1]
+    # Download the file
+    print(f"Downloading {latest_file}...", file=sys.stderr)
+    docx_path = download_systems_review_file(latest_file)
+    
+    if not docx_path:
+        print("Error: Could not download Systems review file", file=sys.stderr)
+        sys.exit(1)
+    
+    # Parse the document
+    print(f"Parsing {latest_file}...", file=sys.stderr)
     items = parse_systems_review(docx_path)
+    
+    # Output JSON to stdout
     print(json.dumps(items, indent=2))

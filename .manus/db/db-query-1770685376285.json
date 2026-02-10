@@ -1,0 +1,34 @@
+{
+  "query": "SELECT id, section, document_id, source_url FROM sync_metadata WHERE section IN ('devices', 'software', 'systems');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, section, document_id, source_url FROM sync_metadata WHERE section IN ('devices', 'software', 'systems');",
+  "rows": [
+    {
+      "id": "1",
+      "section": "software",
+      "document_id": "canonical_program_review",
+      "source_url": "https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit"
+    },
+    {
+      "id": "30001",
+      "section": "devices",
+      "document_id": "device-growth-canonical",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h"
+    },
+    {
+      "id": "30002",
+      "section": "software",
+      "document_id": "software-weekly-archive",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h"
+    },
+    {
+      "id": "30003",
+      "section": "systems",
+      "document_id": "systems-weekly-archive",
+      "source_url": "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsection\tdocument_id\tsource_url\n1\tsoftware\tcanonical_program_review\thttps://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit\n30001\tdevices\tdevice-growth-canonical\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\n30002\tsoftware\tsoftware-weekly-archive\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\n30003\tsystems\tsystems-weekly-archive\thttps://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw\n",
+  "stderr": "",
+  "execution_time_ms": 375
+}

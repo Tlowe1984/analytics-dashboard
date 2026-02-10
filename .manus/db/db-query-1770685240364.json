@@ -1,0 +1,90 @@
+{
+  "query": "DESCRIBE sync_metadata;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute DESCRIBE sync_metadata;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "document_id",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "last_synced_at",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "sync_status",
+      "Type": "enum('success','failed','pending')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "pending",
+      "Extra": ""
+    },
+    {
+      "Field": "error_message",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "source_url",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "section",
+      "Type": "varchar(50)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "software",
+      "Extra": ""
+    },
+    {
+      "Field": "source_file_path",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\ndocument_id\tvarchar(255)\tNO\t\tNULL\t\nlast_synced_at\ttimestamp\tNO\t\tNULL\t\nsync_status\tenum('success','failed','pending')\tNO\t\tpending\t\nerror_message\ttext\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\nsource_url\ttext\tYES\t\tNULL\t\nsection\tvarchar(50)\tNO\t\tsoftware\t\nsource_file_path\ttext\tYES\t\tNULL\t\n",
+  "stderr": "",
+  "execution_time_ms": 341
+}

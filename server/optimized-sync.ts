@@ -5,6 +5,56 @@ import { createHash } from "crypto";
 
 const execAsync = promisify(exec);
 
+/**
+ * Find the latest weekly archive document in Google Drive
+ * Returns the filename of the newest "W* 2026 Device & Growth Canonical Program Review.docx" file
+ */
+async function findLatestWeeklyArchive(): Promise<string> {
+  try {
+    const { stdout } = await execAsync(
+      `rclone lsl "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/" --config /home/ubuntu/.gdrive-rclone.ini | grep "W[0-9]* 2026 Device & Growth Canonical Program Review.docx" | sort -r | head -1`
+    );
+    
+    // Extract filename from rclone output (format: "size date time filename")
+    const match = stdout.trim().match(/W\d+ 2026 Device & Growth Canonical Program Review\.docx/);
+    if (!match) {
+      throw new Error("No weekly archive found");
+    }
+    
+    console.log(`📅 Found latest weekly archive: ${match[0]}`);
+    return match[0];
+  } catch (error) {
+    console.error("Error finding latest weekly archive:", error);
+    // Fallback to a default
+    return "W6 2026 Device & Growth Canonical Program Review.docx";
+  }
+}
+
+/**
+ * Find the latest Systems review archive in Google Drive
+ * Returns the filename of the newest "Wearables Systems Review-WK*-2026.docx" file
+ */
+async function findLatestSystemsArchive(): Promise<string> {
+  try {
+    const { stdout } = await execAsync(
+      `rclone lsl "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/" --config /home/ubuntu/.gdrive-rclone.ini | grep "Wearables Systems Review-WK" | sort -r | head -1`
+    );
+    
+    // Extract filename from rclone output
+    const match = stdout.trim().match(/Wearables Systems Review-WK\d+-2026\.docx/);
+    if (!match) {
+      throw new Error("No Systems archive found");
+    }
+    
+    console.log(`📅 Found latest Systems archive: ${match[0]}`);
+    return match[0];
+  } catch (error) {
+    console.error("Error finding latest Systems archive:", error);
+    // Fallback to a default
+    return "Wearables Systems Review-WK06-2026.docx";
+  }
+}
+
 interface SyncResult {
   source: string;
   success: boolean;
@@ -162,33 +212,44 @@ export async function optimizedSyncAll() {
   console.log("🚀 Starting optimized parallel sync...");
   const overallStart = Date.now();
   
+  // Find the latest weekly archives for Software and Systems sections
+  const latestSoftwareArchive = await findLatestWeeklyArchive();
+  const latestSystemsArchive = await findLatestSystemsArchive();
+  
+  const softwareArchivePath = `Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/${latestSoftwareArchive}`;
+  const systemsArchivePath = `Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/${latestSystemsArchive}`;
+  
   // Define all data sources
   const sources = [
     {
       name: "Devices",
-      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/W5 2026 Device & Growth Canonical Program Review.docx",
-      localPath: "/tmp/W5 2026 Device & Growth Canonical Program Review.docx",
+      section: "devices",
+      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx",
+      localPath: "/tmp/Device & Growth Canonical Program Review.docx",
       parser: "/home/ubuntu/analytics-dashboard/server/parse_exec_summary.py",
       output: "/tmp/parsed_data.json"
     },
     {
       name: "Software",
-      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Wearable Software Review.docx",
-      localPath: "/tmp/Wearable Software Review.docx",
+      section: "software",
+      gdrivePath: softwareArchivePath,
+      localPath: `/tmp/${latestSoftwareArchive}`,
       parser: "/home/ubuntu/analytics-dashboard/server/parse_software_review.py",
       output: "/tmp/software_data.json"
     },
     {
       name: "Systems",
-      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Wearables Systems Review.docx",
-      localPath: "/tmp/Wearables Systems Review.docx",
+      section: "systems",
+      gdrivePath: systemsArchivePath,
+      localPath: `/tmp/${latestSystemsArchive}`,
       parser: "/home/ubuntu/analytics-dashboard/server/parse_systems_review.py",
       output: "/tmp/systems_data.json"
     },
     {
       name: "Decisions",
-      gdrivePath: "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Wearable Decisions Canonical .docx",
-      localPath: "/tmp/Wearable Decisions Canonical .docx",
+      section: "decisions",
+      gdrivePath: softwareArchivePath,
+      localPath: `/tmp/${latestSoftwareArchive}`,
       parser: "/home/ubuntu/analytics-dashboard/server/parse_decisions.py",
       output: "/tmp/decisions_data.json"
     }

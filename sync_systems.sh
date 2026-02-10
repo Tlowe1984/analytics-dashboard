@@ -5,13 +5,14 @@ export PYTHONHOME=
 
 echo "=== Syncing Systems Review Data ==="
 
-# Download Systems review document
-echo "Downloading Wearable Systems Review document..."
-rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Wearables Systems Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
+# Clear any cached files
+echo "Clearing cache..."
+rm -f /tmp/Wearables*Systems*Review*.docx
+rm -f /tmp/systems_data.json
 
-# Parse the document
-echo "Parsing Systems review document..."
-/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_systems_review.py "/tmp/Wearables Systems Review.docx" > /tmp/systems_data.json
+# Parse the document (parser will find and download latest weekly archive)
+echo "Finding and parsing latest Systems review document..."
+/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_systems_review.py > /tmp/systems_data.json
 
 # Load into database
 echo "Loading Systems data into database..."

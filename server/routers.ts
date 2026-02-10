@@ -33,14 +33,29 @@ export const appRouter = router({
       return await db.getLastUpdatedTimestamp();
     }),
 
-    // Get source document URL
-    getSourceDocumentUrl: publicProcedure.query(async () => {
-      const result = await db.query.syncMetadata.findFirst({
-        where: (syncMetadata, { eq }) => eq(syncMetadata.documentId, 'canonical_program_review'),
-        columns: { sourceUrl: true },
-      });
-      return result?.sourceUrl || 'https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit';
-    }),
+    // Get source document URL by section
+    getSourceDocumentUrl: publicProcedure
+      .input(z.object({ section: z.enum(['devices', 'software', 'systems']).optional() }).optional())
+      .query(async ({ input }) => {
+        const section = input?.section || 'software';
+        // Fallback URLs by section
+        const fallbackUrls = {
+          devices: 'https://fburl.com/devicegrowthpr', // Keep existing Devices link
+          software: 'https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h',
+          systems: 'https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw',
+        };
+        try {
+          const result = await db.query.syncMetadata.findFirst({
+            where: (syncMetadata, { eq }) => eq(syncMetadata.section, section),
+            columns: { sourceUrl: true },
+          });
+          return result?.sourceUrl || fallbackUrls[section];
+        } catch (error) {
+          // If database query fails, return fallback URL
+          console.error('Error fetching source URL:', error);
+          return fallbackUrls[section];
+        }
+      }),
 
     // Get items by section and category
     getBySection: publicProcedure

@@ -45,8 +45,10 @@ export type InsertDashboardItem = typeof dashboardItems.$inferInsert;
  */
 export const syncMetadata = mysqlTable("sync_metadata", {
   id: int("id").autoincrement().primaryKey(),
+  section: varchar("section", { length: 50 }).notNull(), // 'devices', 'software', 'systems'
   documentId: varchar("document_id", { length: 255 }).notNull(),
   sourceUrl: text("source_url"), // Google Docs URL for the source document
+  sourceFilePath: text("source_file_path"), // Google Drive file path
   lastSyncedAt: timestamp("last_synced_at").notNull(),
   syncStatus: mysqlEnum("sync_status", ["success", "failed", "pending"]).default("pending").notNull(),
   errorMessage: text("error_message"),

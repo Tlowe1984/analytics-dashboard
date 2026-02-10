@@ -446,7 +446,7 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href={sourceDocumentUrl || "https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit"}
+          href={sourceDocumentUrl || "#"}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -491,8 +491,10 @@ export default function ToplineView() {
   const { data: lastUpdatedData } = trpc.dashboard.getLastUpdated.useQuery();
   const lastUpdated = lastUpdatedData?.updatedAt;
 
-  // Get source document URL
-  const { data: sourceDocumentUrl } = trpc.dashboard.getSourceDocumentUrl.useQuery();
+  // Get source document URLs for each section
+  const { data: devicesSourceUrl } = trpc.dashboard.getSourceDocumentUrl.useQuery({ section: 'devices' });
+  const { data: softwareSourceUrl } = trpc.dashboard.getSourceDocumentUrl.useQuery({ section: 'software' });
+  const { data: systemsSourceUrl } = trpc.dashboard.getSourceDocumentUrl.useQuery({ section: 'systems' });
 
   return (
     <div id="detailed-updates" className="w-full">
@@ -553,23 +555,23 @@ export default function ToplineView() {
           </TabsList>
           
           <TabsContent value="devices">
-            <DevicesTab sourceDocumentUrl={sourceDocumentUrl} />
+            <DevicesTab sourceDocumentUrl={devicesSourceUrl} />
           </TabsContent>
           
           <TabsContent value="software_ie">
-            <SoftwareTab category="software_ie" sourceDocumentUrl={sourceDocumentUrl} />
+            <SoftwareTab category="software_ie" sourceDocumentUrl={softwareSourceUrl} />
           </TabsContent>
           
           <TabsContent value="software_ai">
-            <SoftwareTab category="software_ai" sourceDocumentUrl={sourceDocumentUrl} />
+            <SoftwareTab category="software_ai" sourceDocumentUrl={softwareSourceUrl} />
           </TabsContent>
           
           <TabsContent value="software_hearing">
-            <SoftwareTab category="software_hearing" sourceDocumentUrl={sourceDocumentUrl} />
+            <SoftwareTab category="software_hearing" sourceDocumentUrl={softwareSourceUrl} />
           </TabsContent>
           
           <TabsContent value="systems">
-            <SystemsTab />
+            <SystemsTab sourceDocumentUrl={systemsSourceUrl} />
           </TabsContent>
         </Tabs>
       </div>

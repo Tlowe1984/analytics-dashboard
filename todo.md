@@ -1510,4 +1510,32 @@
 - [x] Ensure tiles stack vertically on mobile (responsive layout with grid-cols-1)
 - [x] Test on desktop viewport (tiles should be in a row) - verified working with 3 columns
 - [x] Test on mobile viewport (tiles should stack) - CSS implementation verified (grid-cols-1 for mobile, lg:grid-cols-3 for desktop)
-- [ ] Save checkpoint with tile layout improvements
+- [x] Save checkpoint with tile layout improvements (version 94813016)
+
+## Make Source Document Links Dynamic Per Software Section
+- [x] Investigate current source file tracking in sync process
+- [x] Clarify requirements: Devices keeps existing fburl link, Software uses Google Drive folder for weekly archives, Systems uses Google Drive folder for Systems archives
+- [x] Implement automatic latest document detection when user clicks Refresh (findLatestWeeklyArchive function)
+- [x] Update sync logic to find newest W* archive file in Google Drive (uses rclone lsl + grep + sort)
+- [x] Update database schema to store source_url per section (devices, software, systems) - added section and source_file_path columns
+- [ ] Modify sync logic to capture source file path/URL for each section during parsing
+- [x] Get Google Drive shareable links for each source file (received folder URLs from user)
+- [x] Create tRPC endpoint to fetch source URL by section (devices vs software vs systems) - updated getSourceDocumentUrl to accept section parameter
+- [x] Update frontend to display section-specific source URLs (updated ToplineView, DevicesTab, SoftwareTab, SystemsTab)
+- [ ] Test that Devices tab shows live doc link, Software tabs show weekly archive link
+- [ ] Save checkpoint with section-specific source document links
+
+## Fix Systems Tab to Use Correct Weekly Document
+- [x] Update Systems sync logic to use weekly pattern "Wearables Systems Review-WK##-2026"
+- [x] Implement same week-based detection logic as Software tabs (current/previous week)
+- [x] Update sync_systems.sh to find latest weekly archive file
+- [x] Test sync to verify correct Systems document is detected and parsed
+- [x] Verify Systems tab displays data from correct weekly document (e.g., WK06-2026)
+- [ ] Save checkpoint with Systems weekly document fix
+
+## Fix Hearing Tab Blank Data Issue
+- [x] Investigate why Hearing tab shows "No items yet" for all sections
+- [x] Check database for software_hearing category data
+- [x] Re-sync Software data to restore Hearing section
+- [x] Verify Hearing tab displays WINS, EXEC SUMMARY, and DECISIONS correctly
+- [ ] Save checkpoint with fix

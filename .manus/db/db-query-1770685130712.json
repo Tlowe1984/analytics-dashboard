@@ -1,0 +1,58 @@
+{
+  "query": "SELECT * FROM sync_metadata;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM sync_metadata;",
+  "rows": [
+    {
+      "id": "1",
+      "document_id": "canonical_program_review",
+      "last_synced_at": "2026-02-10 00:16:28",
+      "sync_status": "success",
+      "error_message": "NULL",
+      "createdAt": "2026-02-10 00:16:28",
+      "updatedAt": "2026-02-10 00:16:28",
+      "source_url": "https://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit",
+      "section": "software",
+      "source_file_path": "NULL"
+    },
+    {
+      "id": "30001",
+      "document_id": "device-growth-canonical",
+      "last_synced_at": "2026-02-10 00:56:12",
+      "sync_status": "success",
+      "error_message": "NULL",
+      "createdAt": "2026-02-10 00:56:12",
+      "updatedAt": "2026-02-10 00:56:12",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h",
+      "section": "devices",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/"
+    },
+    {
+      "id": "30002",
+      "document_id": "software-weekly-archive",
+      "last_synced_at": "2026-02-10 00:56:12",
+      "sync_status": "success",
+      "error_message": "NULL",
+      "createdAt": "2026-02-10 00:56:12",
+      "updatedAt": "2026-02-10 00:56:12",
+      "source_url": "https://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h",
+      "section": "software",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/"
+    },
+    {
+      "id": "30003",
+      "document_id": "systems-weekly-archive",
+      "last_synced_at": "2026-02-10 00:56:12",
+      "sync_status": "success",
+      "error_message": "NULL",
+      "createdAt": "2026-02-10 00:56:12",
+      "updatedAt": "2026-02-10 00:56:12",
+      "source_url": "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw",
+      "section": "systems",
+      "source_file_path": "Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tdocument_id\tlast_synced_at\tsync_status\terror_message\tcreatedAt\tupdatedAt\tsource_url\tsection\tsource_file_path\n1\tcanonical_program_review\t2026-02-10 00:16:28\tsuccess\tNULL\t2026-02-10 00:16:28\t2026-02-10 00:16:28\thttps://docs.google.com/document/d/1J_Q7MoO7q3VmpxZEujzNZx209YooeX_pGNaOMFxmgR0/edit\tsoftware\tNULL\n30001\tdevice-growth-canonical\t2026-02-10 00:56:12\tsuccess\tNULL\t2026-02-10 00:56:12\t2026-02-10 00:56:12\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\tdevices\tWearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/\n30002\tsoftware-weekly-archive\t2026-02-10 00:56:12\tsuccess\tNULL\t2026-02-10 00:56:12\t2026-02-10 00:56:12\thttps://drive.google.com/drive/folders/1WUVIL8v9oQS7Mvc7Snz5lHBhKth-8f9h\tsoftware\tWearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/\n30003\tsystems-weekly-archive\t2026-02-10 00:56:12\tsuccess\tNULL\t2026-02-10 00:56:12\t2026-02-10 00:56:12\thttps://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw\tsystems\tWearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/\n",
+  "stderr": "",
+  "execution_time_ms": 367
+}

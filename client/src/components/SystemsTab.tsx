@@ -24,7 +24,7 @@ const systemsSectionConfig = {
   },
 };
 
-export function SystemsTab() {
+export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: allItems, isLoading } = trpc.systems.getAll.useQuery();
 
   if (isLoading) {
@@ -93,7 +93,7 @@ export function SystemsTab() {
     <div className="space-y-4">
       <div className="flex justify-end">
         <a
-          href="https://docs.google.com/document/d/1pU0TrYDGOR4RemMKLh9p0XaBWQhOAGktNJAESmIBjLg/edit?tab=t.0"
+          href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw"}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"
