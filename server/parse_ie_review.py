@@ -144,8 +144,9 @@ def parse_section(doc, start_idx, end_idx, section_name):
                 current_item_parts = []
             current_subsection = 'decisions'
             continue
-        # Help Needed / Flags section
-        elif re.search(r'🚩\s*(Help\s+Needed|Flag)', text, re.IGNORECASE):
+        # Help Needed / Flags section (flexible pattern to catch all variations)
+        # Matches: "🚩 Help Needed", "Help Needed/ Flag for Leadership", "🚩 Leadership Help Needed", "🚩 Flag", etc.
+        elif re.search(r'(🚩|Help\s+Needed|Flag).*?(Help\s+Needed|Flag|Leadership)', text, re.IGNORECASE):
             # Save previous item if any
             if current_item_parts:
                 if current_subsection == 'wins':

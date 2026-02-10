@@ -1602,4 +1602,15 @@
 - [x] Fix UI rendering to display both items correctly (added help_needed to database schema enum)
 - [x] Test that both items appear: Maps in Highlights, Personal Timeline in Risks/Opens
 - [x] Verify fix applies to all three tabs (I+E, AI, Hearing) - confirmed via sync output
-- [ ] Save checkpoint with fix
+- [x] Save checkpoint with fix (version 522d1d32)
+
+## Make Help Needed Section Detection More Flexible
+- [x] Update parser regex to detect all Help Needed header variations
+- [x] Support "🚩 Help Needed" (current)
+- [x] Support "Help Needed/ Flag for Leadership (SYNC, DISCUSS)"
+- [x] Support "🚩 Leadership Help Needed [Discuss Live]"
+- [x] Support "🚩 Flag" variations
+- [x] Make regex flexible enough to handle future variations
+- [x] Test parser with all three Software tabs (I+E, AI, Hearing)
+- [x] Re-sync data and verify all help_needed items are captured (Hearing now has 7 help_needed items!)
+- [ ] Save checkpoint with improved parser
