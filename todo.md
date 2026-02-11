@@ -1754,4 +1754,10 @@
 ## Remove [wearables-tag] Marker from Display
 - [x] Update generateExecutiveSummaries to strip [wearables-tag] from content before returning
 - [x] Test and verify tag is hidden in UI but filtering still works (verified: no tags visible, rich text preserved)
+- [x] Save checkpoint
+
+## Foolproof Tag Removal - Strip at Database Insert Level
+- [x] Update sync_software.sh parser to strip [wearables-tag] before inserting into database
+- [x] Re-sync SOFTWARE data to apply tag removal to all existing items (28 items synced)
+- [x] Verify tag is removed from both top tile AND detailed SOFTWARE tabs (verified: no tags visible anywhere)
 - [ ] Save checkpoint
