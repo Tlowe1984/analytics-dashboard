@@ -9,7 +9,7 @@ import sys
 import requests
 from rich_text_parser_v2 import extract_rich_text_with_links
 
-def summarize_with_gemini(text, max_words=20):
+def summarize_with_gemini(text, max_words=30):
     """Truncate text to max_words"""
     # Simple truncation - just take first max_words
     words = text.split()
@@ -88,9 +88,9 @@ def extract_hotspots_with_wearables_tag(doc):
                 title_rich = extract_rich_text_with_links(hotspot_cell.paragraphs[0]) if hotspot_cell.paragraphs else title
                 title_rich = re.sub(r'\[wearables-tag\]', '', title_rich, flags=re.IGNORECASE).strip()
                 
-                # Summarize update with Gemini
+                # Summarize update
                 update_clean = re.sub(r'\[wearables-tag\]', '', update_text, flags=re.IGNORECASE).strip()
-                summary = summarize_with_gemini(update_clean, max_words=20)
+                summary = summarize_with_gemini(update_clean, max_words=30)
                 
                 # Extract deep dive link
                 link_url = None
@@ -109,8 +109,8 @@ def extract_hotspots_with_wearables_tag(doc):
                             link_url = text
                             break
                 
-                # Format output: **Title** - Summary [link]
-                formatted_item = f"**{title}** - {summary}"
+                # Format output: Title - Summary [link] (no bold markdown)
+                formatted_item = f"{title} - {summary}"
                 if link_url:
                     formatted_item += f" [link]({link_url})"
                 

@@ -1780,4 +1780,11 @@
 - [x] Add to SOFTWARE Risks/Opens section with section_type='exec_summary'
 - [x] Test sync: extracted 2 hotspots successfully (30 items total)
 - [x] Verify hotspots appear in top tile SOFTWARE section in browser (Malibu Schedule Risk, IG Reels v23 Launch visible with bold titles, summaries, links)
+- [x] Save checkpoint
+
+## Fix Hotspot Formatting - Increase Summary and Remove Bold Markers
+- [x] Update extract_hotspots.py to increase summary from 20 to 30 words
+- [x] Remove ** bold markdown from title (showing as **** in UI)
+- [x] Re-sync SOFTWARE data to apply changes (30 items synced)
+- [x] Verify hotspots display without **** markers (clean titles, 30-word summaries, links preserved)
 - [ ] Save checkpoint
