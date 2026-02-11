@@ -31,7 +31,11 @@ export default function SoftwareWearablesSection() {
   // Helper function to format bullet content (preserve title in bold, rest as is)
   const formatBulletContent = (content: string) => {
     // Remove [Wearables-tag] from the end
-    const cleanContent = content.replace(/\s*\[Wearables-tag\]\s*$/, '');
+    let cleanContent = content.replace(/\s*\[Wearables-tag\]\s*$/, '');
+    
+    // FOOLPROOF FIX: Remove all **** patterns (double bold markers)
+    // This handles cases where Word doc has consecutive bold runs
+    cleanContent = cleanContent.replace(/\*\*\*\*/g, '');
     
     // If there's a bold title at the start, ensure it's preserved
     // The content already has markdown formatting from rich_text_parser_v2
