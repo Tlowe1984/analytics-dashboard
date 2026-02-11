@@ -1735,4 +1735,11 @@
 - [x] Find where Topline items are limited in AIExecutiveUpdates component (LLM prompt limited to 2-3 bullets)
 - [x] Remove limits to show all Highlights and Risks/Opens from Topline (removed LLM summarization, return all items directly)
 - [x] Verify all items appear in browser (DEVICES: 4 Highlights + 5 Risks, SOFTWARE: 1 Highlight + 1 Risk)
+- [x] Save checkpoint
+
+## Limit SYSTEMS Section to 5 Bullets Per Subsection
+- [x] Update generateExecutiveSummaries to slice Systems highlights to first 5 items
+- [x] Update generateExecutiveSummaries to slice Systems risks to first 5 items
+- [x] Keep DEVICES and SOFTWARE sections unlimited (show all items)
+- [x] Verify in browser: Systems shows 3 Highlights + 5 Risks (max 5 per subsection working), Devices shows 4 Highlights + 7 Risks (unlimited)
 - [ ] Save checkpoint

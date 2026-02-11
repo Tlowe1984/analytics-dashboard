@@ -224,14 +224,16 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         .filter(item => item.sectionType === "exec_summary")
         .map(item => item.content);
       
-      // Systems data (uses "wins" and "help_needed")
+      // Systems data (uses "wins" and "help_needed") - limit to 5 per subsection
       const systemsHighlights = systemsItems
         .filter(item => item.sectionType === "wins")
-        .map(item => item.content);
+        .map(item => item.content)
+        .slice(0, 5);
       
       const systemsRisks = systemsItems
         .filter(item => item.sectionType === "help_needed")
-        .map(item => item.content);
+        .map(item => item.content)
+        .slice(0, 5);
       
       return {
         devices: { highlights: devicesHighlights, risks: devicesRisks },
