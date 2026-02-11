@@ -37,8 +37,18 @@ export default function SoftwareWearablesSection() {
     // This handles cases where Word doc has consecutive bold runs
     cleanContent = cleanContent.replace(/\*\*\*\*/g, '');
     
-    // If there's a bold title at the start, ensure it's preserved
-    // The content already has markdown formatting from rich_text_parser_v2
+    // Bold hotspot titles: if content has "Title - Description" format, bold the title
+    // Check if there's a " - " separator (hotspot format)
+    const separatorMatch = cleanContent.match(/^([^-]+) - (.+)$/);
+    if (separatorMatch) {
+      const title = separatorMatch[1].trim();
+      const description = separatorMatch[2].trim();
+      // If title is not already bolded, add bold markdown
+      if (!title.startsWith('**')) {
+        cleanContent = `**${title}** - ${description}`;
+      }
+    }
+    
     return cleanContent;
   };
 

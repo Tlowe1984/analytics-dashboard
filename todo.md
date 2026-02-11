@@ -1796,4 +1796,10 @@
 - [x] Check UI rendering logic (SoftwareWearablesSection.tsx)
 - [x] Implement foolproof fix at UI layer - strip all **** patterns in formatBulletContent()
 - [x] Verify **** markers completely removed in browser (SUCCESS! All **** gone)
+- [x] Save checkpoint
+
+## Bold Hotspot Titles in SOFTWARE RISKS/OPENS Section
+- [x] Update formatBulletContent() to detect and bold hotspot titles
+- [x] Ensure titles before " - " are wrapped in ** markdown
+- [x] Verify bold formatting displays correctly in browser (SUCCESS! All titles bolded)
 - [ ] Save checkpoint
