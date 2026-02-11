@@ -335,7 +335,7 @@ export async function getSoftwareItemsWithWearablesTag(): Promise<SoftwareItem[]
     const result = await db
       .select()
       .from(softwareItems)
-      .where(like(softwareItems.content, '%Wearables-tag%'))
+      .where(eq(softwareItems.isWearablesTag, 1))
       .orderBy(softwareItems.order);
 
     return result;

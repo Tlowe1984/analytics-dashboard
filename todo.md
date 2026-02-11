@@ -1760,4 +1760,10 @@
 - [x] Update sync_software.sh parser to strip [wearables-tag] before inserting into database
 - [x] Re-sync SOFTWARE data to apply tag removal to all existing items (28 items synced)
 - [x] Verify tag is removed from both top tile AND detailed SOFTWARE tabs (verified: no tags visible anywhere)
+- [x] Save checkpoint
+
+## Fix Tag Detection Order - Check Before Stripping
+- [x] Update sync_software.sh to check for tag BEFORE stripping it (sync logic was already correct)
+- [x] Fix getSoftwareItemsWithWearablesTag() to filter by isWearablesTag=1 instead of searching content
+- [x] Verify tagged items appear in top tile SOFTWARE section with clean content (4 items: 2 Highlights + 2 Risks, no tags visible)
 - [ ] Save checkpoint

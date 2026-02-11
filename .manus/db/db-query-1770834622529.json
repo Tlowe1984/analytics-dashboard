@@ -1,0 +1,38 @@
+{
+  "query": "SELECT id, software_category, section_type, LEFT(content, 80) as content_preview, is_wearables_tag FROM software_items WHERE is_wearables_tag = 1 LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, software_category, section_type, LEFT(content, 80) as content_preview, is_wearables_tag FROM software_items WHERE is_wearables_tag = 1 LIMIT 10;",
+  "rows": [
+    {
+      "id": "480749",
+      "software_category": "software_ie",
+      "section_type": "wins",
+      "content_preview": "**[AI Platform] Live Translation is **[**Launch Ready**](https://fb.workplace.co",
+      "is_wearables_tag": "1"
+    },
+    {
+      "id": "480750",
+      "software_category": "software_ie",
+      "section_type": "wins",
+      "content_preview": "******[Platform - 2p Music] **🎉Next Gen Music Platform officially enters Dogfood",
+      "is_wearables_tag": "1"
+    },
+    {
+      "id": "480753",
+      "software_category": "software_ie",
+      "section_type": "exec_summary",
+      "content_preview": "******[****Input****]** **Meta AI + Handwriting integration punted from v23 to v",
+      "is_wearables_tag": "1"
+    },
+    {
+      "id": "480763",
+      "software_category": "software_ie",
+      "section_type": "exec_summary",
+      "content_preview": "******[AI Platform]** **HN AI Lockdown and Pause in AI Feature Development** Due",
+      "is_wearables_tag": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tsoftware_category\tsection_type\tcontent_preview\tis_wearables_tag\n480749\tsoftware_ie\twins\t**[AI Platform] Live Translation is **[**Launch Ready**](https://fb.workplace.co\t1\n480750\tsoftware_ie\twins\t******[Platform - 2p Music] **🎉Next Gen Music Platform officially enters Dogfood\t1\n480753\tsoftware_ie\texec_summary\t******[****Input****]** **Meta AI + Handwriting integration punted from v23 to v\t1\n480763\tsoftware_ie\texec_summary\t******[AI Platform]** **HN AI Lockdown and Pause in AI Feature Development** Due\t1\n",
+  "stderr": "",
+  "execution_time_ms": 361
+}
