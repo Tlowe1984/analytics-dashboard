@@ -9,7 +9,7 @@ import { MarkdownText } from "./MarkdownText";
 interface DashboardItem {
   id: number;
   sectionType: "highlights" | "risks" | "upcoming";
-  productCategory: "general" | "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
+  productCategory: "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
   content: string;
   isNew: number; // 1 if new information (blue text), 0 otherwise
   order: number;
@@ -148,46 +148,6 @@ function ProductCard({
   );
 }
 
-function GeneralToplineCard({ allItems }: { allItems: DashboardItem[] }) {
-  // Filter items for general category (Topline summary)
-  const highlightItems = allItems.filter(
-    (item) => item.productCategory === "general" && item.sectionType === "highlights"
-  );
-  const riskItems = allItems.filter(
-    (item) => item.productCategory === "general" && item.sectionType === "risks"
-  );
-
-  // Only show this card if there are general items
-  if (highlightItems.length === 0 && riskItems.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-2 sm:space-y-3 h-full">
-      {/* Header */}
-      <div className="flex items-center gap-2 sm:gap-3 pb-2 sm:pb-3 border-b border-border/30">
-        <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
-          <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-        </div>
-        <div>
-          <h3 className="font-bold text-sm sm:text-base">TOPLINE</h3>
-          <p className="text-xs text-muted-foreground hidden sm:block">SUMMARY ACROSS ALL PROGRAMS</p>
-        </div>
-      </div>
-
-      {/* Sections - Only Highlights and Risks */}
-      <div className="space-y-3">
-        <SectionContent sectionType="highlights" items={highlightItems} />
-        {riskItems.length > 0 && (
-          <div className="border-t border-border/20 pt-4">
-            <SectionContent sectionType="risks" items={riskItems} />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
   const product = productConfig.in_market;
   const ProductIcon = product.icon;
@@ -258,15 +218,10 @@ function DevicesTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
           📄 View Source Document
         </a>
       </div>
-      {/* General Topline summary at the top */}
-      <div className="grid grid-cols-1 gap-4 mb-4">
-        <GeneralToplineCard allItems={allItems || []} />
-      </div>
-      {/* In-Market tile */}
+      {/* In-Market tile above the other three */}
       <div className="grid grid-cols-1 gap-4 mb-4">
         <InMarketCard allItems={allItems || []} />
       </div>
-      {/* Product-specific tiles */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {["ai_glasses", "wrist", "arg_ssg"].map((product) => (
           <ProductCard key={product} productCategory={product as "ai_glasses" | "wrist" | "arg_ssg"} allItems={allItems || []} />
