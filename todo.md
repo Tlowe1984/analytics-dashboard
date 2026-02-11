@@ -1812,6 +1812,21 @@
 - [x] Ensure titles remain bolded after Gemini rewrite (added ** in formatter)
 - [x] Re-sync SOFTWARE data to apply changes
 - [x] Verify in browser: summaries are 35 words max, titles bolded, links correct
+- [x] Save checkpoint
+
+
+
+## Implement [wearables-tag] Extraction for Systems Section
+- [x] Investigate how Systems document is currently pulled (sync_systems.sh)
+- [x] Investigate how SOFTWARE section extracts [wearables-tag] items (extract_hotspots.py)
+- [x] Confirm Systems file pulling logic and document selection
+- [x] Create extract_systems_wearables.py matching SOFTWARE pattern
+- [x] Preserve rich text formatting
+- [x] Bold titles (text before " - ")
+- [x] Remove [wearables-tag] after extraction
+- [x] Remove **** artifacts
+- [x] Update parse_systems_review.py to integrate extraction logic
+- [x] Re-sync Systems data (589 items loaded, 3 wearables-tagged)
+- [x] Add formatBulletContent() to SystemsTab.tsx for UI cleanup
+- [x] Verify in browser: rich text, bold titles, no tags, no **** (ALL VERIFIED!)
 - [ ] Save checkpoint
-
-

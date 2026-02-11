@@ -11,6 +11,7 @@ import re
 from docx import Document
 from datetime import datetime
 from rich_text_parser_v2 import extract_rich_text
+from extract_systems_wearables import extract_wearables_tagged_systems
 
 def find_latest_systems_review_file():
     """Find the most recent WK## Wearables Systems Review file based on modification time"""
@@ -194,6 +195,21 @@ if __name__ == "__main__":
     # Parse the document
     print(f"Parsing {latest_file}...", file=sys.stderr)
     items = parse_systems_review(docx_path)
+    
+    # Extract wearables-tagged items
+    print("Extracting wearables-tagged items...", file=sys.stderr)
+    doc = Document(docx_path)
+    wearables_items = extract_wearables_tagged_systems(doc)
+    
+    # Add wearables-tagged items to the output (already classified as wins or exec_summary)
+    for idx, item in enumerate(wearables_items):
+        items.append({
+            "section_type": item['section_type'],
+            "content": item['content'],
+            "is_new": 0,
+            "indent_level": 0,
+            "order": len(items) + idx
+        })
     
     # Output JSON to stdout
     print(json.dumps(items, indent=2))

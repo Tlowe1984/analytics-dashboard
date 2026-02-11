@@ -3,6 +3,32 @@ import { Sparkles, AlertTriangle, HelpCircle, Trophy, FileText } from "lucide-re
 import { cn } from "@/lib/utils";
 import { MarkdownText } from "./MarkdownText";
 
+// Format bullet content: remove tags, clean up artifacts, bold titles
+function formatBulletContent(content: string): string {
+  let formatted = content;
+  
+  // Remove [wearables-tag] marker (case insensitive)
+  formatted = formatted.replace(/\[wearables-tag\]/gi, '');
+  
+  // Remove **** artifacts (from consecutive bold formatting)
+  formatted = formatted.replace(/\*{4,}/g, '');
+  
+  // Bold the title if there's a " - " separator
+  // Pattern: "Title - Description" becomes "**Title** - Description"
+  if (formatted.includes(' - ')) {
+    const parts = formatted.split(' - ');
+    if (parts.length >= 2) {
+      const title = parts[0].trim();
+      const description = parts.slice(1).join(' - ').trim();
+      // Remove any existing ** from title first to avoid double-bolding
+      const cleanTitle = title.replace(/\*\*/g, '');
+      formatted = `**${cleanTitle}** - ${description}`;
+    }
+  }
+  
+  return formatted.trim();
+}
+
 const systemsSectionConfig = {
   wins: {
     icon: Trophy,
@@ -77,7 +103,7 @@ export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
                       : "text-foreground/90"
                   )}
                 >
-                  <MarkdownText content={item.content} />
+                  <MarkdownText content={formatBulletContent(item.content)} />
                 </div>
               </div>
             ))
