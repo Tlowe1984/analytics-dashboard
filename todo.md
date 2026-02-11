@@ -1710,3 +1710,12 @@
 - [x] Update parser to correctly extract from Topline tab (now extracts only general Highlights/Risks, stops before product sections)
 - [x] Test and verify correct Topline content displays (9 items: 4 Highlights, 5 Risks/Opens - verified in browser)
 - [ ] Save checkpoint with correct Topline extraction
+
+## Create Separate TOPLINE Section (Top-Level Tile)
+- [x] Create TOPLINE component as separate top-level section (like WEARABLE WEEK X UPDATES)
+- [x] Display general Highlights and Risks/Opens from product_category='general'
+- [x] Position TOPLINE section above the DETAILED UPDATES tabbed interface
+- [x] Update parser to extract product-specific content (In-Market, AI Glasses, Wrist, ARG/SSG) from Topline tab
+- [x] Populate Devices tab sections with product-specific data
+- [x] Test and verify layout matches user's screenshot
+- [ ] Save checkpoint
