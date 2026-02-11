@@ -106,7 +106,7 @@ export async function getAllDashboardItems() {
 
 export async function getDashboardItemsBySection(
   sectionType: "highlights" | "risks" | "upcoming",
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg"
+  productCategory: "general" | "ai_glasses" | "wrist" | "arg_ssg" | "in_market"
 ) {
   const db = await getDb();
   if (!db) {

@@ -1709,4 +1709,10 @@
 - [x] Identify what content should be in Topline vs what's currently showing (Topline has general Highlights/Risks first, then product sections)
 - [x] Update parser to correctly extract from Topline tab (now extracts only general Highlights/Risks, stops before product sections)
 - [x] Test and verify correct Topline content displays (9 items: 4 Highlights, 5 Risks/Opens - verified in browser)
-- [ ] Save checkpoint with correct Topline extraction
+- [x] Save checkpoint with correct Topline extraction (version d4539631)
+
+## Fix Devices Tab to Show Both General and Product-Specific Sections
+- [x] Update UI query to include items with product_category='general' in Devices tab
+- [x] Verify general Topline content appears at top
+- [x] Verify product-specific sections (In-Market, AI Glasses, Wrist, ARG/SSG) still work
+- [ ] Test and save checkpoint
