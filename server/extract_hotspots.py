@@ -9,12 +9,57 @@ import sys
 import requests
 from rich_text_parser_v2 import extract_rich_text_with_links
 
-def summarize_with_gemini(text, max_words=30):
-    """Truncate text to max_words"""
-    # Simple truncation - just take first max_words
+def summarize_with_gemini(text, max_words=35):
+    """Summarize text using Gemini API with max_words limit"""
+    # If text is already short enough, return as-is
     words = text.split()
     if len(words) <= max_words:
         return text
+    
+    # Try Gemini API for intelligent summarization
+    try:
+        api_url = os.getenv('BUILT_IN_FORGE_API_URL', '').rstrip('/')
+        api_key = os.getenv('BUILT_IN_FORGE_API_KEY', '')
+        
+        if not api_url or not api_key:
+            print("Warning: Gemini API credentials not found, using truncation", file=sys.stderr)
+            return ' '.join(words[:max_words]) + '...'
+        
+        response = requests.post(
+            f"{api_url}/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": f"You are a concise summarizer. Summarize the following text in exactly {max_words} words or fewer. Preserve key information, names, and critical details. Do not add commentary."
+                    },
+                    {
+                        "role": "user",
+                        "content": text
+                    }
+                ],
+                "max_tokens": 150
+            },
+            timeout=10
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            summary = result.get('choices', [{}])[0].get('message', {}).get('content', '').strip()
+            if summary:
+                print(f"Gemini summarized: {len(text.split())} words -> {len(summary.split())} words", file=sys.stderr)
+                return summary
+        else:
+            print(f"Gemini API error {response.status_code}: {response.text}", file=sys.stderr)
+    
+    except Exception as e:
+        print(f"Gemini API failed: {e}, falling back to truncation", file=sys.stderr)
+    
+    # Fallback to truncation
     return ' '.join(words[:max_words]) + '...'
 
 def extract_hotspots_with_wearables_tag(doc):
@@ -88,29 +133,30 @@ def extract_hotspots_with_wearables_tag(doc):
                 title_rich = extract_rich_text_with_links(hotspot_cell.paragraphs[0]) if hotspot_cell.paragraphs else title
                 title_rich = re.sub(r'\[wearables-tag\]', '', title_rich, flags=re.IGNORECASE).strip()
                 
-                # Summarize update
+                # Summarize update with Gemini (35 words max)
                 update_clean = re.sub(r'\[wearables-tag\]', '', update_text, flags=re.IGNORECASE).strip()
-                summary = summarize_with_gemini(update_clean, max_words=30)
+                summary = summarize_with_gemini(update_clean, max_words=35)
                 
-                # Extract deep dive link
+                # Extract deep dive link from the Deep Dive/One Pager column using rich_text_parser
                 link_url = None
-                if deep_dive_cell:
-                    for para in deep_dive_cell.paragraphs:
-                        # Check for hyperlinks in paragraph
-                        for rel in para.part.rels.values():
-                            if "hyperlink" in rel.reltype:
-                                link_url = rel.target_ref
-                                break
-                        if link_url:
-                            break
+                if deep_dive_cell and deep_dive_cell.paragraphs:
+                    # Check if cell has "[In progress]" or similar - means no link
+                    cell_text = deep_dive_cell.text.strip()
+                    if re.search(r'\[in progress\]', cell_text, re.IGNORECASE):
+                        link_url = None
+                    else:
+                        # Use rich_text_parser to extract link from the first paragraph
+                        rich_text = extract_rich_text_with_links(deep_dive_cell.paragraphs[0])
+                        # Extract URL from markdown link format: [text](url)
+                        link_match = re.search(r'\[([^\]]+)\]\(([^\)]+)\)', rich_text)
+                        if link_match:
+                            link_url = link_match.group(2)
                         # Fallback: check if text looks like a URL
-                        text = para.text.strip()
-                        if text.startswith('http'):
-                            link_url = text
-                            break
+                        elif cell_text.startswith('http'):
+                            link_url = cell_text
                 
-                # Format output: Title - Summary [link] (no bold markdown)
-                formatted_item = f"{title} - {summary}"
+                # Format output: **Title** - Summary [link] (bold title, optional link)
+                formatted_item = f"**{title}** - {summary}"
                 if link_url:
                     formatted_item += f" [link]({link_url})"
                 

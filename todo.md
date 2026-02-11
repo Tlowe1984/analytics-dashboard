@@ -1802,4 +1802,16 @@
 - [x] Update formatBulletContent() to detect and bold hotspot titles
 - [x] Ensure titles before " - " are wrapped in ** markdown
 - [x] Verify bold formatting displays correctly in browser (SUCCESS! All titles bolded)
+- [x] Save checkpoint
+
+## Fix SOFTWARE Hotspot Summaries and Links
+- [x] Investigate current extract_hotspots.py implementation
+- [x] Update extract_hotspots.py to use Gemini API for 35-word summaries (not truncation)
+- [x] Fix link extraction: skip links for cells with "[In progress]" text
+- [x] Fix link extraction: properly extract hyperlinks from Deep Dive column
+- [x] Ensure titles remain bolded after Gemini rewrite (added ** in formatter)
+- [x] Re-sync SOFTWARE data to apply changes
+- [x] Verify in browser: summaries are 35 words max, titles bolded, links correct
 - [ ] Save checkpoint
+
+
