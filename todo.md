@@ -1766,4 +1766,18 @@
 - [x] Update sync_software.sh to check for tag BEFORE stripping it (sync logic was already correct)
 - [x] Fix getSoftwareItemsWithWearablesTag() to filter by isWearablesTag=1 instead of searching content
 - [x] Verify tagged items appear in top tile SOFTWARE section with clean content (4 items: 2 Highlights + 2 Risks, no tags visible)
+- [x] Save checkpoint
+
+## Extract Wearables-Tagged Hotspots from Hotspots Table
+- [x] Update parse_ie_review.py to extract "Hotspots (Top Risks, Blockers, Leadership focus areas) [Discuss Live]" table
+- [x] Detect [wearables-tag] in Hotspot/Why it Matters column or Update column
+- [x] Extract title from "Hotspot / Why it Matters" column
+- [x] Extract update text from "Update" column
+- [x] Extract link from "Deep Dive Slide / One pager" column
+- [x] Summarize update text (max 20 words) using truncation
+- [x] Format as: **Title** - Summary [link]
+- [x] Strip [wearables-tag] from all content
+- [x] Add to SOFTWARE Risks/Opens section with section_type='exec_summary'
+- [x] Test sync: extracted 2 hotspots successfully (30 items total)
+- [x] Verify hotspots appear in top tile SOFTWARE section in browser (Malibu Schedule Risk, IG Reels v23 Launch visible with bold titles, summaries, links)
 - [ ] Save checkpoint

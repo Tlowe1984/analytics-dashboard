@@ -128,6 +128,24 @@ for (const section of sections) {
     totalInserted++;
   }
   
+  // Insert hotspots (only for Experiences & Interfaces section)
+  // Hotspots are risks/opens, so use exec_summary section type
+  if (section.hotspots && section.hotspots.length > 0) {
+    for (let idx = 0; idx < section.hotspots.length; idx++) {
+      const hotspot = section.hotspots[idx];
+      await db.insert(softwareItems).values({
+        softwareCategory: dbCategory,
+        sectionType: 'exec_summary',  // Hotspots are risks, use exec_summary type
+        content: hotspot,
+        isNew: 0,
+        isWearablesTag: 1,  // All hotspots are wearables-tagged by definition
+        indentLevel: 0,
+        order: section.exec_summary.length + idx,  // Append after existing exec_summary items
+      });
+      totalInserted++;
+    }
+  }
+  
   console.log(`Synced ${sectionName}: ${section.wins.length} wins, ${section.exec_summary.length} exec items, ${section.help_needed.length} help needed, ${section.structured_decisions.length} decisions`);
 }
 

@@ -12,6 +12,7 @@ from docx import Document
 from datetime import datetime, timedelta
 from rich_text_parser_v2 import extract_rich_text_with_links
 from extract_decision_tables import extract_ie_decisions, extract_ai_decisions, extract_hearing_decisions
+from extract_hotspots import extract_hotspots_with_wearables_tag
 
 def get_current_week():
     """Get current week number (ISO week)"""
@@ -256,6 +257,10 @@ def main():
         ai_decisions = extract_ai_decisions(doc)
         hearing_decisions = extract_hearing_decisions(doc)
         
+        # Extract hotspots with wearables-tag
+        print("Extracting wearables-tagged hotspots...", file=sys.stderr)
+        hotspots = extract_hotspots_with_wearables_tag(doc)
+        
         decisions_map = {
             'Experiences & Interfaces': ie_decisions,
             'AI': ai_decisions,
@@ -273,6 +278,10 @@ def main():
             # Add structured decisions
             section_decisions = decisions_map.get(section['name'], [])
             section_data['structured_decisions'] = section_decisions
+            
+            # Add hotspots to Experiences & Interfaces section only
+            if section['name'] == 'Experiences & Interfaces':
+                section_data['hotspots'] = hotspots
             
             results.append(section_data)
             
