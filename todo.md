@@ -1718,4 +1718,21 @@
 - [x] Update parser to extract product-specific content (In-Market, AI Glasses, Wrist, ARG/SSG) from Topline tab
 - [x] Populate Devices tab sections with product-specific data
 - [x] Test and verify layout matches user's screenshot
+- [x] Save checkpoint
+
+## Update Decisions Made Section to Show Only MZ Decisions
+- [x] Update getRecentDecisionsForAI() in server/db.ts to filter for forum containing "MZ"
+- [x] Test and verify MZ Textile decision appears in top tile
+- [x] Verify all MZ decisions from last month are shown
+- [x] Save checkpoint
+
+## Include Wearables Review Decisions in Decisions Made Section
+- [x] Update filter to include forum containing "Wearables Review" in addition to "MZ"
+- [x] Test and verify Wearables Review decisions appear alongside MZ decisions (API returns 5 decisions: 2 MZ + 3 Wearables Review)
+- [x] Save checkpoint
+
+## Remove Bullet Limits in WEARABLE WEEK 7 UPDATES Top Tile
+- [x] Find where Topline items are limited in AIExecutiveUpdates component (LLM prompt limited to 2-3 bullets)
+- [x] Remove limits to show all Highlights and Risks/Opens from Topline (removed LLM summarization, return all items directly)
+- [x] Verify all items appear in browser (DEVICES: 4 Highlights + 5 Risks, SOFTWARE: 1 Highlight + 1 Risk)
 - [ ] Save checkpoint

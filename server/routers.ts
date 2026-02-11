@@ -199,8 +199,6 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
 
     // Generate AI summaries for all sections (Devices, Software, Systems)
     generateExecutiveSummaries: publicProcedure.query(async () => {
-      const { invokeLLM } = await import("./_core/llm");
-      
       // Get all data
       const [dashboardItems, softwareItems, systemsItems] = await Promise.all([
         db.getAllDashboardItems(),
@@ -208,132 +206,38 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         db.getAllSystemsItems(),
       ]);
       
-      // Format Devices data
+      // Return ALL items directly (no LLM summarization)
       const devicesHighlights = dashboardItems
-        .filter(item => item.sectionType === "highlights")
-        .map(item => item.content)
-        .join("\n");
+        .filter(item => item.sectionType === "highlights" && item.productCategory === "general")
+        .map(item => item.content);
       
       const devicesRisks = dashboardItems
-        .filter(item => item.sectionType === "risks")
-        .map(item => item.content)
-        .join("\n");
+        .filter(item => item.sectionType === "risks" && item.productCategory === "general")
+        .map(item => item.content);
       
-      // Format Software data (uses "wins" and "exec_summary")
+      // Software data (uses "wins" and "exec_summary")
       const softwareHighlights = softwareItems
         .filter(item => item.sectionType === "wins")
-        .map(item => item.content)
-        .join("\n");
+        .map(item => item.content);
       
       const softwareRisks = softwareItems
         .filter(item => item.sectionType === "exec_summary")
-        .map(item => item.content)
-        .join("\n");
+        .map(item => item.content);
       
-      // Format Systems data (uses "wins" and "help_needed")
+      // Systems data (uses "wins" and "help_needed")
       const systemsHighlights = systemsItems
         .filter(item => item.sectionType === "wins")
-        .map(item => item.content)
-        .join("\n");
+        .map(item => item.content);
       
       const systemsRisks = systemsItems
         .filter(item => item.sectionType === "help_needed")
-        .map(item => item.content)
-        .join("\n");
+        .map(item => item.content);
       
-      const prompt = `You are extracting key bullets from executive dashboard data. For each section (Devices, Software, Systems), select 2-3 most important bullets for Highlights and 2-3 for Risks/Opens.
-
-IMPORTANT RULES:
-1. Keep ALL emojis (🎉, ⚠️, 🔴, ✅, 🟢, etc.)
-2. Keep ALL markdown links [text](url)
-3. Include program names (e.g., RBM2, Luna, Artemis, Modelo)
-4. Return as JSON with this structure:
-{
-  "devices": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] },
-  "software": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] },
-  "systems": { "highlights": ["bullet1", "bullet2"], "risks": ["bullet1", "bullet2"] }
-}
-
-=== DEVICES DATA ===
-Highlights:
-${devicesHighlights}
-
-Risks/Opens:
-${devicesRisks}
-
-=== SOFTWARE DATA ===
-Highlights:
-${softwareHighlights}
-
-Risks/Opens:
-${softwareRisks}
-
-=== SYSTEMS DATA ===
-Highlights:
-${systemsHighlights}
-
-Risks/Opens:
-${systemsRisks}
-
-Return ONLY valid JSON, no other text.`;
-      
-      const response = await invokeLLM({
-        messages: [
-          { role: "user", content: prompt },
-        ],
-        response_format: {
-          type: "json_schema",
-          json_schema: {
-            name: "executive_summaries",
-            strict: true,
-            schema: {
-              type: "object",
-              properties: {
-                devices: {
-                  type: "object",
-                  properties: {
-                    highlights: { type: "array", items: { type: "string" } },
-                    risks: { type: "array", items: { type: "string" } },
-                  },
-                  required: ["highlights", "risks"],
-                  additionalProperties: false,
-                },
-                software: {
-                  type: "object",
-                  properties: {
-                    highlights: { type: "array", items: { type: "string" } },
-                    risks: { type: "array", items: { type: "string" } },
-                  },
-                  required: ["highlights", "risks"],
-                  additionalProperties: false,
-                },
-                systems: {
-                  type: "object",
-                  properties: {
-                    highlights: { type: "array", items: { type: "string" } },
-                    risks: { type: "array", items: { type: "string" } },
-                  },
-                  required: ["highlights", "risks"],
-                  additionalProperties: false,
-                },
-              },
-              required: ["devices", "software", "systems"],
-              additionalProperties: false,
-            },
-          },
-        },
-      });
-      
-      const content = response.choices[0]?.message?.content;
-      if (!content) {
-        return {
-          devices: { highlights: [], risks: [] },
-          software: { highlights: [], risks: [] },
-          systems: { highlights: [], risks: [] },
-        };
-      }
-      
-      return JSON.parse(content);
+      return {
+        devices: { highlights: devicesHighlights, risks: devicesRisks },
+        software: { highlights: softwareHighlights, risks: softwareRisks },
+        systems: { highlights: systemsHighlights, risks: systemsRisks },
+      };
     }),
 
     // Get upcoming items for AI Executive Updates (PDP gates + upcoming decisions)

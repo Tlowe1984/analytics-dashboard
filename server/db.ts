@@ -385,11 +385,11 @@ export async function getSoftwareItemsBySection(
 // ============ Decisions Functions ============
 
 /**
- * Get recent decisions for AI Executive Updates
- * Returns up to 5 decisions from this week, combining Decisions table and Software Pillar decisions
+ * Get recent MZ and Wearables Review decisions for AI Executive Updates
+ * Returns decisions where forum contains 'MZ' or 'Wearables Review', combining Decisions table and Software Pillar decisions
  * Note: Summaries are generated in the router using LLM to keep them concise (≤15 words)
  */
-export async function getRecentDecisionsForAI(limit = 5) {
+export async function getRecentDecisionsForAI(limit = 10) {
   return cachedQuery('ai:decisions', async () => {
     const db = await getDb();
     if (!db) return [];
@@ -431,19 +431,18 @@ export async function getRecentDecisionsForAI(limit = 5) {
         }))
       ];
       
-      // Sort with MZ decisions first, then by date (most recent first)
-      combined.sort((a, b) => {
-        const aHasMZ = (a.outcome?.toLowerCase() || '').includes('mz') || (a.forum?.toLowerCase() || '').includes('mz');
-        const bHasMZ = (b.outcome?.toLowerCase() || '').includes('mz') || (b.forum?.toLowerCase() || '').includes('mz');
-        
-        // MZ decisions come first
-        if (aHasMZ && !bHasMZ) return -1;
-        if (!aHasMZ && bHasMZ) return 1;
-        
-        // Within same priority group, sort by date (most recent first)
-        return b.date.getTime() - a.date.getTime();
+      // Filter for MZ and Wearables Review decisions only
+      const filteredDecisions = combined.filter(item => {
+        const forum = (item.forum?.toLowerCase() || '');
+        const hasMZ = forum.includes('mz');
+        const hasWearablesReview = forum.includes('wearable') && forum.includes('review');
+        return hasMZ || hasWearablesReview;
       });
-      return combined.slice(0, limit);
+      
+      // Sort by date (most recent first)
+      filteredDecisions.sort((a, b) => b.date.getTime() - a.date.getTime());
+      
+      return filteredDecisions.slice(0, limit);
     } catch (error) {
       console.error("[Database] Error fetching recent decisions for AI:", error);
       return [];
