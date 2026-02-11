@@ -169,6 +169,13 @@
       "when": 1770828966861,
       "tag": "0023_fair_stingray",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "5",
+      "when": 1770833349257,
+      "tag": "0024_awesome_cammi",
+      "breakpoints": true
     }
   ]
 }

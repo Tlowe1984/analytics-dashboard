@@ -215,13 +215,13 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         .filter(item => item.sectionType === "risks" && item.productCategory === "general")
         .map(item => item.content);
       
-      // Software data (uses "wins" and "exec_summary")
+      // Software data - only show items tagged with [wearables-tag]
       const softwareHighlights = softwareItems
-        .filter(item => item.sectionType === "wins")
+        .filter(item => item.sectionType === "wins" && item.isWearablesTag === 1)
         .map(item => item.content);
       
       const softwareRisks = softwareItems
-        .filter(item => item.sectionType === "exec_summary")
+        .filter(item => item.sectionType === "exec_summary" && item.isWearablesTag === 1)
         .map(item => item.content);
       
       // Systems data (uses "wins" and "help_needed") - limit to 5 per subsection

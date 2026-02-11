@@ -1742,4 +1742,11 @@
 - [x] Update generateExecutiveSummaries to slice Systems risks to first 5 items
 - [x] Keep DEVICES and SOFTWARE sections unlimited (show all items)
 - [x] Verify in browser: Systems shows 3 Highlights + 5 Risks (max 5 per subsection working), Devices shows 4 Highlights + 7 Risks (unlimited)
+- [x] Save checkpoint
+
+## Update SOFTWARE Section to Show Only [wearables-tag] Items
+- [x] Add isWearablesTag field to softwareItems schema
+- [x] Update parser to detect and flag items containing [wearables-tag]
+- [x] Update top tile query to filter for isWearablesTag=1 items only
+- [x] Run sync and verify SOFTWARE section shows only tagged items (4 items: 2 Highlights + 2 Risks)
 - [ ] Save checkpoint

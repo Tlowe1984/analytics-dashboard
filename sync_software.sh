@@ -54,11 +54,14 @@ for (const section of sections) {
   
   // Insert wins
   for (let idx = 0; idx < section.wins.length; idx++) {
+    const content = section.wins[idx];
+    const isWearablesTag = content.includes('[wearables-tag]') ? 1 : 0;
     await db.insert(softwareItems).values({
       softwareCategory: dbCategory,
       sectionType: 'wins',
-      content: section.wins[idx],
+      content,
       isNew: 0,
+      isWearablesTag,
       indentLevel: 0,
       order: idx,
     });
@@ -67,11 +70,14 @@ for (const section of sections) {
   
   // Insert exec summary
   for (let idx = 0; idx < section.exec_summary.length; idx++) {
+    const content = section.exec_summary[idx];
+    const isWearablesTag = content.includes('[wearables-tag]') ? 1 : 0;
     await db.insert(softwareItems).values({
       softwareCategory: dbCategory,
       sectionType: 'exec_summary',
-      content: section.exec_summary[idx],
+      content,
       isNew: 0,
+      isWearablesTag,
       indentLevel: 0,
       order: idx,
     });
@@ -80,11 +86,14 @@ for (const section of sections) {
   
   // Insert help_needed
   for (let idx = 0; idx < section.help_needed.length; idx++) {
+    const content = section.help_needed[idx];
+    const isWearablesTag = content.includes('[wearables-tag]') ? 1 : 0;
     await db.insert(softwareItems).values({
       softwareCategory: dbCategory,
       sectionType: 'help_needed',
-      content: section.help_needed[idx],
+      content,
       isNew: 0,
+      isWearablesTag,
       indentLevel: 0,
       order: idx,
     });
@@ -94,6 +103,8 @@ for (const section of sections) {
   // Insert structured decisions
   for (let idx = 0; idx < section.structured_decisions.length; idx++) {
     const decision = section.structured_decisions[idx];
+    const decisionText = `${decision.topic || ''} ${decision.decision_outcome || ''}`;
+    const isWearablesTag = decisionText.includes('[wearables-tag]') ? 1 : 0;
     await db.insert(softwareItems).values({
       softwareCategory: dbCategory,
       sectionType: 'decisions',
@@ -107,6 +118,7 @@ for (const section of sections) {
       decisionOutcome: decision.decision_outcome || '',
       post: decision.post || '',
       isNew: 0,
+      isWearablesTag,
       indentLevel: 0,
       order: idx,
     });
