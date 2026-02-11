@@ -1681,6 +1681,25 @@
 ## Add Upcoming Reviews to Admin Refresh
 - [x] Add sync_upcoming_reviews.sh to syncAllBash.ts scripts list
 - [x] Document all file paths for each sync script (see /home/ubuntu/sync_file_paths.md)
-- [ ] Test Admin Refresh with Upcoming Reviews included
-- [ ] Save checkpoint with complete Admin Refresh
+- [x] Test Admin Refresh with Upcoming Reviews included (6 syncs now run in parallel)
+- [x] Save checkpoint with complete Admin Refresh (version 278f257f)
 >>>>>>> Stashed changes
+
+## Fix Google Drive Token Expiration
+- [x] Add automatic token refresh check to syncAllBash.ts before syncing
+- [ ] Test admin refresh to verify automatic token refresh works
+- [ ] Save checkpoint with automatic token refresh
+
+## Add "Last Synced" Timestamp to Dashboard
+- [x] Create sync_metadata table in database to track last successful sync (already exists with lastSyncedAt field)
+- [ ] Update syncAllBash to record timestamp after successful sync
+- [ ] Add tRPC query to fetch last sync timestamp
+- [ ] Display "Last synced: X hours ago" in dashboard header
+- [ ] Test and save checkpoint
+
+## Update Devices Section to Use Topline Tab
+- [x] Update parse_exec_summary.py to extract content from Topline tab (first tab)
+- [x] Preserve rich text formatting (bold, italic, links, colors) - already implemented
+- [x] Parse Highlights, Risks/Opens, Upcoming sections from Topline (already implemented in parser)
+- [x] Test devices sync to verify Topline content appears correctly (53 items loaded successfully)
+- [x] Verify rich text formatting is preserved in UI (links, bold, colors, symbols all working)

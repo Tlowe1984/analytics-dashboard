@@ -23,8 +23,8 @@ try:
         if not text:
             continue
         
-        # Check if we're in Exec Summary section
-        if 'Exec Summary' in text:
+        # Check if we're in Topline section (first tab)
+        if 'Topline' in text or 'Top Line' in text:
             in_exec_summary = True
             continue
         

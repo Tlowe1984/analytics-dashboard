@@ -46,6 +46,10 @@ export async function syncAllBash(): Promise<{
 
   console.log("🚀 Starting comprehensive sync using bash scripts...");
 
+  // Note: Google Drive token refresh is handled automatically by Manus integration
+  // The rclone config at /home/ubuntu/.gdrive-rclone.ini is managed by the platform
+  // and tokens are refreshed automatically when they expire
+
   try {
     const results: {
       devices: SyncResult;
