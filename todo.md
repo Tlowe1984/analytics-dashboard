@@ -1703,3 +1703,10 @@
 - [x] Parse Highlights, Risks/Opens, Upcoming sections from Topline (already implemented in parser)
 - [x] Test devices sync to verify Topline content appears correctly (53 items loaded successfully)
 - [x] Verify rich text formatting is preserved in UI (links, bold, colors, symbols all working)
+
+## Fix Devices Topline Extraction (Incorrect Content)
+- [x] Download Devices & Growth Canonical document to inspect Topline tab structure
+- [x] Identify what content should be in Topline vs what's currently showing (Topline has general Highlights/Risks first, then product sections)
+- [x] Update parser to correctly extract from Topline tab (now extracts only general Highlights/Risks, stops before product sections)
+- [x] Test and verify correct Topline content displays (9 items: 4 Highlights, 5 Risks/Opens - verified in browser)
+- [ ] Save checkpoint with correct Topline extraction

@@ -26,23 +26,22 @@ try:
         # Check if we're in Topline section (first tab)
         if 'Topline' in text or 'Top Line' in text:
             in_exec_summary = True
+            # For Topline, set product to 'general' to capture top-level Highlights/Risks
+            current_product = 'general'
             continue
         
-        # Stop if we hit another major section (but not "Highlights/ Decisions/" subsection)
-        if text == 'Hotspots' or (text == 'Decisions' and not current_product):
+        # Stop if we hit another major section
+        if text == 'Hotspots' or text == 'Decisions' or text == 'Exec Summary' or text == 'Executive Summary':
             break
         
         if not in_exec_summary:
             continue
         
-        # Detect product categories
+        # Stop extracting when we hit product-specific sections (In-Market, AI Glasses, Wrist, ARG/SSG)
+        # These come AFTER the general Highlights/Risks in Topline
         if text in ['AI Glasses', 'Wrist', 'ARG/SSG', 'ARG / SSG', 'In-Market', 'In Market']:
-            current_product = text.replace(' / ', '_').replace('/', '_').replace(' ', '_').replace('-', '_').lower()
-            if current_product == 'arg_ssg':
-                current_product = 'arg_ssg'
-            elif current_product == 'in_market':
-                current_product = 'in_market'
-            continue
+            # We've reached product-specific sections, stop here for Topline
+            break
         
         # Detect section types (match exact or prefix)
         if text in ['Highlights', 'Risks/Opens', 'Upcoming'] or text.startswith('Highlights') or text.startswith('Risks') or text.startswith('Upcoming'):
