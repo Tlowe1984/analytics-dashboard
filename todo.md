@@ -1624,6 +1624,7 @@
 - [x] Test that scrolling works correctly (verified in browser - scrollbar visible, 8+ GTM milestones showing)
 - [x] Save checkpoint with GTM tile updates (version 88424bd1)
 
+<<<<<<< Updated upstream
 ## Fix Auto-Sync (Daily Automatic Data Refresh)
 - [x] Investigate why auto-sync is not working (scheduler initializes but uses TypeScript sync, not bash scripts)
 - [x] Check if cron scheduler is running (YES - initialized at 6 AM PST)
@@ -1676,3 +1677,10 @@
 - [x] Update syncAllBash.ts to run all 5 syncs in parallel using Promise.all
 - [ ] Test Admin Refresh to verify parallel execution is faster
 - [ ] Save checkpoint with parallel Admin Refresh
+=======
+## Add Upcoming Reviews to Admin Refresh
+- [x] Add sync_upcoming_reviews.sh to syncAllBash.ts scripts list
+- [x] Document all file paths for each sync script (see /home/ubuntu/sync_file_paths.md)
+- [ ] Test Admin Refresh with Upcoming Reviews included
+- [ ] Save checkpoint with complete Admin Refresh
+>>>>>>> Stashed changes

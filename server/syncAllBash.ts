@@ -24,6 +24,7 @@ export async function syncAllBash(): Promise<{
   systems: SyncResult;
   decisions: SyncResult;
   milestones: SyncResult;
+  upcomingReviews: SyncResult;
 }> {
   // Check if sync is already in progress
   if (syncInProgress) {
@@ -35,6 +36,7 @@ export async function syncAllBash(): Promise<{
       systems: skipResult,
       decisions: skipResult,
       milestones: skipResult,
+      upcomingReviews: skipResult,
     };
   }
 
@@ -51,12 +53,14 @@ export async function syncAllBash(): Promise<{
       systems: SyncResult;
       decisions: SyncResult;
       milestones: SyncResult;
+      upcomingReviews: SyncResult;
     } = {
       devices: { success: false, message: "", timestamp: new Date() },
       software: { success: false, message: "", timestamp: new Date() },
       systems: { success: false, message: "", timestamp: new Date() },
       decisions: { success: false, message: "", timestamp: new Date() },
       milestones: { success: false, message: "", timestamp: new Date() },
+      upcomingReviews: { success: false, message: "", timestamp: new Date() },
     };
 
     // Run all sync scripts in parallel for speed
@@ -66,6 +70,7 @@ export async function syncAllBash(): Promise<{
       { name: "systems", script: "sync_systems.sh" },
       { name: "decisions", script: "sync_decisions.sh" },
       { name: "milestones", script: "sync_milestones.sh" },
+      { name: "upcomingReviews", script: "sync_upcoming_reviews.sh" },
     ];
 
     console.log(`📥 Starting ${scripts.length} syncs in parallel...`);
