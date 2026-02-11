@@ -1749,4 +1749,9 @@
 - [x] Update parser to detect and flag items containing [wearables-tag]
 - [x] Update top tile query to filter for isWearablesTag=1 items only
 - [x] Run sync and verify SOFTWARE section shows only tagged items (4 items: 2 Highlights + 2 Risks)
+- [x] Save checkpoint
+
+## Remove [wearables-tag] Marker from Display
+- [x] Update generateExecutiveSummaries to strip [wearables-tag] from content before returning
+- [x] Test and verify tag is hidden in UI but filtering still works (verified: no tags visible, rich text preserved)
 - [ ] Save checkpoint
