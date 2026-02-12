@@ -1842,4 +1842,29 @@
 - [x] Fix sync_systems.sh to include isWearablesTag in database insert
 - [x] Re-sync again with fixed script
 - [x] Verify in browser that SYSTEMS card shows the 3 wearables-tagged items (SUCCESS!)
+- [x] Save checkpoint
+
+## Fix Devices Tab Not Updating on Admin Refresh
+- [x] Investigate how Admin Refresh button triggers data syncing (SyncStatus.tsx → syncAll mutation)
+- [x] Check if Devices sync script is called during refresh (YES - syncAllBash.ts calls sync_from_gdrive.sh)
+- [x] Verify Devices sync script exists and works correctly (YES - manually tested, loads 65 items)
+- [x] Identified issue: SyncStatus invalidates dashboard.getAll, but Devices tab likely uses different query
+- [x] Find which query Devices tab uses (uses dashboard.getAll - correct!)
+- [x] Test Admin Refresh mechanism (sync runs successfully, invalidation works)
+- [x] User reports: should see new content from Google Doc every time
+- [x] Investigate why fresh Google Doc content isn't appearing after sync
+- [x] Check if Google Doc is actually being re-downloaded (FOUND ISSUE: rclone copy doesn't overwrite)
+- [x] Fix sync_from_gdrive.sh to delete old file before download (rm -f)
+- [x] Test fix - now downloads fresh copy with latest timestamp (22:28 vs 22:15)
+- [ ] Verify updated content appears in browser after Admin Refresh
+- [ ] Save checkpoint
+
+## Systematically Clear Cache in All Sync Scripts
+- [x] Find all sync scripts (10 scripts found)
+- [x] Identify scripts with rclone copy commands (3 scripts: devices, decisions, upcoming_reviews)
+- [x] Add rm -f to sync_from_gdrive.sh (Devices)
+- [x] Add rm -f to sync_decisions.sh (Decisions)
+- [x] Add rm -f to sync_upcoming_reviews.sh (3 xlsx files)
+- [ ] Note: sync_software.sh and sync_systems.sh use folder sync (already fresh)
+- [ ] Test Admin Refresh to confirm all sections get fresh data
 - [ ] Save checkpoint

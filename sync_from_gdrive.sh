@@ -7,6 +7,8 @@ export PYTHONPATH=
 export PYTHONHOME=
 
 echo "📥 Downloading Google Doc from Drive..."
+# Delete old file to force fresh download
+rm -f "/tmp/Device & Growth Canonical Program Review.docx"
 rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
 
 echo "📊 Parsing executive summary..."

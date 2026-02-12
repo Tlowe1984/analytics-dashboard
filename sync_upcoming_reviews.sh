@@ -5,6 +5,10 @@ echo "🔄 Syncing Upcoming Reviews from Google Drive..."
 
 # Download the three review sign-up sheets
 echo "📥 Downloading review sign-up sheets..."
+# Delete old files to force fresh downloads
+rm -f "/tmp/2026 Wearables Reviews Sign-Up Sheet .xlsx"
+rm -f "/tmp/2026 Product Reviews Sign-Up Sheet.xlsx"
+rm -f "/tmp/Systems Reviews Sign-Up Sheet .xlsx"
 rclone copy "manus_google_drive:2026 Wearables Reviews Sign-Up Sheet .xlsx" /tmp --config /home/ubuntu/.gdrive-rclone.ini
 rclone copy "manus_google_drive:2026 Product Reviews Sign-Up Sheet.xlsx" /tmp --config /home/ubuntu/.gdrive-rclone.ini
 rclone copy "manus_google_drive:Systems Reviews Sign-Up Sheet .xlsx" /tmp --config /home/ubuntu/.gdrive-rclone.ini
