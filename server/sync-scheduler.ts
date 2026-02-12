@@ -39,11 +39,11 @@ async function runSync() {
     // Import and call the bash script sync function (with weekly archive detection)
     const { syncAllBash } = await import('./syncAllBash');
     
-    log('Syncing all 5 data sources using bash scripts...');
+    log('Syncing all 7 data sources using bash scripts...');
     const result = await syncAllBash();
     
     // Log results for each source
-    const sources = ['devices', 'software', 'systems', 'decisions', 'milestones'] as const;
+    const sources = ['devices', 'software', 'systems', 'hearing', 'decisions', 'milestones', 'upcomingReviews'] as const;
     let successCount = 0;
     let failCount = 0;
     

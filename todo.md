@@ -1867,4 +1867,24 @@
 - [x] Add rm -f to sync_upcoming_reviews.sh (3 xlsx files)
 - [ ] Note: sync_software.sh and sync_systems.sh use folder sync (already fresh)
 - [ ] Test Admin Refresh to confirm all sections get fresh data
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## Update Hearing Tab to Dynamic File Sourcing
+- [x] Create sync_hearing.sh script with dynamic file search
+- [x] Search for WXX Health Canonical Program Review in specified folder
+- [x] Select most recent file (current or previous week) based on modification date
+- [x] Add cache clearing (rm -f) before download
+- [x] Create parse_hearing_review.py matching existing parser patterns
+- [x] Parse Wins, Exec Summary, and Decisions sections with rich text
+- [x] Use same decision parsing logic as other sections
+- [x] Integrate sync_hearing.sh into syncAllBash.ts for admin refresh
+- [x] Add to daily auto-update schedule (sync-scheduler.ts)
+- [x] Create hearingItems database table and run migration
+- [x] Test sync_hearing.sh script (SUCCESS - loaded 323 items from W07)
+- [x] Fix dev server crash (removed trailing comma in syncAllBash.ts)
+- [x] Fix EMFILE error (increased file watcher limits)
+- [x] Verify dev server running successfully on port 3000
+- [ ] Add Hearing tab to frontend UI
+- [ ] Add backend router for hearing data
+- [ ] Test admin refresh with hearing sync
+- [x] Save checkpoint (backend complete)

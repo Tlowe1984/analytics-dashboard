@@ -152,6 +152,26 @@ export type SystemsItem = typeof systemsItems.$inferSelect;
 export type InsertSystemsItem = typeof systemsItems.$inferInsert;
 
 /**
+ * Hearing (Health) review items
+ * Extracted from WXX Health Canonical Program Review documents
+ */
+export const hearingItems = mysqlTable("hearing_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "decisions"]).notNull(),
+  content: text("content").notNull(),
+  isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
+  indentLevel: int("indent_level").default(0).notNull(), // Indentation level from Word numbering (0=flush left, 1+=indented)
+  order: int("order").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  sectionOrderIdx: index("section_order_idx").on(table.sectionType, table.order),
+}));
+
+export type HearingItem = typeof hearingItems.$inferSelect;
+export type InsertHearingItem = typeof hearingItems.$inferInsert;
+
+/**
  * Upcoming reviews from three sign-up sheets
  * Shows next 14 days of scheduled reviews
  */

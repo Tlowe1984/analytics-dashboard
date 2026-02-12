@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `hearing_items` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`section_type` enum('wins','exec_summary','decisions') NOT NULL,\n\t`content` text NOT NULL,\n\t`is_new` int NOT NULL DEFAULT 0,\n\t`indent_level` int NOT NULL DEFAULT 0,\n\t`order` int NOT NULL DEFAULT 0,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `hearing_items_id` PRIMARY KEY(`id`)\n);\nCREATE INDEX `section_order_idx` ON `hearing_items` (`section_type`,`order`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute CREATE TABLE `hearing_items` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`section_type` enum('wins','exec_summary','decisions') NOT NULL,\n\t`content` text NOT NULL,\n\t`is_new` int NOT NULL DEFAULT 0,\n\t`indent_level` int NOT NULL DEFAULT 0,\n\t`order` int NOT NULL DEFAULT 0,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `hearing_items_id` PRIMARY KEY(`id`)\n);\nCREATE INDEX `section_order_idx` ON `hearing_items` (`section_type`,`order`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1151
+}
