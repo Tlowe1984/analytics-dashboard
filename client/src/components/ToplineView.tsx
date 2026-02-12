@@ -2,6 +2,7 @@ import { trpc } from "@/lib/trpc";
 import { Sparkles, AlertTriangle, Calendar, Glasses, Watch, Grid3x3, Cpu, Code, Layers, Trophy, FileText } from "lucide-react";
 import { SystemsTab } from "./SystemsTab";
 import { HearingTab } from "./HearingTab";
+import { AITab } from "./AITab";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -564,7 +565,7 @@ export default function ToplineView() {
           </TabsContent>
           
           <TabsContent value="software_ai">
-            <SoftwareTab category="software_ai" sourceDocumentUrl={softwareSourceUrl} />
+            <AITab sourceDocumentUrl={softwareSourceUrl} />
           </TabsContent>
           
           <TabsContent value="software_hearing">

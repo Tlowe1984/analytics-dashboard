@@ -23,6 +23,7 @@ export async function syncAllBash(): Promise<{
   software: SyncResult;
   systems: SyncResult;
   hearing: SyncResult;
+  ai: SyncResult;
   decisions: SyncResult;
   milestones: SyncResult;
   upcomingReviews: SyncResult;
@@ -36,6 +37,7 @@ export async function syncAllBash(): Promise<{
       software: skipResult,
       systems: skipResult,
       hearing: skipResult,
+      ai: skipResult,
       decisions: skipResult,
       milestones: skipResult,
       upcomingReviews: skipResult,
@@ -58,6 +60,7 @@ export async function syncAllBash(): Promise<{
       software: SyncResult;
       systems: SyncResult;
       hearing: SyncResult;
+      ai: SyncResult;
       decisions: SyncResult;
       milestones: SyncResult;
       upcomingReviews: SyncResult;
@@ -66,6 +69,7 @@ export async function syncAllBash(): Promise<{
       software: { success: false, message: "", timestamp: new Date() },
       systems: { success: false, message: "", timestamp: new Date() },
       hearing: { success: false, message: "", timestamp: new Date() },
+      ai: { success: false, message: "", timestamp: new Date() },
       decisions: { success: false, message: "", timestamp: new Date() },
       milestones: { success: false, message: "", timestamp: new Date() },
       upcomingReviews: { success: false, message: "", timestamp: new Date() },
@@ -77,6 +81,7 @@ export async function syncAllBash(): Promise<{
       { name: "software", script: "sync_software.sh" },
       { name: "systems", script: "sync_systems.sh" },
       { name: "hearing", script: "sync_hearing.sh" },
+      { name: "ai", script: "sync_ai.sh" },
       { name: "decisions", script: "sync_decisions.sh" },
       { name: "milestones", script: "sync_milestones.sh" },
       { name: "upcomingReviews", script: "sync_upcoming_reviews.sh" }

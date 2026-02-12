@@ -478,6 +478,24 @@ Return ONLY valid JSON, no other text.`;
       }),
   }),
 
+  ai: router({
+    // Get all AI review items
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllAiItems();
+    }),
+
+    // Get items by section type
+    getBySection: publicProcedure
+      .input(
+        z.object({
+          sectionType: z.enum(["wins", "exec_summary", "decisions"]),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getAiItemsBySection(input.sectionType);
+      }),
+  }),
+
   milestones: router({
     // Get upcoming milestones by type
     getUpcoming: publicProcedure

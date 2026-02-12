@@ -21,8 +21,13 @@ echo "🖥️  Syncing Systems data..."
 
 # Sync Hearing data
 echo ""
-echo "🏥 Syncing Hearing data..."
+echo "🏯 Syncing Hearing data..."
 ./sync_hearing.sh
+
+# Sync AI data
+echo ""
+echo "🤖 Syncing AI data..."
+./sync_ai.sh
 
 # Sync Decisions data
 echo ""
@@ -46,6 +51,7 @@ echo "   - Devices: ~62 items"
 echo "   - Software: ~30 items"
 echo "   - Systems: ~30 items"
 echo "   - Hearing: ~45 items"
+echo "   - AI: ~43 items"
 echo "   - Decisions: ~17 items"
 echo "   - Milestones: ~666 items"
 echo "   - Upcoming Reviews: varies"

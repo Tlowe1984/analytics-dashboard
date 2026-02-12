@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { cachedQuery } from "./query-cache";
 
@@ -721,6 +721,46 @@ export async function getAllHearingItems(): Promise<HearingItem[]> {
       .select()
       .from(hearingItems)
       .orderBy(asc(hearingItems.order));
+
+    return result;
+  });
+}
+
+// AI review queries
+export async function getAiItemsBySection(
+  sectionType: "wins" | "exec_summary" | "decisions"
+): Promise<AiItem[]> {
+  return cachedQuery(`ai:${sectionType}`, async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get AI items: database not available");
+      return [];
+    }
+
+    const { eq, asc } = await import("drizzle-orm");
+    const result = await db
+      .select()
+      .from(aiItems)
+      .where(eq(aiItems.sectionType, sectionType))
+      .orderBy(asc(aiItems.order));
+
+    return result;
+  });
+}
+
+export async function getAllAiItems(): Promise<AiItem[]> {
+  return cachedQuery('ai:all', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get AI items: database not available");
+      return [];
+    }
+
+    const { asc } = await import("drizzle-orm");
+    const result = await db
+      .select()
+      .from(aiItems)
+      .orderBy(asc(aiItems.order));
 
     return result;
   });

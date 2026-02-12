@@ -1976,3 +1976,18 @@
 - [x] Update DAILY_SYNC_SCHEDULE.md documentation
 - [x] Created new sync_all_dashboard.sh that syncs all 7 data sources
 - [x] Updated documentation to reflect comprehensive sync coverage
+
+## Implement AI Tab Data Sync
+- [x] Create parse_ai_review.py parser based on Hearing parser logic
+- [x] Extract Wins/Launches [Async] section with rich text
+- [x] Extract Exec Summary [Async] section with rich text
+- [x] Extract This Week's Decisions table (DRI, Forum, Status, Decision Doc, Decision Makers, Decision outcome)
+- [x] Create ai_items database table with schema similar to hearing_items
+- [x] Create sync_ai.sh script to download latest AI WX document from Google Drive
+- [x] Create inline tsx loader in sync_ai.sh to load parsed data into database
+- [x] Add AI sync to syncAllBash.ts and sync_all_dashboard.sh
+- [x] Create AITab frontend component to display the data
+- [x] Test full sync and display workflow
+- [x] Added AI router with getAll and getBySection procedures
+- [x] Successfully synced AI W7 (2/10/2026) document with 43 items (5 wins, 32 exec summary, 6 decisions)
+- [x] Integrated AITab into ToplineView to replace old software_ai tab

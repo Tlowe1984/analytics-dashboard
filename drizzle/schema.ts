@@ -199,3 +199,30 @@ export const upcomingReviews = mysqlTable("upcoming_reviews", {
 
 export type UpcomingReview = typeof upcomingReviews.$inferSelect;
 export type InsertUpcomingReview = typeof upcomingReviews.$inferInsert;
+
+/**
+ * AI review items from AI WX Review documents
+ * Extracted from Software (I+E,AI, Hearing) Reviews / AI Previous Reviews & Review Notes
+ */
+export const aiItems = mysqlTable("ai_items", {
+  id: int("id").autoincrement().primaryKey(),
+  sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "decisions"]).notNull(),
+  content: text("content").notNull(),
+  isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
+  indentLevel: int("indent_level").default(0).notNull(), // Indentation level from Word numbering (0=flush left, 1+=indented)
+  order: int("order").default(0).notNull(),
+  // Decision table columns (only used when sectionType = 'decisions')
+  dri: text("dri"),
+  forum: text("forum"),
+  status: text("status"),
+  decisionDoc: text("decision_doc"),
+  decisionMakers: text("decision_makers"),
+  post: text("post"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  sectionOrderIdx: index("section_order_idx").on(table.sectionType, table.order),
+}));
+
+export type AiItem = typeof aiItems.$inferSelect;
+export type InsertAiItem = typeof aiItems.$inferInsert;

@@ -211,6 +211,13 @@
       "when": 1770917158433,
       "tag": "0029_blue_night_thrasher",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "5",
+      "when": 1770923267699,
+      "tag": "0030_tiresome_talon",
+      "breakpoints": true
     }
   ]
 }
