@@ -1884,7 +1884,14 @@
 - [x] Fix dev server crash (removed trailing comma in syncAllBash.ts)
 - [x] Fix EMFILE error (increased file watcher limits)
 - [x] Verify dev server running successfully on port 3000
-- [ ] Add Hearing tab to frontend UI
-- [ ] Add backend router for hearing data
-- [ ] Test admin refresh with hearing sync
-- [x] Save checkpoint (backend complete)
+- [x] Verify Hearing data is in database (323 items loaded)
+- [x] Check file source path for Hearing sync
+- [x] Add backend router for hearing data (hearing.getAll, hearing.getBySection)
+- [x] Add hearing query helpers to db.ts (getHearingItemsBySection, getAllHearingItems)
+- [x] Create HearingTab component to display hearing data
+- [x] Update ToplineView to use HearingTab instead of SoftwareTab
+- [x] Test backend endpoints (hearing.getAll returns 323 items, hearing.getBySection works)
+- [ ] Fix parse_hearing_review.py to correctly identify Wins/Exec Summary/Decisions sections (currently all items are marked as 'decisions')
+- [ ] Re-sync hearing data after parser fix
+- [ ] Verify Hearing tab displays data correctly in browser
+- [ ] Save checkpoint (backend and frontend complete)

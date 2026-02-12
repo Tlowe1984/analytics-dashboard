@@ -458,6 +458,24 @@ Return ONLY valid JSON, no other text.`;
       }),
   }),
 
+  hearing: router({
+    // Get all hearing (health) review items
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllHearingItems();
+    }),
+
+    // Get items by section type
+    getBySection: publicProcedure
+      .input(
+        z.object({
+          sectionType: z.enum(["wins", "exec_summary", "decisions"]),
+        })
+      )
+      .query(async ({ input }) => {
+        return await db.getHearingItemsBySection(input.sectionType);
+      }),
+  }),
+
   milestones: router({
     // Get upcoming milestones by type
     getUpcoming: publicProcedure

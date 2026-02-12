@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { cachedQuery } from "./query-cache";
 
@@ -642,5 +642,45 @@ export async function getPDPMilestonesThisAndNextWeek() {
       console.error("[Database] Error fetching PDP milestones for this and next week:", error);
       return [];
     }
+  });
+}
+
+// Hearing (Health) review queries
+export async function getHearingItemsBySection(
+  sectionType: "wins" | "exec_summary" | "decisions"
+): Promise<HearingItem[]> {
+  return cachedQuery(`hearing:${sectionType}`, async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get hearing items: database not available");
+      return [];
+    }
+
+    const { eq, asc } = await import("drizzle-orm");
+    const result = await db
+      .select()
+      .from(hearingItems)
+      .where(eq(hearingItems.sectionType, sectionType))
+      .orderBy(asc(hearingItems.order));
+
+    return result;
+  });
+}
+
+export async function getAllHearingItems(): Promise<HearingItem[]> {
+  return cachedQuery('hearing:all', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get hearing items: database not available");
+      return [];
+    }
+
+    const { asc } = await import("drizzle-orm");
+    const result = await db
+      .select()
+      .from(hearingItems)
+      .orderBy(asc(hearingItems.order));
+
+    return result;
   });
 }
