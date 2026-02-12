@@ -261,6 +261,8 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       const { invokeLLM } = await import("./_core/llm");
       const rawDecisions = await db.getRecentDecisionsForAI(7);
       
+      console.log('[DEBUG] Raw decisions before LLM:', JSON.stringify(rawDecisions, null, 2));
+      
       if (rawDecisions.length === 0) {
         return [];
       }

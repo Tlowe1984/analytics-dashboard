@@ -385,69 +385,110 @@ export async function getSoftwareItemsBySection(
 // ============ Decisions Functions ============
 
 /**
- * Get recent MZ and Wearables Review decisions for AI Executive Updates
- * Returns decisions where forum contains 'MZ' or 'Wearables Review', combining Decisions table and Software Pillar decisions
+ * Get CURRENT WEEK MZ and Wearables Review decisions for AI Executive Updates
+ * Returns decisions from current week where forum contains 'MZ' or 'Wearables Review'
+ * MZ decisions are stack-ranked to the top
  * Note: Summaries are generated in the router using LLM to keep them concise (≤15 words)
  */
 export async function getRecentDecisionsForAI(limit = 10) {
-  return cachedQuery('ai:decisions', async () => {
-    const db = await getDb();
-    if (!db) return [];
+  // NO CACHE - always fetch fresh data
+  const db = await getDb();
+  if (!db) return [];
+  
+  try {
+    const { desc, gte } = await import("drizzle-orm");
     
-    try {
-      const { desc } = await import("drizzle-orm");
+    // Calculate current week number for classification
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    const days = Math.floor((now.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+    const currentWeekNum = Math.ceil((days + startOfYear.getDay() + 1) / 7);
+    const currentWeekStr = `W${currentWeekNum} ${now.getFullYear()}`;
+    const previousWeekStr = `W${currentWeekNum - 1} ${now.getFullYear()}`;
+    
+    // For database query, use a reasonable time window (last 2 months)
+    const twoMonthsAgo = new Date(now);
+    twoMonthsAgo.setMonth(now.getMonth() - 2);
+    
+    // Get decisions from Decisions table (last 2 months, filter by week field later)
+    const decisionsFromTable = await db
+      .select()
+      .from(decisions)
+      .where(gte(decisions.updatedAt, twoMonthsAgo))
+      .orderBy(desc(decisions.updatedAt));
+    
+
+    
+    // Get Pillar decisions from Software items (last 2 months)
+    const pillarDecisions = await db
+      .select()
+      .from(softwareItems)
+      .where(and(
+        eq(softwareItems.sectionType, "decisions"),
+        eq(softwareItems.category, "Pillar"),
+        gte(softwareItems.updatedAt, twoMonthsAgo)
+      ))
+      .orderBy(desc(softwareItems.updatedAt))
+      .limit(limit * 2);
+    
+    // Combine and format with week classification based on week field
+    const combined = [
+      ...decisionsFromTable.map(item => ({
+        type: 'decision' as const,
+        forum: item.forum || '',
+        outcome: item.decisionOutcome,
+        date: item.updatedAt,
+        week: item.week || '',
+        isCurrentWeek: item.week === currentWeekStr,
+        isPreviousWeek: item.week === previousWeekStr,
+      })),
+      ...pillarDecisions.map(item => ({
+        type: 'pillar' as const,
+        forum: item.forum || '',
+        outcome: item.content,
+        date: item.updatedAt,
+        week: item.week || '',
+        isCurrentWeek: item.week === currentWeekStr,
+        isPreviousWeek: item.week === previousWeekStr,
+      }))
+    ];
+    
+    // Filter for MZ and Wearables Review decisions from current + previous week only
+    const filteredDecisions = combined.filter(item => {
+      // Must be from current or previous week
+      if (!item.isCurrentWeek && !item.isPreviousWeek) return false;
       
-      // Get decisions from Decisions table (recent, not filtered by week)
-      const decisionsFromTable = await db
-        .select()
-        .from(decisions)
-        .orderBy(desc(decisions.updatedAt))
-        .limit(limit * 2); // Get more to ensure we have enough after combining with pillar decisions
+      const forum = (item.forum?.toLowerCase() || '');
+      const outcome = (item.outcome?.toLowerCase() || '');
+      const hasMZ = forum.includes('mz') || outcome.includes('mz');
+      const hasWearablesReview = forum.includes('wearable') && forum.includes('review');
+      return hasMZ || hasWearablesReview;
+    });
+    
+    // Stack rank: Current week MZ first, then other current week, then previous week
+    filteredDecisions.sort((a, b) => {
+      const aHasMZ = (a.forum?.toLowerCase() || '').includes('mz') || (a.outcome?.toLowerCase() || '').includes('mz');
+      const bHasMZ = (b.forum?.toLowerCase() || '').includes('mz') || (b.outcome?.toLowerCase() || '').includes('mz');
       
-      // Get Pillar decisions from Software items (category = "Pillar")
-      const pillarDecisions = await db
-        .select()
-        .from(softwareItems)
-        .where(and(
-          eq(softwareItems.sectionType, "decisions"),
-          eq(softwareItems.category, "Pillar")
-        ))
-        .orderBy(desc(softwareItems.updatedAt))
-        .limit(limit);
+      // Priority 1: Current week MZ decisions
+      const aIsCurrentWeekMZ = a.isCurrentWeek && aHasMZ;
+      const bIsCurrentWeekMZ = b.isCurrentWeek && bHasMZ;
+      if (aIsCurrentWeekMZ && !bIsCurrentWeekMZ) return -1;
+      if (!aIsCurrentWeekMZ && bIsCurrentWeekMZ) return 1;
       
-      // Combine and format (return raw data for LLM summarization)
-      const combined = [
-        ...decisionsFromTable.map(item => ({
-          type: 'decision' as const,
-          forum: item.forum || '',
-          outcome: item.decisionOutcome,
-          date: item.updatedAt,
-        })),
-        ...pillarDecisions.map(item => ({
-          type: 'pillar' as const,
-          forum: item.forum || '',
-          outcome: item.content,
-          date: item.updatedAt,
-        }))
-      ];
+      // Priority 2: Other current week decisions
+      if (a.isCurrentWeek && !b.isCurrentWeek) return -1;
+      if (!a.isCurrentWeek && b.isCurrentWeek) return 1;
       
-      // Filter for MZ and Wearables Review decisions only
-      const filteredDecisions = combined.filter(item => {
-        const forum = (item.forum?.toLowerCase() || '');
-        const hasMZ = forum.includes('mz');
-        const hasWearablesReview = forum.includes('wearable') && forum.includes('review');
-        return hasMZ || hasWearablesReview;
-      });
-      
-      // Sort by date (most recent first)
-      filteredDecisions.sort((a, b) => b.date.getTime() - a.date.getTime());
-      
-      return filteredDecisions.slice(0, limit);
-    } catch (error) {
-      console.error("[Database] Error fetching recent decisions for AI:", error);
-      return [];
-    }
-  });
+      // Within same priority group, sort by date (most recent first)
+      return b.date.getTime() - a.date.getTime();
+    });
+    
+    return filteredDecisions.slice(0, limit);
+  } catch (error) {
+    console.error("[Database] Error fetching recent decisions for AI:", error);
+    return [];
+  }
 }
 
 export async function getAllDecisions(): Promise<Decision[]> {

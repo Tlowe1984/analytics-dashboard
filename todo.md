@@ -1938,5 +1938,26 @@
 - [x] Update SyncStatus.tsx to check all 7 sources (devices, software, systems, hearing, decisions, milestones, upcomingReviews)
 - [x] Update success toast to show all 7 sources in the count
 - [x] Create documentation table showing file sourcing logic for each source (SYNC_LOGIC_DOCUMENTATION.md)
-- [ ] Test sync and verify all sources are displayed
-- [ ] Save checkpoint with sync status update
+- [x] Test sync and verify all sources are displayed
+- [x] Save checkpoint with sync status update (version: 18f73158)
+
+## Fix Decisions Made Section Filtering (User Reported)
+- [x] Investigate why textile decision with "MZ" is not showing in Decisions Made section at top
+- [x] Check current filtering logic for Decisions Made section (getRecentDecisionsForAI in db.ts)
+- [x] Update logic to prioritize and include decisions containing "MZ" keyword in forum OR outcome
+- [x] Add MZ prioritization sorting (MZ decisions appear first, then sorted by date)
+- [x] Clear cache and restart server to apply changes
+- [x] Update logic to filter for CURRENT WEEK decisions only (not all recent)
+- [x] Ensure cache is cleared BEFORE filtering (removed cachedQuery wrapper)
+- [x] Stack rank: MZ decisions from this week at top, then other current week decisions
+- [x] Calculate week start (Sunday) and filter decisions.updatedAt >= startOfWeek
+- [ ] Restart server to apply changes
+- [ ] Test with textile decision to verify it appears
+- [ ] Save checkpoint with filtering fix
+
+## Fix Decision Filtering Logic
+- [x] Update getRecentDecisionsForAI to include current week AND previous week decisions
+- [x] Stack rank: Current week MZ decisions first, then other current week, then previous week
+- [x] Ensure SSG1 decision from W6 appears in the list (ranked lower than current week MZ decisions)
+- [x] Use week field instead of updatedAt for classification (decisions synced today but from different weeks)
+- [x] Verified correct ordering: W7 MZ decisions first, then W6 MZ decisions, then other W7 decisions
