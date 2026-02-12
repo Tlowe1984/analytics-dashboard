@@ -139,6 +139,7 @@ export const systemsItems = mysqlTable("systems_items", {
   sectionType: mysqlEnum("section_type", ["wins", "exec_summary", "help_needed"]).notNull(),
   content: text("content").notNull(),
   isNew: int("is_new").default(0).notNull(), // 1 if this is new information (blue text), 0 otherwise
+  isWearablesTag: int("is_wearables_tag").default(0).notNull(), // 1 if item contains [wearables-tag], 0 otherwise
   indentLevel: int("indent_level").default(0).notNull(), // Indentation level from Word numbering (0=flush left, 1+=indented)
   order: int("order").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),

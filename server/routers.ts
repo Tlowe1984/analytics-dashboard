@@ -224,16 +224,14 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         .filter(item => item.sectionType === "exec_summary" && item.isWearablesTag === 1)
         .map(item => item.content.replace(/\[wearables-tag\]/gi, '').trim());
       
-      // Systems data (uses "wins" and "help_needed") - limit to 5 per subsection
+      // Systems data - only show items tagged with [wearables-tag], strip tag from display
       const systemsHighlights = systemsItems
-        .filter(item => item.sectionType === "wins")
-        .map(item => item.content)
-        .slice(0, 5);
+        .filter(item => item.sectionType === "wins" && item.isWearablesTag === 1)
+        .map(item => item.content.replace(/\[wearables-tag\]/gi, '').trim());
       
       const systemsRisks = systemsItems
-        .filter(item => item.sectionType === "help_needed")
-        .map(item => item.content)
-        .slice(0, 5);
+        .filter(item => item.sectionType === "exec_summary" && item.isWearablesTag === 1)
+        .map(item => item.content.replace(/\[wearables-tag\]/gi, '').trim());
       
       return {
         devices: { highlights: devicesHighlights, risks: devicesRisks },

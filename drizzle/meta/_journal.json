@@ -176,6 +176,13 @@
       "when": 1770833349257,
       "tag": "0024_awesome_cammi",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1770854080895,
+      "tag": "0025_empty_whistler",
+      "breakpoints": true
     }
   ]
 }

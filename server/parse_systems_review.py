@@ -207,6 +207,7 @@ if __name__ == "__main__":
             "section_type": item['section_type'],
             "content": item['content'],
             "is_new": 0,
+            "is_wearables_tag": 1,  # Mark as wearables-tagged item
             "indent_level": 0,
             "order": len(items) + idx
         })

@@ -38,6 +38,7 @@ for (const item of data) {
     sectionType: item.section_type,
     content: item.content,
     isNew: item.is_new,
+    isWearablesTag: item.is_wearables_tag || 0,
     indentLevel: item.indent_level || 0,
     order: item.order,
   });

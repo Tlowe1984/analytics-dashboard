@@ -1,0 +1,1 @@
+ALTER TABLE `systems_items` ADD `is_wearables_tag` int DEFAULT 0 NOT NULL;

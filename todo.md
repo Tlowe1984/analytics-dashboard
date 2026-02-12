@@ -1829,4 +1829,17 @@
 - [x] Re-sync Systems data (589 items loaded, 3 wearables-tagged)
 - [x] Add formatBulletContent() to SystemsTab.tsx for UI cleanup
 - [x] Verify in browser: rich text, bold titles, no tags, no **** (ALL VERIFIED!)
+- [x] Save checkpoint
+
+## Fix SYSTEMS Topline Summary to Show Wearables-Tagged Items
+- [x] Investigate how topline SYSTEMS summary card is populated (AIExecutiveUpdates.tsx)
+- [x] Find where Systems data is queried for topline display (generateExecutiveSummaries)
+- [x] Add isWearablesTag column to systemsItems table schema
+- [x] Generate and apply migration for new column
+- [x] Update parse_systems_review.py to set isWearablesTag=1 for extracted items
+- [x] Update generateExecutiveSummaries to filter by isWearablesTag
+- [x] Re-sync Systems data to populate isWearablesTag column (589 items loaded, 3 wearables-tagged)
+- [x] Fix sync_systems.sh to include isWearablesTag in database insert
+- [x] Re-sync again with fixed script
+- [x] Verify in browser that SYSTEMS card shows the 3 wearables-tagged items (SUCCESS!)
 - [ ] Save checkpoint
