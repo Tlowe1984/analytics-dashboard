@@ -260,7 +260,25 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
   const { data: execSummaryItems, isLoading: execLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "exec_summary" });
   const { data: decisionsItems, isLoading: decisionsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "decisions" });
   
-  const isLoading = winsLoading || execLoading || decisionsLoading;
+  // For software_ie category, also fetch wearables-tagged items from AI and Hearing
+  const { data: wearablesItems, isLoading: wearablesLoading } = trpc.software.getWearablesTagged.useQuery(undefined, {
+    enabled: category === "software_ie"
+  });
+  
+  const isLoading = winsLoading || execLoading || decisionsLoading || (category === "software_ie" && wearablesLoading);
+  
+  // Combine software_ie items with wearables-tagged items for software_ie category
+  const combinedWinsItems = category === "software_ie" && wearablesItems 
+    ? [...(winsItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "wins")]
+    : winsItems;
+  
+  const combinedExecSummaryItems = category === "software_ie" && wearablesItems
+    ? [...(execSummaryItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "exec_summary")]
+    : execSummaryItems;
+  
+  const combinedDecisionsItems = category === "software_ie" && wearablesItems
+    ? [...(decisionsItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "decisions")]
+    : decisionsItems;
 
   if (isLoading) {
     return (
@@ -398,7 +416,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
 
   // Render decisions as a structured table
   const renderDecisionsTable = () => {
-    if (!decisionsItems || decisionsItems.length === 0) {
+    const itemsToRender = combinedDecisionsItems;
+    if (!itemsToRender || itemsToRender.length === 0) {
       return (
         <div className="bg-card/50 border border-border/50 rounded-xl p-4">
           <h3 className="text-sm font-semibold mb-3 text-foreground">DECISIONS</h3>
@@ -421,7 +440,7 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
               </tr>
             </thead>
             <tbody>
-              {decisionsItems.map((item, idx) => (
+              {itemsToRender.map((item, idx) => (
                 <tr key={idx} className="border-b border-border/30 last:border-0">
                   <td className="py-2 px-2 align-top">
                     <MarkdownText content={item.topic || item.decision_doc || '-'} />
@@ -457,8 +476,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
         </a>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {renderTile("wins", winsItems)}
-        {renderTile("exec_summary", execSummaryItems)}
+        {renderTile("wins", combinedWinsItems)}
+        {renderTile("exec_summary", combinedExecSummaryItems)}
         {renderDecisionsTable()}
       </div>
     </div>

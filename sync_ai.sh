@@ -71,6 +71,7 @@ async function loadAiData() {
       sectionType: item.section_type,
       content: item.content,
       isNew: item.is_new ? 1 : 0,
+      isWearablesTag: item.is_wearables_tag ? 1 : 0,
       indentLevel: item.indent_level,
       order: item.order,
       // Decision table fields (only for decisions section)

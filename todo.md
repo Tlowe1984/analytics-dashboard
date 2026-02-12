@@ -1996,3 +1996,14 @@
 - [x] Change AI tab layout from 2-column + full-width to 3-column grid
 - [x] Display Wins, Exec Summary, and Decisions tiles side by side
 - [x] Ensure responsive design maintains readability on smaller screens
+
+## Add Wearables-Tag Filtering to Software Section
+- [x] Update parse_ai_review.py to detect [wearables-tag] in all sections (Wins, Exec Summary, Decisions)
+- [x] Update parse_hearing_review.py to detect [wearables-tag] in all sections (Wins, Exec Summary, Decisions)
+- [x] Remove [wearables-tag] text before storing content
+- [x] Set is_wearables_tag flag to 1 for tagged items in ai_items and hearing_items tables
+- [x] Added is_wearables_tag column to both ai_items and hearing_items tables
+- [x] Updated sync scripts to pass is_wearables_tag field to database
+- [x] Create backend query to fetch wearables-tagged items from AI and Hearing tables
+- [x] Update Software (I+E) tab to display both software_ie items AND wearables-tagged items from AI/Hearing
+- [x] Combined wearables-tagged items with software_ie items for Wins, Exec Summary, and Decisions sections

@@ -458,6 +458,11 @@ Return ONLY valid JSON, no other text.`;
       .query(async ({ input }) => {
         return await db.getSoftwareItemsBySection(input.softwareCategory, input.sectionType);
       }),
+
+    // Get wearables-tagged items from AI and Hearing reviews
+    getWearablesTagged: publicProcedure.query(async () => {
+      return await db.getWearablesTaggedItems();
+    }),
   }),
 
   hearing: router({

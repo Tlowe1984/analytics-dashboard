@@ -90,6 +90,13 @@ def parse_ai_review(docx_path):
                         is_new = True
                         break
             
+            # Detect and strip [wearables-tag]
+            is_wearables_tag = '[wearables-tag]' in rich_text.lower()
+            if is_wearables_tag:
+                # Remove [wearables-tag] (case insensitive)
+                import re
+                rich_text = re.sub(r'\[wearables-tag\]', '', rich_text, flags=re.IGNORECASE).strip()
+            
             # Detect indent level
             indent_level = 0
             if para.paragraph_format.left_indent:
@@ -100,6 +107,7 @@ def parse_ai_review(docx_path):
                 'section_type': current_section,
                 'content': rich_text,
                 'is_new': is_new,
+                'is_wearables_tag': is_wearables_tag,
                 'indent_level': indent_level,
                 'order': order
             })
@@ -158,6 +166,12 @@ def parse_ai_review(docx_path):
                 if 'sub-pillar' in dri.lower() or 'cross-pillar' in dri.lower():
                     continue
                 
+                # Detect and strip [wearables-tag] from decision outcome
+                is_wearables_tag = '[wearables-tag]' in decision_outcome.lower()
+                if is_wearables_tag:
+                    import re
+                    decision_outcome = re.sub(r'\[wearables-tag\]', '', decision_outcome, flags=re.IGNORECASE).strip()
+                
                 # Create decision item with table structure
                 items.append({
                     'section_type': 'decisions',
@@ -169,6 +183,7 @@ def parse_ai_review(docx_path):
                     'decision_makers': decision_makers,
                     'post': post,
                     'is_new': False,
+                    'is_wearables_tag': is_wearables_tag,
                     'indent_level': 0,
                     'order': order
                 })

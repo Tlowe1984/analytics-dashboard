@@ -765,3 +765,33 @@ export async function getAllAiItems(): Promise<AiItem[]> {
     return result;
   });
 }
+
+// Get wearables-tagged items from AI and Hearing reviews
+export async function getWearablesTaggedItems(): Promise<Array<AiItem | HearingItem>> {
+  return cachedQuery('wearables:all', async () => {
+    const db = await getDb();
+    if (!db) {
+      console.warn("[Database] Cannot get wearables-tagged items: database not available");
+      return [];
+    }
+
+    const { eq, asc } = await import("drizzle-orm");
+    
+    // Get wearables-tagged items from AI
+    const aiWearables = await db
+      .select()
+      .from(aiItems)
+      .where(eq(aiItems.isWearablesTag, 1))
+      .orderBy(asc(aiItems.order));
+    
+    // Get wearables-tagged items from Hearing
+    const hearingWearables = await db
+      .select()
+      .from(hearingItems)
+      .where(eq(hearingItems.isWearablesTag, 1))
+      .orderBy(asc(hearingItems.order));
+    
+    // Combine and return
+    return [...aiWearables, ...hearingWearables];
+  });
+}
