@@ -2007,3 +2007,11 @@
 - [x] Create backend query to fetch wearables-tagged items from AI and Hearing tables
 - [x] Update Software (I+E) tab to display both software_ie items AND wearables-tagged items from AI/Hearing
 - [x] Combined wearables-tagged items with software_ie items for Wins, Exec Summary, and Decisions sections
+
+## Fix Admin Refresh for Devices Wearable Week Tile
+- [x] Check why Devices Wearable Week X tile doesn't update on Admin Refresh
+- [x] Verify sync_from_gdrive.sh is syncing Devices data correctly
+- [x] Check if Wearable Week data is being parsed and stored in database
+- [x] Test Admin Refresh to ensure Wearable Week tile updates
+- [x] Confirmed sync_from_gdrive.sh successfully loads 72 dashboard items including Wearable Week data
+- [x] Verified Wearable Week tile now shows updated data after Admin Refresh
