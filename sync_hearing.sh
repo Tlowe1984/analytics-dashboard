@@ -74,7 +74,14 @@ async function loadHearingData() {
       content: item.content,
       isNew: item.is_new ? 1 : 0,
       indentLevel: item.indent_level,
-      order: item.order
+      order: item.order,
+      // Decision table fields (only for decisions section)
+      date: item.date || null,
+      dri: item.dri || null,
+      forum: item.forum || null,
+      status: item.status || null,
+      decisionDoc: item.decision_doc || null,
+      decisionMakers: item.decision_makers || null
     });
   }
   

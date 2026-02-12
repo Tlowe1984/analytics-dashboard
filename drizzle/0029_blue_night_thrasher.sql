@@ -1,0 +1,1 @@
+ALTER TABLE `hearing_items` MODIFY COLUMN `date` text;

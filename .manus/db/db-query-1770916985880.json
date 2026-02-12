@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `hearing_items` ADD `date` varchar(50);\nALTER TABLE `hearing_items` ADD `dri` varchar(255);\nALTER TABLE `hearing_items` ADD `forum` varchar(255);\nALTER TABLE `hearing_items` ADD `status` varchar(100);\nALTER TABLE `hearing_items` ADD `decision_doc` text;\nALTER TABLE `hearing_items` ADD `decision_makers` text;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute ALTER TABLE `hearing_items` ADD `date` varchar(50);\nALTER TABLE `hearing_items` ADD `dri` varchar(255);\nALTER TABLE `hearing_items` ADD `forum` varchar(255);\nALTER TABLE `hearing_items` ADD `status` varchar(100);\nALTER TABLE `hearing_items` ADD `decision_doc` text;\nALTER TABLE `hearing_items` ADD `decision_makers` text;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 3032
+}

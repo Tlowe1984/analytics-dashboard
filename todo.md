@@ -1895,3 +1895,33 @@
 - [ ] Re-sync hearing data after parser fix
 - [ ] Verify Hearing tab displays data correctly in browser
 - [ ] Save checkpoint (backend and frontend complete)
+
+## Fix Hearing Tab Parser and Data Structure
+- [ ] Update parse_hearing_review.py to correctly identify "Wins" section (look for 🏆Wins or Wins heading)
+- [ ] Update parse_hearing_review.py to correctly identify "Exec Summary" section (look for 🚀Exec Summary or Exec Summary heading)
+- [ ] Update parse_hearing_review.py to parse Decisions table (WW07 Health Decisions table with columns: Topic/Decision, Date, DRI, Forum, Status, Decision Doc, Decision Makers)
+- [ ] Update database schema for hearing decisions to support table columns (date, dri, forum, status, decision_doc, decision_makers)
+- [ ] Update HearingTab component to display Decisions as a table (similar to SoftwareTab decisions table)
+- [ ] Re-sync hearing data after parser fix
+- [ ] Verify Wins section shows bullet points from Wins heading
+- [ ] Verify Exec Summary section shows bullet points from Exec Summary heading
+- [ ] Verify Decisions section shows table with proper columns
+- [ ] Save checkpoint with working Hearing tab
+
+## Fix Hearing Decisions Table Column Mapping (User Reported Issue)
+- [ ] Fix parse_hearing_review.py to correctly map table columns (currently shifted by one position)
+- [ ] Re-sync hearing data after parser fix
+- [ ] Verify Decisions table displays correctly in browser
+- [ ] Save checkpoint with working Hearing tab
+
+## Fix Devices Tab MRBD Indentation and Hearing Tab Issues (User Reported)
+- [x] Fixed Hearing Decisions table column mapping (parser now correctly extracts all 7 columns)
+- [x] Updated parser to identify Health Decisions table by header text
+- [x] Re-synced Hearing data (343 items: 31 wins, 307 exec summary, 5 decisions)
+- [x] Verified MRBD v23 indentation working correctly in Devices tab (frontend rendering correct)
+- [x] Remove "Help Needed" section from Hearing tab Exec Summary
+- [x] Update parse_hearing_review.py to skip Help Needed section
+- [x] Re-sync Hearing data after parser fix (187 items - Help Needed filtered out)
+- [x] Test both fixes in browser
+- [x] Restart dev server to clear cache
+- [ ] Save checkpoint with all fixes

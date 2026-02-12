@@ -89,6 +89,76 @@ export function HearingTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
     );
   };
 
+  // Render decisions as a table
+  const renderDecisionsTable = () => {
+    if (!decisionsItems || decisionsItems.length === 0) {
+      return (
+        <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <div className={cn("p-2 rounded", hearingSectionConfig.decisions.bgClass)}>
+              <AlertTriangle className={cn("w-5 h-5", hearingSectionConfig.decisions.color)} />
+            </div>
+            <h3 className="font-bold text-base tracking-wide">DECISIONS</h3>
+          </div>
+          <p className="text-xs text-muted-foreground italic">No decisions yet</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="bg-background/40 backdrop-blur-sm border border-border/50 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <div className={cn("p-2 rounded", hearingSectionConfig.decisions.bgClass)}>
+            <AlertTriangle className={cn("w-5 h-5", hearingSectionConfig.decisions.color)} />
+          </div>
+          <h3 className="font-bold text-base tracking-wide">DECISIONS</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-border/50">
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Topic / Decision</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Date</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">DRI</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Forum</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Status</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Decision Doc</th>
+                <th className="text-left py-2 px-2 font-semibold text-foreground/80">Decision Makers</th>
+              </tr>
+            </thead>
+            <tbody>
+              {decisionsItems.map((item) => (
+                <tr key={item.id} className="border-b border-border/30 last:border-0">
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.content || '-'} />
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    {item.date || '-'}
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    {item.dri || '-'}
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    {item.forum || '-'}
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    {item.status || '-'}
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    <MarkdownText content={item.decisionDoc || '-'} />
+                  </td>
+                  <td className="py-2 px-2 align-top">
+                    {item.decisionMakers || '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
@@ -104,7 +174,7 @@ export function HearingTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {renderTile("wins", winsItems)}
         {renderTile("exec_summary", execSummaryItems)}
-        {renderTile("decisions", decisionsItems)}
+        {renderDecisionsTable()}
       </div>
     </div>
   );
