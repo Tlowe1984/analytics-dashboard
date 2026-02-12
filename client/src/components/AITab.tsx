@@ -171,14 +171,12 @@ export function AITab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
         </div>
       )}
 
-      {/* Wins and Exec Summary tiles side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* All 3 tiles side by side */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {renderTile("wins", winsItems)}
         {renderTile("exec_summary", execSummaryItems)}
+        {renderDecisionsTable()}
       </div>
-
-      {/* Decisions table full width */}
-      {renderDecisionsTable()}
     </div>
   );
 }
