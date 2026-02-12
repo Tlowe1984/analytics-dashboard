@@ -1961,3 +1961,11 @@
 - [x] Ensure SSG1 decision from W6 appears in the list (ranked lower than current week MZ decisions)
 - [x] Use week field instead of updatedAt for classification (decisions synced today but from different weeks)
 - [x] Verified correct ordering: W7 MZ decisions first, then W6 MZ decisions, then other W7 decisions
+
+## Fix Hearing Exec Summary Section
+- [x] Update parse_hearing_review.py to stop after Fitness Algos bullet
+- [x] Ensure only Exec Summary section content is extracted (not Help Needed or other sections)
+- [x] Re-sync hearing data to apply the fix
+- [x] Verify in browser that Exec Summary stops at the correct point
+- [x] Added seen_fitness_algos flag to stop extraction immediately after Fitness Algos
+- [x] Reduced Exec Summary from 151 items to 9 items (correct scope)

@@ -24,6 +24,7 @@ def parse_hearing_review(docx_path):
     current_section = None
     order = 0
     in_decisions_table = False
+    seen_fitness_algos = False  # Flag to stop after Fitness Algos
     
     # Process all document elements (paragraphs and tables)
     for element in doc.element.body:
@@ -59,6 +60,20 @@ def parse_hearing_review(docx_path):
                 in_decisions_table = False
                 continue
             
+            # Stop Exec Summary section at status indicator lines or subsection headers
+            if current_section == 'exec_summary':
+                # Check for status indicator pattern [RED] [ORANGE] [YELLOW] [GREEN]
+                if '[RED]' in text or '[ORANGE]' in text or '[YELLOW]' in text or '[GREEN]' in text:
+                    if text.count('[') >= 3:  # Multiple status indicators
+                        current_section = None
+                        continue
+                
+                # Check for subsection headers that end Exec Summary
+                if any(keyword in text_lower for keyword in ['experience overall', 'risks/opens', 'help needed']):
+                    if len(text) < 50:  # Likely a header
+                        current_section = None
+                        continue
+            
             # Look for Help Needed section header - skip this section entirely
             if 'help needed' in text_lower or 'flags for leadership' in text_lower:
                 current_section = 'help_needed'
@@ -78,11 +93,20 @@ def parse_hearing_review(docx_path):
             if current_section is None:
                 continue
             
+            # Stop exec_summary section immediately after Fitness Algos
+            if current_section == 'exec_summary' and seen_fitness_algos:
+                current_section = None
+                continue
+            
             # Extract rich text content for Wins and Exec Summary
             rich_text = extract_rich_text(para)
             
             if not rich_text or rich_text.strip() == '':
                 continue
+            
+            # Check if this is the Fitness Algos bullet
+            if current_section == 'exec_summary' and 'Fitness Algos' in rich_text:
+                seen_fitness_algos = True
             
             # Detect if this is a "new" item (blue text)
             is_new = False
