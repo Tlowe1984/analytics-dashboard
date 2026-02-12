@@ -76,10 +76,10 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
                     <ul className="space-y-1 list-disc list-inside">
                       {summaries?.devices?.highlights?.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
+                        <div key={idx} className="flex items-start gap-2" style={{ paddingLeft: `${(typeof item === 'object' ? item.indentLevel : 0) * 1.5}rem` }}>
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                           <div className="text-sm leading-relaxed text-foreground/90">
-                            <MarkdownText content={item} />
+                            <MarkdownText content={typeof item === 'object' ? item.content : item} />
                           </div>
                         </div>
                       )) || <div className="text-sm text-muted-foreground italic">No highlights available</div>}
@@ -90,10 +90,10 @@ export default function AIExecutiveUpdates() {
                     <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
                     <ul className="space-y-1 list-disc list-inside">
                       {summaries?.devices?.risks?.map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
+                        <div key={idx} className="flex items-start gap-2" style={{ paddingLeft: `${(typeof item === 'object' ? item.indentLevel : 0) * 1.5}rem` }}>
                           <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                           <div className="text-sm leading-relaxed text-foreground/90">
-                            <MarkdownText content={item} />
+                            <MarkdownText content={typeof item === 'object' ? item.content : item} />
                           </div>
                         </div>
                       )) || <div className="text-sm text-muted-foreground italic">No risks available</div>}

@@ -1924,4 +1924,12 @@
 - [x] Re-sync Hearing data after parser fix (187 items - Help Needed filtered out)
 - [x] Test both fixes in browser
 - [x] Restart dev server to clear cache
-- [ ] Save checkpoint with all fixes
+- [x] Save checkpoint with all fixes (version: 60983940)
+
+## Fix RISKS/OPENS Section Indentation (User Reported - AIExecutiveUpdates)
+- [x] Identify where RISKS/OPENS section is rendered (AIExecutiveUpdates component, not ToplineView)
+- [x] Found issue: generateExecutiveSummaries was returning only content strings, losing indentLevel
+- [x] Update backend to return objects with {content, indentLevel} instead of just strings
+- [x] Update AIExecutiveUpdates frontend to use indentLevel for paddingLeft styling
+- [x] Restart dev server to apply changes
+- [ ] Save checkpoint with indentation fix

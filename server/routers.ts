@@ -209,11 +209,11 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       // Return ALL items directly (no LLM summarization)
       const devicesHighlights = dashboardItems
         .filter(item => item.sectionType === "highlights" && item.productCategory === "general")
-        .map(item => item.content);
+        .map(item => ({ content: item.content, indentLevel: item.indentLevel || 0 }));
       
       const devicesRisks = dashboardItems
         .filter(item => item.sectionType === "risks" && item.productCategory === "general")
-        .map(item => item.content);
+        .map(item => ({ content: item.content, indentLevel: item.indentLevel || 0 }));
       
       // Software data - only show items tagged with [wearables-tag], strip tag from display
       const softwareHighlights = softwareItems
