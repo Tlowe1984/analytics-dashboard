@@ -1969,3 +1969,10 @@
 - [x] Verify in browser that Exec Summary stops at the correct point
 - [x] Added seen_fitness_algos flag to stop extraction immediately after Fitness Algos
 - [x] Reduced Exec Summary from 151 items to 9 items (correct scope)
+
+## Update Daily Auto-Sync to Include All 7 Sources
+- [x] Update sync_all_exec_summary.sh to include Systems, Hearing, Milestones, and Upcoming Reviews
+- [x] Rename script to sync_all_dashboard.sh for clarity
+- [x] Update DAILY_SYNC_SCHEDULE.md documentation
+- [x] Created new sync_all_dashboard.sh that syncs all 7 data sources
+- [x] Updated documentation to reflect comprehensive sync coverage
