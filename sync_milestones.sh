@@ -41,20 +41,26 @@ const data = JSON.parse(fs.readFileSync('/tmp/milestones_parsed.json', 'utf8'));
 await db.delete(milestones);
 console.log('Cleared existing milestones');
 
-// Insert new milestones
+// Insert new milestones in batches for performance
+const batchSize = 100;
 let insertCount = 0;
-for (const item of data) {
+
+for (let i = 0; i < data.length; i += batchSize) {
+  const batch = data.slice(i, i + batchSize);
+  const values = batch.map(item => ({
+    product: item.product,
+    milestoneName: item.milestone_name,
+    milestoneDate: new Date(item.milestone_date),
+    milestoneType: item.milestone_type,
+    originalType: item.original_type || ''
+  }));
+  
   try {
-    await db.insert(milestones).values({
-      product: item.product,
-      milestoneName: item.milestone_name,
-      milestoneDate: new Date(item.milestone_date),
-      milestoneType: item.milestone_type,
-      originalType: item.original_type || ''
-    });
-    insertCount++;
+    await db.insert(milestones).values(values);
+    insertCount += values.length;
+    console.log(`Inserted batch ${Math.floor(i / batchSize) + 1}: ${insertCount}/${data.length} milestones`);
   } catch (err) {
-    console.error(`Failed to insert milestone: ${item.product} - ${item.milestone_name}`, err.message);
+    console.error(`Failed to insert batch starting at index ${i}:`, err.message);
   }
 }
 
