@@ -1,0 +1,80 @@
+{
+  "query": "SELECT id, week, forum, LEFT(decision_outcome, 100) as outcome_preview, updatedAt FROM decisions ORDER BY updatedAt DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, week, forum, LEFT(decision_outcome, 100) as outcome_preview, updatedAt FROM decisions ORDER BY updatedAt DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "660002",
+      "week": "W7 2026",
+      "forum": "MZ Async Review",
+      "outcome_preview": "**[MZ Async Review] Ceres2 Textile Options **[Link](https://fb.workplace.com/groups/2136532653072213",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660003",
+      "week": "W7 2026",
+      "forum": "Wearables & MSL",
+      "outcome_preview": "**Meta AI 2.0 - Wearables AI Convergence Plan **[Link](https://fb.workplace.com/groups/8928533386820",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660004",
+      "week": "W7 2026",
+      "forum": "Experience & Interface",
+      "outcome_preview": "**W07 Experiences & Interfaces Review**[** **](https://fb.workplace.com/groups/892853338682054/perma",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660005",
+      "week": "W7 2026",
+      "forum": "ARG & SSG Product Review",
+      "outcome_preview": "[**[AR Glasses Product Review] Artemis Battery Capacity vs. Mass Increase**](https://fb.workplace.co",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660006",
+      "week": "W7 2026",
+      "forum": "Wearables Review",
+      "outcome_preview": "**[Discuss]** **Value Propositions x Content Slate. **Aligned on Spatial AI as the hero use case for",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660007",
+      "week": "W6 2026",
+      "forum": "Wearable Reviews",
+      "outcome_preview": "**Decisions:** **HN1 LE limited to Elite Bundle (YES):** No standalone MRBD LE at Connect '26 to ele",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660008",
+      "week": "W6 2026",
+      "forum": "Wearable Reviews",
+      "outcome_preview": "**Malibu2 LE Software Steer** [Post](https://fb.workplace.com/groups/892853338682054/permalink/15361",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660009",
+      "week": "W6 2026",
+      "forum": "W06 Experiences & Interfaces Review",
+      "outcome_preview": "**W06 Experiences & Interfaces Review **[Post](https://fb.workplace.com/groups/892853338682054/perma",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660010",
+      "week": "W6 2026",
+      "forum": "MZ Review",
+      "outcome_preview": "**[MZ Review] 2027-2029 Glasses Portfolio **[Post](https://fb.workplace.com/groups/2136532653072213/",
+      "updatedAt": "2026-02-13 21:20:31"
+    },
+    {
+      "id": "660001",
+      "week": "W7 2026",
+      "forum": "Device & Growth Review",
+      "outcome_preview": "**[Retail Demo Review] SpSu ‘26 Self Serve**[ Link](https://fb.workplace.com/groups/892853338682054/",
+      "updatedAt": "2026-02-13 21:20:31"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tweek\tforum\toutcome_preview\tupdatedAt\n660002\tW7 2026\tMZ Async Review\t**[MZ Async Review] Ceres2 Textile Options **[Link](https://fb.workplace.com/groups/2136532653072213\t2026-02-13 21:20:31\n660003\tW7 2026\tWearables & MSL\t**Meta AI 2.0 - Wearables AI Convergence Plan **[Link](https://fb.workplace.com/groups/8928533386820\t2026-02-13 21:20:31\n660004\tW7 2026\tExperience & Interface\t**W07 Experiences & Interfaces Review**[** **](https://fb.workplace.com/groups/892853338682054/perma\t2026-02-13 21:20:31\n660005\tW7 2026\tARG & SSG Product Review\t[**[AR Glasses Product Review] Artemis Battery Capacity vs. Mass Increase**](https://fb.workplace.co\t2026-02-13 21:20:31\n660006\tW7 2026\tWearables Review\t**[Discuss]** **Value Propositions x Content Slate. **Aligned on Spatial AI as the hero use case for\t2026-02-13 21:20:31\n660007\tW6 2026\tWearable Reviews\t**Decisions:** **HN1 LE limited to Elite Bundle (YES):** No standalone MRBD LE at Connect '26 to ele\t2026-02-13 21:20:31\n660008\tW6 2026\tWearable Reviews\t**Malibu2 LE Software Steer** [Post](https://fb.workplace.com/groups/892853338682054/permalink/15361\t2026-02-13 21:20:31\n660009\tW6 2026\tW06 Experiences & Interfaces Review\t**W06 Experiences & Interfaces Review **[Post](https://fb.workplace.com/groups/892853338682054/perma\t2026-02-13 21:20:31\n660010\tW6 2026\tMZ Review\t**[MZ Review] 2027-2029 Glasses Portfolio **[Post](https://fb.workplace.com/groups/2136532653072213/\t2026-02-13 21:20:31\n660001\tW7 2026\tDevice & Growth Review\t**[Retail Demo Review] SpSu ‘26 Self Serve**[ Link](https://fb.workplace.com/groups/892853338682054/\t2026-02-13 21:20:31\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}

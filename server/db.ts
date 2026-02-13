@@ -388,12 +388,14 @@ export async function getSoftwareItemsBySection(
 // ============ Decisions Functions ============
 
 /**
- * Get CURRENT WEEK MZ and Wearables Review decisions for AI Executive Updates
- * Returns decisions from current week where forum contains 'MZ' or 'Wearables Review'
- * MZ decisions are stack-ranked to the top
- * Note: Summaries are generated in the router using LLM to keep them concise (≤15 words)
+ * Get decisions for AI Executive Updates with new prioritization:
+ * 1. Current week MZ decisions (highest priority)
+ * 2. Current/previous week Wearables Review decisions
+ * 3. Other current/previous week decisions
+ * Returns up to 8 decisions total
+ * Note: Summaries are generated in the router using LLM (≤25 words)
  */
-export async function getRecentDecisionsForAI(limit = 10) {
+export async function getRecentDecisionsForAI(limit = 8) {
   // NO CACHE - always fetch fresh data
   const db = await getDb();
   if (!db) return [];
@@ -456,30 +458,40 @@ export async function getRecentDecisionsForAI(limit = 10) {
       }))
     ];
     
-    // Filter for MZ and Wearables Review decisions from current + previous week only
+    // Filter for decisions from current + previous week only (no content filter)
     const filteredDecisions = combined.filter(item => {
       // Must be from current or previous week
-      if (!item.isCurrentWeek && !item.isPreviousWeek) return false;
-      
-      const forum = (item.forum?.toLowerCase() || '');
-      const outcome = (item.outcome?.toLowerCase() || '');
-      const hasMZ = forum.includes('mz') || outcome.includes('mz');
-      const hasWearablesReview = forum.includes('wearable') && forum.includes('review');
-      return hasMZ || hasWearablesReview;
+      return item.isCurrentWeek || item.isPreviousWeek;
     });
     
-    // Stack rank: Current week MZ first, then other current week, then previous week
+    // New prioritization logic:
+    // 1. Current week MZ decisions
+    // 2. Current/previous week Wearables Review decisions
+    // 3. Other current/previous week decisions
     filteredDecisions.sort((a, b) => {
-      const aHasMZ = (a.forum?.toLowerCase() || '').includes('mz') || (a.outcome?.toLowerCase() || '').includes('mz');
-      const bHasMZ = (b.forum?.toLowerCase() || '').includes('mz') || (b.outcome?.toLowerCase() || '').includes('mz');
+      const aForum = (a.forum?.toLowerCase() || '');
+      const bForum = (b.forum?.toLowerCase() || '');
+      const aOutcome = (a.outcome?.toLowerCase() || '');
+      const bOutcome = (b.outcome?.toLowerCase() || '');
       
-      // Priority 1: Current week MZ decisions
+      const aHasMZ = aForum.includes('mz') || aOutcome.includes('mz');
+      const bHasMZ = bForum.includes('mz') || bOutcome.includes('mz');
+      const aHasWearablesReview = aForum.includes('wearable') && aForum.includes('review');
+      const bHasWearablesReview = bForum.includes('wearable') && bForum.includes('review');
+      
+      // Priority 1: Current week MZ decisions (highest)
       const aIsCurrentWeekMZ = a.isCurrentWeek && aHasMZ;
       const bIsCurrentWeekMZ = b.isCurrentWeek && bHasMZ;
       if (aIsCurrentWeekMZ && !bIsCurrentWeekMZ) return -1;
       if (!aIsCurrentWeekMZ && bIsCurrentWeekMZ) return 1;
       
-      // Priority 2: Other current week decisions
+      // Priority 2: Current/previous week Wearables Review decisions
+      const aIsWearablesReview = aHasWearablesReview;
+      const bIsWearablesReview = bHasWearablesReview;
+      if (aIsWearablesReview && !bIsWearablesReview) return -1;
+      if (!aIsWearablesReview && bIsWearablesReview) return 1;
+      
+      // Priority 3: Current week decisions (any other)
       if (a.isCurrentWeek && !b.isCurrentWeek) return -1;
       if (!a.isCurrentWeek && b.isCurrentWeek) return 1;
       

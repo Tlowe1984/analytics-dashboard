@@ -1,0 +1,30 @@
+{
+  "query": "SELECT DISTINCT week, COUNT(*) as count FROM decisions GROUP BY week ORDER BY week DESC LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT DISTINCT week, COUNT(*) as count FROM decisions GROUP BY week ORDER BY week DESC LIMIT 15;",
+  "rows": [
+    {
+      "week": "W7 2026",
+      "count": "6"
+    },
+    {
+      "week": "W6 2026",
+      "count": "7"
+    },
+    {
+      "week": "W5 2026",
+      "count": "2"
+    },
+    {
+      "week": "W4 2026",
+      "count": "2"
+    },
+    {
+      "week": "W3 2026",
+      "count": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "week\tcount\nW7 2026\t6\nW6 2026\t7\nW5 2026\t2\nW4 2026\t2\nW3 2026\t2\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

@@ -2108,3 +2108,12 @@
 - [x] Update SYNC_VERIFICATION.md with token error troubleshooting
 - [x] Fix syncMetadata undefined error by adding schema to drizzle instance
 - [x] Test Admin Refresh end-to-end to verify retry logic works
+
+## Decisions Made Display Update (Current)
+- [x] Update backend query to fetch up to 8 decisions (increased from 7)
+- [x] Modify prioritization logic: 1) Current week MZ, 2) Current/previous week Wearables Review, 3) Other current/previous week decisions
+- [x] Update AI summarization to format as: **Forum**: Summary (25 words). [Link]
+- [x] Extract links from decision outcomes and append to summaries
+- [x] Verify frontend MarkdownText component renders bold and links correctly
+- [x] Code implementation complete - requires Admin Refresh to populate with current week data
+- [x] Verified database has old decisions (W47-W51 2025) - need fresh sync for W6-W7 2026

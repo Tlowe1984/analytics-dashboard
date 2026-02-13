@@ -269,10 +269,11 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     }),
 
     // Get recent decisions for AI Executive Updates (Decisions table + Software Pillar decisions)
-    // Summaries are generated using LLM to keep them concise (≤15 words)
+    // Summaries are generated using LLM to keep them concise (≤25 words)
+    // Format: **Forum**: Summary. [Link]
     getRecentDecisions: publicProcedure.query(async () => {
       const { invokeLLM } = await import("./_core/llm");
-      const rawDecisions = await db.getRecentDecisionsForAI(7);
+      const rawDecisions = await db.getRecentDecisionsForAI(8);
       
       console.log('[DEBUG] Raw decisions before LLM:', JSON.stringify(rawDecisions, null, 2));
       
@@ -280,21 +281,27 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         return [];
       }
       
-      // Prepare prompt for LLM to summarize decisions
+      // Prepare prompt for LLM to summarize decisions with new format
       const decisionsText = rawDecisions.map((d, idx) => 
         `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
       ).join('\n\n');
       
-      const prompt = `For each decision below, write a concise summary (up to 25 words) focusing on the outcome. Preserve any [links](url) at the end.
+      const prompt = `For each decision below, format as: **Forum**: Summary (25 words max). [Link]
+
+Rules:
+1. Start with forum name in bold markdown: **Forum Name**:
+2. Follow with concise outcome summary (up to 25 words)
+3. Extract and preserve any links at the end as [Post](url) or [Link](url)
+4. If no link in outcome, omit the link part
 
 Examples:
-- "Malibu2 LE steers on 3rd button follow-up with MZ, workshop, and watch-face experiences. [Post](url)"
-- "Meta AI 2.0 architecture strategy approved with GO for W06 Experiences & Interfaces Review. [Post](url)"
-- "HN1 LE limited to Elite Bundle; Ceres included with blue transparent frame. [Post](url)"
+- "**MZ**: Malibu2 LE steers on 3rd button follow-up with workshop and watch-face experiences. [Post](url)"
+- "**Wearables Review**: Meta AI 2.0 architecture strategy approved with GO for W06 Experiences & Interfaces Review. [Post](url)"
+- "**Product Council**: HN1 LE limited to Elite Bundle; Ceres included with blue transparent frame."
 
-Return as JSON array with this structure:
+Return as JSON array:
 [
-  { "summary": "Outcome summary. [link](url)" }
+  { "summary": "**Forum**: Summary. [Link](url)" }
 ]
 
 ${decisionsText}
