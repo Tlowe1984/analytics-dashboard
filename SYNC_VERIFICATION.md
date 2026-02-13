@@ -2,6 +2,25 @@
 
 This document describes how to verify that all data sources are syncing correctly for both Admin Refresh and Daily Auto-Sync.
 
+## 🚨 After Sandbox Reset
+
+If you see sync errors after a sandbox reset or hibernation, run:
+
+```bash
+cd /home/ubuntu/analytics-dashboard
+bash init_dependencies.sh
+```
+
+This will:
+- Install python-docx and openpyxl packages
+- Verify Google Drive rclone configuration
+- Ensure all dependencies are ready
+
+Then test all syncs:
+```bash
+bash test_sync_robustness.sh
+```
+
 ## All Data Sources
 
 The dashboard syncs data from 8 sources:
@@ -129,9 +148,87 @@ When adding new data sources:
 5. Update this documentation with expected item counts
 6. Test both Admin Refresh and Daily Auto-Sync
 
+## Time-Based Edge Cases
+
+### Week Number Transitions
+
+**Week 52 → Week 1 (Year Rollover)**
+- Sync scripts automatically detect current week number
+- Fall back to previous week if current week file doesn't exist
+- Example: If today is W1 2027 and W1 file doesn't exist, uses W52 2026
+
+**Missing Weeks**
+- Some weeks may be skipped (e.g., no W6 file, only W5 and W7)
+- Scripts try current week first, then previous week
+- Fail gracefully with clear error message if neither exists
+
+### Month Boundaries
+
+**Filename Pattern Changes**
+- AI documents: "AI W7 (2/10/2026)" vs "AI W1 (1/6/2027)"
+- Hearing documents: "W7 Health Canonical" vs "W1 Health Canonical"
+- Scripts use regex patterns that match both formats
+- Year is automatically detected from current date
+
+### Year Rollover (2026 → 2027)
+
+**Automatic Handling**
+- All sync scripts use current date to determine year
+- Filename patterns accommodate year changes
+- No manual updates needed during year transitions
+- Database stores timestamps in UTC for consistency
+
+## Dependency Management
+
+### Python Package Issues
+
+**Symptom**: "ModuleNotFoundError: No module named 'docx'" or "openpyxl"  
+**Cause**: Sandbox reset or hibernation cleared Python packages  
+**Solution**: Run `bash init_dependencies.sh`  
+**Prevention**: init_dependencies.sh is called automatically by test_sync_robustness.sh
+
+### Python Environment Stability
+
+**Issue**: Multiple Python versions or environments  
+**Solution**: All sync scripts explicitly use `python3.11`  
+**Verification**: `which python3.11` should show `/usr/bin/python3.11`
+
+### Google Drive Access
+
+**Issue**: "Config file not found - using defaults"  
+**Cause**: rclone configuration missing or corrupted  
+**Solution**: Verify `/home/ubuntu/.gdrive-rclone.ini` exists  
+**Recovery**: Google Drive integration needs to be re-enabled via Manus UI
+
+## Robust Error Handling
+
+### Retry Logic
+
+Sync scripts include retry logic for transient failures:
+- Network timeouts: Automatic retries with backoff
+- File not found: Try previous week automatically
+- Database connection: Retry mechanism built-in
+
+### Graceful Degradation
+
+If a sync fails:
+- Error is logged with detailed context
+- Other syncs continue to run
+- Dashboard displays last successful sync data
+- Admin Refresh UI shows which sources failed
+
+### Timeout Protection
+
+Long-running syncs have timeouts:
+- Milestones: 60 seconds max
+- Upcoming Reviews: 60 seconds max
+- Other syncs: 30 seconds max
+- Prevents indefinite hangs
+
 ## Contact
 
 For sync issues or questions, check:
 - `todo.md` for known issues
 - `.manus-logs/` directory for recent logs
 - Database directly using `pnpm exec tsx` scripts
+- Run `bash test_sync_robustness.sh` for comprehensive diagnostics

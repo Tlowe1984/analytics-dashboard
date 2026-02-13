@@ -1,5 +1,15 @@
 # Analytics Dashboard TODO
 
+## Robust Initialization System (Current)
+- [x] Create init_dependencies.sh script for automatic Python package installation
+- [x] Add dependency checks with auto-installation to prevent recurring issues
+- [x] Create test_sync_robustness.sh for comprehensive sync testing
+- [x] Update SYNC_VERIFICATION.md with sandbox reset recovery procedures
+- [x] Document time-based edge cases (week/month/year transitions)
+- [x] Add comprehensive error handling and retry logic documentation
+- [x] Test Admin Refresh end-to-end with all fixes
+- [x] Verify all 8 syncs work after simulated sandbox reset
+
 ## Phase 1: Project Setup
 - [x] Initialize full-stack web project with database and authentication
 - [x] Create todo.md tracking file
@@ -2064,3 +2074,28 @@
 - [x] Created getDevicesLastUpdated, getSoftwareLastUpdated, getSystemsLastUpdated backend queries
 - [x] Added tRPC endpoints for section-specific last updated timestamps
 - [x] Integrated timestamps into DevicesTab, SoftwareTab, and SystemsTab components
+
+## Comprehensive Admin Refresh Fix (Permanent Solution)
+- [ ] Fix immediate Python SRE module errors after sandbox reset
+- [ ] Verify all Google Drive file paths are accessible
+- [ ] Add robust file discovery logic that handles:
+  * Week number transitions (W52 → W1, W99 → W100)
+  * Month boundaries (Jan → Feb filename patterns)
+  * Year rollover (2026 → 2027)
+  * Missing weeks (skip W6 if it doesn't exist, try W5)
+- [ ] Implement fallback logic for each sync:
+  * Try current week first
+  * Fall back to previous week if current not found
+  * Log warnings but don't fail entire sync
+- [ ] Add comprehensive error handling:
+  * Catch and log individual sync failures
+  * Continue with other syncs even if one fails
+  * Return partial success status to UI
+- [ ] Create sync validation script that tests:
+  * All file paths exist
+  * All Python parsers work
+  * Database writes succeed
+  * Returns detailed status report
+- [ ] Document all filename patterns and update logic in SYNC_VERIFICATION.md
+- [ ] Add monitoring/alerting for sync failures
+- [ ] Test edge cases: week 52→1, month boundaries, year rollover
