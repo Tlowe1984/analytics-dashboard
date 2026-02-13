@@ -2099,3 +2099,12 @@
 - [ ] Document all filename patterns and update logic in SYNC_VERIFICATION.md
 - [ ] Add monitoring/alerting for sync failures
 - [ ] Test edge cases: week 52→1, month boundaries, year rollover
+
+## Google Drive Token Refresh (Current)
+- [x] Diagnose Google Drive token expiration error from Admin Refresh
+- [x] Implement retry logic with exponential backoff for token errors
+- [x] Verify Google Drive access is working
+- [x] Update syncAllBash.ts with automatic retry mechanism (up to 3 retries)
+- [x] Update SYNC_VERIFICATION.md with token error troubleshooting
+- [x] Fix syncMetadata undefined error by adding schema to drizzle instance
+- [x] Test Admin Refresh end-to-end to verify retry logic works

@@ -1,6 +1,6 @@
 import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem, syncMetadata, upcomingReviews } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { cachedQuery } from "./query-cache";
 
@@ -10,7 +10,10 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _db = drizzle(process.env.DATABASE_URL, {
+        schema: { users, dashboardItems, milestones, softwareItems, decisions, systemsItems, hearingItems, aiItems, syncMetadata, upcomingReviews },
+        mode: "default"
+      });
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;

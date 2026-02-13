@@ -200,6 +200,12 @@ When adding new data sources:
 **Solution**: Verify `/home/ubuntu/.gdrive-rclone.ini` exists  
 **Recovery**: Google Drive integration needs to be re-enabled via Manus UI
 
+**Issue**: "token expired and there's no refresh token"  
+**Cause**: Transient token refresh timing issue when multiple syncs run in parallel  
+**Solution**: Admin Refresh now includes automatic retry logic with exponential backoff  
+**Details**: Syncs will retry up to 3 times (2s, 4s, 8s delays) for token errors  
+**Manual Fix**: If error persists, wait 2-3 minutes and try Admin Refresh again
+
 ## Robust Error Handling
 
 ### Retry Logic

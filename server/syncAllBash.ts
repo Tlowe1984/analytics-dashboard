@@ -54,6 +54,33 @@ export async function syncAllBash(): Promise<{
   // The rclone config at /home/ubuntu/.gdrive-rclone.ini is managed by the platform
   // and tokens are refreshed automatically when they expire
 
+  // Helper function to run sync with retry logic
+  const runSyncWithRetry = async (name: string, script: string, maxRetries = 3): Promise<{ stdout: string; stderr: string }> => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`📥 Running ${script} (attempt ${attempt}/${maxRetries})...`);
+        const result = await execAsync(
+          `cd /home/ubuntu/analytics-dashboard && bash ${script}`,
+          { timeout: 180000, shell: "/bin/bash" }
+        );
+        return result;
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        const isTokenError = errorMessage.includes("token expired") || 
+                             errorMessage.includes("CRITICAL: Failed to create file system");
+        
+        if (isTokenError && attempt < maxRetries) {
+          const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
+          console.warn(`⚠️ ${name} sync failed with token error (attempt ${attempt}/${maxRetries}), retrying in ${backoffMs}ms...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+          continue;
+        }
+        throw error;
+      }
+    }
+    throw new Error(`Failed after ${maxRetries} retries`);
+  };
+
   try {
     const results: {
       devices: SyncResult;
@@ -93,11 +120,7 @@ export async function syncAllBash(): Promise<{
     const syncPromises = scripts.map(async ({ name, script }) => {
       const startTime = Date.now();
       try {
-        console.log(`📥 Running ${script}...`);
-        const { stdout, stderr } = await execAsync(
-          `cd /home/ubuntu/analytics-dashboard && bash ${script}`,
-          { timeout: 180000, shell: "/bin/bash" }
-        );
+        const { stdout, stderr } = await runSyncWithRetry(name, script);
 
         const duration = Date.now() - startTime;
         
@@ -119,9 +142,15 @@ export async function syncAllBash(): Promise<{
         const duration = Date.now() - startTime;
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
         
+        // Check if it's a token error for better error message
+        const isTokenError = errorMessage.includes("token expired") || 
+                             errorMessage.includes("CRITICAL: Failed to create file system");
+        
         const result: SyncResult = {
           success: false,
-          message: `Failed to sync ${name}`,
+          message: isTokenError 
+            ? `Google Drive token error - please wait a few minutes and try again`
+            : `Failed to sync ${name}`,
           timestamp: new Date(),
           itemsUpdated: 0,
           duration,
