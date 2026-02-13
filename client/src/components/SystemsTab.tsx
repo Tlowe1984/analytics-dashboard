@@ -52,6 +52,7 @@ const systemsSectionConfig = {
 
 export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: allItems, isLoading } = trpc.systems.getAll.useQuery();
+  const { data: lastUpdated } = trpc.dashboard.getSystemsLastUpdated.useQuery();
 
   if (isLoading) {
     return (
@@ -117,7 +118,16 @@ export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <p className="text-xs text-muted-foreground">
+          Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+          }) : 'Loading...'}
+        </p>
         <a
           href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw"}
           target="_blank"

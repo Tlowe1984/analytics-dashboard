@@ -795,3 +795,49 @@ export async function getWearablesTaggedItems(): Promise<Array<AiItem | HearingI
     return [...aiWearables, ...hearingWearables];
   });
 }
+
+// Get last updated timestamp for specific sections
+export async function getDevicesLastUpdated() {
+  return cachedQuery('dashboard:devices:lastUpdated', async () => {
+    const db = await getDb();
+    if (!db) return null;
+    
+    const result = await db
+      .select({ updatedAt: dashboardItems.updatedAt })
+      .from(dashboardItems)
+      .orderBy(desc(dashboardItems.updatedAt))
+      .limit(1);
+    
+    return result.length > 0 ? result[0] : null;
+  });
+}
+
+export async function getSoftwareLastUpdated() {
+  return cachedQuery('software:lastUpdated', async () => {
+    const db = await getDb();
+    if (!db) return null;
+    
+    const result = await db
+      .select({ updatedAt: softwareItems.updatedAt })
+      .from(softwareItems)
+      .orderBy(desc(softwareItems.updatedAt))
+      .limit(1);
+    
+    return result.length > 0 ? result[0] : null;
+  });
+}
+
+export async function getSystemsLastUpdated() {
+  return cachedQuery('systems:lastUpdated', async () => {
+    const db = await getDb();
+    if (!db) return null;
+    
+    const result = await db
+      .select({ updatedAt: systemsItems.updatedAt })
+      .from(systemsItems)
+      .orderBy(desc(systemsItems.updatedAt))
+      .limit(1);
+    
+    return result.length > 0 ? result[0] : null;
+  });
+}

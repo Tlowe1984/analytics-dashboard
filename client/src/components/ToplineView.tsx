@@ -188,6 +188,7 @@ function InMarketCard({ allItems }: { allItems: DashboardItem[] }) {
 
 function DevicesTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: allItems, isLoading } = trpc.dashboard.getAll.useQuery();
+  const { data: lastUpdated } = trpc.dashboard.getDevicesLastUpdated.useQuery();
 
   if (isLoading) {
     return (
@@ -210,7 +211,16 @@ function DevicesTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <p className="text-xs text-muted-foreground">
+          Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+          }) : 'Loading...'}
+        </p>
         <a
           href={sourceDocumentUrl || "https://fburl.com/devicegrowthpr"} 
           target="_blank"
@@ -259,6 +269,7 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
   const { data: winsItems, isLoading: winsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "wins" });
   const { data: execSummaryItems, isLoading: execLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "exec_summary" });
   const { data: decisionsItems, isLoading: decisionsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "decisions" });
+  const { data: lastUpdated } = trpc.dashboard.getSoftwareLastUpdated.useQuery();
   
   // For software_ie category, also fetch wearables-tagged items from AI and Hearing
   const { data: wearablesItems, isLoading: wearablesLoading } = trpc.software.getWearablesTagged.useQuery(undefined, {
@@ -465,9 +476,18 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center">
+        <p className="text-xs text-muted-foreground">
+          Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+          }) : 'Loading...'}
+        </p>
         <a
-          href={sourceDocumentUrl || "#"}
+          href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1JY78rUBZquuOd2kCVzTU6_t_ozM3DH7I"}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-primary hover:underline flex items-center gap-1"

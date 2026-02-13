@@ -2036,3 +2036,31 @@
 - [x] Created SYNC_VERIFICATION.md with comprehensive testing guide
 - [x] Documented both Admin Refresh and Daily Auto-Sync workflows
 - [x] Added troubleshooting guide and maintenance procedures
+
+## Investigate and Fix Slow Dashboard Loading Performance
+- [ ] Check server logs for slow queries and response times
+- [ ] Analyze database query performance (especially large data fetches)
+- [ ] Check if multiple sequential tRPC queries are blocking render
+- [ ] Investigate frontend loading patterns and bundle size
+- [ ] Implement query optimization (indexes, caching, pagination)
+- [ ] Add loading skeletons and progressive rendering
+- [ ] Test loading performance before and after optimizations
+
+## Fix Devices Section Not Pulling Latest Content
+- [ ] Check when Devices data was last synced
+- [ ] Verify sync_from_gdrive.sh is downloading latest document version
+- [ ] Check if document name or location changed
+- [ ] Force fresh download by clearing cached files
+- [ ] Re-sync Devices data and verify content is current
+- [ ] Test Admin Refresh to ensure it pulls latest Devices content
+
+## Add Last Modified Timestamps to Topline Sections
+- [x] Add "Last modified" display to Devices section header
+- [x] Add "Last modified" display to Software section header
+- [x] Add "Last modified" display to Systems section header
+- [x] Query dashboard_items.updated_at for each section to get last modified time
+- [x] Format timestamps as date/time (matching Detailed Updates tab format)
+- [x] Match styling with Detailed Updates tab timestamps
+- [x] Created getDevicesLastUpdated, getSoftwareLastUpdated, getSystemsLastUpdated backend queries
+- [x] Added tRPC endpoints for section-specific last updated timestamps
+- [x] Integrated timestamps into DevicesTab, SoftwareTab, and SystemsTab components

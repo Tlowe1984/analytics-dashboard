@@ -34,6 +34,19 @@ export const appRouter = router({
       return await db.getLastUpdatedTimestamp();
     }),
 
+    // Get section-specific last updated timestamps
+    getDevicesLastUpdated: publicProcedure.query(async () => {
+      return await db.getDevicesLastUpdated();
+    }),
+
+    getSoftwareLastUpdated: publicProcedure.query(async () => {
+      return await db.getSoftwareLastUpdated();
+    }),
+
+    getSystemsLastUpdated: publicProcedure.query(async () => {
+      return await db.getSystemsLastUpdated();
+    }),
+
     // Get source document URL by section
     getSourceDocumentUrl: publicProcedure
       .input(z.object({ section: z.enum(['devices', 'software', 'systems']).optional() }).optional())
