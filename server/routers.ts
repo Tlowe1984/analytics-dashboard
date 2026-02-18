@@ -59,7 +59,11 @@ export const appRouter = router({
           systems: 'https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw',
         };
         try {
-          const result = await db.query.syncMetadata.findFirst({
+          const database = await db.getDb();
+          if (!database) {
+            return fallbackUrls[section];
+          }
+          const result = await database.query.syncMetadata.findFirst({
             where: (syncMetadata, { eq }) => eq(syncMetadata.section, section),
             columns: { sourceUrl: true },
           });
