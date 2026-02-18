@@ -7,10 +7,12 @@ echo "🔄 Syncing Hearing (Health) reviews from Google Drive..."
 
 # Get current week number
 CURRENT_WEEK=$(date +%V)
-PREVIOUS_WEEK=$((CURRENT_WEEK - 1))
+# Force decimal interpretation to avoid octal errors (e.g., 08, 09)
+PREVIOUS_WEEK=$((10#$CURRENT_WEEK - 1))
 
 # Format week numbers with leading zero if needed
-CURRENT_WEEK_FORMATTED=$(printf "W%02d" $CURRENT_WEEK)
+# Use 10# prefix to force decimal interpretation
+CURRENT_WEEK_FORMATTED=$(printf "W%02d" $((10#$CURRENT_WEEK)))
 PREVIOUS_WEEK_FORMATTED=$(printf "W%02d" $PREVIOUS_WEEK)
 
 echo "📅 Looking for Health reviews from $CURRENT_WEEK_FORMATTED or $PREVIOUS_WEEK_FORMATTED..."
