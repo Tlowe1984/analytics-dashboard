@@ -1,8 +1,8 @@
 /**
- * Sync Scheduler - Runs daily data sync at 6 AM
+ * Sync Scheduler - Runs daily data sync at 8:45 AM PST
  * 
  * This module sets up a cron job that automatically syncs all dashboard data
- * from Google Drive every day at 6 AM. It includes error handling and notifications.
+ * from Google Drive every day at 8:45 AM PST. It includes error handling and notifications.
  */
 
 import cron from 'node-cron';
@@ -98,13 +98,13 @@ async function runSync() {
  * Initialize the cron scheduler
  */
 export function initSyncScheduler() {
-  // Run daily at 9:15 AM (15 9 * * *) - Changed for testing
-  // Cron format: second minute hour day month weekday
-  // node-cron uses 5-field format (no seconds): minute hour day month weekday
-  const schedule = '15 9 * * *'; // 9:15 AM every day
+  // Run daily at 8:45 AM PST (45 8 * * *)
+  // Cron format: minute hour day month weekday
+  // node-cron uses 5-field format (no seconds)
+  const schedule = '45 8 * * *'; // 8:45 AM every day
   
   log('Initializing sync scheduler');
-  log(`Schedule: Daily at 9:15 AM (cron: ${schedule})`);
+  log(`Schedule: Daily at 8:45 AM PST (cron: ${schedule})`);
   
   cron.schedule(schedule, async () => {
     await runSync();
@@ -113,7 +113,7 @@ export function initSyncScheduler() {
   });
   
   log('✅ Sync scheduler initialized successfully');
-  log('Next sync will run at 9:15 AM PST');
+  log('Next sync will run at 8:45 AM PST');
   
   // Optional: Run sync on startup (commented out by default)
   // Uncomment if you want to sync immediately when server starts

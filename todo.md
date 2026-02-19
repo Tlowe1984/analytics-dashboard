@@ -2149,3 +2149,11 @@
 - [x] Fix sync_all_data.sh to include AI and Hearing syncs (was missing 2 of 8)
 - [x] Test complete sync cycle end-to-end - 0 errors, all 8 syncs working
 - [x] Database counts verified: Devices(61), Software(30), Systems(589), Hearing(46), AI(43), Decisions(20), Milestones(1278), Reviews(13)
+
+## Scheduled Auto-Refresh at 8:45 AM (Current)
+- [x] Create scheduled task for daily auto-refresh at 8:45 AM PST
+- [x] Updated existing sync-scheduler.ts to run at 8:45 AM instead of 9:15 AM
+- [x] Scheduler uses node-cron with America/Los_Angeles timezone
+- [x] Includes error handling and owner notifications on failure
+- [x] Verified scheduler initialized successfully and is active
+- [x] Confirmed next sync will run tomorrow at 8:45 AM PST
