@@ -31,7 +31,7 @@ log_timing() {
 trap 'log "❌ ERROR: Script failed at line $LINENO"' ERR
 
 log "========================================="
-log "Starting unified dashboard sync (parallel optimized)"
+log "Starting unified dashboard sync (parallel optimized - 8 data sources)"
 log "========================================="
 
 SYNC_START=$(date +%s)
@@ -60,60 +60,84 @@ PID_MILESTONES=$!
 bash "$SCRIPT_DIR/sync_upcoming_reviews.sh" > "$TEMP_DIR/upcoming_reviews.log" 2>&1 &
 PID_REVIEWS=$!
 
+bash "$SCRIPT_DIR/sync_ai.sh" > "$TEMP_DIR/ai.log" 2>&1 &
+PID_AI=$!
+
+bash "$SCRIPT_DIR/sync_hearing.sh" > "$TEMP_DIR/hearing.log" 2>&1 &
+PID_HEARING=$!
+
 # Wait for all syncs to complete and check results
 log "⏳ Waiting for all syncs to complete..."
 
 # Check Devices sync
 if wait $PID_DEVICES; then
-    log "✅ [1/6] Devices sync completed"
+    log "✅ [1/8] Devices sync completed"
 else
-    log "❌ [1/6] Devices sync failed - check $TEMP_DIR/devices.log"
+    log "❌ [1/8] Devices sync failed - check $TEMP_DIR/devices.log"
     cat "$TEMP_DIR/devices.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
 # Check Software sync
 if wait $PID_SOFTWARE; then
-    log "✅ [2/6] Software sync completed"
+    log "✅ [2/8] Software sync completed"
 else
-    log "❌ [2/6] Software sync failed - check $TEMP_DIR/software.log"
+    log "❌ [2/8] Software sync failed - check $TEMP_DIR/software.log"
     cat "$TEMP_DIR/software.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
 # Check Systems sync
 if wait $PID_SYSTEMS; then
-    log "✅ [3/6] Systems sync completed"
+    log "✅ [3/8] Systems sync completed"
 else
-    log "❌ [3/6] Systems sync failed - check $TEMP_DIR/systems.log"
+    log "❌ [3/8] Systems sync failed - check $TEMP_DIR/systems.log"
     cat "$TEMP_DIR/systems.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
 # Check Decisions sync
 if wait $PID_DECISIONS; then
-    log "✅ [4/6] Decisions sync completed"
+    log "✅ [4/8] Decisions sync completed"
 else
-    log "❌ [4/6] Decisions sync failed - check $TEMP_DIR/decisions.log"
+    log "❌ [4/8] Decisions sync failed - check $TEMP_DIR/decisions.log"
     cat "$TEMP_DIR/decisions.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
 # Check Milestones sync
 if wait $PID_MILESTONES; then
-    log "✅ [5/6] Milestones sync completed"
+    log "✅ [5/8] Milestones sync completed"
 else
-    log "❌ [5/6] Milestones sync failed - check $TEMP_DIR/milestones.log"
+    log "❌ [5/8] Milestones sync failed - check $TEMP_DIR/milestones.log"
     cat "$TEMP_DIR/milestones.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 
 # Check Upcoming Reviews sync
 if wait $PID_REVIEWS; then
-    log "✅ [6/6] Upcoming Reviews sync completed"
+    log "✅ [6/8] Upcoming Reviews sync completed"
 else
-    log "❌ [6/6] Upcoming Reviews sync failed - check $TEMP_DIR/upcoming_reviews.log"
+    log "❌ [6/8] Upcoming Reviews sync failed - check $TEMP_DIR/upcoming_reviews.log"
     cat "$TEMP_DIR/upcoming_reviews.log" >> "$LOG_FILE"
+    ((SYNC_ERRORS++))
+fi
+
+# Check AI sync
+if wait $PID_AI; then
+    log "✅ [7/8] AI sync completed"
+else
+    log "❌ [7/8] AI sync failed - check $TEMP_DIR/ai.log"
+    cat "$TEMP_DIR/ai.log" >> "$LOG_FILE"
+    ((SYNC_ERRORS++))
+fi
+
+# Check Hearing sync
+if wait $PID_HEARING; then
+    log "✅ [8/8] Hearing sync completed"
+else
+    log "❌ [8/8] Hearing sync failed - check $TEMP_DIR/hearing.log"
+    cat "$TEMP_DIR/hearing.log" >> "$LOG_FILE"
     ((SYNC_ERRORS++))
 fi
 

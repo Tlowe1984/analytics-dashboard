@@ -1,0 +1,42 @@
+{
+  "query": "SELECT 'Devices' as source, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'Software', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'Systems', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'Hearing', COUNT(*) FROM hearing_items\nUNION ALL\nSELECT 'AI', COUNT(*) FROM ai_items\nUNION ALL\nSELECT 'Decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'Milestones', COUNT(*) FROM milestones\nUNION ALL\nSELECT 'Upcoming Reviews', COUNT(*) FROM upcoming_reviews;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT 'Devices' as source, COUNT(*) as count FROM dashboard_items\nUNION ALL\nSELECT 'Software', COUNT(*) FROM software_items\nUNION ALL\nSELECT 'Systems', COUNT(*) FROM systems_items\nUNION ALL\nSELECT 'Hearing', COUNT(*) FROM hearing_items\nUNION ALL\nSELECT 'AI', COUNT(*) FROM ai_items\nUNION ALL\nSELECT 'Decisions', COUNT(*) FROM decisions\nUNION ALL\nSELECT 'Milestones', COUNT(*) FROM milestones\nUNION ALL\nSELECT 'Upcoming Reviews', COUNT(*) FROM upcoming_reviews;",
+  "rows": [
+    {
+      "source": "AI",
+      "count": "43"
+    },
+    {
+      "source": "Hearing",
+      "count": "46"
+    },
+    {
+      "source": "Software",
+      "count": "30"
+    },
+    {
+      "source": "Devices",
+      "count": "61"
+    },
+    {
+      "source": "Decisions",
+      "count": "20"
+    },
+    {
+      "source": "Upcoming Reviews",
+      "count": "13"
+    },
+    {
+      "source": "Systems",
+      "count": "589"
+    },
+    {
+      "source": "Milestones",
+      "count": "1278"
+    }
+  ],
+  "messages": [],
+  "stdout": "source\tcount\nAI\t43\nHearing\t46\nSoftware\t30\nDevices\t61\nDecisions\t20\nUpcoming Reviews\t13\nSystems\t589\nMilestones\t1278\n",
+  "stderr": "",
+  "execution_time_ms": 87
+}

@@ -2139,3 +2139,13 @@
 - [x] Test all 8 sync scripts manually - all working correctly
 - [x] Create daily_auto_sync.sh script to run all syncs
 - [x] Cron not available in sandbox - user must run Admin Refresh manually or use external scheduler
+
+## Auto-Update Debug (Current)
+- [x] Check auto_sync.log for last night's execution (no log - auto-sync never ran, cron not available)
+- [x] Run Admin Refresh via sync_all_data.sh - all 8 syncs completed successfully in 28s
+- [x] Verify all 8 source documents are accessible - all synced successfully
+- [x] Check if source documents have been updated with latest data - fresh data downloaded
+- [x] Ensure sync scripts are downloading fresh data - confirmed fresh downloads
+- [x] Fix sync_all_data.sh to include AI and Hearing syncs (was missing 2 of 8)
+- [x] Test complete sync cycle end-to-end - 0 errors, all 8 syncs working
+- [x] Database counts verified: Devices(61), Software(30), Systems(589), Hearing(46), AI(43), Decisions(20), Milestones(1278), Reviews(13)
