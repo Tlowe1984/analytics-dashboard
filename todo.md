@@ -2157,3 +2157,21 @@
 - [x] Includes error handling and owner notifications on failure
 - [x] Verified scheduler initialized successfully and is active
 - [x] Confirmed next sync will run tomorrow at 8:45 AM PST
+
+## Preview Not Loading (Current)
+- [ ] Check server status and logs
+- [ ] Check browser console for errors
+- [ ] Diagnose root cause of preview failure
+- [ ] Fix the issue
+- [ ] Verify preview loads correctly
+
+## Permanent Fix for Recurring Python Corruption (Current)
+- [x] Analyze why Python packages get corrupted on sandbox resets (sandbox environment resets periodically)
+- [x] Discovered root cause: TWO Python environments (3.11 and UV 3.13) both need packages
+- [x] Create automatic dependency checker on server startup (check-python-deps.sh)
+- [x] Auto-install missing Python packages before any sync runs (predev script in package.json)
+- [x] Enhanced checker to detect core Python corruption (_contextvars, _decimal, SRE)
+- [x] Updated checker to install to BOTH Python 3.11 AND UV Python 3.13
+- [x] Fix current Python corruption (installed to both environments)
+- [x] Test sync works after fix (devices sync successful)
+- [x] Verify dual-Python checker works (both environments ready)
