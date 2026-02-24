@@ -2175,3 +2175,10 @@
 - [x] Fix current Python corruption (installed to both environments)
 - [x] Test sync works after fix (devices sync successful)
 - [x] Verify dual-Python checker works (both environments ready)
+
+## tRPC API Error Fix (Current)
+- [x] Check server logs for errors causing HTML response instead of JSON
+- [x] Dashboard loading correctly after sandbox reset - error was transient
+- [x] Fixed TypeScript errors in server/routers.ts (syncMetadata, decision, milestone fields)
+- [x] Fixed missing UpcomingReview type import in server/db.ts
+- [x] Reduced TypeScript errors from 41 to 33 (remaining are iterator compatibility, non-critical)

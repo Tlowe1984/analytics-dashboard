@@ -63,8 +63,8 @@ export const appRouter = router({
           if (!database) {
             return fallbackUrls[section];
           }
-          const result = await database.query.syncMetadata.findFirst({
-            where: (syncMetadata, { eq }) => eq(syncMetadata.section, section),
+          const result = await (database.query as any).syncMetadata.findFirst({
+            where: (syncMetadata: any, { eq }: any) => eq(syncMetadata.section, section),
             columns: { sourceUrl: true },
           });
           return result?.sourceUrl || fallbackUrls[section];
@@ -153,7 +153,7 @@ export const appRouter = router({
         
         // Format Decisions data
         const decisionsContext = decisions.map(item => 
-          `[DECISION - Week ${item.week}] ${item.status} | DRI: ${item.dri} | Forum: ${item.forum} | ${item.decision}`
+          `[DECISION - Week ${item.week}] ${item.status} | DRI: ${item.dri} | Forum: ${item.forum} | ${item.decisionOutcome}`
         ).join("\n");
         
         // Format Upcoming Reviews data
@@ -163,7 +163,7 @@ export const appRouter = router({
         
         // Format Milestones data
         const milestonesContext = milestones.map(item => 
-          `[MILESTONE - ${item.milestoneType}] ${item.date} | Product: ${item.product} | ${item.description}`
+          `[MILESTONE - ${item.milestoneType}] ${item.milestoneDate} | Product: ${item.product} | ${item.milestoneName}`
         ).join("\n");
         
         // Combine all data
@@ -314,7 +314,7 @@ Return ONLY valid JSON, no other text.`;
       
       try {
         const response = await invokeLLM({
-          messages: [{ role: "user", content: prompt }],
+          messages: [{ role: "user", content: prompt as string }],
           response_format: {
             type: "json_schema",
             json_schema: {
@@ -343,7 +343,7 @@ Return ONLY valid JSON, no other text.`;
         });
         
         const content = response.choices[0]?.message?.content;
-        if (!content) {
+        if (!content || typeof content !== 'string') {
           return rawDecisions; // Fallback to raw data
         }
         
