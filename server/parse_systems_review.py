@@ -25,7 +25,7 @@ def find_latest_systems_review_file():
             ],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=120
         )
         
         if result.returncode != 0:
@@ -82,7 +82,7 @@ def download_systems_review_file(filename):
             ],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=120
         )
         
         if result.returncode != 0:

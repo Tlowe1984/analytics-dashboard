@@ -30,7 +30,7 @@ def find_latest_review_file():
             ],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=120
         )
         
         if result.returncode != 0:
@@ -79,7 +79,7 @@ def download_review_file(filename):
             ],
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=120
         )
         
         if result.returncode != 0:

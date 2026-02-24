@@ -114,10 +114,12 @@ export async function syncAllBash(): Promise<{
       { name: "upcomingReviews", script: "sync_upcoming_reviews.sh" }
     ];
 
-    console.log(`📥 Starting ${scripts.length} syncs in parallel...`);
+    console.log(`📥 Starting ${scripts.length} syncs sequentially to avoid Google Drive API rate limits...`);
 
-    // Run all scripts in parallel
-    const syncPromises = scripts.map(async ({ name, script }) => {
+    // Run all scripts sequentially to avoid Google Drive API race conditions
+    const syncResults: Array<{ name: string; result: SyncResult }> = [];
+    
+    for (const { name, script } of scripts) {
       const startTime = Date.now();
       try {
         const { stdout, stderr } = await runSyncWithRetry(name, script);
@@ -137,7 +139,7 @@ export async function syncAllBash(): Promise<{
         };
 
         console.log(`✅ ${name} sync complete (${(duration / 1000).toFixed(1)}s, ${itemsUpdated} items)`);
-        return { name, result };
+        syncResults.push({ name, result });
       } catch (error) {
         const duration = Date.now() - startTime;
         const errorMessage = error instanceof Error ? error.message : "Unknown error";
@@ -148,27 +150,23 @@ export async function syncAllBash(): Promise<{
         
         const result: SyncResult = {
           success: false,
-          message: isTokenError 
-            ? `Google Drive token error - please wait a few minutes and try again`
-            : `Failed to sync ${name}`,
+          message: isTokenError ? "Google Drive token error - please wait a few minutes and try again" : `Sync failed: ${errorMessage}`,
           timestamp: new Date(),
-          itemsUpdated: 0,
-          duration,
           error: errorMessage,
+          duration,
         };
 
-        console.error(`❌ ${name} sync failed:`, errorMessage);
-        return { name, result };
+        console.error(`❌ ${name}: ${result.message}`);
+        syncResults.push({ name, result });
       }
-    });
+    }
 
-    // Wait for all syncs to complete
-    const syncResults = await Promise.all(syncPromises);
-    
-    // Map results back to the results object
+    // Convert array to object
     for (const { name, result } of syncResults) {
       results[name as keyof typeof results] = result;
     }
+
+    // Old parallel code removed for sequential execution
 
     const overallDuration = Date.now() - overallStart;
     console.log(`✨ Overall sync complete (${(overallDuration / 1000).toFixed(1)}s)`);

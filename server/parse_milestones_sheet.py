@@ -23,7 +23,7 @@ def download_sheet_as_csv():
         subprocess.run(
             ["wget", "-q", "-O", output_file, csv_url],
             check=True,
-            timeout=30
+            timeout=120
         )
         return output_file
     except Exception as e:

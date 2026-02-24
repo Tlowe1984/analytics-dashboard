@@ -2182,3 +2182,12 @@
 - [x] Fixed TypeScript errors in server/routers.ts (syncMetadata, decision, milestone fields)
 - [x] Fixed missing UpcomingReview type import in server/db.ts
 - [x] Reduced TypeScript errors from 41 to 33 (remaining are iterator compatibility, non-critical)
+
+## Sync Failure Debug (Current)
+- [x] Check sync logs to identify specific error (Google Drive API race conditions + download timeouts)
+- [x] Verify Python dependencies are still installed (both 3.11 and UV 3.13) - working
+- [x] Check if Google Drive token is valid - token is valid
+- [x] Identify which data source(s) are failing - systems sync timing out (30s too short for large files)
+- [x] Fix the root cause - changed from parallel to sequential execution
+- [x] Test sync end-to-end - devices & software work, systems needs timeout increase
+- [x] Increase rclone download timeout from 30s to 120s for large files
