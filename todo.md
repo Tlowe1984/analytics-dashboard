@@ -2221,3 +2221,10 @@
 - [x] Pattern now: (W[0-9]+.*AI.*Hotspots|AI.*W[0-9]+.*Hotspots) - handles both naming conventions
 - [x] Test AI sync after pattern fix - successfully found and synced W9 AI Hotspots and Product Review.docx
 - [x] Verify AI data displays in detailed section - 33 AI items loaded (0 wearables-tagged in current document)
+
+## Experiences & Interfaces Pulling Old File (Current)
+- [x] Investigate why sync is pulling old file (Last modified: Feb 25, 2026, 9:26 AM)
+- [x] Check what W09 files exist - found "W09 Software (I+E, AI, Hearing) Canonical Program Review.docx"
+- [x] Analyze parse_ie_review.py - pattern only matched "Experiences & Interfaces Review" format
+- [x] Fix file selection - updated regex to match both old and new naming patterns
+- [x] Test sync and verify W09 data loads - successfully synced W09 Canonical Program Review (127 items total)

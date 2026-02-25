@@ -43,7 +43,10 @@ def find_latest_review_file():
         
         for item in files_data:
             name = item.get('Name', '')
-            if re.match(r'W\d+\s+Experiences\s*&\s*Interfaces\s+Review\.docx', name, re.IGNORECASE):
+            # Match both naming patterns:
+            # - "W09 Experiences & Interfaces Review.docx" (old format)
+            # - "W09 Software (I+E, AI, Hearing) Canonical Program Review.docx" (new format)
+            if re.match(r'W\d+\s+(Experiences\s*&\s*Interfaces\s+Review|Software\s*\(I\+E,\s*AI,\s*Hearing\).*Review)\.docx', name, re.IGNORECASE):
                 mod_time = item.get('ModTime', '')
                 review_files.append({
                     'name': name,
