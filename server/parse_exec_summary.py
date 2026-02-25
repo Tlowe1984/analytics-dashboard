@@ -94,12 +94,20 @@ try:
         # Extract rich text with bold and links
         rich_content = extract_rich_text(para)
         
+        # Detect and strip [wearables-tag]
+        is_wearables_tag = '[wearables-tag]' in rich_content.lower()
+        if is_wearables_tag:
+            # Remove [wearables-tag] (case insensitive)
+            import re
+            rich_content = re.sub(r'\[wearables-tag\]', '', rich_content, flags=re.IGNORECASE).strip()
+        
         # Add the item
         items.append({
             'product': current_product,
             'section': current_section,
             'content': rich_content,
             'is_new': 1 if is_new else 0,
+            'is_wearables_tag': 1 if is_wearables_tag else 0,
             'indent_level': indent_level
         })
     

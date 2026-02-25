@@ -238,3 +238,92 @@ For sync issues or questions, check:
 - `.manus-logs/` directory for recent logs
 - Database directly using `pnpm exec tsx` scripts
 - Run `bash test_sync_robustness.sh` for comprehensive diagnostics
+
+## [wearables-tag] System
+
+The dashboard includes a **Wearable Week** tile that aggregates content from all 5 data sources tagged with `[wearables-tag]`. This allows contributors to mark specific items across different documents that should appear in the consolidated Wearable Week view.
+
+### How It Works
+
+1. **Tagging Content**: Contributors add `[wearables-tag]` anywhere in a bullet point in any of the 5 source documents:
+   - Devices (Device & Growth Canonical Program Review)
+   - Software (Software I+E, AI, Hearing Canonical Program Review)
+   - Systems (WXX Systems Canonical Program Review)
+   - Hearing (WXX Health Canonical Program Review)
+   - AI (AI WXX Review documents)
+
+2. **Parsing**: Each parser automatically:
+   - Detects `[wearables-tag]` markers (case insensitive)
+   - Strips the tag from the content before storing
+   - Sets `is_wearables_tag = 1` in the database
+
+3. **Database Storage**: All 5 tables have `is_wearables_tag` column:
+   - `dashboard_items` (Devices)
+   - `software_items` (Software)
+   - `systems_items` (Systems)
+   - `hearing_items` (Hearing)
+   - `ai_items` (AI)
+
+4. **Aggregation**: The `getWearablesTaggedItems()` function:
+   - Queries all 5 tables for items where `is_wearables_tag = 1`
+   - Normalizes items to common format with source labels
+   - Returns combined list for display
+
+5. **Display**: The Wearable Week tile (`SoftwareWearablesSection.tsx`):
+   - Shows items grouped by Highlights and Risks/Opens
+   - Displays source label for each item (e.g., `[Systems]`, `[Software]`)
+   - Updates automatically when new tagged items are synced
+
+### Parsers with [wearables-tag] Detection
+
+All 5 parsers have been updated to detect and handle `[wearables-tag]`:
+
+- ✅ `parse_exec_summary.py` (Devices) - inline detection
+- ✅ `parse_ie_review.py` (Software) - inline detection
+- ✅ `parse_systems_review.py` (Systems) - inline + separate extraction via `extract_systems_wearables.py`
+- ✅ `parse_hearing_review.py` (Hearing) - inline detection
+- ✅ `parse_ai_review.py` (AI) - inline detection
+
+### Verifying [wearables-tag] Items
+
+After running a sync, check how many wearables-tagged items were found:
+
+```bash
+cd /home/ubuntu/analytics-dashboard
+node -e "
+const mysql = require('mysql2/promise');
+
+async function check() {
+  const conn = await mysql.createConnection(process.env.DATABASE_URL);
+  
+  const [devices] = await conn.query('SELECT COUNT(*) as count FROM dashboard_items WHERE is_wearables_tag = 1');
+  const [software] = await conn.query('SELECT COUNT(*) as count FROM software_items WHERE is_wearables_tag = 1');
+  const [systems] = await conn.query('SELECT COUNT(*) as count FROM systems_items WHERE is_wearables_tag = 1');
+  const [hearing] = await conn.query('SELECT COUNT(*) as count FROM hearing_items WHERE is_wearables_tag = 1');
+  const [ai] = await conn.query('SELECT COUNT(*) as count FROM ai_items WHERE is_wearables_tag = 1');
+  
+  console.log('Wearables-tagged items:');
+  console.log('- Devices:', devices[0].count);
+  console.log('- Software:', software[0].count);
+  console.log('- Systems:', systems[0].count);
+  console.log('- Hearing:', hearing[0].count);
+  console.log('- AI:', ai[0].count);
+  console.log('Total:', devices[0].count + software[0].count + systems[0].count + hearing[0].count + ai[0].count);
+  
+  await conn.end();
+}
+
+check().catch(console.error);
+"
+```
+
+### Adding New Data Sources
+
+If you add a new data source that should support `[wearables-tag]`:
+
+1. Add `isWearablesTag: int("is_wearables_tag").default(0).notNull()` to the table schema in `drizzle/schema.ts`
+2. Generate and apply migration: `pnpm drizzle-kit generate` then `webdev_execute_sql`
+3. Update the parser to detect `[wearables-tag]` and strip it from content
+4. Add the new table to `getWearablesTaggedItems()` query in `server/db.ts`
+5. Test sync and verify items appear in Wearable Week tile
+

@@ -781,8 +781,8 @@ export async function getAllAiItems(): Promise<AiItem[]> {
   });
 }
 
-// Get wearables-tagged items from AI and Hearing reviews
-export async function getWearablesTaggedItems(): Promise<Array<AiItem | HearingItem>> {
+// Get wearables-tagged items from ALL data sources (Devices, Software, Systems, Hearing, AI)
+export async function getWearablesTaggedItems(): Promise<Array<{ source: string; content: string; sectionType: string; isNew: number }>> {
   return cachedQuery('wearables:all', async () => {
     const db = await getDb();
     if (!db) {
@@ -792,12 +792,26 @@ export async function getWearablesTaggedItems(): Promise<Array<AiItem | HearingI
 
     const { eq, asc } = await import("drizzle-orm");
     
-    // Get wearables-tagged items from AI
-    const aiWearables = await db
+    // Get wearables-tagged items from Devices (dashboard_items)
+    const devicesWearables = await db
       .select()
-      .from(aiItems)
-      .where(eq(aiItems.isWearablesTag, 1))
-      .orderBy(asc(aiItems.order));
+      .from(dashboardItems)
+      .where(eq(dashboardItems.isWearablesTag, 1))
+      .orderBy(asc(dashboardItems.order));
+    
+    // Get wearables-tagged items from Software (software_items)
+    const softwareWearables = await db
+      .select()
+      .from(softwareItems)
+      .where(eq(softwareItems.isWearablesTag, 1))
+      .orderBy(asc(softwareItems.order));
+    
+    // Get wearables-tagged items from Systems
+    const systemsWearables = await db
+      .select()
+      .from(systemsItems)
+      .where(eq(systemsItems.isWearablesTag, 1))
+      .orderBy(asc(systemsItems.order));
     
     // Get wearables-tagged items from Hearing
     const hearingWearables = await db
@@ -806,8 +820,48 @@ export async function getWearablesTaggedItems(): Promise<Array<AiItem | HearingI
       .where(eq(hearingItems.isWearablesTag, 1))
       .orderBy(asc(hearingItems.order));
     
-    // Combine and return
-    return [...aiWearables, ...hearingWearables];
+    // Get wearables-tagged items from AI
+    const aiWearables = await db
+      .select()
+      .from(aiItems)
+      .where(eq(aiItems.isWearablesTag, 1))
+      .orderBy(asc(aiItems.order));
+    
+    // Normalize all items to a common format
+    const normalizedItems = [
+      ...devicesWearables.map(item => ({
+        source: 'Devices',
+        content: item.content,
+        sectionType: item.sectionType,
+        isNew: item.isNew
+      })),
+      ...softwareWearables.map(item => ({
+        source: 'Software',
+        content: item.content,
+        sectionType: item.sectionType,
+        isNew: item.isNew
+      })),
+      ...systemsWearables.map(item => ({
+        source: 'Systems',
+        content: item.content,
+        sectionType: item.sectionType,
+        isNew: item.isNew
+      })),
+      ...hearingWearables.map(item => ({
+        source: 'Hearing',
+        content: item.content,
+        sectionType: item.sectionType,
+        isNew: item.isNew
+      })),
+      ...aiWearables.map(item => ({
+        source: 'AI',
+        content: item.content,
+        sectionType: item.sectionType,
+        isNew: item.isNew
+      }))
+    ];
+    
+    return normalizedItems;
   });
 }
 

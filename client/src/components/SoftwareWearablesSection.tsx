@@ -5,10 +5,12 @@ import { MarkdownText } from './MarkdownText';
 export default function SoftwareWearablesSection() {
   const { data: wearablesItems, isLoading } = trpc.dashboard.getWearablesTaggedItems.useQuery();
 
-  // Categorize items into Highlights (wins) and Risks/Opens (exec_summary, help_needed)
-  const highlights = wearablesItems?.filter(item => item.sectionType === 'wins') || [];
+  // Categorize items into Highlights (wins) and Risks/Opens (exec_summary, help_needed, risks, highlights)
+  const highlights = wearablesItems?.filter(item => 
+    item.sectionType === 'wins' || item.sectionType === 'highlights'
+  ) || [];
   const risks = wearablesItems?.filter(item => 
-    item.sectionType === 'exec_summary' || item.sectionType === 'help_needed'
+    item.sectionType === 'exec_summary' || item.sectionType === 'help_needed' || item.sectionType === 'risks'
   ) || [];
 
   // Helper function to extract title from content
@@ -87,6 +89,7 @@ export default function SoftwareWearablesSection() {
                   <div key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                     <div className="text-sm leading-relaxed text-foreground/90">
+                      <span className="text-xs font-semibold text-blue-500 mr-1">[{item.source}]</span>
                       <MarkdownText content={formatBulletContent(item.content)} />
                     </div>
                   </div>
@@ -106,6 +109,7 @@ export default function SoftwareWearablesSection() {
                   <div key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                     <div className="text-sm leading-relaxed text-foreground/90">
+                      <span className="text-xs font-semibold text-orange-500 mr-1">[{item.source}]</span>
                       <MarkdownText content={formatBulletContent(item.content)} />
                     </div>
                   </div>

@@ -164,10 +164,19 @@ def parse_systems_review(docx_path):
         # Extract rich text with bold and links
         rich_content = extract_rich_text(para)
         
+        # Detect and strip [wearables-tag] for inline detection
+        is_wearables_tag = 0
+        if '[wearables-tag]' in rich_content.lower():
+            is_wearables_tag = 1
+            # Remove [wearables-tag] (case insensitive)
+            import re
+            rich_content = re.sub(r'\[wearables-tag\]', '', rich_content, flags=re.IGNORECASE).strip()
+        
         items.append({
             "section_type": current_section,
             "content": rich_content,
             "is_new": is_new,
+            "is_wearables_tag": is_wearables_tag,
             "indent_level": indent_level,
             "order": order
         })

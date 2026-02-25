@@ -2191,3 +2191,21 @@
 - [x] Fix the root cause - changed from parallel to sequential execution
 - [x] Test sync end-to-end - devices & software work, systems needs timeout increase
 - [x] Increase rclone download timeout from 30s to 120s for large files
+
+## Comprehensive Data Refresh with Source Documentation (Current)
+- [x] Run sync_all_data.sh to refresh all 8 data sources (7/8 successful, AI failed)
+- [x] Document exact Google Drive paths for each source
+- [x] Record file names and modified dates for all downloaded documents
+- [x] Verify all data is from current or previous week (not cached) - fresh downloads confirmed
+- [x] Check database item counts after refresh (Dashboard:61, Software:30, Systems:589, Hearing:46, AI:43, Decisions:18, Milestones:1286, Reviews:14)
+- [x] Create detailed source report showing where each data type was pulled from (data_source_report.md)
+
+## Systematic [wearables-tag] Detection Across All Data Sources (Current)
+- [x] Audit all 5 parsers for [wearables-tag] detection: Devices, Software, Systems, Hearing, AI
+- [x] Add [wearables-tag] detection to parse_exec_summary.py (Devices) - added detection and stripping
+- [x] Add [wearables-tag] detection to parse_systems_review.py - added inline detection (already had extract_systems_wearables.py for separate extraction)
+- [x] Verify all database tables have is_wearables_tag column - all 5 tables now have it (dashboard_items, software_items, systems_items, hearing_items, ai_items)
+- [x] Create unified getWearablesTaggedItems() query aggregating from all 5 sources - returns normalized format with source label
+- [x] Update Wearable Week tile (SoftwareWearablesSection) to display items from all 5 sources with source labels
+- [x] Test sync with W09 documents and verify all [wearables-tag] items appear - 16 items found (10 Systems, 6 Software)
+- [x] Document [wearables-tag] system in SYNC_VERIFICATION.md for future maintenance
