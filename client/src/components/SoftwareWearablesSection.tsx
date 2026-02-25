@@ -89,7 +89,6 @@ export default function SoftwareWearablesSection() {
                   <div key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                     <div className="text-sm leading-relaxed text-foreground/90">
-                      <span className="text-xs font-semibold text-blue-500 mr-1">[{item.source}]</span>
                       <MarkdownText content={formatBulletContent(item.content)} />
                     </div>
                   </div>
@@ -109,7 +108,6 @@ export default function SoftwareWearablesSection() {
                   <div key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                     <div className="text-sm leading-relaxed text-foreground/90">
-                      <span className="text-xs font-semibold text-orange-500 mr-1">[{item.source}]</span>
                       <MarkdownText content={formatBulletContent(item.content)} />
                     </div>
                   </div>
