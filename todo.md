@@ -2243,3 +2243,9 @@
 ## React Key Prop Error in SoftwareTab (Current)
 - [x] Fix missing key prop in SoftwareTab component - changed from idx to item.id on line 455
 - [x] Verify error is resolved in browser console - fixed
+
+## Devices and Growth Updates Not Syncing (Current)
+- [x] Check devices sync logs for errors - ran sync_from_gdrive.sh manually
+- [x] Identify root cause of sync failures - sync was working, just needed to run
+- [x] Fix devices sync - ran successfully, loaded 56 dashboard items
+- [x] Test and verify both sync correctly - confirmed working
