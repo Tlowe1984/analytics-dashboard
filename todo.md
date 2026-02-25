@@ -2228,3 +2228,18 @@
 - [x] Analyze parse_ie_review.py - pattern only matched "Experiences & Interfaces Review" format
 - [x] Fix file selection - updated regex to match both old and new naming patterns
 - [x] Test sync and verify W09 data loads - successfully synced W09 Canonical Program Review (127 items total)
+
+## Milestone Sync Not Running in Admin/Auto Refresh (Current)
+- [x] Run sync_milestones.sh now to get updated W10 data from source spreadsheet - synced 1282 milestones
+- [x] Verify Mojito Concept Commit shows W10 after manual sync - confirmed Mar 3, 2026 (W10)
+- [x] Add milestone sync to sync_all_data.sh (admin refresh) - already included on line 57-58
+- [x] Add milestone sync to scheduled auto sync - already included in syncAllBash.ts line 113
+- [ ] Verify cache clearing happens systematically in all sync flows
+- [ ] Test admin refresh and verify milestones update
+- [ ] Document milestone sync in SYNC_VERIFICATION.md
+
+## Milestone Sync Not Running in Admin/Auto Refresh (Current)
+
+## React Key Prop Error in SoftwareTab (Current)
+- [x] Fix missing key prop in SoftwareTab component - changed from idx to item.id on line 455
+- [x] Verify error is resolved in browser console - fixed

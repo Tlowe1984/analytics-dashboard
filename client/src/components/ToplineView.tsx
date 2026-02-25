@@ -451,8 +451,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
               </tr>
             </thead>
             <tbody>
-              {itemsToRender.map((item, idx) => (
-                <tr key={idx} className="border-b border-border/30 last:border-0">
+              {itemsToRender.map((item) => (
+                <tr key={item.id} className="border-b border-border/30 last:border-0">
                   <td className="py-2 px-2 align-top">
                     <MarkdownText content={item.topic || item.decision_doc || '-'} />
                   </td>
