@@ -21,8 +21,12 @@ rclone lsf "manus_google_drive:$FOLDER_PATH" \
 done
 
 # Find the most recent AI WX file (sort by modification time)
+# Flexible pattern matches both:
+#   - "W9 AI Hotspots and Product Review.docx"
+#   - "AI W9 Hotspots.docx"
+#   - "W09 AI Hotspots.docx"
 latest_file=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
-  grep -E "AI W[0-9]+.*Hotspots.*\.docx" | \
+  grep -iE "(W[0-9]+.*AI.*Hotspots|AI.*W[0-9]+.*Hotspots).*\.docx" | \
   sort -k2,3 -r | \
   head -1 | \
   awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
