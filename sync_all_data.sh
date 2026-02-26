@@ -41,29 +41,29 @@ SYNC_WARNINGS=0
 # Run all independent syncs in parallel for maximum speed
 log "📥 Starting all syncs in parallel..."
 
-# Start all syncs in background
-bash "$SCRIPT_DIR/sync_from_gdrive.sh" > "$TEMP_DIR/devices.log" 2>&1 &
+# Start all syncs in background with auto-fix wrapper
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_from_gdrive.sh" "Devices" > "$TEMP_DIR/devices.log" 2>&1 &
 PID_DEVICES=$!
 
-bash "$SCRIPT_DIR/sync_software.sh" > "$TEMP_DIR/software.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_software.sh" "Software" > "$TEMP_DIR/software.log" 2>&1 &
 PID_SOFTWARE=$!
 
-bash "$SCRIPT_DIR/sync_systems.sh" > "$TEMP_DIR/systems.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_systems.sh" "Systems" > "$TEMP_DIR/systems.log" 2>&1 &
 PID_SYSTEMS=$!
 
-bash "$SCRIPT_DIR/sync_decisions.sh" > "$TEMP_DIR/decisions.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_decisions.sh" "Decisions" > "$TEMP_DIR/decisions.log" 2>&1 &
 PID_DECISIONS=$!
 
-bash "$SCRIPT_DIR/sync_milestones.sh" > "$TEMP_DIR/milestones.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_milestones.sh" "Milestones" > "$TEMP_DIR/milestones.log" 2>&1 &
 PID_MILESTONES=$!
 
-bash "$SCRIPT_DIR/sync_upcoming_reviews.sh" > "$TEMP_DIR/upcoming_reviews.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_upcoming_reviews.sh" "Upcoming Reviews" > "$TEMP_DIR/upcoming_reviews.log" 2>&1 &
 PID_REVIEWS=$!
 
-bash "$SCRIPT_DIR/sync_ai.sh" > "$TEMP_DIR/ai.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_ai.sh" "AI" > "$TEMP_DIR/ai.log" 2>&1 &
 PID_AI=$!
 
-bash "$SCRIPT_DIR/sync_hearing.sh" > "$TEMP_DIR/hearing.log" 2>&1 &
+bash "$SCRIPT_DIR/sync_with_auto_fix.sh" "$SCRIPT_DIR/sync_hearing.sh" "Hearing" > "$TEMP_DIR/hearing.log" 2>&1 &
 PID_HEARING=$!
 
 # Wait for all syncs to complete and check results

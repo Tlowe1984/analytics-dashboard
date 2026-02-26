@@ -101,6 +101,19 @@ try:
             import re
             rich_content = re.sub(r'\[wearables-tag\]', '', rich_content, flags=re.IGNORECASE).strip()
         
+        # Intelligent categorization: detect risks in content even if under Highlights section
+        # Check for risk indicators in the content
+        content_lower = rich_content.lower()
+        risk_indicators = [
+            'mrbd risks', 'mrbd risk', 'risks/opens', 'risk:', 'concern', 'concerned',
+            'delayed', 'delay', 'issue', 'problem', 'blocker', 'blocked', 'failed',
+            '⚠️', '🔴', '🚨', '❌', 'not meeting', 'behind schedule', 'at risk'
+        ]
+        
+        # If current section is highlights but content contains risk indicators, recategorize as risk
+        if current_section == 'highlights' and any(indicator in content_lower for indicator in risk_indicators):
+            current_section = 'risks'
+        
         # Add the item
         items.append({
             'product': current_product,

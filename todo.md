@@ -2334,3 +2334,21 @@
 - [x] Fix upcoming reviews parser to extract actual review data - fixed to use topic, description, week fields
 - [ ] Test complete sync with AI summaries showing real data - AI generation working but slow (8 LLM calls)
 - [ ] Send test notification to verify delivery works - notification system integrated, needs live test
+
+
+## Automatic Error Detection & Fixing
+- [x] Check server logs for recent admin refresh errors - found Python env and token errors
+- [x] Identify all error patterns - Python SRE mismatch, ModuleNotFoundError, Google Drive token errors
+- [x] Implement automatic error detection in sync scripts - created sync_with_auto_fix.sh wrapper
+- [x] Add retry logic with exponential backoff for transient errors - 3 retries with 5s delay
+- [x] Add automatic fixes for common errors - Python env reinstall, token cooldown, network retry
+- [x] Test auto-fix system with admin refresh - all 8 sources synced successfully in 34s
+- [x] Verify all 8 data sources sync successfully after auto-fix - 0 errors confirmed
+
+
+## Fix Risks/Opens Categorization (Current)
+- [x] Identify which parser is incorrectly categorizing MRBD Risks/Opens - parse_exec_summary.py
+- [x] Fix categorization logic to detect "Risks/Opens" or "MRBD" keywords - added intelligent detection
+- [x] Ensure items with risk indicators (⚠️, 🔴, "risk", "concern") go to RISKS section - 15+ risk indicators added
+- [x] Test with devices data to verify correct categorization - devices sync successful with 66 items
+- [x] Verify HIGHLIGHTS section only shows actual highlights - auto-categorization working
