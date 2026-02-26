@@ -95,6 +95,30 @@ def download_review_file(filename):
             print(f"rclone error: {result.stderr}", file=sys.stderr)
             return None
         
+        # Validate file week (must be current or last week)
+        # Get file modification time
+        file_stat_result = subprocess.run(
+            ['stat', '-c', '%y', f"/tmp/{filename}"],
+            capture_output=True,
+            text=True
+        )
+        if file_stat_result.returncode == 0:
+            file_mtime = file_stat_result.stdout.strip().split()[0] + 'T' + file_stat_result.stdout.strip().split()[1].split('.')[0] + 'Z'
+            validation_result = subprocess.run(
+                ['python3', '/home/ubuntu/analytics-dashboard/server/validate_week.py', file_mtime],
+                capture_output=True,
+                text=True
+            )
+            try:
+                validation = json.loads(validation_result.stdout)
+                if not validation['valid']:
+                    print(f"⚠️ WARNING: {validation['message']}", file=sys.stderr)
+                    print(f"File may contain outdated data. Consider updating the source document.", file=sys.stderr)
+                else:
+                    print(f"✅ File validation passed: {validation['message']}", file=sys.stderr)
+            except:
+                pass  # Skip validation if it fails
+        
         return f"/tmp/{filename}"
     
     except Exception as e:

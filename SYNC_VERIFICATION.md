@@ -391,3 +391,142 @@ If stale data persists after sync:
 2. Verify temp file is deleted before download (`rm -f "/tmp/filename"`)
 3. Check rclone logs for download errors
 4. Verify database cache is cleared after sync (query-cache.ts `invalidateDashboardCache()`)
+
+
+## Automatic Error Detection & Fixing
+
+The sync system includes automatic error detection and recovery mechanisms to ensure reliable data updates:
+
+### Startup Sync
+- **When**: Runs automatically 5 seconds after server starts/wakes from hibernation
+- **Why**: Ensures fresh data when you first access the dashboard each day
+- **What**: Full sync of all 8 data sources with validation checks
+
+### Cache Clearing
+- **When**: Before every sync (startup, scheduled, manual admin refresh)
+- **How**: Calls `invalidateDashboardCache()` to clear all query cache
+- **Verification**: Check logs for "🧽 Clearing query cache..." message
+
+### Fresh File Downloads
+- **Mechanism**: All rclone commands use `--ignore-times --no-check-certificate` flags
+- **Effect**: Forces fresh download from Google Drive, bypasses modification time checks and SSL cert caching
+- **Verification**: Check sync logs for successful downloads with latest modification times
+
+### Week Validation
+- **Tool**: `server/validate_week.py`
+- **Rules**: 
+  - Files must be from current week (W{current}) or last week (W{current-1})
+  - Maximum age: 14 days
+  - Rejects files older than 14 days
+- **Action**: Logs warning if file is outdated, continues with sync but alerts user to update source
+- **Verification**: Check logs for "✅ File validation passed: File is from W{X} ({Y} days old) - valid"
+
+### Automatic Retries
+- **Token refresh errors**: Up to 3 retries with exponential backoff (2s, 4s, 8s)
+- **Network timeouts**: Automatic retry with 180-second timeout per sync
+- **Parse errors**: Logs error details, skips problematic items, continues with rest
+
+### Error Notifications
+- **Persistent failures**: Owner notification sent if all retries fail
+- **Partial failures**: Logs which sources failed, continues with successful sources
+- **Success confirmation**: Logs item counts for each source after successful sync
+
+### Testing Auto-Fix
+To verify auto-fix is working:
+
+```bash
+# Test startup sync
+cd /home/ubuntu/analytics-dashboard
+grep "Starting startup sync" .manus-logs/sync-scheduler.log
+
+# Test cache clearing
+grep "Clearing query cache" .manus-logs/sync-scheduler.log
+
+# Test week validation
+cd server && python3 validate_week.py "2026-02-26T17:00:00Z"
+
+# Test with old file (should fail)
+python3 validate_week.py "2026-01-01T00:00:00Z"
+```
+
+### Troubleshooting
+
+**If sync fails repeatedly:**
+1. Check `.manus-logs/sync-scheduler.log` for error details
+2. Verify Google Drive token is valid: `rclone lsd manus_google_drive: --config /home/ubuntu/.gdrive-rclone.ini`
+3. Check file modification dates in Google Drive
+4. Manually trigger sync via Admin Refresh button
+5. Check database for loaded items
+
+**If week validation fails:**
+- Update source documents in Google Drive to current/last week
+- Check that file naming matches expected patterns (W{number} prefix)
+- Verify modification times are recent (within 14 days)
+
+---
+
+## UptimeRobot Setup Guide
+
+To ensure the dashboard syncs automatically at 8:45 AM PST even when the sandbox is hibernated, set up a free UptimeRobot monitor to wake the server 5 minutes before the scheduled sync.
+
+### Step 1: Sign Up for UptimeRobot
+
+1. Go to https://uptimerobot.com
+2. Click "Register for FREE"
+3. Create account (free tier allows 50 monitors)
+
+### Step 2: Create Monitor
+
+1. Click "Add New Monitor"
+2. Configure monitor:
+   - **Monitor Type**: HTTP(s)
+   - **Friendly Name**: "Wearables Dashboard Wake-Up"
+   - **URL**: `https://3000-igce7qiubzimnqap2s96q-4a48a2c0.us2.manus.computer`
+   - **Monitoring Interval**: 5 minutes (free tier)
+   - **Monitor Timeout**: 30 seconds
+3. Click "Create Monitor"
+
+### Step 3: Set Up Daily Wake-Up
+
+Unfortunately, UptimeRobot free tier doesn't support scheduled checks (only continuous monitoring). **Alternative solutions:**
+
+**Option A: Use cron-job.org (Recommended)**
+1. Go to https://cron-job.org/en/
+2. Sign up for free account
+3. Create new cron job:
+   - **Title**: "Wake Wearables Dashboard"
+   - **URL**: `https://3000-igce7qiubzimnqap2s96q-4a48a2c0.us2.manus.computer`
+   - **Schedule**: Daily at 8:40 AM PST (16:40 UTC)
+   - **Enabled**: Yes
+4. Save cron job
+
+**Option B: Deploy to Production (Best Long-Term)**
+1. Click "Publish" button in dashboard UI
+2. Deploy to Manus production hosting
+3. Server runs 24/7, scheduled sync works reliably
+4. No external service needed
+
+### Step 4: Verify Setup
+
+After setup:
+1. Wait for next scheduled wake-up (8:40 AM PST)
+2. Check `.manus-logs/sync-scheduler.log` for startup sync at ~8:40 AM
+3. Verify scheduled sync runs at 8:45 AM
+4. Confirm dashboard shows fresh data
+
+### Monitoring
+
+UptimeRobot/cron-job.org will:
+- Ping your dashboard URL at 8:40 AM PST
+- Wake up the sandbox from hibernation
+- Trigger startup sync (runs 5 seconds after wake)
+- Scheduled sync runs at 8:45 AM as configured
+- Dashboard has fresh data when you access it
+
+### Troubleshooting
+
+**If wake-up doesn't work:**
+- Verify cron job URL is correct (check for typos)
+- Check cron job execution history for errors
+- Verify sandbox URL hasn't changed (Manus may rotate URLs)
+- Consider deploying to production for reliability

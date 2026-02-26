@@ -36,6 +36,13 @@ async function runSync() {
   log('========================================')
   
   try {
+    // Step 1: Clear query cache before sync
+    log('🧽 Clearing query cache...');
+    const { invalidateDashboardCache } = await import('./query-cache');
+    await invalidateDashboardCache();
+    log('✅ Query cache cleared');
+    
+    // Step 2: Verify fresh downloads (flags already set in sync scripts)
     // Import and call the bash script sync function (with weekly archive detection)
     const { syncAllBash } = await import('./syncAllBash');
     
@@ -115,10 +122,11 @@ export function initSyncScheduler() {
   log('✅ Sync scheduler initialized successfully');
   log('Next sync will run at 8:45 AM PST');
   
-  // Optional: Run sync on startup (commented out by default)
-  // Uncomment if you want to sync immediately when server starts
-  // log('Running initial sync on startup to test fixes...');
-  // runSync();
+  // Run sync on startup to ensure fresh data when server wakes from hibernation
+  log('Running initial sync on startup...');
+  setTimeout(() => {
+    runSync().catch(err => log('Startup sync failed: ' + err.message));
+  }, 5000); // Wait 5 seconds for server to fully initialize
 }
 
 /**
