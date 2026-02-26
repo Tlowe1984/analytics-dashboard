@@ -41,7 +41,7 @@ rm -f "/tmp/$LATEST_FILE"
 
 # Download the file
 echo "📥 Downloading $LATEST_FILE..."
-rclone copy "manus_google_drive:$FOLDER_PATH/$LATEST_FILE" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
+rclone copy "manus_google_drive:$FOLDER_PATH/$LATEST_FILE" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --ignore-times --no-check-certificate
 
 # Parse the document
 echo "📊 Parsing Health review document..."

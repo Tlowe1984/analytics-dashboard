@@ -327,3 +327,67 @@ If you add a new data source that should support `[wearables-tag]`:
 4. Add the new table to `getWearablesTaggedItems()` query in `server/db.ts`
 5. Test sync and verify items appear in Wearable Week tile
 
+
+
+---
+
+## No-Cache Policy for Sync Scripts
+
+**Critical Requirement:** All sync scripts MUST download fresh files from Google Drive on every refresh. Caching can cause stale data to be displayed even after source documents are updated.
+
+### Implementation
+
+All `rclone copy` commands include cache-busting flags:
+```bash
+rclone copy "manus_google_drive:path/to/file.docx" /tmp/ \
+  --config /home/ubuntu/.gdrive-rclone.ini \
+  --ignore-times \
+  --no-check-certificate
+```
+
+**Flags explained:**
+- `--ignore-times`: Forces download even if local file has same modification time
+- `--no-check-certificate`: Bypasses SSL certificate caching
+
+### File Deletion Before Download
+
+All scripts delete temp files before downloading:
+```bash
+rm -f "/tmp/filename.docx"
+rclone copy "manus_google_drive:path/to/filename.docx" /tmp/ ...
+```
+
+### Affected Scripts
+
+**Bash sync scripts:**
+- `sync_from_gdrive.sh` (Devices)
+- `sync_ai.sh` (AI)
+- `sync_hearing.sh` (Hearing)
+
+**Python parsers:**
+- `server/parse_ie_review.py` (Software I+E)
+- `server/parse_systems_review.py` (Systems)
+- `server/parse_milestones_xlsx.py` (Milestones)
+
+### Verification
+
+To verify cache-busting is working:
+1. Update source document in Google Drive
+2. Run sync script
+3. Check item count changes in database
+4. Verify new content appears in UI
+
+**Test command:**
+```bash
+cd /home/ubuntu/analytics-dashboard
+bash sync_from_gdrive.sh
+# Should show different item count if source changed
+```
+
+### Troubleshooting
+
+If stale data persists after sync:
+1. Check that `--ignore-times --no-check-certificate` flags are present in rclone command
+2. Verify temp file is deleted before download (`rm -f "/tmp/filename"`)
+3. Check rclone logs for download errors
+4. Verify database cache is cleared after sync (query-cache.ts `invalidateDashboardCache()`)

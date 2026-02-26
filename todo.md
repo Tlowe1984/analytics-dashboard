@@ -2249,3 +2249,15 @@
 - [x] Identify root cause of sync failures - sync was working, just needed to run
 - [x] Fix devices sync - ran successfully, loaded 56 dashboard items
 - [x] Test and verify both sync correctly - confirmed working
+
+## In-Market Section Using Cached Files (CRITICAL)
+- [x] Identify where In-Market data comes from - Devices sync (sync_from_gdrive.sh)
+- [x] Audit ALL sync scripts for file caching behavior - found inconsistent cache clearing
+- [x] Remove file caching from devices sync - added --ignore-times --no-check-certificate
+- [x] Remove file caching from software sync (parse_ie_review.py) - added cache-busting flags
+- [x] Remove file caching from systems sync (parse_systems_review.py) - added cache-busting flags
+- [x] Remove file caching from AI sync - added cache-busting flags
+- [x] Remove file caching from Hearing sync - added cache-busting flags
+- [x] Remove file caching from Milestones sync - added cache-busting flags
+- [x] Test In-Market section updates with fresh data - devices sync now loads 65 items (up from 62)
+- [x] Document no-cache policy in SYNC_VERIFICATION.md - added comprehensive section

@@ -13,12 +13,17 @@ import re
 def download_spreadsheet():
     """Download spreadsheet using rclone"""
     try:
+        # Delete old file first to force fresh download
+        subprocess.run(["rm", "-f", "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx"], check=False)
+        
         result = subprocess.run(
             [
                 "rclone", "copy",
                 "manus_google_drive:Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx",
                 "/tmp/",
-                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+                "--config", "/home/ubuntu/.gdrive-rclone.ini",
+                "--ignore-times",
+                "--no-check-certificate"
             ],
             capture_output=True,
             text=True,

@@ -9,7 +9,7 @@ export PYTHONHOME=
 echo "📥 Downloading Google Doc from Drive..."
 # Delete old file to force fresh download
 rm -f "/tmp/Device & Growth Canonical Program Review.docx"
-rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini
+rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --ignore-times --no-check-certificate
 
 echo "📊 Parsing executive summary..."
 /home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/Device & Growth Canonical Program Review.docx" > /tmp/parsed_data.json

@@ -42,7 +42,7 @@ echo "📄 Latest file: $latest_file"
 # Download the file
 echo "📥 Downloading $latest_file..."
 rm -f "/tmp/$latest_file"
-rclone copy "manus_google_drive:$FOLDER_PATH/$latest_file" /tmp --config /home/ubuntu/.gdrive-rclone.ini
+rclone copy "manus_google_drive:$FOLDER_PATH/$latest_file" /tmp --config /home/ubuntu/.gdrive-rclone.ini --ignore-times --no-check-certificate
 
 # Parse AI review document
 echo "📊 Parsing AI review document..."

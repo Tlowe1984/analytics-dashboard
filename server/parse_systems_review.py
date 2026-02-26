@@ -78,7 +78,9 @@ def download_systems_review_file(filename):
                 "rclone", "copy",
                 f"manus_google_drive:Wearables Everything/Reviews (Comment Only)/Systems Software Reviews/Archive/{filename}",
                 "/tmp/",
-                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+                "--config", "/home/ubuntu/.gdrive-rclone.ini",
+                "--ignore-times",
+                "--no-check-certificate"
             ],
             capture_output=True,
             text=True,

@@ -73,12 +73,18 @@ def find_latest_review_file():
 def download_review_file(filename):
     """Download the review file from Google Drive"""
     try:
+        # Delete old file first to force fresh download
+        local_path = f"/tmp/{filename}"
+        subprocess.run(["rm", "-f", local_path], check=False)
+        
         result = subprocess.run(
             [
                 "rclone", "copy",
                 f"manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/{filename}",
                 "/tmp/",
-                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+                "--config", "/home/ubuntu/.gdrive-rclone.ini",
+                "--ignore-times",
+                "--no-check-certificate"
             ],
             capture_output=True,
             text=True,
