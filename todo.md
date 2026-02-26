@@ -2279,3 +2279,8 @@
 - [x] Update sync_software.sh to handle new object format from parser
 - [x] Re-sync Software data to apply the fix - loaded 130 items, 7 wearables-tagged
 - [x] Verify tagged items appear in Wearable Week tile without visible tags - tags stripped, items marked correctly
+
+
+## Change Dashboard Title (Current)
+- [x] Update title from "WEARABLE LIVE DASHBOARD" to "Wearables Program Status & Decisions"
+- [x] Subtitle kept as "Real-time program insights"
