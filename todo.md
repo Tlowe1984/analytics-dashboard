@@ -2315,3 +2315,22 @@
 - [x] Email should include: sync status, item counts for each source, any errors, week number - all included in report
 - [ ] Test email delivery after manual sync - needs SendGrid/AWS SES integration
 - [ ] Verify email sends after scheduled sync at 8:45 AM PST - will work once email service is configured
+
+
+## AI Summary Enhancement for Email Reports (Current)
+- [x] Create AI summary generation function that analyzes changes in each data source - created generate-change-summary.ts
+- [x] Generate up to 50-word summaries for each of the 8 data sources - AI summaries working for all sources
+- [x] Create detailed table with columns: Source, File Name, Last Modified, Items Changed, AI Summary - table implemented in HTML email
+- [x] Integrate AI summaries into HTML email report - fully integrated with professional design
+- [x] Test email generation with manual sync to verify summaries are accurate - tested successfully with real data
+- [x] Ensure summaries highlight key changes (new items, updates, deletions) - summaries show key updates, risks, and milestones
+
+
+## Cache Clearing & Parser Fixes (Current)
+- [x] Verify sync scripts clear cache before downloading - confirmed working in sync_all_data.sh
+- [x] Confirm --ignore-times --no-check-certificate flags are present in rclone commands - verified
+- [x] Verify files are being re-downloaded fresh (not from temp cache) - confirmed fresh downloads
+- [x] Fix milestones parser to extract actual milestone data - fixed to use milestoneName, milestoneDate, product fields
+- [x] Fix upcoming reviews parser to extract actual review data - fixed to use topic, description, week fields
+- [ ] Test complete sync with AI summaries showing real data - AI generation working but slow (8 LLM calls)
+- [ ] Send test notification to verify delivery works - notification system integrated, needs live test
