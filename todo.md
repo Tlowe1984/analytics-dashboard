@@ -2261,3 +2261,21 @@
 - [x] Remove file caching from Milestones sync - added cache-busting flags
 - [x] Test In-Market section updates with fresh data - devices sync now loads 65 items (up from 62)
 - [x] Document no-cache policy in SYNC_VERIFICATION.md - added comprehensive section
+
+
+## Refresh Errors and Software Document Not Found (Current)
+- [ ] Check refresh error logs to identify which syncs failed
+- [ ] List Software documents in Google Drive to find correct filename
+- [ ] Report filename to user
+- [ ] Fix Software sync script to match correct filename
+- [ ] Fix any other failing syncs
+- [ ] Test full refresh and verify all data loads
+
+
+## Software Parser Not Detecting [wearables-tag] (Current)
+- [x] Check parse_ie_review.py for wearables-tag detection logic - found it only extracts hotspots separately
+- [x] Fix parser to detect [wearables-tag] in all sections (wins, exec_summary, help_needed, decisions)
+- [x] Fix parser to strip [wearables-tag] from content and return {content, is_wearables_tag} objects
+- [x] Update sync_software.sh to handle new object format from parser
+- [x] Re-sync Software data to apply the fix - loaded 130 items, 7 wearables-tagged
+- [x] Verify tagged items appear in Wearable Week tile without visible tags - tags stripped, items marked correctly

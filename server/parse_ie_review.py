@@ -216,12 +216,26 @@ def parse_section(doc, start_idx, end_idx, section_name):
         elif current_subsection == 'exec_summary':
             exec_summary.append('\n'.join(current_item_parts))
     
+    # Process items to detect and strip [wearables-tag]
+    def process_items_for_wearables_tag(items):
+        processed = []
+        for item in items:
+            # Check for [wearables-tag] (case insensitive)
+            has_tag = bool(re.search(r'\[wearables-tag\]', item, re.IGNORECASE))
+            # Strip the tag from content
+            cleaned_item = re.sub(r'\[wearables-tag\]', '', item, flags=re.IGNORECASE).strip()
+            processed.append({
+                'content': cleaned_item,
+                'is_wearables_tag': 1 if has_tag else 0
+            })
+        return processed
+    
     return {
         'section': section_name,
-        'wins': wins[:20],  # Limit to top 20 items
-        'exec_summary': exec_summary[:30],  # Limit to top 30 items
-        'help_needed': help_needed[:10],  # Limit to top 10 items
-        'decisions': decisions[:20]  # Limit to top 20 items
+        'wins': process_items_for_wearables_tag(wins[:20]),  # Limit to top 20 items
+        'exec_summary': process_items_for_wearables_tag(exec_summary[:30]),  # Limit to top 30 items
+        'help_needed': process_items_for_wearables_tag(help_needed[:10]),  # Limit to top 10 items
+        'decisions': process_items_for_wearables_tag(decisions[:20])  # Limit to top 20 items
     }
 
 def main():
