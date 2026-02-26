@@ -7,6 +7,7 @@
 
 import cron from 'node-cron';
 import { notifyOwner } from './_core/notification';
+import { sendSyncReport } from './send-sync-report';
 import { appendFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -67,6 +68,15 @@ async function runSync() {
     
     log('========================================')
     log(`Sync completed: ${successCount} succeeded, ${failCount} failed`);
+    
+    // Send email report to tlowe999@meta.com
+    try {
+      log('📧 Sending sync report email...');
+      await sendSyncReport(result);
+      log('✅ Email report sent successfully');
+    } catch (emailError: any) {
+      log('⚠️  Failed to send email report: ' + emailError.message);
+    }
     log('========================================')
     
     if (failCount > 0) {
