@@ -36,7 +36,7 @@ export default function Home() {
                 <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-lg sm:text-2xl font-bold">Wearables Program Status & Decisions</h1>
+                <h1 className="text-lg sm:text-2xl font-bold">WEARABLES PROGRAM STATUS & DECISIONS</h1>
                 <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Real-time program insights</p>
               </div>
             </div>
