@@ -1,12 +1,16 @@
 #!/bin/bash
-# Automatic Python Dependency Checker and Installer
-# Runs on every server startup to ensure Python packages are available
-# This prevents sync failures due to sandbox resets
-#
-# CRITICAL: Installs to BOTH Python 3.11 AND UV Python 3.13
-# because different parts of the system use different Python versions
+# check-python-deps.sh — runs as the `predev` hook before every server start
+# Delegates to setup.sh which does a full venv rebuild to prevent
+# SRE module mismatch and _decimal/_contextvars errors after sandbox hibernation
 
-echo "🔍 Checking Python dependencies..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "🔧 Running Python environment setup before server start..."
+bash "$SCRIPT_DIR/setup.sh"
+exit $?  # propagate exit code
+
+# ---- Legacy per-interpreter check (kept for reference, no longer active) ----
+echo "🔍 Checking Python dependencies...""
 
 # List of Python executables to check and install packages for
 PYTHON_EXES=(

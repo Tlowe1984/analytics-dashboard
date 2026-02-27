@@ -2372,3 +2372,9 @@
 ## Systems Parser Instruction Bullet Filter
 - [x] Filter out the wearables-tag instruction bullet from systems parser - added phrase matching in extract_systems_wearables.py
 - [x] Re-run sync to verify the instruction bullet no longer appears - confirmed "Skipping instruction bullet" in sync output, 3 real items loaded
+
+## Pin Python Environment on Server Start
+- [x] Create setup.sh that rebuilds venv from scratch on every server start - completes in 7s
+- [x] Wire setup.sh into server startup via predev hook in check-python-deps.sh
+- [x] Test venv rebuild runs cleanly in under 30 seconds - confirmed 7s rebuild time
+- [x] Verify milestones and AI syncs work immediately after startup - 1,283 milestones + 64 AI items loaded
