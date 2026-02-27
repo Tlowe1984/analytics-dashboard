@@ -5,14 +5,10 @@ export PYTHONHOME=
 
 echo "🔄 Syncing Hearing (Health) reviews from Google Drive..."
 
-# Get current week number
-CURRENT_WEEK=$(date +%V)
-# Force decimal interpretation to avoid octal errors (e.g., 08, 09)
-PREVIOUS_WEEK=$((10#$CURRENT_WEEK - 1))
-
-# Format week numbers with leading zero if needed
-# Use 10# prefix to force decimal interpretation
-CURRENT_WEEK_FORMATTED=$(printf "W%02d" $((10#$CURRENT_WEEK)))
+# Get current and previous week numbers (force decimal to avoid octal errors on 08/09)
+CURRENT_WEEK=$((10#$(date +%V)))
+PREVIOUS_WEEK=$((CURRENT_WEEK - 1))
+CURRENT_WEEK_FORMATTED=$(printf "W%02d" $CURRENT_WEEK)
 PREVIOUS_WEEK_FORMATTED=$(printf "W%02d" $PREVIOUS_WEEK)
 
 echo "📅 Looking for Health reviews from $CURRENT_WEEK_FORMATTED or $PREVIOUS_WEEK_FORMATTED..."
@@ -21,16 +17,32 @@ echo "📅 Looking for Health reviews from $CURRENT_WEEK_FORMATTED or $PREVIOUS_
 FOLDER_PATH="Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/Health/Previous Reviews & Review Notes"
 
 # Search for files matching pattern and get the most recent one
+# Flexible regex matches:
+#   "W09 Health Canonical Program Review.docx"
+#   "W9 Health Canonical Program Review.docx"
+#   "WK09 Health Canonical Program Review.docx"
+#   "W09 Health Program Review.docx" (shorter variant)
 echo "🔍 Searching for Health Canonical Program Review files..."
 LATEST_FILE=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
-  grep -E "W[0-9]{2} Health Canonical Program Review\.docx" | \
+  grep -iE "W(K)?[0-9]{1,2}[[:space:]].*Health.*(Canonical[[:space:]]+)?Program[[:space:]]+Review\.docx" | \
   sort -k2,3 -r | \
   head -1 | \
   awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-  sed 's/ $//')
+  sed 's/[[:space:]]*$//')
+
+# Fallback: if nothing matched the strict pattern, grab the most recently modified Health .docx
+if [ -z "$LATEST_FILE" ]; then
+  echo "⚠️  Primary pattern matched nothing — trying broad Health .docx fallback..."
+  LATEST_FILE=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
+    grep -iE "Health.*\.docx" | \
+    sort -k2,3 -r | \
+    head -1 | \
+    awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
+    sed 's/[[:space:]]*$//')
+fi
 
 if [ -z "$LATEST_FILE" ]; then
-  echo "❌ No Health Canonical Program Review file found!"
+  echo "❌ No Health review file found in $FOLDER_PATH"
   exit 1
 fi
 

@@ -2378,3 +2378,17 @@
 - [x] Wire setup.sh into server startup via predev hook in check-python-deps.sh
 - [x] Test venv rebuild runs cleanly in under 30 seconds - confirmed 7s rebuild time
 - [x] Verify milestones and AI syncs work immediately after startup - 1,283 milestones + 64 AI items loaded
+
+## Systematic Fixes for All Audit Gaps (Current)
+- [x] Cat 3a: Add --ignore-times --no-check-certificate to sync_decisions.sh
+- [x] Cat 3a: Add --ignore-times --no-check-certificate to sync_upcoming_reviews.sh
+- [x] Cat 3b: Add hearing.getAll and ai.getAll to SyncStatus.tsx invalidation list
+- [x] Cat 2: Add previous-week fallback to sync_hearing.sh (try W10, fall back to W09)
+- [x] Cat 2: Add previous-week fallback to sync_ai.sh
+- [x] Cat 2: Add previous-week fallback to parse_systems_review.py
+- [x] Cat 2: Add previous-week fallback to parse_ie_review.py (Software)
+- [x] Cat 2: Broaden Systems regex to match WK## and W## formats
+- [x] Cat 2: Broaden Hearing regex to match flexible naming patterns
+- [x] Cat 4: Add defensive unknown-section logging to all parsers
+- [x] Cat 5: Add /api/health endpoint that also triggers a server wake
+- [x] Cat 5: Document cron-job.org setup for guaranteed 8:45 AM wake

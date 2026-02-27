@@ -38,8 +38,13 @@ def find_latest_systems_review_file():
         
         for item in files_data:
             name = item.get('Name', '')
-            # Match pattern: "Wearables Systems Review-WK##-2026.docx" or "Wearables Systems Review WK## 2026.docx"
-            if re.match(r'Wearables\s+Systems\s+Review[-\s]+WK?\d+[-\s]+2026\.docx', name, re.IGNORECASE):
+            # Flexible match — handles all known naming variants:
+            #   "Wearables Systems Review-WK09-2026.docx"
+            #   "Wearables Systems Review WK09 2026.docx"
+            #   "Wearables Systems Review-W09-2026.docx"   (no K)
+            #   "Wearables Systems Review W09 2026.docx"   (no K, space)
+            #   "Wearables Systems Review WK9 2026.docx"   (single digit)
+            if re.match(r'Wearables\s+Systems\s+Review[-\s]+WK?\d+[-\s]+\d{4}\.docx', name, re.IGNORECASE):
                 mod_time = item.get('ModTime', '')
                 review_files.append({
                     'name': name,
@@ -47,7 +52,16 @@ def find_latest_systems_review_file():
                 })
         
         if not review_files:
-            print("No Systems review files found", file=sys.stderr)
+            # Broad fallback: any .docx containing "Systems" and "Review" in the folder
+            print("Primary pattern matched nothing — trying broad Systems Review fallback...", file=sys.stderr)
+            for item in files_data:
+                name = item.get('Name', '')
+                if re.search(r'Systems.*Review.*\.docx', name, re.IGNORECASE):
+                    mod_time = item.get('ModTime', '')
+                    review_files.append({'name': name, 'modified': mod_time})
+        
+        if not review_files:
+            print("No Systems review files found in archive folder", file=sys.stderr)
             return None
         
         # Sort by modification time (most recent first)
@@ -107,10 +121,7 @@ def parse_systems_review(docx_path):
     current_section = None
     order = 0
     
-    # Section markers
-    wins_markers = ["🏆 Wins", "Wins [Async]"]
-    exec_summary_markers = ["🚀 Exec Summary", "Exec Summary [Async]"]
-    help_needed_markers = ["🆘 Help Needed", "Help Needed / Flag for Leadership"]
+    import re as _re
     
     for para in doc.paragraphs:
         text = para.text.strip()
@@ -118,19 +129,25 @@ def parse_systems_review(docx_path):
         if not text:
             continue
             
-        # Check for section headers
-        if any(marker in text for marker in wins_markers):
+        # Check for section headers using flexible regex patterns
+        # Wins: any heading containing "Wins" or "Launches" (with optional emoji/async)
+        if _re.search(r'(🏆|^)\s*(Wins?|Launches?)\s*(\[Async\])?\s*$', text, _re.IGNORECASE):
             current_section = "wins"
             continue
-        elif any(marker in text for marker in exec_summary_markers):
+        # Exec Summary: any heading containing "Exec Summary" or "FYIs" (with optional emoji/async)
+        elif _re.search(r'(🚀|📣|^)\s*(Exec\s+Summary|FYIs?)\s*(\[Async\])?\s*$', text, _re.IGNORECASE):
             current_section = "exec_summary"
             continue
-        elif any(marker in text for marker in help_needed_markers):
+        # Help Needed: any heading mentioning Help Needed or Flag for Leadership
+        elif _re.search(r'(🆘|🚩)?\s*(Help\s+Needed|Flag\s+(for\s+)?Leadership)', text, _re.IGNORECASE):
             current_section = "help_needed"
             continue
         
         # Skip if we haven't entered a section yet
         if current_section is None:
+            # Log unrecognised headings so format changes are visible in sync logs
+            if len(text) < 60 and any(c.isupper() for c in text[:5]):
+                print(f"[PARSER] Unrecognised heading skipped: {text!r}", file=sys.stderr)
             continue
         
         # Check if this is a bullet point or content line (not a sub-header)

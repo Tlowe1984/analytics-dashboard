@@ -43,10 +43,16 @@ def find_latest_review_file():
         
         for item in files_data:
             name = item.get('Name', '')
-            # Match both naming patterns:
-            # - "W09 Experiences & Interfaces Review.docx" (old format)
-            # - "W09 Software (I+E, AI, Hearing) Canonical Program Review.docx" (new format)
-            if re.match(r'W\d+\s+(Experiences\s*&\s*Interfaces\s+Review|Software\s*\(I\+E,\s*AI,\s*Hearing\).*Review)\.docx', name, re.IGNORECASE):
+            # Flexible match — handles all known naming variants:
+            #   "W09 Experiences & Interfaces Review.docx"                   (original)
+            #   "W09 Software (I+E, AI, Hearing) Canonical Program Review.docx" (new canonical)
+            #   "WK09 Experiences & Interfaces Review.docx"                  (WK prefix)
+            #   "W9 Software (I+E, AI, Hearing) Review.docx"                 (single digit)
+            if re.match(
+                r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
+                r'|Software\s*\(I\+E[^)]*\).*Review)',
+                name, re.IGNORECASE
+            ):
                 mod_time = item.get('ModTime', '')
                 review_files.append({
                     'name': name,
@@ -54,7 +60,16 @@ def find_latest_review_file():
                 })
         
         if not review_files:
-            print("No review files found", file=sys.stderr)
+            # Broad fallback: any .docx containing both "Software" and "Review" (or I+E and Review)
+            print("Primary pattern matched nothing — trying broad Software/I+E Review fallback...", file=sys.stderr)
+            for item in files_data:
+                name = item.get('Name', '')
+                if re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
+                    mod_time = item.get('ModTime', '')
+                    review_files.append({'name': name, 'modified': mod_time})
+        
+        if not review_files:
+            print("No Software/I+E review files found in folder", file=sys.stderr)
             return None
         
         # Sort by modification time (most recent first)
@@ -296,7 +311,13 @@ def main():
                 })
         
         if len(sections) < 3:
-            print(f"Warning: Only found {len(sections)} sections, expected 3", file=sys.stderr)
+            print(f"[PARSER] Warning: Only found {len(sections)} section(s), expected 3 (Experiences & Interfaces, AI, Hearing)", file=sys.stderr)
+            # Log all headings found so format changes are diagnosable
+            print("[PARSER] All short headings found in document:", file=sys.stderr)
+            for i, para in enumerate(doc.paragraphs):
+                t = para.text.strip()
+                if t and len(t) < 60 and any(c.isupper() for c in t[:5]):
+                    print(f"  [{i}] {t!r}", file=sys.stderr)
         
         # Extract decisions from tables
         print("Extracting decision tables...", file=sys.stderr)

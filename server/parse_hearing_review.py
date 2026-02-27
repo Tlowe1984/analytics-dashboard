@@ -91,6 +91,9 @@ def parse_hearing_review(docx_path):
             
             # Skip if we haven't found a section yet
             if current_section is None:
+                # Log unrecognised headings so format changes are visible in sync logs
+                if len(text) < 60 and any(c.isupper() for c in text[:5]):
+                    print(f"[PARSER] Unrecognised heading skipped: {text!r}", file=sys.stderr)
                 continue
             
             # Stop exec_summary section immediately after Fitness Algos

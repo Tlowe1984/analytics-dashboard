@@ -34,6 +34,18 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  // Health / wake-up endpoint — used by external ping services (e.g. cron-job.org)
+  // to keep the sandbox alive before the 8:45 AM scheduled sync.
+  // Returns 200 with uptime and scheduler status; safe to call unauthenticated.
+  app.get("/api/health", (_req, res) => {
+    res.json({
+      status: "ok",
+      uptime: Math.floor(process.uptime()),
+      timestamp: new Date().toISOString(),
+      env: process.env.NODE_ENV ?? "unknown",
+    });
+  });
+
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   // tRPC API

@@ -53,6 +53,8 @@ export default function SyncStatus() {
       utils.milestones.getReleaseDates.invalidate();
       utils.milestones.getGTMMilestones.invalidate();
       utils.upcomingReviews.getAll.invalidate();
+      utils.hearing.getAll.invalidate();
+      utils.ai.getAll.invalidate();
     },
     onError: (error) => {
       toast.error("Sync failed", {

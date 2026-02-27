@@ -3,8 +3,8 @@ set -e
 
 echo "🔄 Syncing AI reviews from Google Drive..."
 
-# Calculate current week and previous week
-current_week=$(date +%V | sed 's/^0*//')
+# Calculate current week and previous week (force decimal to avoid octal errors on 08/09)
+current_week=$((10#$(date +%V)))
 current_year=$(date +%Y)
 
 # Look for AI review documents from current or previous week
@@ -21,19 +21,32 @@ rclone lsf "manus_google_drive:$FOLDER_PATH" \
 done
 
 # Find the most recent AI WX file (sort by modification time)
-# Flexible pattern matches both:
+# Flexible pattern matches all known naming variants:
 #   - "W9 AI Hotspots and Product Review.docx"
 #   - "AI W9 Hotspots.docx"
 #   - "W09 AI Hotspots.docx"
+#   - "W09 AI Product Review.docx"
+#   - "WK09 AI Hotspots.docx"
 latest_file=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
-  grep -iE "(W[0-9]+.*AI.*Hotspots|AI.*W[0-9]+.*Hotspots).*\.docx" | \
+  grep -iE "(W(K)?[0-9]+.*AI.*(Hotspots|Product[[:space:]]+Review)|AI.*W(K)?[0-9]+.*(Hotspots|Review)).*\.docx" | \
   sort -k2,3 -r | \
   head -1 | \
   awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-  sed 's/ $//')
+  sed 's/[[:space:]]*$//')
+
+# Fallback: if nothing matched, grab the most recently modified .docx in the folder
+if [ -z "$latest_file" ]; then
+  echo "⚠️  Primary pattern matched nothing — trying broad .docx fallback..."
+  latest_file=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
+    grep -iE "\.docx$" | \
+    sort -k2,3 -r | \
+    head -1 | \
+    awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
+    sed 's/[[:space:]]*$//')
+fi
 
 if [ -z "$latest_file" ]; then
-  echo "❌ No AI review documents found"
+  echo "❌ No AI review documents found in $FOLDER_PATH"
   exit 1
 fi
 

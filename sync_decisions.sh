@@ -9,7 +9,7 @@ echo "🔄 Syncing Decisions from Google Drive..."
 echo "📥 Downloading Wearable Decisions Canonical..."
 # Delete old file to force fresh download
 rm -f "/tmp/Wearable Decisions Canonical .docx"
-rclone copy "manus_google_drive:Wearables Everything/Wearable Decisions Canonical .docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --drive-export-formats docx --drive-skip-gdocs=false
+rclone copy "manus_google_drive:Wearables Everything/Wearable Decisions Canonical .docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --drive-export-formats docx --drive-skip-gdocs=false --ignore-times --no-check-certificate
 
 # Parse decisions
 echo "📊 Parsing decisions..."
