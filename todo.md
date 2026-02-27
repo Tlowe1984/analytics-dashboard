@@ -2352,3 +2352,6 @@
 - [x] Ensure items with risk indicators (⚠️, 🔴, "risk", "concern") go to RISKS section - 15+ risk indicators added
 - [x] Test with devices data to verify correct categorization - devices sync successful with 66 items
 - [x] Verify HIGHLIGHTS section only shows actual highlights - auto-categorization working
+
+## Bug Fixes
+- [x] Fix missing React key prop in SoftwareTab component - fixed in MarkdownText.tsx (li renderer) and ToplineView.tsx (combined items use _key)

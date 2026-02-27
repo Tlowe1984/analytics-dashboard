@@ -38,6 +38,11 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
           // Render lists with proper spacing
           ul: ({ children }) => <ul className="list-disc list-inside my-2">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal list-inside my-2">{children}</ol>,
+          // Render list items with unique keys to avoid React warnings
+          li: ({ children, ...props }) => {
+            const key = typeof children === 'string' ? children.slice(0, 20) : Math.random().toString(36).slice(2);
+            return <li key={key} className="my-0.5" {...props}>{children}</li>;
+          },
         }}
       >
         {processedContent}

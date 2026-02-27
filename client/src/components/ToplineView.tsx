@@ -279,17 +279,21 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
   const isLoading = winsLoading || execLoading || decisionsLoading || (category === "software_ie" && wearablesLoading);
   
   // Combine software_ie items with wearables-tagged items for software_ie category
+  // Use index-based keys to avoid duplicate IDs when merging from multiple sources
   const combinedWinsItems = category === "software_ie" && wearablesItems 
-    ? [...(winsItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "wins")]
-    : winsItems;
+    ? [...(winsItems || []).map((item, i) => ({ ...item, _key: `ie-wins-${i}` })), 
+       ...wearablesItems.filter((item: any) => item.sectionType === "wins").map((item: any, i: number) => ({ ...item, _key: `w-wins-${i}` }))]
+    : (winsItems || []).map((item, i) => ({ ...item, _key: `wins-${i}` }));
   
   const combinedExecSummaryItems = category === "software_ie" && wearablesItems
-    ? [...(execSummaryItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "exec_summary")]
-    : execSummaryItems;
+    ? [...(execSummaryItems || []).map((item, i) => ({ ...item, _key: `ie-exec-${i}` })),
+       ...wearablesItems.filter((item: any) => item.sectionType === "exec_summary").map((item: any, i: number) => ({ ...item, _key: `w-exec-${i}` }))]
+    : (execSummaryItems || []).map((item, i) => ({ ...item, _key: `exec-${i}` }));
   
   const combinedDecisionsItems = category === "software_ie" && wearablesItems
-    ? [...(decisionsItems || []), ...wearablesItems.filter((item: any) => item.sectionType === "decisions")]
-    : decisionsItems;
+    ? [...(decisionsItems || []).map((item, i) => ({ ...item, _key: `ie-dec-${i}` })),
+       ...wearablesItems.filter((item: any) => item.sectionType === "decisions").map((item: any, i: number) => ({ ...item, _key: `w-dec-${i}` }))]
+    : (decisionsItems || []).map((item, i) => ({ ...item, _key: `dec-${i}` }));
 
   if (isLoading) {
     return (
@@ -338,8 +342,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
                   <div>
                     <h4 className="text-xs font-semibold text-muted-foreground mb-2">PILLAR DECISIONS</h4>
                     <div className="space-y-3">
-                      {pillarDecisions.map((item) => (
-                        <div key={item.id} className="border-l-2 border-orange-500/30 pl-3 space-y-1">
+                      {pillarDecisions.map((item, i) => (
+                        <div key={(item as any)._key || item.id || i} className="border-l-2 border-orange-500/30 pl-3 space-y-1">
                           <div className="text-sm font-medium text-foreground">
                             <MarkdownText content={item.topic || ""} />
                           </div>
@@ -362,8 +366,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
                   <div>
                     <h4 className="text-xs font-semibold text-muted-foreground mb-2">FYI SUB-PILLAR DECISIONS</h4>
                     <div className="space-y-3">
-                      {fyiDecisions.map((item) => (
-                        <div key={item.id} className="border-l-2 border-blue-500/30 pl-3 space-y-1">
+                      {fyiDecisions.map((item, i) => (
+                        <div key={(item as any)._key || item.id || i} className="border-l-2 border-blue-500/30 pl-3 space-y-1">
                           <div className="text-sm font-medium text-foreground">
                             <MarkdownText content={item.topic || ""} />
                           </div>
@@ -402,8 +406,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
         </div>
         <div className="space-y-2.5">
           {items && items.length > 0 ? (
-            items.map((item) => (
-              <div key={item.id} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
+            items.map((item, i) => (
+              <div key={(item as any)._key || item.id || i} className="flex items-start gap-2" style={{ paddingLeft: `${(item.indentLevel || 0) * 1.5}rem` }}>
                 <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
                 <div
                   className={cn(
@@ -451,8 +455,8 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
               </tr>
             </thead>
             <tbody>
-              {itemsToRender.map((item) => (
-                <tr key={item.id} className="border-b border-border/30 last:border-0">
+              {itemsToRender.map((item, i) => (
+                <tr key={(item as any)._key || item.id || i} className="border-b border-border/30 last:border-0">
                   <td className="py-2 px-2 align-top">
                     <MarkdownText content={item.topic || item.decision_doc || '-'} />
                   </td>
