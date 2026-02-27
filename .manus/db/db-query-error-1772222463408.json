@@ -1,0 +1,10 @@
+{
+  "query": "SELECT COUNT(*) as total_milestones, MAX(updatedAt) as last_synced FROM milestones;\nSELECT milestoneName, product, milestoneDate FROM milestones WHERE milestoneDate >= NOW() ORDER BY milestoneDate ASC LIMIT 8;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT COUNT(*) as total_milestones, MAX(updatedAt) as last_synced FROM milestones;\nSELECT milestoneName, product, milestoneDate FROM milestones WHERE milestoneDate >= NOW() ORDER BY milestoneDate ASC LIMIT 8;",
+  "returncode": 1,
+  "logs": [
+    "total_milestones\tlast_synced",
+    "1283\t2026-02-27 19:51:30",
+    "ERROR 1054 (42S22) at line 2: Unknown column 'milestonedate' in 'where clause'"
+  ]
+}
