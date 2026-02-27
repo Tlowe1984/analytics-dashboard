@@ -1,0 +1,22 @@
+{
+  "query": "SELECT product_category, section_type, COUNT(*) as cnt, SUBSTRING(MIN(content), 1, 80) as sample FROM dashboard_items WHERE product_category = 'general' GROUP BY product_category, section_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product_category, section_type, COUNT(*) as cnt, SUBSTRING(MIN(content), 1, 80) as sample FROM dashboard_items WHERE product_category = 'general' GROUP BY product_category, section_type;",
+  "rows": [
+    {
+      "product_category": "general",
+      "section_type": "highlights",
+      "cnt": "4",
+      "sample": "✅ Snowsports on Displayless glasses now live [ Post ](https://fb.workplace.com/g"
+    },
+    {
+      "product_category": "general",
+      "section_type": "risks",
+      "cnt": "10",
+      "sample": "**⚠️****Reels:** PRE is hitting P75 target <5s on First Reel latency, but we are"
+    }
+  ],
+  "messages": [],
+  "stdout": "product_category\tsection_type\tcnt\tsample\ngeneral\thighlights\t4\t✅ Snowsports on Displayless glasses now live [ Post ](https://fb.workplace.com/g\ngeneral\trisks\t10\t**⚠️****Reels:** PRE is hitting P75 target <5s on First Reel latency, but we are\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}

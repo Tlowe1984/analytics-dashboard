@@ -6,12 +6,14 @@ export default function SoftwareWearablesSection() {
   const { data: wearablesItems, isLoading } = trpc.dashboard.getWearablesTaggedItems.useQuery();
 
   // Categorize items into Highlights (wins) and Risks/Opens (exec_summary, help_needed, risks, highlights)
-  const highlights = wearablesItems?.filter(item => 
-    item.sectionType === 'wins' || item.sectionType === 'highlights'
-  ) || [];
-  const risks = wearablesItems?.filter(item => 
-    item.sectionType === 'exec_summary' || item.sectionType === 'help_needed' || item.sectionType === 'risks'
-  ) || [];
+  const highlights = wearablesItems?.filter(item => {
+    const s = item.sectionType as string;
+    return s === 'wins' || s === 'highlights';
+  }) || [];
+  const risks = wearablesItems?.filter(item => {
+    const s = item.sectionType as string;
+    return s === 'exec_summary' || s === 'help_needed' || s === 'risks';
+  }) || [];
 
   // Helper function to extract title from content
   const extractTitle = (content: string) => {

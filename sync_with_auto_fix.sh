@@ -30,16 +30,31 @@ log_error() {
 fix_python_env() {
     log_warn "Detected Python environment issue, attempting automatic fix..."
     
-    # Reinstall required Python packages
-    python3 -m pip install --force-reinstall --no-cache-dir --quiet openpyxl python-docx lxml 2>&1 | grep -v "Defaulting to user installation"
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     
-    if [ $? -eq 0 ]; then
-        log_info "Python environment fixed successfully"
-        return 0
-    else
-        log_error "Failed to fix Python environment"
+    # Step 1: Rebuild the venv from scratch (fixes SRE module mismatch after hibernation)
+    log_warn "Rebuilding Python venv to fix SRE module mismatch..."
+    if [ -d "$SCRIPT_DIR/venv" ]; then
+        rm -rf "$SCRIPT_DIR/venv"
+    fi
+    python3.11 -m venv "$SCRIPT_DIR/venv" 2>&1
+    if [ $? -ne 0 ]; then
+        log_error "Failed to create venv"
         return 1
     fi
+    
+    # Step 2: Install all required packages into the fresh venv
+    "$SCRIPT_DIR/venv/bin/pip" install --quiet openpyxl python-docx lxml requests 2>&1 | tail -3
+    if [ $? -ne 0 ]; then
+        log_error "Failed to install packages into venv"
+        return 1
+    fi
+    
+    # Step 3: Also fix system python3 packages (for scripts using python3/python3.11 directly)
+    sudo pip3 install --force-reinstall --no-cache-dir --quiet openpyxl python-docx lxml requests 2>&1 | grep -v "Defaulting to user installation" | tail -3
+    
+    log_info "Python environment rebuilt successfully"
+    return 0
 }
 
 # Function to fix Google Drive token issues

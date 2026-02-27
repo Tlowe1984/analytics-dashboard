@@ -20,6 +20,7 @@ export async function generateChangeSummaries(): Promise<ChangeSummary[]> {
 
   try {
     const db = await getDb();
+    if (!db) return summaries;
     
     // 1. Devices (Dashboard Items)
     const devicesData = await db
@@ -139,7 +140,7 @@ export async function generateChangeSummaries(): Promise<ChangeSummary[]> {
     if (decisionsData.length > 0) {
       const decisionsSummary = await generateAISummary(
         'Decisions',
-        decisionsData.map(d => `${d.decisionText} (Status: ${d.status})`).join('\n\n'),
+        decisionsData.map(d => `${d.decisionOutcome} (Status: ${d.status})`).join('\n\n'),
         true // Prioritize MZ decisions
       );
       summaries.push({
@@ -227,7 +228,8 @@ async function generateAISummary(
       ]
     });
 
-    const summary = response.choices[0]?.message?.content || 'No changes detected';
+    const rawContent = response.choices[0]?.message?.content;
+    const summary = typeof rawContent === 'string' ? rawContent : 'No changes detected';
     
     // Ensure summary is under 50 words
     const words = summary.split(/\s+/);

@@ -10,7 +10,7 @@ export default function SyncStatus() {
   const utils = trpc.useUtils();
   
   const syncAll = trpc.sync.syncAll.useMutation({
-    onSuccess: (result) => {
+    onSuccess: (result: any) => {
       setLastSyncTime(new Date());
       
       const allSuccess = result.devices.success && result.software.success && result.systems.success && result.hearing?.success && result.decisions.success && result.milestones?.success && result.upcomingReviews?.success;
@@ -22,21 +22,30 @@ export default function SyncStatus() {
         });
       } else {
         const errors = [];
-        if (!result.devices.success) errors.push(`Devices: ${result.devices.error || result.devices.message}`);
-        if (!result.software.success) errors.push(`Software: ${result.software.error || result.software.message}`);
-        if (!result.systems.success) errors.push(`Systems: ${result.systems.error || result.systems.message}`);
-        if (result.hearing && !result.hearing.success) errors.push(`Hearing: ${result.hearing.error || result.hearing.message}`);
-        if (!result.decisions.success) errors.push(`Decisions: ${result.decisions.error || result.decisions.message}`);
-        if (result.milestones && !result.milestones.success) errors.push(`Milestones: ${result.milestones.error || result.milestones.message}`);
-        if (result.upcomingReviews && !result.upcomingReviews.success) errors.push(`Upcoming Reviews: ${result.upcomingReviews.error || result.upcomingReviews.message}`);
+        if (!result.devices.success) errors.push(`Devices: ${(result.devices as any).error || result.devices.message}`);
+        if (!result.software.success) errors.push(`Software: ${(result.software as any).error || result.software.message}`);
+        if (!result.systems.success) errors.push(`Systems: ${(result.systems as any).error || result.systems.message}`);
+        if (result.hearing && !result.hearing.success) errors.push(`Hearing: ${(result.hearing as any).error || result.hearing.message}`);
+        if (!result.decisions.success) errors.push(`Decisions: ${(result.decisions as any).error || result.decisions.message}`);
+        if (result.milestones && !result.milestones.success) errors.push(`Milestones: ${(result.milestones as any).error || result.milestones.message}`);
+        if (result.upcomingReviews && !result.upcomingReviews.success) errors.push(`Upcoming Reviews: ${(result.upcomingReviews as any).error || result.upcomingReviews.message}`);
         
         toast.error("Sync completed with errors", {
           description: errors.join("; "),
         });
       }
       
-      // Invalidate all data queries to refresh UI
+      // Invalidate ALL data queries to refresh UI (including top tiles)
       utils.dashboard.getAll.invalidate();
+      utils.dashboard.generateExecutiveSummaries.invalidate();
+      utils.dashboard.getUpcomingItems.invalidate();
+      utils.dashboard.getPDPMilestonesThisAndNextWeek.invalidate();
+      utils.dashboard.getRecentDecisions.invalidate();
+      utils.dashboard.getLastUpdated.invalidate();
+      utils.dashboard.getDevicesLastUpdated.invalidate();
+      utils.dashboard.getSoftwareLastUpdated.invalidate();
+      utils.dashboard.getSystemsLastUpdated.invalidate();
+      utils.dashboard.getSourceDocumentUrl.invalidate();
       utils.software.getAll.invalidate();
       utils.systems.getAll.invalidate();
       utils.decisions.getAll.invalidate();

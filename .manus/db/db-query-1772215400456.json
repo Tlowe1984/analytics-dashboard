@@ -1,0 +1,75 @@
+{
+  "query": "SELECT product_category, section_type, COUNT(*) as cnt FROM dashboard_items GROUP BY product_category, section_type ORDER BY product_category, section_type;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT product_category, section_type, COUNT(*) as cnt FROM dashboard_items GROUP BY product_category, section_type ORDER BY product_category, section_type;",
+  "rows": [
+    {
+      "product_category": "general",
+      "section_type": "highlights",
+      "cnt": "4"
+    },
+    {
+      "product_category": "general",
+      "section_type": "risks",
+      "cnt": "10"
+    },
+    {
+      "product_category": "ai_glasses",
+      "section_type": "highlights",
+      "cnt": "5"
+    },
+    {
+      "product_category": "ai_glasses",
+      "section_type": "risks",
+      "cnt": "6"
+    },
+    {
+      "product_category": "ai_glasses",
+      "section_type": "upcoming",
+      "cnt": "3"
+    },
+    {
+      "product_category": "wrist",
+      "section_type": "highlights",
+      "cnt": "2"
+    },
+    {
+      "product_category": "wrist",
+      "section_type": "risks",
+      "cnt": "6"
+    },
+    {
+      "product_category": "wrist",
+      "section_type": "upcoming",
+      "cnt": "2"
+    },
+    {
+      "product_category": "arg_ssg",
+      "section_type": "highlights",
+      "cnt": "5"
+    },
+    {
+      "product_category": "arg_ssg",
+      "section_type": "risks",
+      "cnt": "9"
+    },
+    {
+      "product_category": "arg_ssg",
+      "section_type": "upcoming",
+      "cnt": "5"
+    },
+    {
+      "product_category": "in_market",
+      "section_type": "highlights",
+      "cnt": "1"
+    },
+    {
+      "product_category": "in_market",
+      "section_type": "risks",
+      "cnt": "8"
+    }
+  ],
+  "messages": [],
+  "stdout": "product_category\tsection_type\tcnt\ngeneral\thighlights\t4\ngeneral\trisks\t10\nai_glasses\thighlights\t5\nai_glasses\trisks\t6\nai_glasses\tupcoming\t3\nwrist\thighlights\t2\nwrist\trisks\t6\nwrist\tupcoming\t2\narg_ssg\thighlights\t5\narg_ssg\trisks\t9\narg_ssg\tupcoming\t5\nin_market\thighlights\t1\nin_market\trisks\t8\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

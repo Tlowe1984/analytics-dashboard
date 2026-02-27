@@ -452,9 +452,9 @@ export async function getRecentDecisionsForAI(limit = 8) {
         forum: item.forum || '',
         outcome: item.content,
         date: item.updatedAt,
-        week: item.week || '',
-        isCurrentWeek: item.week === currentWeekStr,
-        isPreviousWeek: item.week === previousWeekStr,
+        week: '',
+        isCurrentWeek: false,
+        isPreviousWeek: false,
       }))
     ];
     

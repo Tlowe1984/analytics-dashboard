@@ -11,7 +11,7 @@ import { MarkdownText } from "./MarkdownText";
 interface DashboardItem {
   id: number;
   sectionType: "highlights" | "risks" | "upcoming";
-  productCategory: "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
+  productCategory: "general" | "ai_glasses" | "wrist" | "arg_ssg" | "in_market";
   content: string;
   isNew: number; // 1 if new information (blue text), 0 otherwise
   order: number;

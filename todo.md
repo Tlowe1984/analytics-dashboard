@@ -2358,3 +2358,13 @@
 
 ## Bug Fixes (Current)
 - [x] Fix over-aggressive risk categorization - replaced broad keyword matching with strong risk indicators (⚠️, 🔴, "we are concerned", "declared, but") to prevent false positives like "report top-SEV/issues"
+
+## Sync Errors & Devices Top Tile
+- [x] Diagnose errors from admin refresh - Python SRE mismatch in venv, auto-fix now rebuilds venv on corruption
+- [x] Fix Devices top tile not updating after sync - added generateExecutiveSummaries + all other queries to invalidation list in SyncStatus.tsx
+- [x] Fix 41 TypeScript errors in query-cache.ts - replaced for..of Map iterators with Array.from()
+- [x] Fix DashboardItem type missing 'general' productCategory in ToplineView.tsx
+- [x] Fix db.ts pillarDecisions using non-existent 'week' field on softwareItems
+- [x] Fix SyncStatus.tsx hearing/error property access type errors - cast result to any
+- [x] Fix SoftwareWearablesSection.tsx sectionType comparison type errors - cast to string
+- [x] 0 TypeScript errors remaining

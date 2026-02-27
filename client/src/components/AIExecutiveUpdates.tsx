@@ -255,7 +255,7 @@ export default function AIExecutiveUpdates() {
             </div>
             {recentDecisions && recentDecisions.length > 0 ? (
               <ul className="space-y-2 text-sm">
-                {recentDecisions.map((item, idx) => (
+                {recentDecisions.map((item: any, idx: number) => (
                   <li key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-orange-500" />
                     <div className="leading-relaxed">

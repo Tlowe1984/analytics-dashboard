@@ -70,11 +70,11 @@ class QueryCache {
   invalidatePattern(pattern: RegExp): void {
     const keysToDelete: string[] = [];
     
-    for (const key of this.cache.keys()) {
+    Array.from(this.cache.keys()).forEach(key => {
       if (pattern.test(key)) {
         keysToDelete.push(key);
       }
-    }
+    });
 
     keysToDelete.forEach(key => this.cache.delete(key));
   }
@@ -94,14 +94,14 @@ class QueryCache {
     let validEntries = 0;
     let expiredEntries = 0;
 
-    for (const entry of this.cache.values()) {
+    Array.from(this.cache.values()).forEach(entry => {
       const age = now - entry.timestamp;
       if (age > entry.ttl) {
         expiredEntries++;
       } else {
         validEntries++;
       }
-    }
+    });
 
     return {
       totalEntries: this.cache.size,
@@ -118,12 +118,12 @@ class QueryCache {
     const now = Date.now();
     const keysToDelete: string[] = [];
 
-    for (const [key, entry] of this.cache.entries()) {
+    Array.from(this.cache.entries()).forEach(([key, entry]) => {
       const age = now - entry.timestamp;
       if (age > entry.ttl) {
         keysToDelete.push(key);
       }
-    }
+    });
 
     keysToDelete.forEach(key => this.cache.delete(key));
   }
@@ -172,6 +172,8 @@ export function invalidateDashboardCache(): void {
   queryCache.invalidatePattern(/^milestones:/);
   queryCache.invalidatePattern(/^ai:/);
   queryCache.invalidatePattern(/^hearing:/);
+  queryCache.invalidatePattern(/^pdp:/);
+  queryCache.invalidatePattern(/^wearables:/);
   
   console.log(`[${new Date().toISOString()}] Dashboard cache invalidated`);
 }
