@@ -102,16 +102,30 @@ try:
             rich_content = re.sub(r'\[wearables-tag\]', '', rich_content, flags=re.IGNORECASE).strip()
         
         # Intelligent categorization: detect risks in content even if under Highlights section
-        # Check for risk indicators in the content
+        # Only recategorize if the item is ITSELF a risk, not merely reporting/mentioning risk topics
         content_lower = rich_content.lower()
-        risk_indicators = [
-            'mrbd risks', 'mrbd risk', 'risks/opens', 'risk:', 'concern', 'concerned',
-            'delayed', 'delay', 'issue', 'problem', 'blocker', 'blocked', 'failed',
-            '⚠️', '🔴', '🚨', '❌', 'not meeting', 'behind schedule', 'at risk'
+        
+        # Strong risk indicators - these almost always mean the item IS a risk
+        strong_risk_indicators = [
+            'mrbd risks', 'mrbd risk', 'risks/opens',
+            '⚠️', '🔴', '🚨', '❌',
+            'not meeting criteria', 'behind schedule', 'at risk',
+            'we are concerned', 'still aiming', 'punted if not',
         ]
         
-        # If current section is highlights but content contains risk indicators, recategorize as risk
-        if current_section == 'highlights' and any(indicator in content_lower for indicator in risk_indicators):
+        # Phrase-level risk patterns (require surrounding context, not just a word)
+        # These avoid false positives like "report top-SEV/issues" or "track blockers"
+        phrase_risk_patterns = [
+            'but 5 days delayed', 'but delayed', 'declared, but',
+            'kpis may not be', 'p90 numbers are concerning',
+            'will be punted', 'not complete by',
+        ]
+        
+        is_strong_risk = any(ind in content_lower for ind in strong_risk_indicators)
+        is_phrase_risk = any(pat in content_lower for pat in phrase_risk_patterns)
+        
+        # If current section is highlights but content contains strong risk signals, recategorize
+        if current_section == 'highlights' and (is_strong_risk or is_phrase_risk):
             current_section = 'risks'
         
         # Add the item

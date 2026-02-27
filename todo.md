@@ -2355,3 +2355,6 @@
 
 ## Bug Fixes
 - [x] Fix missing React key prop in SoftwareTab component - fixed in MarkdownText.tsx (li renderer) and ToplineView.tsx (combined items use _key)
+
+## Bug Fixes (Current)
+- [x] Fix over-aggressive risk categorization - replaced broad keyword matching with strong risk indicators (⚠️, 🔴, "we are concerned", "declared, but") to prevent false positives like "report top-SEV/issues"
