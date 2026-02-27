@@ -66,6 +66,18 @@ def extract_wearables_tagged_systems(doc):
         # Extract rich text with links
         rich_content = extract_rich_text_with_links(para)
         
+        # Skip the instruction bullet that explains what [wearables-tag] does
+        # e.g. "[wearables-tag] will be added to items in executive summary that will surface to Ming, Brijesh etc in Tim Lowe's dashboard"
+        instruction_phrases = [
+            "will be added to items in executive summary",
+            "will surface to ming",
+            "tim lowe's dashboard",
+            "brijesh",
+        ]
+        if any(phrase in text.lower() for phrase in instruction_phrases):
+            print(f"Skipping instruction bullet: {text[:80]}", file=sys.stderr)
+            continue
+
         # Remove [wearables-tag] marker (case insensitive)
         rich_content = re.sub(r'\[wearables-tag\]', '', rich_content, flags=re.IGNORECASE).strip()
         

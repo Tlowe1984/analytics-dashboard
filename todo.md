@@ -2368,3 +2368,7 @@
 - [x] Fix SyncStatus.tsx hearing/error property access type errors - cast result to any
 - [x] Fix SoftwareWearablesSection.tsx sectionType comparison type errors - cast to string
 - [x] 0 TypeScript errors remaining
+
+## Systems Parser Instruction Bullet Filter
+- [x] Filter out the wearables-tag instruction bullet from systems parser - added phrase matching in extract_systems_wearables.py
+- [x] Re-run sync to verify the instruction bullet no longer appears - confirmed "Skipping instruction bullet" in sync output, 3 real items loaded

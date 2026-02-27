@@ -395,7 +395,7 @@ export async function getSoftwareItemsBySection(
  * Returns up to 8 decisions total
  * Note: Summaries are generated in the router using LLM (≤25 words)
  */
-export async function getRecentDecisionsForAI(limit = 8) {
+export async function getRecentDecisionsForAI(limit = 13) {
   // NO CACHE - always fetch fresh data
   const db = await getDb();
   if (!db) return [];

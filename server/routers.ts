@@ -277,7 +277,7 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
     // Format: **Forum**: Summary. [Link]
     getRecentDecisions: publicProcedure.query(async () => {
       const { invokeLLM } = await import("./_core/llm");
-      const rawDecisions = await db.getRecentDecisionsForAI(8);
+      const rawDecisions = await db.getRecentDecisionsForAI(13);
       
       console.log('[DEBUG] Raw decisions before LLM:', JSON.stringify(rawDecisions, null, 2));
       
