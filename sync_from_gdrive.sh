@@ -1,5 +1,12 @@
 #!/bin/bash
 # Manual sync script to refresh dashboard data from Google Drive
+
+# Load environment variables
+if [ -f "/home/ubuntu/analytics-dashboard/.env" ]; then
+  set -a
+  source "/home/ubuntu/analytics-dashboard/.env"
+  set +a
+fi
 # Run this script whenever you need to update the dashboard with latest Google Doc data
 
 set -e

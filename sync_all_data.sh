@@ -6,6 +6,14 @@
 set -euo pipefail  # Strict error handling
 
 SCRIPT_DIR="/home/ubuntu/analytics-dashboard"
+
+# Load environment variables from .env file so sub-scripts can connect to DB
+if [ -f "$SCRIPT_DIR/.env" ]; then
+  set -a
+  source "$SCRIPT_DIR/.env"
+  set +a
+fi
+
 LOG_FILE="$SCRIPT_DIR/.manus-logs/sync.log"
 TEMP_DIR="$SCRIPT_DIR/.manus-logs/sync_temp"
 

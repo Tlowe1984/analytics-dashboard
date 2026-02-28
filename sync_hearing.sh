@@ -1,5 +1,12 @@
 #!/bin/bash
 set -e
+
+# Load environment variables
+if [ -f "/home/ubuntu/analytics-dashboard/.env" ]; then
+  set -a
+  source "/home/ubuntu/analytics-dashboard/.env"
+  set +a
+fi
 export PYTHONPATH=
 export PYTHONHOME=
 
