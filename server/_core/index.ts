@@ -8,6 +8,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { initSyncScheduler } from "../sync-scheduler";
+import { invalidateDashboardCache } from "../query-cache";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -44,6 +45,19 @@ async function startServer() {
       timestamp: new Date().toISOString(),
       env: process.env.NODE_ENV ?? "unknown",
     });
+  });
+
+  // Cache-clear endpoint — called by sync scripts after writing to DB so the
+  // in-memory query cache is flushed and the frontend gets fresh data immediately.
+  // Protected by a simple shared secret (SYNC_SECRET env var) to prevent abuse.
+  app.post("/api/cache-clear", (req, res) => {
+    const secret = process.env.SYNC_SECRET || "sync-secret-default";
+    const provided = req.headers["x-sync-secret"] || req.body?.secret;
+    if (provided !== secret) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    invalidateDashboardCache();
+    res.json({ status: "ok", message: "Cache cleared", timestamp: new Date().toISOString() });
   });
 
   // OAuth callback under /api/oauth/callback

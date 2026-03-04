@@ -163,6 +163,17 @@ log "   Warnings: $SYNC_WARNINGS"
 if [ $SYNC_ERRORS -eq 0 ]; then
     log "✅ All syncs completed successfully!"
     log "========================================="
+    # Flush the server-side in-memory query cache so the frontend gets fresh data immediately
+    SYNC_SECRET_VAL="${SYNC_SECRET:-sync-secret-default}"
+    CACHE_RESULT=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:3000/api/cache-clear \
+      -H "Content-Type: application/json" \
+      -H "x-sync-secret: ${SYNC_SECRET_VAL}" \
+      --max-time 5 2>/dev/null || echo "000")
+    if [ "$CACHE_RESULT" = "200" ]; then
+        log "🗑️  Server cache cleared — frontend will show fresh data"
+    else
+        log "⚠️  Cache clear skipped (server returned: $CACHE_RESULT) — data will refresh on next TTL expiry"
+    fi
     # Clean up temp logs on success
     rm -rf "$TEMP_DIR"
     exit 0
