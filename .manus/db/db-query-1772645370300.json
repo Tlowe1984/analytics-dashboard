@@ -1,0 +1,9 @@
+{
+  "query": "SELECT * FROM decisions WHERE week = 10 ORDER BY forum LIMIT 50;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT * FROM decisions WHERE week = 10 ORDER BY forum LIMIT 50;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 61
+}

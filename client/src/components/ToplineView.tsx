@@ -246,19 +246,19 @@ function DevicesTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
 const softwareSectionConfig = {
   wins: {
     icon: Trophy,
-    label: "WINS",
+    label: "HIGHLIGHTS",
     color: "text-green-600 dark:text-green-400",
     bgClass: "bg-green-500/10",
   },
   exec_summary: {
     icon: FileText,
-    label: "EXEC SUMMARY",
+    label: "EXECUTIVE SUMMARY",
     color: "text-blue-600 dark:text-blue-400",
     bgClass: "bg-blue-500/10",
   },
   decisions: {
     icon: AlertTriangle,
-    label: "DECISIONS",
+    label: "RISKS / OPENS",
     color: "text-orange-600 dark:text-orange-400",
     bgClass: "bg-orange-500/10",
   },
@@ -435,15 +435,15 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
     if (!itemsToRender || itemsToRender.length === 0) {
       return (
         <div className="bg-card/50 border border-border/50 rounded-xl p-4">
-          <h3 className="text-sm font-semibold mb-3 text-foreground">DECISIONS</h3>
-          <p className="text-xs text-muted-foreground italic">No decisions yet</p>
+          <h3 className="text-sm font-semibold mb-3 text-foreground">RISKS / OPENS</h3>
+          <p className="text-xs text-muted-foreground italic">No items yet</p>
         </div>
       );
     }
 
     return (
       <div className="bg-card/50 border border-border/50 rounded-xl p-4">
-        <h3 className="text-sm font-semibold mb-3 text-foreground">DECISIONS</h3>
+        <h3 className="text-sm font-semibold mb-3 text-foreground">RISKS / OPENS</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>

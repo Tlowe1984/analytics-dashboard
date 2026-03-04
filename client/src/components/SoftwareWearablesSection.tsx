@@ -5,55 +5,60 @@ import { MarkdownText } from './MarkdownText';
 export default function SoftwareWearablesSection() {
   const { data: wearablesItems, isLoading } = trpc.dashboard.getWearablesTaggedItems.useQuery();
 
-  // Categorize items into Highlights (wins) and Risks/Opens (exec_summary, help_needed, risks, highlights)
+  // Route items to the correct tab based on their source heading title:
+  // "Wins" / "Launches" → Highlights
+  // "Exec Summary" / "Executive Summary" → Executive Summary
+  // "Risks/Opens" / "Help Needed" / "Hotspots" (exec_summary from hotspot table) → Risks/Opens
   const highlights = wearablesItems?.filter(item => {
     const s = item.sectionType as string;
-    return s === 'wins' || s === 'highlights';
+    return s === 'wins';
   }) || [];
+
+  const execSummary = wearablesItems?.filter(item => {
+    const s = item.sectionType as string;
+    // exec_summary from text bullets (not hotspots) → Executive Summary
+    // Hotspots are stored as exec_summary but come from source "Software" with hotspot content
+    // We distinguish by checking if the source is not a hotspot (hotspots have bold title + " - " format)
+    if (s !== 'exec_summary') return false;
+    // Hotspot items have the pattern "**Title** - Description" — route those to Risks/Opens
+    const isHotspot = /^\*\*[^*]+\*\* - .+/.test(item.content);
+    return !isHotspot;
+  }) || [];
+
   const risks = wearablesItems?.filter(item => {
     const s = item.sectionType as string;
-    return s === 'exec_summary' || s === 'help_needed' || s === 'risks';
+    if (s === 'help_needed' || s === 'risks') return true;
+    // Hotspot items (exec_summary with bold-title-dash format) → Risks/Opens
+    if (s === 'exec_summary') {
+      const isHotspot = /^\*\*[^*]+\*\* - .+/.test(item.content);
+      return isHotspot;
+    }
+    return false;
   }) || [];
 
-  // Helper function to extract title from content
-  const extractTitle = (content: string) => {
-    // Look for bold text at the start: **[Title]** or **Title:**
-    const boldMatch = content.match(/^\*\*(.+?)\*\*/);
-    if (boldMatch) {
-      return boldMatch[1];
-    }
-    
-    // Look for text before first colon
-    const colonMatch = content.match(/^([^:]+):/);
-    if (colonMatch) {
-      return colonMatch[1];
-    }
-    
-    return null;
+  // Helper function to format bullet content (remove [Wearables-tag] tag)
+  const formatBulletContent = (content: string) => {
+    let cleanContent = content.replace(/\s*\[Wearables-tag\]\s*$/i, '');
+    cleanContent = cleanContent.replace(/\*\*\*\*/g, '');
+    return cleanContent;
   };
 
-  // Helper function to format bullet content (preserve title in bold, rest as is)
-  const formatBulletContent = (content: string) => {
-    // Remove [Wearables-tag] from the end
-    let cleanContent = content.replace(/\s*\[Wearables-tag\]\s*$/, '');
-    
-    // FOOLPROOF FIX: Remove all **** patterns (double bold markers)
-    // This handles cases where Word doc has consecutive bold runs
-    cleanContent = cleanContent.replace(/\*\*\*\*/g, '');
-    
-    // Bold hotspot titles: if content has "Title - Description" format, bold the title
-    // Check if there's a " - " separator (hotspot format)
-    const separatorMatch = cleanContent.match(/^([^-]+) - (.+)$/);
-    if (separatorMatch) {
-      const title = separatorMatch[1].trim();
-      const description = separatorMatch[2].trim();
-      // If title is not already bolded, add bold markdown
-      if (!title.startsWith('**')) {
-        cleanContent = `**${title}** - ${description}`;
-      }
+  const renderItems = (items: typeof wearablesItems) => {
+    if (!items || items.length === 0) {
+      return <div className="text-sm text-muted-foreground italic">None this week</div>;
     }
-    
-    return cleanContent;
+    return (
+      <ul className="space-y-1">
+        {items.map((item, idx) => (
+          <div key={idx} className="flex items-start gap-2">
+            <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
+            <div className="text-sm leading-relaxed text-foreground/90">
+              <MarkdownText content={formatBulletContent(item.content)} />
+            </div>
+          </div>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -65,7 +70,6 @@ export default function SoftwareWearablesSection() {
           href="#detailed-updates-software" 
           className="text-xs text-blue-500 hover:text-blue-600 hover:underline font-medium transition-colors"
           onClick={() => {
-            // Scroll to detailed updates after hash change
             setTimeout(() => {
               document.getElementById('detailed-updates')?.scrollIntoView({ behavior: 'smooth' });
             }, 100);
@@ -82,42 +86,22 @@ export default function SoftwareWearablesSection() {
         </div>
       ) : (
         <div className="space-y-3 ml-7">
-          {/* Highlights */}
+          {/* Highlights — from Wins/Launches heading */}
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Highlights</h4>
-            <ul className="space-y-1 list-disc list-inside">
-              {highlights.length > 0 ? (
-                highlights.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2">
-                    <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-                    <div className="text-sm leading-relaxed text-foreground/90">
-                      <MarkdownText content={formatBulletContent(item.content)} />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-sm text-muted-foreground italic">No highlights available</div>
-              )}
-            </ul>
+            {renderItems(highlights)}
+          </div>
+
+          {/* Executive Summary — from Exec Summary heading */}
+          <div>
+            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Executive Summary</h4>
+            {renderItems(execSummary)}
           </div>
           
-          {/* Risks/Opens */}
+          {/* Risks/Opens — from Risks/Opens, Help Needed, and Hotspots */}
           <div>
             <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">Risks / Opens</h4>
-            <ul className="space-y-1 list-disc list-inside">
-              {risks.length > 0 ? (
-                risks.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2">
-                    <div className="w-1 h-1 rounded-full mt-2 flex-shrink-0 bg-muted-foreground/30" />
-                    <div className="text-sm leading-relaxed text-foreground/90">
-                      <MarkdownText content={formatBulletContent(item.content)} />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-sm text-muted-foreground italic">No risks available</div>
-              )}
-            </ul>
+            {renderItems(risks)}
           </div>
         </div>
       )}

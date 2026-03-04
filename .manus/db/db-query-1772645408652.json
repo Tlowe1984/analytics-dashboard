@@ -1,0 +1,37 @@
+{
+  "query": "SELECT week, COUNT(*) as count FROM decisions GROUP BY week ORDER BY week DESC LIMIT 10;\nSELECT * FROM decisions ORDER BY week DESC, id DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT week, COUNT(*) as count FROM decisions GROUP BY week ORDER BY week DESC LIMIT 10;\nSELECT * FROM decisions ORDER BY week DESC, id DESC LIMIT 5;",
+  "rows": [
+    {
+      "week": "W9 2026",
+      "count": "9"
+    },
+    {
+      "week": "W8 2026",
+      "count": "4"
+    },
+    {
+      "week": "W7 2026",
+      "count": "7"
+    },
+    {
+      "week": "W6 2026",
+      "count": "7"
+    },
+    {
+      "week": "W10 2026",
+      "count": "6"
+    }
+  ],
+  "messages": [
+    "id\tweek\tdri\tforum\tstatus\tdecision_outcome\tcreatedAt\tupdatedAt",
+    "1080178\tW9 2026\tArvind Ranganathan\tWearables Review\tDecision\t**Decide (Async) - Group Conversations (Aurachat) Ship Plan **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1555102285790486/) **Decision: **Ship plan and included asks approved: Include Group Conversations in RL priorities for fast escalation/resolution Continued collaboration & pressure on QCOM to meet their deliverables on schedule and quality XFN teams to prioritize GC feature over others requiring feature-level tradeoffs as specified in the ship plan doc\t2026-03-04 17:30:01\t2026-03-04 17:30:01",
+    "1080177\tW9 2026\tMinki Jung\tExperiences & Interfaces\tDecision\t**[Decide] Handwriting Integration to Meta AI Launch Timeline **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554348832532498/) We will proceed with the following timeline:\t2026-03-04 17:30:01\t2026-03-04 17:30:01",
+    "1080176\tW9 2026\tPaul-Edouard Juan\tOther\tInform\t**HSTN Horizontal RefCam for WWE: Project Kick-Off! **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1553876735913041/) The HSTN RefCam for WWE project has officially kicked off. The goal is to build 75 tethered horizontal-camera HSTN devices for a livestreaming referee camera at major WWE events, with an additional 25 untethered units for exploration into other demand-based partnerships (e.g. MrBeast). The manufacturer of this proto build is GTK. The key project milestones are OK2Fab on March 13th, units in the Meta team's hands by June 26th and first field tests with WWE by July 20th. The target for the RefCam debut, aligned with TKO (the WWE production team), is **Money in the Bank on September 6th**.\t2026-03-04 17:30:01\t2026-03-04 17:30:01",
+    "1080175\tW9 2026\tRoberta Santoro\tOther\tInform\t**[INFORM] Navigation Quality Measurement & AI Acceleration **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554251475875567/) XR Tech and Wearables are aligned to track navigation quality through 2 main vectors - the quality of our data (map, routing, places) and the quality of the user experience. We are on track across both vectors for the US expansion, to maintain or exceed current experience quality.\t2026-03-04 17:30:01\t2026-03-04 17:30:01",
+    "1080174\tW9 2026\tDan Siroker\tDevices & Growth\tDecisions\t**[Decide] Pendant Microphone **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554105615890153/) Decided on one TDK T 5838 microphone\t2026-03-04 17:30:01\t2026-03-04 17:30:01"
+  ],
+  "stdout": "week\tcount\nW9 2026\t9\nW8 2026\t4\nW7 2026\t7\nW6 2026\t7\nW10 2026\t6\nid\tweek\tdri\tforum\tstatus\tdecision_outcome\tcreatedAt\tupdatedAt\n1080178\tW9 2026\tArvind Ranganathan\tWearables Review\tDecision\t**Decide (Async) - Group Conversations (Aurachat) Ship Plan **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1555102285790486/) **Decision: **Ship plan and included asks approved: Include Group Conversations in RL priorities for fast escalation/resolution Continued collaboration & pressure on QCOM to meet their deliverables on schedule and quality XFN teams to prioritize GC feature over others requiring feature-level tradeoffs as specified in the ship plan doc\t2026-03-04 17:30:01\t2026-03-04 17:30:01\n1080177\tW9 2026\tMinki Jung\tExperiences & Interfaces\tDecision\t**[Decide] Handwriting Integration to Meta AI Launch Timeline **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554348832532498/) We will proceed with the following timeline:\t2026-03-04 17:30:01\t2026-03-04 17:30:01\n1080176\tW9 2026\tPaul-Edouard Juan\tOther\tInform\t**HSTN Horizontal RefCam for WWE: Project Kick-Off! **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1553876735913041/) The HSTN RefCam for WWE project has officially kicked off. The goal is to build 75 tethered horizontal-camera HSTN devices for a livestreaming referee camera at major WWE events, with an additional 25 untethered units for exploration into other demand-based partnerships (e.g. MrBeast). The manufacturer of this proto build is GTK. The key project milestones are OK2Fab on March 13th, units in the Meta team's hands by June 26th and first field tests with WWE by July 20th. The target for the RefCam debut, aligned with TKO (the WWE production team), is **Money in the Bank on September 6th**.\t2026-03-04 17:30:01\t2026-03-04 17:30:01\n1080175\tW9 2026\tRoberta Santoro\tOther\tInform\t**[INFORM] Navigation Quality Measurement & AI Acceleration **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554251475875567/) XR Tech and Wearables are aligned to track navigation quality through 2 main vectors - the quality of our data (map, routing, places) and the quality of the user experience. We are on track across both vectors for the US expansion, to maintain or exceed current experience quality.\t2026-03-04 17:30:01\t2026-03-04 17:30:01\n1080174\tW9 2026\tDan Siroker\tDevices & Growth\tDecisions\t**[Decide] Pendant Microphone **[Link](https://fb.workplace.com/groups/892853338682054/permalink/1554105615890153/) Decided on one TDK T 5838 microphone\t2026-03-04 17:30:01\t2026-03-04 17:30:01\n",
+  "stderr": "",
+  "execution_time_ms": 73
+}
