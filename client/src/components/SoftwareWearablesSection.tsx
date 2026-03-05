@@ -3,7 +3,9 @@ import { trpc } from "@/lib/trpc";
 import { MarkdownText } from './MarkdownText';
 
 export default function SoftwareWearablesSection() {
-  const { data: wearablesItems, isLoading } = trpc.dashboard.getWearablesTaggedItems.useQuery();
+  // Use software.getWearablesTagged which queries ALL sources (Software, AI, Systems, Hearing, Devices)
+  // dashboard.getWearablesTaggedItems only returns Software-source items
+  const { data: wearablesItems, isLoading } = trpc.software.getWearablesTagged.useQuery();
 
   // Route items to the correct tab based on their source heading title:
   // "Wins" / "Launches" → Highlights
