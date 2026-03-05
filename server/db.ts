@@ -512,8 +512,10 @@ export async function getAllDecisions(): Promise<Decision[]> {
     if (!db) return [];
     
     try {
-      // Return all decisions sorted by week DESC (most recent first)
-      const results = await db.select().from(decisions).orderBy(desc(decisions.week));
+      // Sort by id ASC — decisions canonical doc is ordered newest-first,
+      // so W10 rows get the lowest IDs (inserted first). asc(id) = W10 first.
+      // Avoid string sort on week field ("W9" > "W10" lexicographically).
+      const results = await db.select().from(decisions).orderBy(asc(decisions.id));
       return results;
     } catch (error) {
       console.error("[Database] Error fetching decisions:", error);
