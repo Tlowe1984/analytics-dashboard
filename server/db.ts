@@ -458,48 +458,23 @@ export async function getRecentDecisionsForAI(limit = 13) {
       }))
     ];
     
-    // Filter for decisions from current + previous week only (no content filter)
-    const filteredDecisions = combined.filter(item => {
-      // Must be from current or previous week
-      return item.isCurrentWeek || item.isPreviousWeek;
+    // Sort purely chronologically — most recent week first.
+    // The decisions canonical doc is ordered newest-first, so items with the
+    // same week share the same updatedAt; use the week string numerically as
+    // a tiebreaker by extracting the week number.
+    const parseWeekNum = (w: string) => {
+      const m = w.match(/^W(\d+)/);
+      return m ? parseInt(m[1], 10) : 0;
+    };
+
+    combined.sort((a, b) => {
+      const wDiff = parseWeekNum(b.week) - parseWeekNum(a.week);
+      if (wDiff !== 0) return wDiff;
+      // Same week — preserve insertion order (earlier date = inserted first = newer in canonical doc)
+      return a.date.getTime() - b.date.getTime();
     });
-    
-    // New prioritization logic:
-    // 1. Current week MZ decisions
-    // 2. Current/previous week Wearables Review decisions
-    // 3. Other current/previous week decisions
-    filteredDecisions.sort((a, b) => {
-      const aForum = (a.forum?.toLowerCase() || '');
-      const bForum = (b.forum?.toLowerCase() || '');
-      const aOutcome = (a.outcome?.toLowerCase() || '');
-      const bOutcome = (b.outcome?.toLowerCase() || '');
-      
-      const aHasMZ = aForum.includes('mz') || aOutcome.includes('mz');
-      const bHasMZ = bForum.includes('mz') || bOutcome.includes('mz');
-      const aHasWearablesReview = aForum.includes('wearable') && aForum.includes('review');
-      const bHasWearablesReview = bForum.includes('wearable') && bForum.includes('review');
-      
-      // Priority 1: Current week MZ decisions (highest)
-      const aIsCurrentWeekMZ = a.isCurrentWeek && aHasMZ;
-      const bIsCurrentWeekMZ = b.isCurrentWeek && bHasMZ;
-      if (aIsCurrentWeekMZ && !bIsCurrentWeekMZ) return -1;
-      if (!aIsCurrentWeekMZ && bIsCurrentWeekMZ) return 1;
-      
-      // Priority 2: Current/previous week Wearables Review decisions
-      const aIsWearablesReview = aHasWearablesReview;
-      const bIsWearablesReview = bHasWearablesReview;
-      if (aIsWearablesReview && !bIsWearablesReview) return -1;
-      if (!aIsWearablesReview && bIsWearablesReview) return 1;
-      
-      // Priority 3: Current week decisions (any other)
-      if (a.isCurrentWeek && !b.isCurrentWeek) return -1;
-      if (!a.isCurrentWeek && b.isCurrentWeek) return 1;
-      
-      // Within same priority group, sort by date (most recent first)
-      return b.date.getTime() - a.date.getTime();
-    });
-    
-    return filteredDecisions.slice(0, limit);
+
+    return combined.slice(0, limit);
   } catch (error) {
     console.error("[Database] Error fetching recent decisions for AI:", error);
     return [];
