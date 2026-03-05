@@ -1,0 +1,34 @@
+{
+  "query": "SELECT MAX(updatedAt) as last_updated, COUNT(*) as total_rows FROM dashboard_items;\nSELECT section, last_synced_at FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT MAX(updatedAt) as last_updated, COUNT(*) as total_rows FROM dashboard_items;\nSELECT section, last_synced_at FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 10;",
+  "rows": [
+    {
+      "last_updated": "2026-03-05 18:22:24",
+      "total_rows": "66"
+    },
+    {
+      "last_updated": "section",
+      "total_rows": "last_synced_at"
+    },
+    {
+      "last_updated": "devices",
+      "total_rows": "2026-02-10 00:56:12"
+    },
+    {
+      "last_updated": "systems",
+      "total_rows": "2026-02-10 00:56:12"
+    },
+    {
+      "last_updated": "software",
+      "total_rows": "2026-02-10 00:56:12"
+    },
+    {
+      "last_updated": "software",
+      "total_rows": "2026-02-10 00:16:28"
+    }
+  ],
+  "messages": [],
+  "stdout": "last_updated\ttotal_rows\n2026-03-05 18:22:24\t66\nsection\tlast_synced_at\ndevices\t2026-02-10 00:56:12\nsystems\t2026-02-10 00:56:12\nsoftware\t2026-02-10 00:56:12\nsoftware\t2026-02-10 00:16:28\n",
+  "stderr": "",
+  "execution_time_ms": 66
+}

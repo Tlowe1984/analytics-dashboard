@@ -24,7 +24,8 @@ try:
             continue
         
         # Check if we're in Topline section (first tab)
-        if 'Topline' in text or 'Top Line' in text:
+        # Use exact match to avoid false positives like "Topline Scorecard metrics" in content
+        if text == 'Topline' or text == 'Top Line' or text == 'Topline View':
             in_exec_summary = True
             # For Topline, set product to 'general' to capture top-level Highlights/Risks
             current_product = 'general'
@@ -103,12 +104,14 @@ try:
         
         # Intelligent categorization: detect risks in content even if under Highlights section
         # Only recategorize if the item is ITSELF a risk, not merely reporting/mentioning risk topics
+        # IMPORTANT: Use a LOCAL effective_section variable - never mutate current_section here,
+        # as that would corrupt the section state for all subsequent items in the same product.
         content_lower = rich_content.lower()
         
         # Strong risk indicators - these almost always mean the item IS a risk
         strong_risk_indicators = [
             'mrbd risks', 'mrbd risk', 'risks/opens',
-            '⚠️', '🔴', '🚨', '❌',
+            '🔴', '🚨', '❌',
             'not meeting criteria', 'behind schedule', 'at risk',
             'we are concerned', 'still aiming', 'punted if not',
         ]
@@ -121,17 +124,23 @@ try:
             'will be punted', 'not complete by',
         ]
         
+        # Positive highlight signals - if present, do NOT recategorize as risk
+        # (handles mixed-content paragraphs that mention both ⚠️ and 🎉)
+        positive_indicators = ['🎉', '✅', '🏆', '🥇', '🌟', '⭐']
+        
         is_strong_risk = any(ind in content_lower for ind in strong_risk_indicators)
         is_phrase_risk = any(pat in content_lower for pat in phrase_risk_patterns)
+        has_positive_signal = any(ind in rich_content for ind in positive_indicators)
         
-        # If current section is highlights but content contains strong risk signals, recategorize
-        if current_section == 'highlights' and (is_strong_risk or is_phrase_risk):
-            current_section = 'risks'
+        # Determine effective section for THIS item only (never mutate current_section)
+        effective_section = current_section
+        if current_section == 'highlights' and (is_strong_risk or is_phrase_risk) and not has_positive_signal:
+            effective_section = 'risks'
         
         # Add the item
         items.append({
             'product': current_product,
-            'section': current_section,
+            'section': effective_section,
             'content': rich_content,
             'is_new': 1 if is_new else 0,
             'is_wearables_tag': 1 if is_wearables_tag else 0,
