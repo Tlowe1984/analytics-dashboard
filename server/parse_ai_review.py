@@ -23,6 +23,9 @@ def parse_ai_review(docx_path):
     items = []
     current_section = None
     order = 0
+    pending_wearables_tag = False  # Propagate tag to sub-bullets when tagged item is a heading
+    wearables_heading_indent = 0  # Indent level of the tagged heading, propagate to deeper levels
+    import re
     
     # Process all document elements (paragraphs and tables)
     for element in doc.element.body:
@@ -97,7 +100,6 @@ def parse_ai_review(docx_path):
             is_wearables_tag = '[wearables-tag]' in rich_text.lower()
             if is_wearables_tag:
                 # Remove [wearables-tag] (case insensitive)
-                import re
                 rich_text = re.sub(r'\[wearables-tag\]', '', rich_text, flags=re.IGNORECASE).strip()
             
             # Detect indent level
@@ -105,6 +107,22 @@ def parse_ai_review(docx_path):
             if para.paragraph_format.left_indent:
                 indent_inches = para.paragraph_format.left_indent.inches
                 indent_level = int(indent_inches / 0.5)
+            
+            # Propagate wearables tag to sub-bullets when a tagged item is just a heading (ends with ':')
+            # e.g. "[wearables-tag] Harmony:" should tag all following indented sub-bullets
+            # Propagation continues for ALL paragraphs indented deeper than the tagged heading
+            if not is_wearables_tag and pending_wearables_tag:
+                if indent_level > wearables_heading_indent:
+                    is_wearables_tag = True  # Sub-bullet under a tagged heading
+                else:
+                    pending_wearables_tag = False  # Back to same/higher level, stop propagating
+            
+            if is_wearables_tag:
+                stripped = rich_text.rstrip()
+                if stripped.endswith(':') and len(stripped) < 40:
+                    pending_wearables_tag = True  # This is a heading, propagate to sub-bullets
+                    wearables_heading_indent = indent_level  # Remember this heading's indent level
+                # Don't reset pending_wearables_tag for non-heading tagged items — keep propagating siblings
             
             items.append({
                 'section_type': current_section,
