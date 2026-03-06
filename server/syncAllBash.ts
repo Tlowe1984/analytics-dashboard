@@ -50,6 +50,17 @@ export async function syncAllBash(): Promise<{
 
   console.log("🚀 Starting comprehensive sync using bash scripts...");
 
+  // Auto-rebuild Python venv if broken (SRE module mismatch after sandbox hibernation)
+  try {
+    await execAsync(
+      'cd /home/ubuntu/analytics-dashboard && ./venv/bin/python -c "import json" 2>/dev/null || bash setup.sh',
+      { timeout: 60000, shell: '/bin/bash' }
+    );
+    console.log('✅ Python venv health check passed');
+  } catch (venvErr) {
+    console.warn('⚠️ Python venv check/rebuild failed:', venvErr instanceof Error ? venvErr.message.slice(0, 100) : String(venvErr));
+  }
+
   // Note: Google Drive token refresh is handled automatically by Manus integration
   // The rclone config at /home/ubuntu/.gdrive-rclone.ini is managed by the platform
   // and tokens are refreshed automatically when they expire
@@ -68,7 +79,12 @@ export async function syncAllBash(): Promise<{
         const errorMessage = error instanceof Error ? error.message : String(error);
         const isTokenError = errorMessage.includes("token expired") || 
                              errorMessage.includes("CRITICAL: Failed to create file system");
+        const isSreMismatch = errorMessage.includes("SRE module mismatch") || errorMessage.includes("AssertionError");
         
+        // Don't retry SRE mismatch errors (Python env issue, not a transient error)
+        if (isSreMismatch) {
+          throw error;
+        }
         if (isTokenError && attempt < maxRetries) {
           const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
           console.warn(`⚠️ ${name} sync failed with token error (attempt ${attempt}/${maxRetries}), retrying in ${backoffMs}ms...`);

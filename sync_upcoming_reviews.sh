@@ -23,7 +23,7 @@ rclone copy "manus_google_drive:Systems Reviews Sign-Up Sheet .xlsx" /tmp --conf
 # Parse upcoming reviews
 echo "📊 Parsing upcoming reviews..."
 cd /home/ubuntu/analytics-dashboard
-python3.11 server/parse_upcoming_reviews.py > /dev/null
+./venv/bin/python server/parse_upcoming_reviews.py > /dev/null
 
 # Load into database
 echo "💾 Loading upcoming reviews data into database..."

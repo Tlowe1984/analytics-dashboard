@@ -424,13 +424,20 @@ Return ONLY valid JSON, no other text.`;
     syncAll: protectedProcedure
       .input(z.object({ forceRefresh: z.boolean().optional() }).optional())
       .mutation(async ({ input }) => {
-        // Check if we're in production (no Python available)
-        const isProduction = process.env.NODE_ENV === 'production';
-        
-        if (isProduction) {
-          // Production: Cannot run sync (no Python/rclone), return message
-          console.log('[SYNC] Production mode: Manual sync disabled');
-          const message = 'Manual sync is not available in production. Data syncs automatically daily at 6 AM PST in the sandbox environment.';
+        // Check if sandbox tools (rclone + Python venv) are available
+        const { execSync } = await import('child_process');
+        let hasSandboxTools = false;
+        try {
+          execSync('which rclone', { stdio: 'ignore' });
+          hasSandboxTools = true;
+        } catch {
+          hasSandboxTools = false;
+        }
+
+        if (!hasSandboxTools) {
+          // Not in sandbox: Cannot run sync (no rclone available)
+          console.log('[SYNC] Sandbox tools not available: Manual sync disabled');
+          const message = 'Manual sync requires sandbox tools (rclone/Python). Data syncs automatically daily at 6 AM PST.';
           return {
             devices: { success: false, message, timestamp: new Date() },
             software: { success: false, message, timestamp: new Date() },
