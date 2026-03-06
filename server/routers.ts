@@ -127,13 +127,15 @@ export const appRouter = router({
         const { invokeLLM } = await import("./_core/llm");
         
         // Get ALL data from all sources
-        const [dashboardItems, softwareItems, systemsItems, decisions, upcomingReviews, milestones] = await Promise.all([
+        const [dashboardItems, softwareItems, systemsItems, decisions, upcomingReviews, milestones, hearingItems, aiItems] = await Promise.all([
           db.getAllDashboardItems(),
           db.getAllSoftwareItems(),
           db.getAllSystemsItems(),
           db.getAllDecisions(),
           db.getUpcomingReviews(),
           db.getAllMilestones(),
+          db.getAllHearingItems(),
+          db.getAllAiItems(),
         ]);
         
         // Format Exec Summary data
@@ -166,6 +168,16 @@ export const appRouter = router({
           `[MILESTONE - ${item.milestoneType}] ${item.milestoneDate} | Product: ${item.product} | ${item.milestoneName}`
         ).join("\n");
         
+        // Format Hearing (Health) Review data
+        const hearingContext = hearingItems.map(item =>
+          `[HEALTH REVIEW] ${item.sectionType}: ${item.content}`
+        ).join("\n");
+
+        // Format AI Review data
+        const aiContext = aiItems.map(item =>
+          `[AI REVIEW] ${item.sectionType}: ${item.content}`
+        ).join("\n");
+
         // Combine all data
         const fullDataContext = [
           "=== EXECUTIVE SUMMARY ===",
@@ -176,6 +188,12 @@ export const appRouter = router({
           "",
           "=== SYSTEMS REVIEWS ===",
           systemsContext,
+          "",
+          "=== HEALTH REVIEWS ===",
+          hearingContext,
+          "",
+          "=== AI REVIEWS ===",
+          aiContext,
           "",
           "=== DECISIONS ===",
           decisionsContext,
