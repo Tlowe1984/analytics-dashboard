@@ -308,10 +308,10 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
       ).join('\n\n');
       
-       const prompt = `For each decision below, format as: **Forum**: Summary (30 words max). [Link]
+       const prompt = `For each decision below, format as: **Forum**: Summary (45 words max). [Link]
 Rules:
 1. Start with forum name in bold markdown: **Forum Name**:
-2. Follow with concise outcome summary (up to 30 words)
+2. Follow with concise outcome summary (up to 45 words)
 3. Extract and preserve any links at the end as [Post](url) or [Link](url)
 4. If no link in outcome, omit the link part
 
