@@ -15,7 +15,7 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting milestones sync..."
 
 # Parse milestones from spreadsheet
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Parsing Wearable Program Milestones SOT spreadsheet..."
-MILESTONES_JSON=$(./venv/bin/python server/parse_milestones_xlsx.py 2>&1 | tail -n +4)
+MILESTONES_JSON=$(/home/ubuntu/wearables-venv/bin/python server/parse_milestones_xlsx.py 2>&1 | tail -n +4)
 
 if [ -z "$MILESTONES_JSON" ] || [ "$MILESTONES_JSON" = "[]" ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: No milestones parsed"
@@ -26,7 +26,7 @@ fi
 echo "$MILESTONES_JSON" > /tmp/milestones_parsed.json
 
 # Count milestones
-MILESTONE_COUNT=$(echo "$MILESTONES_JSON" | ./venv/bin/python -c "import json, sys; print(len(json.load(sys.stdin)))")
+MILESTONE_COUNT=$(echo "$MILESTONES_JSON" | /home/ubuntu/wearables-venv/bin/python -c "import json, sys; print(len(json.load(sys.stdin)))")
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Parsed $MILESTONE_COUNT milestones"
 
 # Load into database

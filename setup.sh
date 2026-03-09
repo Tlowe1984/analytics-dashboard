@@ -6,7 +6,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VENV_DIR="$SCRIPT_DIR/venv"
+VENV_DIR="/home/ubuntu/wearables-venv"
 REQUIREMENTS="python-docx openpyxl requests"
 
 echo "[setup] Starting Python environment setup..."

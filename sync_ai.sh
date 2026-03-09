@@ -67,7 +67,7 @@ rclone copy "manus_google_drive:$FOLDER_PATH/$latest_file" /tmp --config /home/u
 # Parse AI review document
 echo "📊 Parsing AI review document..."
 cd /home/ubuntu/analytics-dashboard
-./venv/bin/python3 server/parse_ai_review.py "/tmp/$latest_file" > /tmp/ai_data.json
+/home/ubuntu/wearables-venv/bin/python server/parse_ai_review.py "/tmp/$latest_file" > /tmp/ai_data.json
 
 # Load into database
 echo "💾 Loading AI data into database..."

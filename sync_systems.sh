@@ -19,7 +19,7 @@ rm -f /tmp/systems_data.json
 
 # Parse the document (parser will find and download latest weekly archive)
 echo "Finding and parsing latest Systems review document..."
-/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_systems_review.py > /tmp/systems_data.json
+/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_systems_review.py > /tmp/systems_data.json
 
 # Load into database
 echo "Loading Systems data into database..."

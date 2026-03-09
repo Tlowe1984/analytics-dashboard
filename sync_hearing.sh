@@ -64,7 +64,7 @@ rclone copy "manus_google_drive:$FOLDER_PATH/$LATEST_FILE" /tmp/ --config /home/
 
 # Parse the document
 echo "📊 Parsing Health review document..."
-/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_hearing_review.py "/tmp/$LATEST_FILE" > /tmp/hearing_data.json
+/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_hearing_review.py "/tmp/$LATEST_FILE" > /tmp/hearing_data.json
 
 # Load into database
 echo "💾 Loading Hearing data into database..."

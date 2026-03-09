@@ -50,11 +50,11 @@ export async function syncAllBash(): Promise<{
 
   console.log("🚀 Starting comprehensive sync using bash scripts...");
 
-  // Auto-rebuild Python venv if broken (SRE module mismatch after sandbox hibernation)
+  // Auto-rebuild Python venv if broken (uses persistent path outside project dir to survive checkpoints)
   try {
     await execAsync(
-      'cd /home/ubuntu/analytics-dashboard && ./venv/bin/python -c "import json" 2>/dev/null || bash setup.sh',
-      { timeout: 60000, shell: '/bin/bash' }
+      '/home/ubuntu/wearables-venv/bin/python -c "import json, docx, openpyxl" 2>/dev/null || (python3.11 -m venv /home/ubuntu/wearables-venv && /home/ubuntu/wearables-venv/bin/pip install --quiet python-docx openpyxl requests)',
+      { timeout: 120000, shell: '/bin/bash' }
     );
     console.log('✅ Python venv health check passed');
   } catch (venvErr) {

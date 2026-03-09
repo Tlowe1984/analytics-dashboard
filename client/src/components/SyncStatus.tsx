@@ -55,6 +55,7 @@ export default function SyncStatus() {
       utils.upcomingReviews.getAll.invalidate();
       utils.hearing.getAll.invalidate();
       utils.ai.getAll.invalidate();
+      utils.software.getWearablesTagged.invalidate();
     },
     onError: (error) => {
       toast.error("Sync failed", {

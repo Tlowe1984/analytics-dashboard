@@ -19,7 +19,7 @@ rm -f /tmp/software_data.json
 
 # Parse the document (parser will find and download latest weekly archive)
 echo "Finding and parsing latest Software review document..."
-/home/ubuntu/analytics-dashboard/venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_ie_review.py > /tmp/software_data.json
+/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_ie_review.py > /tmp/software_data.json
 
 # Load into database
 echo "Loading Software data into database..."
