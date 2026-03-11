@@ -119,10 +119,6 @@ function ProductCard({
   const riskItems = allItems.filter(
     (item) => item.productCategory === productCategory && item.sectionType === "risks"
   );
-  const upcomingItems = allItems.filter(
-    (item) => item.productCategory === productCategory && item.sectionType === "upcoming"
-  );
-
   return (
     <div className="bg-background/40 border border-border/50 rounded-xl p-3 sm:p-5 space-y-2 sm:space-y-3 h-full">
       {/* Product Header */}
@@ -141,9 +137,6 @@ function ProductCard({
         <SectionContent sectionType="highlights" items={highlightItems} />
         <div className="border-t border-border/20 pt-4">
           <SectionContent sectionType="risks" items={riskItems} />
-        </div>
-        <div className="border-t border-border/20 pt-4">
-          <SectionContent sectionType="upcoming" items={upcomingItems} />
         </div>
       </div>
     </div>
