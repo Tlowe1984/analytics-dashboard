@@ -6,6 +6,7 @@ export default function SoftwareWearablesSection() {
   // Use software.getWearablesTagged which queries ALL sources (Software, AI, Systems, Hearing, Devices)
   // dashboard.getWearablesTaggedItems only returns Software-source items
   const { data: wearablesItems, isLoading } = trpc.software.getWearablesTagged.useQuery();
+  const { data: softwareSourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'software_ie' });
 
   // Route items to the correct tab based on their source heading title:
   // "Wins" / "Launches" → Highlights
@@ -80,7 +81,16 @@ export default function SoftwareWearablesSection() {
           Details
         </a>
       </div>
-      
+      {softwareSourceMeta?.sourceFileName && (
+        <div className="ml-7 mb-2 -mt-1">
+          <span className="text-xs text-muted-foreground">Source: </span>
+          {softwareSourceMeta.sourceFileUrl ? (
+            <a href={softwareSourceMeta.sourceFileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">{softwareSourceMeta.sourceFileName}</a>
+          ) : (
+            <span className="text-xs text-muted-foreground">{softwareSourceMeta.sourceFileName}</span>
+          )}
+        </div>
+      )}
       {isLoading ? (
         <div className="ml-7 space-y-2">
           <div className="h-4 bg-muted/20 rounded w-3/4 animate-pulse" />

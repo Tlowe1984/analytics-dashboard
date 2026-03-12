@@ -8,6 +8,8 @@ export default function AIExecutiveUpdates() {
   const { data: upcomingItems } = trpc.dashboard.getUpcomingItems.useQuery();
   const { data: pdpMilestones } = trpc.dashboard.getPDPMilestonesThisAndNextWeek.useQuery();
   const { data: recentDecisions } = trpc.dashboard.getRecentDecisions.useQuery();
+  const { data: devicesSourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'devices' });
+  const { data: systemsSourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'systems' });
   
   // Filter upcomingItems to only show upcoming_decision type (reviews)
   const upcomingDecisions = upcomingItems?.filter(item => item.type === 'upcoming_decision') || [];
@@ -70,6 +72,16 @@ export default function AIExecutiveUpdates() {
                     Details
                   </a>
                 </div>
+                {devicesSourceMeta?.sourceFileName && (
+                  <div className="ml-7 mb-2 -mt-1">
+                    <span className="text-xs text-muted-foreground">Source: </span>
+                    {devicesSourceMeta.sourceFileUrl ? (
+                      <a href={devicesSourceMeta.sourceFileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">{devicesSourceMeta.sourceFileName}</a>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">{devicesSourceMeta.sourceFileName}</span>
+                    )}
+                  </div>
+                )}
                 <div className="space-y-3 ml-7">
                   {/* Highlights */}
                   <div>
@@ -123,6 +135,16 @@ export default function AIExecutiveUpdates() {
                     Details
                   </a>
                 </div>
+                {systemsSourceMeta?.sourceFileName && (
+                  <div className="ml-7 mb-2 -mt-1">
+                    <span className="text-xs text-muted-foreground">Source: </span>
+                    {systemsSourceMeta.sourceFileUrl ? (
+                      <a href={systemsSourceMeta.sourceFileUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline">{systemsSourceMeta.sourceFileName}</a>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">{systemsSourceMeta.sourceFileName}</span>
+                    )}
+                  </div>
+                )}
                 <div className="space-y-3 ml-7">
                   {/* Highlights */}
                   <div>
