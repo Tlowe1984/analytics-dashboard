@@ -258,8 +258,8 @@ export const appRouter = router({
 
 The dashboard integrates data from 8 sources:
 1. Devices (Executive Summary): Highlights, risks, and upcoming items for AI Glasses, Wrist, and ARG/SSG products
-2. Experiences & Interfaces (E&I / Software Review): Software development updates, wins, and risks — filtered to [wearables-tag] items only
-3. Systems Review: Systems engineering updates — filtered to [wearables-tag] items only
+2. Experiences & Interfaces (E&I / Software Review): Software development updates, wins, and risks — pre-filtered to wearables-relevant items only
+3. Systems Review: Systems engineering updates — pre-filtered to wearables-relevant items only
 4. Health / Hearing Review: Health and hearing product review updates
 5. AI Review: AI features, hotspots, and product review updates
 6. Decisions: Program decisions with week, DRI (Directly Responsible Individual), forum, and outcome — last 20 weeks of history

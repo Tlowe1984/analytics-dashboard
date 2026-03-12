@@ -485,9 +485,21 @@ export async function getAllDecisions(): Promise<Decision[]> {
     if (!db) return [];
     
     try {
-      // Sort by id DESC — decisions are inserted oldest-first (W7 first, W11 last),
-      // so desc(id) = most recent week at the top.
-      const results = await db.select().from(decisions).orderBy(desc(decisions.id));
+      // Fetch all decisions and sort using cross-year-safe weekToNumber.
+      // Cannot rely on desc(id) because the canonical doc is ordered newest-first,
+      // so re-inserts give highest IDs to the oldest weeks.
+      const results = await db.select().from(decisions);
+      const weekToNumber = (w: string): number => {
+        const m = w.match(/^W(\d+)\s+(\d{4})/);
+        if (!m) return 0;
+        return parseInt(m[2], 10) * 100 + parseInt(m[1], 10);
+      };
+      results.sort((a, b) => {
+        const wDiff = weekToNumber(b.week || '') - weekToNumber(a.week || '');
+        if (wDiff !== 0) return wDiff;
+        // Same week — preserve canonical doc order (lower id = inserted first = appears first in doc)
+        return a.id - b.id;
+      });
       return results;
     } catch (error) {
       console.error("[Database] Error fetching decisions:", error);
