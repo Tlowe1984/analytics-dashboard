@@ -207,9 +207,9 @@ export default function DecisionsSection() {
                             {isExpanded ? (
                               <MarkdownText content={decision.decisionOutcome} />
                             ) : (
-                              <p className="line-clamp-2 text-sm text-foreground/90">
-                                {decision.decisionOutcome?.replace(/\*\*/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")}
-                              </p>
+                              <div className="line-clamp-2 text-sm text-foreground/90 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_strong]:font-semibold">
+                                <MarkdownText content={decision.decisionOutcome} />
+                              </div>
                             )}
                           </td>
                         </tr>
@@ -253,9 +253,9 @@ export default function DecisionsSection() {
                               <MarkdownText content={decision.decisionOutcome} />
                             </div>
                           ) : (
-                            <p className="text-xs text-foreground/90 line-clamp-2">
-                              {decision.decisionOutcome?.replace(/\*\*/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")}
-                            </p>
+                            <div className="text-xs text-foreground/90 line-clamp-2 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_strong]:font-semibold">
+                              <MarkdownText content={decision.decisionOutcome} />
+                            </div>
                           )}
                         </div>
                       </div>
