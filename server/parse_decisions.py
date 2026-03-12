@@ -33,8 +33,8 @@ def parse_week_number(week_str):
     except:
         return None, None
 
-def is_within_last_month(week_str):
-    """Check if the week is within the last month (approximately 4 weeks)"""
+def is_within_last_20_weeks(week_str):
+    """Check if the week is within the last 20 weeks"""
     week_num, year = parse_week_number(week_str)
     if week_num is None or year is None:
         return False
@@ -53,8 +53,8 @@ def is_within_last_month(week_str):
     else:
         return False
     
-    # Include decisions from last 4 weeks (approximately 1 month)
-    return 0 <= week_diff <= 4
+    # Include decisions from last 20 weeks
+    return 0 <= week_diff <= 20
 
 def parse_decisions(doc_path):
     """Extract decisions from the Consolidated Summary table"""
@@ -82,8 +82,8 @@ def parse_decisions(doc_path):
         
         week_str = cells[3]
         
-        # Filter for last month only
-        if not is_within_last_month(week_str):
+        # Filter for last 20 weeks
+        if not is_within_last_20_weeks(week_str):
             continue
         
         decision = {
