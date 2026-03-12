@@ -312,14 +312,13 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
       return await db.getPDPMilestonesThisAndNextWeek();
     }),
 
-    // Get recent decisions for AI Executive Updates (Decisions table + Software Pillar decisions)
-    // Summaries are generated using LLM to keep them concise (≤25 words)
+    // Get recent decisions for AI Executive Updates top tile
+    // Rules: last 2 weeks only, max 8, MZ first, exclude Timothy Lowe, exclude 'cannot be displayed'
+    // Summaries are generated using LLM to keep them concise (≤60 words)
     // Format: **Forum**: Summary. [Link]
     getRecentDecisions: publicProcedure.query(async () => {
       const { invokeLLM } = await import("./_core/llm");
-      const rawDecisions = await db.getRecentDecisionsForAI(13);
-      
-      console.log('[DEBUG] Raw decisions before LLM:', JSON.stringify(rawDecisions, null, 2));
+      const rawDecisions = await db.getRecentDecisionsForAI(8);
       
       if (rawDecisions.length === 0) {
         return [];
@@ -330,10 +329,10 @@ Answer the user's question based on this comprehensive data. Be specific, cite r
         `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
       ).join('\n\n');
       
-       const prompt = `For each decision below, format as: **Forum**: Summary (45 words max). [Link]
+      const prompt = `For each decision below, format as: **Forum**: Summary (60 words max). [Link]
 Rules:
 1. Start with forum name in bold markdown: **Forum Name**:
-2. Follow with concise outcome summary (up to 45 words)
+2. Follow with concise outcome summary (up to 60 words, no bolding in the summary text)
 3. Extract and preserve any links at the end as [Post](url) or [Link](url)
 4. If no link in outcome, omit the link part
 

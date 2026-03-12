@@ -388,93 +388,91 @@ export async function getSoftwareItemsBySection(
 // ============ Decisions Functions ============
 
 /**
- * Get decisions for AI Executive Updates with new prioritization:
- * 1. Current week MZ decisions (highest priority)
- * 2. Current/previous week Wearables Review decisions
- * 3. Other current/previous week decisions
- * Returns up to 8 decisions total
- * Note: Summaries are generated in the router using LLM (≤25 words)
+ * Get decisions for AI Executive Updates top tile with strict rules:
+ * - Only last 2 weeks (current week + previous week)
+ * - Exclude DRI = Timothy Lowe
+ * - Exclude outcomes containing 'cannot be displayed'
+ * - Prioritize: MZ forum first, then Wearable Review, then others
+ * - Max 8 decisions total
+ * Note: Summaries are generated in the router using LLM (≤60 words)
  */
-export async function getRecentDecisionsForAI(limit = 13) {
+export async function getRecentDecisionsForAI(limit = 8) {
   // NO CACHE - always fetch fresh data
   const db = await getDb();
   if (!db) return [];
   
   try {
-    const { desc, gte } = await import("drizzle-orm");
-    
-    // Calculate current week number for classification
+    // Cross-year-safe week number parser: W3 2026 > W50 2025
+    const weekToNumber = (w: string): number => {
+      const m = w.match(/^W(\d+)\s+(\d{4})/);
+      if (!m) return 0;
+      const weekNum = parseInt(m[1], 10);
+      const year = parseInt(m[2], 10);
+      return year * 100 + weekNum;
+    };
+
+    // Calculate current and previous week strings (cross-year safe)
     const now = new Date();
     const startOfYear = new Date(now.getFullYear(), 0, 1);
     const days = Math.floor((now.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
     const currentWeekNum = Math.ceil((days + startOfYear.getDay() + 1) / 7);
     const currentWeekStr = `W${currentWeekNum} ${now.getFullYear()}`;
-    const previousWeekStr = `W${currentWeekNum - 1} ${now.getFullYear()}`;
+    // Handle year boundary: if currentWeekNum is 1, previous week is W52 of last year
+    const prevWeekNum = currentWeekNum > 1 ? currentWeekNum - 1 : 52;
+    const prevWeekYear = currentWeekNum > 1 ? now.getFullYear() : now.getFullYear() - 1;
+    const previousWeekStr = `W${prevWeekNum} ${prevWeekYear}`;
     
-    // For database query, use a reasonable time window (last 2 months)
-    const twoMonthsAgo = new Date(now);
-    twoMonthsAgo.setMonth(now.getMonth() - 2);
-    
-    // Get decisions from Decisions table (last 2 months, filter by week field later)
-    const decisionsFromTable = await db
+    const allowedWeeks = new Set([currentWeekStr, previousWeekStr]);
+
+    // Fetch all decisions (no date filter — filter by week string instead)
+    const allDecisions = await db
       .select()
       .from(decisions)
-      .where(gte(decisions.updatedAt, twoMonthsAgo))
-      .orderBy(desc(decisions.updatedAt));
+      .orderBy(desc(decisions.id));
     
-
-    
-    // Get Pillar decisions from Software items (last 2 months)
-    const pillarDecisions = await db
-      .select()
-      .from(softwareItems)
-      .where(and(
-        eq(softwareItems.sectionType, "decisions"),
-        eq(softwareItems.category, "Pillar"),
-        gte(softwareItems.updatedAt, twoMonthsAgo)
-      ))
-      .orderBy(desc(softwareItems.updatedAt))
-      .limit(limit * 2);
-    
-    // Combine and format with week classification based on week field
-    const combined = [
-      ...decisionsFromTable.map(item => ({
-        type: 'decision' as const,
-        forum: item.forum || '',
-        outcome: item.decisionOutcome,
-        date: item.updatedAt,
-        week: item.week || '',
-        isCurrentWeek: item.week === currentWeekStr,
-        isPreviousWeek: item.week === previousWeekStr,
-      })),
-      ...pillarDecisions.map(item => ({
-        type: 'pillar' as const,
-        forum: item.forum || '',
-        outcome: item.content,
-        date: item.updatedAt,
-        week: '',
-        isCurrentWeek: false,
-        isPreviousWeek: false,
-      }))
-    ];
-    
-    // Sort purely chronologically — most recent week first.
-    // The decisions canonical doc is ordered newest-first, so items with the
-    // same week share the same updatedAt; use the week string numerically as
-    // a tiebreaker by extracting the week number.
-    const parseWeekNum = (w: string) => {
-      const m = w.match(/^W(\d+)/);
-      return m ? parseInt(m[1], 10) : 0;
-    };
-
-    combined.sort((a, b) => {
-      const wDiff = parseWeekNum(b.week) - parseWeekNum(a.week);
-      if (wDiff !== 0) return wDiff;
-      // Same week — preserve insertion order (earlier date = inserted first = newer in canonical doc)
-      return a.date.getTime() - b.date.getTime();
+    // Apply all filters:
+    // 1. Only last 2 weeks
+    // 2. Exclude Timothy Lowe as DRI
+    // 3. Exclude 'cannot be displayed' in outcome
+    const filtered = allDecisions.filter(item => {
+      const week = item.week || '';
+      const dri = item.dri || '';
+      const outcome = item.decisionOutcome || '';
+      
+      if (!allowedWeeks.has(week)) return false;
+      if (dri.toLowerCase().includes('timothy lowe')) return false;
+      if (outcome.toLowerCase().includes('cannot be displayed')) return false;
+      return true;
     });
 
-    return combined.slice(0, limit);
+    // Sort: MZ forum first, then Wearable Review, then others; within tier sort by week desc
+    const forumPriority = (forum: string): number => {
+      const f = forum.toLowerCase();
+      if (f.includes('mz')) return 0;
+      if (f.includes('wearable')) return 1;
+      return 2;
+    };
+
+    filtered.sort((a, b) => {
+      // Primary: most recent week first
+      const wDiff = weekToNumber(b.week || '') - weekToNumber(a.week || '');
+      if (wDiff !== 0) return wDiff;
+      // Secondary: MZ > Wearable > Other
+      const pDiff = forumPriority(a.forum || '') - forumPriority(b.forum || '');
+      if (pDiff !== 0) return pDiff;
+      // Tertiary: preserve insertion order
+      return a.id - b.id;
+    });
+
+    return filtered.slice(0, limit).map(item => ({
+      type: 'decision' as const,
+      forum: item.forum || '',
+      outcome: item.decisionOutcome,
+      date: item.updatedAt,
+      week: item.week || '',
+      isCurrentWeek: item.week === currentWeekStr,
+      isPreviousWeek: item.week === previousWeekStr,
+    }));
   } catch (error) {
     console.error("[Database] Error fetching recent decisions for AI:", error);
     return [];
