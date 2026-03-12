@@ -17,6 +17,16 @@ function normalizeForumLabel(forum: string): string {
   return forum;
 }
 
+// Convert week string like "W11 2026" or "W3 2026" to a sortable number
+function weekToNumber(week: string): number {
+  if (!week) return 0;
+  const match = week.match(/(\d+)\s*(\d{4})?/);
+  if (!match) return 0;
+  const wNum = parseInt(match[1], 10);
+  const year = match[2] ? parseInt(match[2], 10) : 2026;
+  return year * 100 + wNum;
+}
+
 // Normalize status values
 function normalizeStatus(status: string): string {
   const s = status.toLowerCase().trim();
@@ -46,10 +56,11 @@ export default function DecisionsSection() {
 
   const statusOptions = ["All", "Decisions", "Inform", "Discussed", "Other"];
 
-  // Apply filters and search
+  // Apply filters and search, then sort most recent first
   const filtered = useMemo(() => {
     if (!decisions) return [];
-    return decisions.filter(d => {
+    return decisions
+    .filter(d => {
       // Status filter
       if (statusFilter !== "All") {
         const norm = normalizeStatus(d.status || "");
@@ -71,7 +82,8 @@ export default function DecisionsSection() {
         );
       }
       return true;
-    });
+    })
+    .sort((a, b) => weekToNumber(b.week || "") - weekToNumber(a.week || ""));
   }, [decisions, statusFilter, forumFilter, search]);
 
   if (isLoading) {

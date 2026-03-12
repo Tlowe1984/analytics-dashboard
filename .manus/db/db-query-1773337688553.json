@@ -1,0 +1,90 @@
+{
+  "query": "SELECT id, week FROM decisions ORDER BY id DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT id, week FROM decisions ORDER BY id DESC LIMIT 20;",
+  "rows": [
+    {
+      "id": "1320270",
+      "week": "W3 2026"
+    },
+    {
+      "id": "1320269",
+      "week": "W3 2026"
+    },
+    {
+      "id": "1320268",
+      "week": "W4 2026"
+    },
+    {
+      "id": "1320267",
+      "week": "W4 2026"
+    },
+    {
+      "id": "1320266",
+      "week": "W5 2026"
+    },
+    {
+      "id": "1320265",
+      "week": "W5 2026"
+    },
+    {
+      "id": "1320264",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320263",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320262",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320261",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320260",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320259",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320258",
+      "week": "W6 2026"
+    },
+    {
+      "id": "1320257",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320256",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320255",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320254",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320253",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320252",
+      "week": "W7 2026"
+    },
+    {
+      "id": "1320251",
+      "week": "W7 2026"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tweek\n1320270\tW3 2026\n1320269\tW3 2026\n1320268\tW4 2026\n1320267\tW4 2026\n1320266\tW5 2026\n1320265\tW5 2026\n1320264\tW6 2026\n1320263\tW6 2026\n1320262\tW6 2026\n1320261\tW6 2026\n1320260\tW6 2026\n1320259\tW6 2026\n1320258\tW6 2026\n1320257\tW7 2026\n1320256\tW7 2026\n1320255\tW7 2026\n1320254\tW7 2026\n1320253\tW7 2026\n1320252\tW7 2026\n1320251\tW7 2026\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}

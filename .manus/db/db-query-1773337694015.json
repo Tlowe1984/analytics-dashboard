@@ -1,0 +1,76 @@
+{
+  "query": "SELECT week, MIN(id) as min_id, MAX(id) as max_id, COUNT(*) as cnt FROM decisions GROUP BY week ORDER BY MIN(id) ASC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT week, MIN(id) as min_id, MAX(id) as max_id, COUNT(*) as cnt FROM decisions GROUP BY week ORDER BY MIN(id) ASC;",
+  "rows": [
+    {
+      "week": "W51 2025",
+      "min_id": "1320226",
+      "max_id": "1320226",
+      "cnt": "1"
+    },
+    {
+      "week": "W50 2025",
+      "min_id": "1320227",
+      "max_id": "1320227",
+      "cnt": "1"
+    },
+    {
+      "week": "W11 2026",
+      "min_id": "1320228",
+      "max_id": "1320229",
+      "cnt": "2"
+    },
+    {
+      "week": "W10 2026",
+      "min_id": "1320230",
+      "max_id": "1320237",
+      "cnt": "8"
+    },
+    {
+      "week": "W9 2026",
+      "min_id": "1320238",
+      "max_id": "1320246",
+      "cnt": "9"
+    },
+    {
+      "week": "W8 2026",
+      "min_id": "1320247",
+      "max_id": "1320250",
+      "cnt": "4"
+    },
+    {
+      "week": "W7 2026",
+      "min_id": "1320251",
+      "max_id": "1320257",
+      "cnt": "7"
+    },
+    {
+      "week": "W6 2026",
+      "min_id": "1320258",
+      "max_id": "1320264",
+      "cnt": "7"
+    },
+    {
+      "week": "W5 2026",
+      "min_id": "1320265",
+      "max_id": "1320266",
+      "cnt": "2"
+    },
+    {
+      "week": "W4 2026",
+      "min_id": "1320267",
+      "max_id": "1320268",
+      "cnt": "2"
+    },
+    {
+      "week": "W3 2026",
+      "min_id": "1320269",
+      "max_id": "1320270",
+      "cnt": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "week\tmin_id\tmax_id\tcnt\nW51 2025\t1320226\t1320226\t1\nW50 2025\t1320227\t1320227\t1\nW11 2026\t1320228\t1320229\t2\nW10 2026\t1320230\t1320237\t8\nW9 2026\t1320238\t1320246\t9\nW8 2026\t1320247\t1320250\t4\nW7 2026\t1320251\t1320257\t7\nW6 2026\t1320258\t1320264\t7\nW5 2026\t1320265\t1320266\t2\nW4 2026\t1320267\t1320268\t2\nW3 2026\t1320269\t1320270\t2\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}
