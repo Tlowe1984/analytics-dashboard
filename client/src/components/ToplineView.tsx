@@ -263,6 +263,7 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
   const { data: execSummaryItems, isLoading: execLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "exec_summary" });
   const { data: decisionsItems, isLoading: decisionsLoading } = trpc.software.getBySection.useQuery({ softwareCategory: category, sectionType: "decisions" });
   const { data: lastUpdated } = trpc.dashboard.getSoftwareLastUpdated.useQuery();
+  const { data: sourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'software_ie' }, { enabled: category === 'software_ie' });
   
   // For software_ie category, also fetch wearables-tagged items from AI and Hearing
   const { data: wearablesItems, isLoading: wearablesLoading } = trpc.software.getWearablesTagged.useQuery(undefined, {
@@ -473,23 +474,26 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <p className="text-xs text-muted-foreground">
-          Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
-            year: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit'
-          }) : 'Loading...'}
-        </p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-xs text-muted-foreground">
+          {sourceMeta?.sourceFileName ? (
+            <span>
+              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+              {sourceMeta.fileModifiedAt && (
+                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+              )}
+            </span>
+          ) : (
+            <span>Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Loading...'}</span>
+          )}
+        </div>
         <a
           href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1JY78rUBZquuOd2kCVzTU6_t_ozM3DH7I"}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-primary hover:underline flex items-center gap-1"
+          className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
         >
-          📄 View Source Document
+          View Source Document →
         </a>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

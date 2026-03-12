@@ -34,22 +34,20 @@ done
 #   - "W09 AI Hotspots.docx"
 #   - "W09 AI Product Review.docx"
 #   - "WK09 AI Hotspots.docx"
-latest_file=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
+ai_lsl_output=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini 2>/dev/null)
+latest_line=$(echo "$ai_lsl_output" | \
   grep -iE "(W(K)?[0-9]+.*AI.*(Hotspots|Product[[:space:]]+Review)|AI.*W(K)?[0-9]+.*(Hotspots|Review)).*\.docx" | \
   sort -k2,3 -r | \
-  head -1 | \
-  awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-  sed 's/[[:space:]]*$//')
+  head -1)
+latest_file=$(echo "$latest_line" | awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | sed 's/[[:space:]]*$//')
+ai_file_modified=$(echo "$latest_line" | awk '{print $2" "$3}' | sed 's/\..*//')
 
 # Fallback: if nothing matched, grab the most recently modified .docx in the folder
 if [ -z "$latest_file" ]; then
   echo "⚠️  Primary pattern matched nothing — trying broad .docx fallback..."
-  latest_file=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
-    grep -iE "\.docx$" | \
-    sort -k2,3 -r | \
-    head -1 | \
-    awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-    sed 's/[[:space:]]*$//')
+  fallback_line=$(echo "$ai_lsl_output" | grep -iE "\.docx$" | sort -k2,3 -r | head -1)
+  latest_file=$(echo "$fallback_line" | awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | sed 's/[[:space:]]*$//')
+  ai_file_modified=$(echo "$fallback_line" | awk '{print $2" "$3}' | sed 's/\..*//')
 fi
 
 if [ -z "$latest_file" ]; then
@@ -117,5 +115,32 @@ loadAiData().catch(err => {
   process.exit(1);
 });
 EOF
+
+# Upsert source file metadata into sync_metadata table
+echo "Saving source file metadata..."
+python3 -c "import json; json.dump({'filename': '$latest_file', 'modified': '$ai_file_modified'}, open('/tmp/ai_source_meta.json','w'))"
+cat > /home/ubuntu/analytics-dashboard/upsert_ai_meta.mjs << 'METAEOF'
+import { readFileSync } from 'fs';
+import { getDb } from './server/db.js';
+import { syncMetadata } from './drizzle/schema.js';
+import { eq } from 'drizzle-orm';
+const meta = JSON.parse(readFileSync('/tmp/ai_source_meta.json', 'utf8'));
+const db = await getDb();
+if (db) {
+  const filename = meta.filename || '';
+  const fileModifiedAt = meta.modified ? new Date(meta.modified) : null;
+  console.log(`📄 Source: ${filename} (modified: ${meta.modified})`);
+  const existing = await db.select().from(syncMetadata).where(eq(syncMetadata.section, 'ai')).limit(1);
+  if (existing.length > 0) {
+    await db.update(syncMetadata).set({ sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'ai'));
+  } else {
+    await db.insert(syncMetadata).values({ section: 'ai', documentId: 'ai_review', sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
+  }
+  console.log('✅ Metadata saved for ai');
+}
+process.exit(0);
+METAEOF
+cd /home/ubuntu/analytics-dashboard && pnpm exec tsx upsert_ai_meta.mjs
+rm -f /home/ubuntu/analytics-dashboard/upsert_ai_meta.mjs
 
 echo "✅ AI sync complete! Refresh your browser to see the updated data."

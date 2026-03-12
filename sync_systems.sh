@@ -55,4 +55,32 @@ console.log(`✅ Loaded ${data.length} Systems items`);
 process.exit(0);
 ENDTS
 
+# Upsert source file metadata into sync_metadata table
+if [ -f /tmp/systems_source_meta.json ]; then
+  echo "Saving source file metadata..."
+  cat > /home/ubuntu/analytics-dashboard/upsert_systems_meta.mjs << 'METAEOF'
+import { readFileSync } from 'fs';
+import { getDb } from './server/db.js';
+import { syncMetadata } from './drizzle/schema.js';
+import { eq } from 'drizzle-orm';
+const meta = JSON.parse(readFileSync('/tmp/systems_source_meta.json', 'utf8'));
+const db = await getDb();
+if (db) {
+  const filename = meta.filename || '';
+  const fileModifiedAt = meta.modified ? new Date(meta.modified) : null;
+  console.log(`📄 Source: ${filename} (modified: ${meta.modified})`);
+  const existing = await db.select().from(syncMetadata).where(eq(syncMetadata.section, 'systems')).limit(1);
+  if (existing.length > 0) {
+    await db.update(syncMetadata).set({ sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'systems'));
+  } else {
+    await db.insert(syncMetadata).values({ section: 'systems', documentId: 'systems_review', sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
+  }
+  console.log('✅ Metadata saved for systems');
+}
+process.exit(0);
+METAEOF
+  cd /home/ubuntu/analytics-dashboard && pnpm exec tsx upsert_systems_meta.mjs
+  rm -f /home/ubuntu/analytics-dashboard/upsert_systems_meta.mjs
+fi
+
 echo "=== Systems sync complete ==="

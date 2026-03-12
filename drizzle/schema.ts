@@ -50,6 +50,8 @@ export const syncMetadata = mysqlTable("sync_metadata", {
   documentId: varchar("document_id", { length: 255 }).notNull(),
   sourceUrl: text("source_url"), // Google Docs URL for the source document
   sourceFilePath: text("source_file_path"), // Google Drive file path
+  sourceFileName: varchar("source_file_name", { length: 500 }), // Just the filename (e.g. "W11 Experiences & Interfaces Review.docx")
+  fileModifiedAt: timestamp("file_modified_at"), // When the source file was last modified in Google Drive
   lastSyncedAt: timestamp("last_synced_at").notNull(),
   syncStatus: mysqlEnum("sync_status", ["success", "failed", "pending"]).default("pending").notNull(),
   errorMessage: text("error_message"),

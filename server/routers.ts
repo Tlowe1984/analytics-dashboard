@@ -75,6 +75,27 @@ export const appRouter = router({
         }
       }),
 
+    // Get source file metadata (filename + modified date) for a given section
+    getSourceFileMeta: publicProcedure
+      .input(z.object({ section: z.string() }))
+      .query(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) return null;
+          const result = await (database.query as any).syncMetadata.findFirst({
+            where: (sm: any, { eq }: any) => eq(sm.section, input.section),
+            columns: { sourceFileName: true, fileModifiedAt: true },
+          });
+          return result ? {
+            sourceFileName: result.sourceFileName || null,
+            fileModifiedAt: result.fileModifiedAt || null,
+          } : null;
+        } catch (error) {
+          console.error('Error fetching source file meta:', error);
+          return null;
+        }
+      }),
+
     // Get items by section and category
     getBySection: publicProcedure
       .input(

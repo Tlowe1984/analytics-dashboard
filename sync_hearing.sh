@@ -30,22 +30,20 @@ FOLDER_PATH="Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hear
 #   "WK09 Health Canonical Program Review.docx"
 #   "W09 Health Program Review.docx" (shorter variant)
 echo "🔍 Searching for Health Canonical Program Review files..."
-LATEST_FILE=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
+hearing_lsl_output=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini 2>/dev/null)
+latest_hearing_line=$(echo "$hearing_lsl_output" | \
   grep -iE "W(K)?[0-9]{1,2}[[:space:]].*Health.*(Canonical[[:space:]]+)?Program[[:space:]]+Review\.docx" | \
   sort -k2,3 -r | \
-  head -1 | \
-  awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-  sed 's/[[:space:]]*$//')
+  head -1)
+LATEST_FILE=$(echo "$latest_hearing_line" | awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | sed 's/[[:space:]]*$//')
+HEARING_FILE_MODIFIED=$(echo "$latest_hearing_line" | awk '{print $2" "$3}' | sed 's/\..*//')
 
 # Fallback: if nothing matched the strict pattern, grab the most recently modified Health .docx
 if [ -z "$LATEST_FILE" ]; then
   echo "⚠️  Primary pattern matched nothing — trying broad Health .docx fallback..."
-  LATEST_FILE=$(rclone lsl "manus_google_drive:$FOLDER_PATH" --config /home/ubuntu/.gdrive-rclone.ini | \
-    grep -iE "Health.*\.docx" | \
-    sort -k2,3 -r | \
-    head -1 | \
-    awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | \
-    sed 's/[[:space:]]*$//')
+  fallback_hearing_line=$(echo "$hearing_lsl_output" | grep -iE "Health.*\.docx" | sort -k2,3 -r | head -1)
+  LATEST_FILE=$(echo "$fallback_hearing_line" | awk '{for(i=4;i<=NF;i++) printf "%s ", $i; print ""}' | sed 's/[[:space:]]*$//')
+  HEARING_FILE_MODIFIED=$(echo "$fallback_hearing_line" | awk '{print $2" "$3}' | sed 's/\..*//')
 fi
 
 if [ -z "$LATEST_FILE" ]; then
@@ -116,5 +114,32 @@ loadHearingData().catch(err => {
   process.exit(1);
 });
 EOF
+
+# Upsert source file metadata into sync_metadata table
+echo "Saving source file metadata..."
+python3 -c "import json; json.dump({'filename': '$LATEST_FILE', 'modified': '$HEARING_FILE_MODIFIED'}, open('/tmp/hearing_source_meta.json','w'))"
+cat > /home/ubuntu/analytics-dashboard/upsert_hearing_meta.mjs << 'METAEOF'
+import { readFileSync } from 'fs';
+import { getDb } from './server/db.js';
+import { syncMetadata } from './drizzle/schema.js';
+import { eq } from 'drizzle-orm';
+const meta = JSON.parse(readFileSync('/tmp/hearing_source_meta.json', 'utf8'));
+const db = await getDb();
+if (db) {
+  const filename = meta.filename || '';
+  const fileModifiedAt = meta.modified ? new Date(meta.modified) : null;
+  console.log(`📄 Source: ${filename} (modified: ${meta.modified})`);
+  const existing = await db.select().from(syncMetadata).where(eq(syncMetadata.section, 'hearing')).limit(1);
+  if (existing.length > 0) {
+    await db.update(syncMetadata).set({ sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'hearing'));
+  } else {
+    await db.insert(syncMetadata).values({ section: 'hearing', documentId: 'hearing_review', sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
+  }
+  console.log('✅ Metadata saved for hearing');
+}
+process.exit(0);
+METAEOF
+cd /home/ubuntu/analytics-dashboard && pnpm exec tsx upsert_hearing_meta.mjs
+rm -f /home/ubuntu/analytics-dashboard/upsert_hearing_meta.mjs
 
 echo "✅ Hearing sync complete! Refresh your browser to see the updated data."

@@ -29,6 +29,7 @@ export function HearingTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
   const { data: winsItems, isLoading: winsLoading } = trpc.hearing.getBySection.useQuery({ sectionType: "wins" });
   const { data: execSummaryItems, isLoading: execLoading } = trpc.hearing.getBySection.useQuery({ sectionType: "exec_summary" });
   const { data: decisionsItems, isLoading: decisionsLoading } = trpc.hearing.getBySection.useQuery({ sectionType: "decisions" });
+  const { data: sourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'hearing' });
   
   const isLoading = winsLoading || execLoading || decisionsLoading;
 
@@ -161,14 +162,24 @@ export function HearingTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-xs text-muted-foreground">
+          {sourceMeta?.sourceFileName ? (
+            <span>
+              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+              {sourceMeta.fileModifiedAt && (
+                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+              )}
+            </span>
+          ) : null}
+        </div>
         <a
           href={sourceDocumentUrl || "#"}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-primary hover:underline flex items-center gap-1"
+          className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
         >
-          📄 View Source Document
+          View Source Document →
         </a>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

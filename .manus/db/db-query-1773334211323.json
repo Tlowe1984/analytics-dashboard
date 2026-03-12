@@ -1,0 +1,40 @@
+{
+  "query": "SELECT section, COALESCE(source_file_name, 'NULL') as source_file_name, COALESCE(CAST(file_modified_at AS CHAR), 'NULL') as file_modified_at FROM sync_metadata;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT section, COALESCE(source_file_name, 'NULL') as source_file_name, COALESCE(CAST(file_modified_at AS CHAR), 'NULL') as file_modified_at FROM sync_metadata;",
+  "rows": [
+    {
+      "section": "software",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL"
+    },
+    {
+      "section": "devices",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL"
+    },
+    {
+      "section": "software",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL"
+    },
+    {
+      "section": "systems",
+      "source_file_name": "Wearables Systems Review-WK11-2026.docx",
+      "file_modified_at": "2026-03-12 07:35:43"
+    },
+    {
+      "section": "ai",
+      "source_file_name": "W11 AI Hotspots and Product Review.docx",
+      "file_modified_at": "2026-03-12 03:30:26"
+    },
+    {
+      "section": "hearing",
+      "source_file_name": "W10 Health Canonical Program Review.docx",
+      "file_modified_at": "2026-03-05 19:36:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "section\tsource_file_name\tfile_modified_at\nsoftware\tNULL\tNULL\ndevices\tNULL\tNULL\nsoftware\tNULL\tNULL\nsystems\tWearables Systems Review-WK11-2026.docx\t2026-03-12 07:35:43\nai\tW11 AI Hotspots and Product Review.docx\t2026-03-12 03:30:26\nhearing\tW10 Health Canonical Program Review.docx\t2026-03-05 19:36:00\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

@@ -1,0 +1,46 @@
+{
+  "query": "SELECT section, source_file_name, file_modified_at, last_synced_at FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SELECT section, source_file_name, file_modified_at, last_synced_at FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 20;",
+  "rows": [
+    {
+      "section": "systems",
+      "source_file_name": "Wearables Systems Review-WK11-2026.docx",
+      "file_modified_at": "2026-03-12 07:35:43",
+      "last_synced_at": "2026-03-12 16:49:31"
+    },
+    {
+      "section": "hearing",
+      "source_file_name": "W10 Health Canonical Program Review.docx",
+      "file_modified_at": "2026-03-05 19:36:00",
+      "last_synced_at": "2026-03-12 16:49:08"
+    },
+    {
+      "section": "ai",
+      "source_file_name": "W11 AI Hotspots and Product Review.docx",
+      "file_modified_at": "2026-03-12 03:30:26",
+      "last_synced_at": "2026-03-12 16:48:40"
+    },
+    {
+      "section": "devices",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL",
+      "last_synced_at": "2026-02-10 00:56:12"
+    },
+    {
+      "section": "software",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL",
+      "last_synced_at": "2026-02-10 00:56:12"
+    },
+    {
+      "section": "software",
+      "source_file_name": "NULL",
+      "file_modified_at": "NULL",
+      "last_synced_at": "2026-02-10 00:16:28"
+    }
+  ],
+  "messages": [],
+  "stdout": "section\tsource_file_name\tfile_modified_at\tlast_synced_at\nsystems\tWearables Systems Review-WK11-2026.docx\t2026-03-12 07:35:43\t2026-03-12 16:49:31\nhearing\tW10 Health Canonical Program Review.docx\t2026-03-05 19:36:00\t2026-03-12 16:49:08\nai\tW11 AI Hotspots and Product Review.docx\t2026-03-12 03:30:26\t2026-03-12 16:48:40\ndevices\tNULL\tNULL\t2026-02-10 00:56:12\nsoftware\tNULL\tNULL\t2026-02-10 00:56:12\nsoftware\tNULL\tNULL\t2026-02-10 00:16:28\n",
+  "stderr": "",
+  "execution_time_ms": 55
+}

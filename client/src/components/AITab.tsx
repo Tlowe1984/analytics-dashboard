@@ -29,6 +29,7 @@ export function AITab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: winsItems, isLoading: winsLoading } = trpc.ai.getBySection.useQuery({ sectionType: "wins" });
   const { data: execSummaryItems, isLoading: execLoading } = trpc.ai.getBySection.useQuery({ sectionType: "exec_summary" });
   const { data: decisionsItems, isLoading: decisionsLoading } = trpc.ai.getBySection.useQuery({ sectionType: "decisions" });
+  const { data: sourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'ai' });
   
   const isLoading = winsLoading || execLoading || decisionsLoading;
 
@@ -157,19 +158,24 @@ export function AITab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
 
   return (
     <div className="space-y-4">
-      {/* Source document link */}
-      {sourceDocumentUrl && (
-        <div className="flex justify-end">
-          <a
-            href={sourceDocumentUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
-          >
+      {/* Source file metadata + document link */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-xs text-muted-foreground">
+          {sourceMeta?.sourceFileName ? (
+            <span>
+              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+              {sourceMeta.fileModifiedAt && (
+                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+              )}
+            </span>
+          ) : null}
+        </div>
+        {sourceDocumentUrl && (
+          <a href={sourceDocumentUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">
             View Source Document →
           </a>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* All 3 tiles side by side */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

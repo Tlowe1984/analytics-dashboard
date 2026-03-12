@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `sync_metadata` ADD `source_file_name` varchar(500);\nALTER TABLE `sync_metadata` ADD `file_modified_at` timestamp;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute ALTER TABLE `sync_metadata` ADD `source_file_name` varchar(500);\nALTER TABLE `sync_metadata` ADD `file_modified_at` timestamp;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 445
+}

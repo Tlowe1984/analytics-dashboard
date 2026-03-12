@@ -53,6 +53,7 @@ const systemsSectionConfig = {
 export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
   const { data: allItems, isLoading } = trpc.systems.getAll.useQuery();
   const { data: lastUpdated } = trpc.dashboard.getSystemsLastUpdated.useQuery();
+  const { data: sourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'systems' });
 
   if (isLoading) {
     return (
@@ -118,23 +119,26 @@ export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <p className="text-xs text-muted-foreground">
-          Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
-            year: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit'
-          }) : 'Loading...'}
-        </p>
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-xs text-muted-foreground">
+          {sourceMeta?.sourceFileName ? (
+            <span>
+              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+              {sourceMeta.fileModifiedAt && (
+                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+              )}
+            </span>
+          ) : (
+            <span>Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Loading...'}</span>
+          )}
+        </div>
         <a
           href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw"}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-primary hover:underline flex items-center gap-1"
+          className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
         >
-          📄 View Source Document
+          View Source Document →
         </a>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

@@ -35,7 +35,7 @@ def find_latest_review_file():
         
         if result.returncode != 0:
             print(f"rclone error: {result.stderr}", file=sys.stderr)
-            return None
+            return None, None
         
         # Parse JSON and find WXX Experiences & Interfaces Review files
         files_data = json.loads(result.stdout)
@@ -70,20 +70,21 @@ def find_latest_review_file():
         
         if not review_files:
             print("No Software/I+E review files found in folder", file=sys.stderr)
-            return None
+            return None, None
         
         # Sort by modification time (most recent first)
         review_files.sort(key=lambda x: x['modified'], reverse=True)
         latest_file = review_files[0]['name']
+        latest_modified = review_files[0]['modified']
         
-        print(f"Found latest review file: {latest_file} (modified {review_files[0]['modified']})", file=sys.stderr)
-        return latest_file
+        print(f"Found latest review file: {latest_file} (modified {latest_modified})", file=sys.stderr)
+        return latest_file, latest_modified
     
     except Exception as e:
         print(f"Error finding latest review file: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc(file=sys.stderr)
-        return None
+        return None, None
 
 def download_review_file(filename):
     """Download the review file from Google Drive"""
@@ -108,7 +109,7 @@ def download_review_file(filename):
         
         if result.returncode != 0:
             print(f"rclone error: {result.stderr}", file=sys.stderr)
-            return None
+            return None, None
         
         # Validate file week (must be current or last week)
         # Get file modification time
@@ -281,11 +282,15 @@ def main():
     print("Finding latest I+E review file...", file=sys.stderr)
     
     # Find latest review file
-    latest_file = find_latest_review_file()
+    latest_file, latest_modified = find_latest_review_file()
     if not latest_file:
         print("Failed to find review file", file=sys.stderr)
         print("[]")
         return 1
+    
+    # Write source metadata for the sync script to pick up
+    with open('/tmp/software_source_meta.json', 'w') as _f:
+        json.dump({'filename': latest_file, 'modified': latest_modified or ''}, _f)
     
     # Download the file
     print(f"Downloading {latest_file}...", file=sys.stderr)
