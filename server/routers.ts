@@ -8,6 +8,7 @@ import { syncAll, syncExecutiveSummary, syncMilestones } from "./googleDriveSync
 import { syncAllBash } from "./syncAllBash";
 import { invalidateDashboardCache } from "./query-cache";
 import { syncMonitoringRouter } from "./sync-monitoring";
+import { syncMetadata } from "../drizzle/schema";
 
 export const appRouter = router({
   system: systemRouter,
@@ -148,8 +149,9 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const { invokeLLM } = await import("./_core/llm");
         
-        // Get ALL data from all sources
-        const [dashboardItems, softwareItems, systemsItems, decisions, upcomingReviews, milestones, hearingItems, aiItems] = await Promise.all([
+        // Get ALL data from all 8 sources + source file metadata
+        const database = await db.getDb();
+        const [dashboardItems, softwareItems, systemsItems, allDecisions, upcomingReviews, milestones, hearingItems, aiItems] = await Promise.all([
           db.getAllDashboardItems(),
           db.getAllSoftwareItems(),
           db.getAllSystemsItems(),
@@ -159,26 +161,50 @@ export const appRouter = router({
           db.getAllHearingItems(),
           db.getAllAiItems(),
         ]);
+
+        // Fetch source file metadata for all sections
+        let sourceMetaContext = '';
+        if (database) {
+          try {
+            const allMeta = await database.select().from(syncMetadata);
+            if (allMeta.length > 0) {
+              const metaLines = allMeta
+                .filter(m => m.sourceFileName)
+                .map(m => {
+                  const modified = m.fileModifiedAt ? new Date(m.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown';
+                  return `  - ${m.section}: "${m.sourceFileName}" (last modified: ${modified})`;
+                });
+              if (metaLines.length > 0) {
+                sourceMetaContext = `\n=== DATA SOURCE FILES ===\n${metaLines.join('\n')}\n`;
+              }
+            }
+          } catch (_) { /* ignore */ }
+        }
         
-        // Format Exec Summary data
+        // Format Exec Summary data (Devices - AI Glasses, Wrist, ARG/SSG highlights & risks)
         const execSummaryContext = dashboardItems.map(item => 
-          `[EXEC SUMMARY - ${item.productCategory.toUpperCase()}] ${item.sectionType}: ${item.content}`
+          `[DEVICES - ${item.productCategory.toUpperCase()}] ${item.sectionType}: ${item.content}`
         ).join("\n");
         
-        // Format Software Review data
-        const softwareContext = softwareItems.map(item => 
-          `[SOFTWARE REVIEW] ${item.sectionType}: ${item.content}`
-        ).join("\n");
+        // Format Software / E&I Review data (only [wearables-tag] items)
+        const softwareContext = softwareItems
+          .filter(item => item.isWearablesTag === 1)
+          .map(item => `[E&I / SOFTWARE REVIEW] ${item.sectionType}${item.forum ? ' | Forum: ' + item.forum : ''}: ${item.content.replace(/\[wearables-tag\]/gi, '').trim()}`)
+          .join("\n");
         
-        // Format Systems Review data
-        const systemsContext = systemsItems.map(item => 
-          `[SYSTEMS REVIEW] ${item.sectionType}: ${item.content}`
-        ).join("\n");
+        // Format Systems Review data (only [wearables-tag] items)
+        const systemsContext = systemsItems
+          .filter(item => item.isWearablesTag === 1)
+          .map(item => `[SYSTEMS REVIEW] ${item.sectionType}: ${item.content.replace(/\[wearables-tag\]/gi, '').trim()}`)
+          .join("\n");
         
-        // Format Decisions data
-        const decisionsContext = decisions.map(item => 
-          `[DECISION - Week ${item.week}] ${item.status} | DRI: ${item.dri} | Forum: ${item.forum} | ${item.decisionOutcome}`
-        ).join("\n");
+        // Format Decisions data (all 20 weeks of history for full context)
+        const decisionsContext = allDecisions
+          .filter(item => !(item.dri || '').toLowerCase().includes('timothy lowe'))
+          .filter(item => !(item.decisionOutcome || '').toLowerCase().includes('cannot be displayed'))
+          .map(item => 
+            `[DECISION - ${item.week}] Status: ${item.status || 'N/A'} | DRI: ${item.dri} | Forum: ${item.forum} | ${item.decisionOutcome}`
+          ).join("\n");
         
         // Format Upcoming Reviews data
         const reviewsContext = upcomingReviews.map(item => 
@@ -190,7 +216,7 @@ export const appRouter = router({
           `[MILESTONE - ${item.milestoneType}] ${item.milestoneDate} | Product: ${item.product} | ${item.milestoneName}`
         ).join("\n");
         
-        // Format Hearing (Health) Review data
+        // Format Hearing / Health Review data
         const hearingContext = hearingItems.map(item =>
           `[HEALTH REVIEW] ${item.sectionType}: ${item.content}`
         ).join("\n");
@@ -202,44 +228,48 @@ export const appRouter = router({
 
         // Combine all data
         const fullDataContext = [
-          "=== EXECUTIVE SUMMARY ===",
-          execSummaryContext,
+          sourceMetaContext,
+          "=== EXECUTIVE SUMMARY (DEVICES) ===",
+          execSummaryContext || "(no data)",
           "",
-          "=== SOFTWARE REVIEWS ===",
-          softwareContext,
+          "=== EXPERIENCES & INTERFACES / SOFTWARE REVIEW ===",
+          softwareContext || "(no data)",
           "",
-          "=== SYSTEMS REVIEWS ===",
-          systemsContext,
+          "=== SYSTEMS REVIEW ===",
+          systemsContext || "(no data)",
           "",
-          "=== HEALTH REVIEWS ===",
-          hearingContext,
+          "=== HEALTH / HEARING REVIEW ===",
+          hearingContext || "(no data)",
           "",
-          "=== AI REVIEWS ===",
-          aiContext,
+          "=== AI REVIEW ===",
+          aiContext || "(no data)",
           "",
-          "=== DECISIONS ===",
-          decisionsContext,
+          "=== DECISIONS (last 20 weeks) ===",
+          decisionsContext || "(no data)",
           "",
           "=== UPCOMING REVIEWS ===",
-          reviewsContext,
+          reviewsContext || "(no data)",
           "",
-          "=== MILESTONES ===",
-          milestonesContext,
+          "=== PDP MILESTONES ===",
+          milestonesContext || "(no data)",
         ].join("\n");
         
-        const systemPrompt = `You are an AI assistant helping analyze a comprehensive executive dashboard for a wearables program. The dashboard contains:
+        const systemPrompt = `You are an AI assistant helping analyze a comprehensive executive dashboard for a wearables product program. Today's date is ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.
 
-1. Executive Summary: Product highlights, risks, and upcoming items for AI Glasses, Wrist, and ARG/SSG
-2. Software Reviews: Software development updates and status
-3. Systems Reviews: Systems engineering updates and status
-4. Decisions: Recent program decisions with DRI (Directly Responsible Individual) and forum information
-5. Upcoming Reviews: Scheduled product, systems, and wearables reviews
-6. Milestones: Key dates for releases, launches, and program milestones
+The dashboard integrates data from 8 sources:
+1. Devices (Executive Summary): Highlights, risks, and upcoming items for AI Glasses, Wrist, and ARG/SSG products
+2. Experiences & Interfaces (E&I / Software Review): Software development updates, wins, and risks — filtered to [wearables-tag] items only
+3. Systems Review: Systems engineering updates — filtered to [wearables-tag] items only
+4. Health / Hearing Review: Health and hearing product review updates
+5. AI Review: AI features, hotspots, and product review updates
+6. Decisions: Program decisions with week, DRI (Directly Responsible Individual), forum, and outcome — last 20 weeks of history
+7. Upcoming Reviews: Scheduled product, systems, and wearables reviews with dates and owners
+8. PDP Milestones: Key dates for product development phases, releases, and launches
 
 Current dashboard data:
 ${fullDataContext}
 
-Answer the user's question based on this comprehensive data. Be specific, cite relevant information, and provide actionable insights. If the data contains hyperlinks in markdown format [text](url), you can reference them in your answer.`;
+Answer the user's question based on this comprehensive data. Be specific and cite relevant information. If data contains hyperlinks in markdown format [text](url), include them in your answer. If asked about data freshness or sources, refer to the DATA SOURCE FILES section.`;
         
         const response = await invokeLLM({
           messages: [
