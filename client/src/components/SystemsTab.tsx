@@ -119,27 +119,22 @@ export function SystemsTab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        <div className="text-xs text-muted-foreground">
-          {sourceMeta?.sourceFileName ? (
-            <span>
-              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
-              {sourceMeta.fileModifiedAt && (
-                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
-              )}
-            </span>
-          ) : (
-            <span>Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Loading...'}</span>
-          )}
-        </div>
-        <a
-          href={sourceDocumentUrl || "https://drive.google.com/drive/folders/1Qf4aS6k4QbCd_0DF2OCz7AMSUiKFvFWw"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
-        >
-          View Source Document →
-        </a>
+      <div className="text-xs text-muted-foreground">
+        {sourceMeta?.sourceFileName ? (
+          <span>
+            Source:{' '}
+            {sourceMeta.sourceFileUrl ? (
+              <a href={sourceMeta.sourceFileUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">{sourceMeta.sourceFileName}</a>
+            ) : (
+              <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+            )}
+            {sourceMeta.fileModifiedAt && (
+              <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+            )}
+          </span>
+        ) : (
+          <span>Last modified: {lastUpdated?.updatedAt ? new Date(lastUpdated.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Loading...'}</span>
+        )}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {renderTile("wins", winsItems)}

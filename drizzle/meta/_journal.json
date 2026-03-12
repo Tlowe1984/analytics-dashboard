@@ -239,6 +239,13 @@
       "when": 1773333419395,
       "tag": "0033_gigantic_blacklash",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "5",
+      "when": 1773334742101,
+      "tag": "0034_new_maggott",
+      "breakpoints": true
     }
   ]
 }

@@ -118,7 +118,14 @@ EOF
 
 # Upsert source file metadata into sync_metadata table
 echo "Saving source file metadata..."
-python3 -c "import json; json.dump({'filename': '$latest_file', 'modified': '$ai_file_modified'}, open('/tmp/ai_source_meta.json','w'))"
+# Get file ID from rclone lsjson to build Google Drive URL
+ai_file_id=$(rclone lsjson "manus_google_drive:$FOLDER_PATH/$latest_file" --config /home/ubuntu/.gdrive-rclone.ini 2>/dev/null | python3 -c "import json,sys; data=json.load(sys.stdin); print(data[0].get('ID',''))" 2>/dev/null || echo '')
+if [ -n "$ai_file_id" ]; then
+  ai_file_url="https://docs.google.com/document/d/${ai_file_id}/edit"
+else
+  ai_file_url=""
+fi
+python3 -c "import json; json.dump({'filename': '$latest_file', 'modified': '$ai_file_modified', 'file_url': '$ai_file_url'}, open('/tmp/ai_source_meta.json','w'))"
 cat > /home/ubuntu/analytics-dashboard/upsert_ai_meta.mjs << 'METAEOF'
 import { readFileSync } from 'fs';
 import { getDb } from './server/db.js';
@@ -129,12 +136,14 @@ const db = await getDb();
 if (db) {
   const filename = meta.filename || '';
   const fileModifiedAt = meta.modified ? new Date(meta.modified) : null;
+  const sourceFileUrl = meta.file_url || null;
   console.log(`📄 Source: ${filename} (modified: ${meta.modified})`);
+  if (sourceFileUrl) console.log(`🔗 URL: ${sourceFileUrl}`);
   const existing = await db.select().from(syncMetadata).where(eq(syncMetadata.section, 'ai')).limit(1);
   if (existing.length > 0) {
-    await db.update(syncMetadata).set({ sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'ai'));
+    await db.update(syncMetadata).set({ sourceFileName: filename, sourceFileUrl, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'ai'));
   } else {
-    await db.insert(syncMetadata).values({ section: 'ai', documentId: 'ai_review', sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
+    await db.insert(syncMetadata).values({ section: 'ai', documentId: 'ai_review', sourceFileName: filename, sourceFileUrl, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
   }
   console.log('✅ Metadata saved for ai');
 }

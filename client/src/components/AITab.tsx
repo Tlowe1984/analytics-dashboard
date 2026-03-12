@@ -158,23 +158,21 @@ export function AITab({ sourceDocumentUrl }: { sourceDocumentUrl?: string }) {
 
   return (
     <div className="space-y-4">
-      {/* Source file metadata + document link */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="text-xs text-muted-foreground">
-          {sourceMeta?.sourceFileName ? (
-            <span>
-              Source: <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
-              {sourceMeta.fileModifiedAt && (
-                <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
-              )}
-            </span>
-          ) : null}
-        </div>
-        {sourceDocumentUrl && (
-          <a href={sourceDocumentUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">
-            View Source Document →
-          </a>
-        )}
+      {/* Source file metadata - filename is clickable link */}
+      <div className="text-xs text-muted-foreground">
+        {sourceMeta?.sourceFileName ? (
+          <span>
+            Source:{' '}
+            {sourceMeta.sourceFileUrl ? (
+              <a href={sourceMeta.sourceFileUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-blue-600 dark:text-blue-400 hover:underline">{sourceMeta.sourceFileName}</a>
+            ) : (
+              <span className="font-medium text-foreground">{sourceMeta.sourceFileName}</span>
+            )}
+            {sourceMeta.fileModifiedAt && (
+              <span className="ml-2">· Modified: {new Date(sourceMeta.fileModifiedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+            )}
+          </span>
+        ) : null}
       </div>
 
       {/* All 3 tiles side by side */}

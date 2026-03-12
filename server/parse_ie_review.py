@@ -56,7 +56,8 @@ def find_latest_review_file():
                 mod_time = item.get('ModTime', '')
                 review_files.append({
                     'name': name,
-                    'modified': mod_time
+                    'modified': mod_time,
+                    'id': item.get('ID', '')
                 })
         
         if not review_files:
@@ -66,25 +67,26 @@ def find_latest_review_file():
                 name = item.get('Name', '')
                 if re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
                     mod_time = item.get('ModTime', '')
-                    review_files.append({'name': name, 'modified': mod_time})
+                    review_files.append({'name': name, 'modified': mod_time, 'id': item.get('ID', '')})
         
         if not review_files:
             print("No Software/I+E review files found in folder", file=sys.stderr)
-            return None, None
+            return None, None, None
         
         # Sort by modification time (most recent first)
         review_files.sort(key=lambda x: x['modified'], reverse=True)
         latest_file = review_files[0]['name']
         latest_modified = review_files[0]['modified']
+        latest_id = review_files[0].get('id', '')
         
         print(f"Found latest review file: {latest_file} (modified {latest_modified})", file=sys.stderr)
-        return latest_file, latest_modified
+        return latest_file, latest_modified, latest_id
     
     except Exception as e:
         print(f"Error finding latest review file: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc(file=sys.stderr)
-        return None, None
+        return None, None, None
 
 def download_review_file(filename):
     """Download the review file from Google Drive"""
@@ -282,15 +284,16 @@ def main():
     print("Finding latest I+E review file...", file=sys.stderr)
     
     # Find latest review file
-    latest_file, latest_modified = find_latest_review_file()
+    latest_file, latest_modified, latest_file_id = find_latest_review_file()
     if not latest_file:
         print("Failed to find review file", file=sys.stderr)
         print("[]")
         return 1
     
     # Write source metadata for the sync script to pick up
+    file_url = f"https://docs.google.com/document/d/{latest_file_id}/edit" if latest_file_id else ''
     with open('/tmp/software_source_meta.json', 'w') as _f:
-        json.dump({'filename': latest_file, 'modified': latest_modified or ''}, _f)
+        json.dump({'filename': latest_file, 'modified': latest_modified or '', 'file_url': file_url}, _f)
     
     # Download the file
     print(f"Downloading {latest_file}...", file=sys.stderr)

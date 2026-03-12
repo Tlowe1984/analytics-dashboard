@@ -84,11 +84,12 @@ export const appRouter = router({
           if (!database) return null;
           const result = await (database.query as any).syncMetadata.findFirst({
             where: (sm: any, { eq }: any) => eq(sm.section, input.section),
-            columns: { sourceFileName: true, fileModifiedAt: true },
+            columns: { sourceFileName: true, fileModifiedAt: true, sourceFileUrl: true },
           });
           return result ? {
             sourceFileName: result.sourceFileName || null,
             fileModifiedAt: result.fileModifiedAt || null,
+            sourceFileUrl: result.sourceFileUrl || null,
           } : null;
         } catch (error) {
           console.error('Error fetching source file meta:', error);

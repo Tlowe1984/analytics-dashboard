@@ -68,12 +68,14 @@ const db = await getDb();
 if (db) {
   const filename = meta.filename || '';
   const fileModifiedAt = meta.modified ? new Date(meta.modified) : null;
+  const sourceFileUrl = meta.file_url || null;
   console.log(`📄 Source: ${filename} (modified: ${meta.modified})`);
+  if (sourceFileUrl) console.log(`🔗 URL: ${sourceFileUrl}`);
   const existing = await db.select().from(syncMetadata).where(eq(syncMetadata.section, 'systems')).limit(1);
   if (existing.length > 0) {
-    await db.update(syncMetadata).set({ sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'systems'));
+    await db.update(syncMetadata).set({ sourceFileName: filename, sourceFileUrl, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' }).where(eq(syncMetadata.section, 'systems'));
   } else {
-    await db.insert(syncMetadata).values({ section: 'systems', documentId: 'systems_review', sourceFileName: filename, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
+    await db.insert(syncMetadata).values({ section: 'systems', documentId: 'systems_review', sourceFileName: filename, sourceFileUrl, fileModifiedAt, lastSyncedAt: new Date(), syncStatus: 'success' });
   }
   console.log('✅ Metadata saved for systems');
 }
