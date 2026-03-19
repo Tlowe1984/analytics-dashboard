@@ -533,18 +533,35 @@ export async function insertDecision(decision: InsertDecision): Promise<void> {
 
 // ===== Systems Items =====
 
+/** Deduplicate systems items by sectionType + plain-text content, keeping the first occurrence (lowest order).
+ * Strips markdown bold markers (**) and normalizes whitespace so formatting variants of the
+ * same bullet (e.g. "**Arch: **text" vs "**Arch:** text") are treated as identical.
+ */
+function dedupeSystemsItems(items: SystemsItem[]): SystemsItem[] {
+  const seen = new Set<string>();
+  const toPlain = (s: string) => s.replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
+  return items.filter(item => {
+    const key = `${item.sectionType}::${toPlain(item.content)}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export async function getAllSystemsItems(): Promise<SystemsItem[]> {
   return cachedQuery('systems:all', async () => {
     const db = await getDb();
     if (!db) return [];
-    return db.select().from(systemsItems).orderBy(asc(systemsItems.order));
+    const rows = await db.select().from(systemsItems).orderBy(asc(systemsItems.order));
+    return dedupeSystemsItems(rows);
   });
 }
 
 export async function getSystemsItemsBySection(sectionType: "wins" | "exec_summary" | "help_needed"): Promise<SystemsItem[]> {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(systemsItems).where(eq(systemsItems.sectionType, sectionType)).orderBy(asc(systemsItems.order));
+  const rows = await db.select().from(systemsItems).where(eq(systemsItems.sectionType, sectionType)).orderBy(asc(systemsItems.order));
+  return dedupeSystemsItems(rows);
 }
 
 
