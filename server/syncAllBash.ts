@@ -86,8 +86,8 @@ export async function syncAllBash(): Promise<{
           throw error;
         }
         if (isTokenError && attempt < maxRetries) {
-          const backoffMs = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
-          console.warn(`⚠️ ${name} sync failed with token error (attempt ${attempt}/${maxRetries}), retrying in ${backoffMs}ms...`);
+          const backoffMs = attempt * 30000; // 30s, 60s — long enough for GDrive token to auto-refresh
+          console.warn(`⚠️ ${name} sync failed with token error (attempt ${attempt}/${maxRetries}), retrying in ${backoffMs / 1000}s...`);
           await new Promise(resolve => setTimeout(resolve, backoffMs));
           continue;
         }
