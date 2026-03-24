@@ -8,16 +8,22 @@ export default function SoftwareWearablesSection() {
   const { data: wearablesItems, isLoading } = trpc.software.getWearablesTagged.useQuery();
   const { data: softwareSourceMeta } = trpc.dashboard.getSourceFileMeta.useQuery({ section: 'software_ie' });
 
+  // Only show Software, AI, and Hearing wearables-tagged items here.
+  // Systems items have their own dedicated section in the top panel and must NOT appear here.
+  const softwareOnlyItems = wearablesItems?.filter(item =>
+    item.source === 'Software' || item.source === 'AI' || item.source === 'Hearing'
+  ) || [];
+
   // Route items to the correct tab based on their source heading title:
   // "Wins" / "Launches" → Highlights
   // "Exec Summary" / "Executive Summary" → Executive Summary
   // "Risks/Opens" / "Help Needed" / "Hotspots" (exec_summary from hotspot table) → Risks/Opens
-  const highlights = wearablesItems?.filter(item => {
+  const highlights = softwareOnlyItems.filter(item => {
     const s = item.sectionType as string;
     return s === 'wins';
-  }) || [];
+  });
 
-  const execSummary = wearablesItems?.filter(item => {
+  const execSummary = softwareOnlyItems.filter(item => {
     const s = item.sectionType as string;
     // exec_summary from text bullets (not hotspots) → Executive Summary
     // Hotspots are stored as exec_summary but come from source "Software" with hotspot content
@@ -26,9 +32,9 @@ export default function SoftwareWearablesSection() {
     // Hotspot items have the pattern "**Title** - Description" — route those to Risks/Opens
     const isHotspot = /^\*\*[^*]+\*\* - .+/.test(item.content);
     return !isHotspot;
-  }) || [];
+  });
 
-  const risks = wearablesItems?.filter(item => {
+  const risks = softwareOnlyItems.filter(item => {
     const s = item.sectionType as string;
     if (s === 'help_needed' || s === 'risks') return true;
     // Hotspot items (exec_summary with bold-title-dash format) → Risks/Opens
@@ -37,7 +43,7 @@ export default function SoftwareWearablesSection() {
       return isHotspot;
     }
     return false;
-  }) || [];
+  });
 
   // Helper function to format bullet content (remove [Wearables-tag] tag)
   const formatBulletContent = (content: string) => {

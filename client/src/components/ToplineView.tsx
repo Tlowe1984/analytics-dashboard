@@ -273,20 +273,25 @@ function SoftwareTab({ category, sourceDocumentUrl }: { category: "software_ie" 
   const isLoading = winsLoading || execLoading || decisionsLoading || (category === "software_ie" && wearablesLoading);
   
   // Combine software_ie items with wearables-tagged items for software_ie category
+  // Only include Software, AI, and Hearing sources — NOT Systems (Systems has its own tab)
   // Use index-based keys to avoid duplicate IDs when merging from multiple sources
+  const softwareOnlyWearables = wearablesItems
+    ? wearablesItems.filter((item: any) => item.source === 'Software' || item.source === 'AI' || item.source === 'Hearing')
+    : [];
+
   const combinedWinsItems = category === "software_ie" && wearablesItems 
     ? [...(winsItems || []).map((item, i) => ({ ...item, _key: `ie-wins-${i}` })), 
-       ...wearablesItems.filter((item: any) => item.sectionType === "wins").map((item: any, i: number) => ({ ...item, _key: `w-wins-${i}` }))]
+       ...softwareOnlyWearables.filter((item: any) => item.sectionType === "wins").map((item: any, i: number) => ({ ...item, _key: `w-wins-${i}` }))]
     : (winsItems || []).map((item, i) => ({ ...item, _key: `wins-${i}` }));
   
   const combinedExecSummaryItems = category === "software_ie" && wearablesItems
     ? [...(execSummaryItems || []).map((item, i) => ({ ...item, _key: `ie-exec-${i}` })),
-       ...wearablesItems.filter((item: any) => item.sectionType === "exec_summary").map((item: any, i: number) => ({ ...item, _key: `w-exec-${i}` }))]
+       ...softwareOnlyWearables.filter((item: any) => item.sectionType === "exec_summary").map((item: any, i: number) => ({ ...item, _key: `w-exec-${i}` }))]
     : (execSummaryItems || []).map((item, i) => ({ ...item, _key: `exec-${i}` }));
   
   const combinedDecisionsItems = category === "software_ie" && wearablesItems
     ? [...(decisionsItems || []).map((item, i) => ({ ...item, _key: `ie-dec-${i}` })),
-       ...wearablesItems.filter((item: any) => item.sectionType === "decisions").map((item: any, i: number) => ({ ...item, _key: `w-dec-${i}` }))]
+       ...softwareOnlyWearables.filter((item: any) => item.sectionType === "decisions").map((item: any, i: number) => ({ ...item, _key: `w-dec-${i}` }))]
     : (decisionsItems || []).map((item, i) => ({ ...item, _key: `dec-${i}` }));
 
   if (isLoading) {
