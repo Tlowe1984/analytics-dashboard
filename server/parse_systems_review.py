@@ -65,13 +65,26 @@ def find_latest_systems_review_file():
             print("No Systems review files found in archive folder", file=sys.stderr)
             return None, None, None
         
-        # Sort by modification time (most recent first)
-        review_files.sort(key=lambda x: x['modified'], reverse=True)
+        def week_sort_key(f):
+            """Sort by (year, week_number) extracted from filename — NOT by modification time.
+            This prevents an older week's file from being picked just because it was edited recently.
+            e.g. WK12-2026 > WK11-2026 regardless of which file was touched last."""
+            name = f['name']
+            # Extract year (default 2026 if not present)
+            year_match = re.search(r'(\d{4})', name)
+            year = int(year_match.group(1)) if year_match else 2026
+            # Extract week number — handles WK09, WK9, W09, W9
+            wk_match = re.search(r'WK?(\d+)', name, re.IGNORECASE)
+            week = int(wk_match.group(1)) if wk_match else 0
+            return (year, week)
+
+        # Sort by (year, week number) descending — highest week wins
+        review_files.sort(key=week_sort_key, reverse=True)
         latest_file = review_files[0]['name']
         latest_modified = review_files[0]['modified']
         latest_id = review_files[0].get('id', '')
         
-        print(f"Found latest Systems review file: {latest_file} (modified {latest_modified})", file=sys.stderr)
+        print(f"Found latest Systems review file: {latest_file} (week sort key: {week_sort_key(review_files[0])}, modified {latest_modified})", file=sys.stderr)
         return latest_file, latest_modified, latest_id
     
     except Exception as e:
