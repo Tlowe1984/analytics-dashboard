@@ -1,0 +1,124 @@
+{
+  "query": "SHOW COLUMNS FROM sync_metadata; SELECT section, last_synced_at, source_file_name FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute SHOW COLUMNS FROM sync_metadata; SELECT section, last_synced_at, source_file_name FROM sync_metadata ORDER BY last_synced_at DESC LIMIT 15;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "document_id",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "last_synced_at",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "sync_status",
+      "Type": "enum('success','failed','pending')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "pending",
+      "Extra": ""
+    },
+    {
+      "Field": "error_message",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "source_url",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "section",
+      "Type": "varchar(50)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "software",
+      "Extra": ""
+    },
+    {
+      "Field": "source_file_path",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "source_file_name",
+      "Type": "varchar(500)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "file_modified_at",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "source_file_url",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    }
+  ],
+  "messages": [
+    "section\tlast_synced_at\tsource_file_name",
+    "decisions\t2026-03-25 17:24:53\tWearable Decisions Canonical .docx",
+    "hearing\t2026-03-25 04:41:49\tW12 Health Canonical Program Review.docx",
+    "systems\t2026-03-25 04:41:23\tWearables Systems Review-WK13-2026.docx",
+    "software_ie\t2026-03-25 04:41:00\tW12 Experiences & Interfaces Review.docx",
+    "ai\t2026-03-24 15:46:10\tW12 AI Hotspots and Product Review.docx",
+    "devices\t2026-03-24 15:44:13\tDevice & Growth Canonical Program Review.docx",
+    "software\t2026-02-10 00:56:12\tNULL",
+    "software\t2026-02-10 00:16:28\tNULL"
+  ],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint\tNO\tPRI\tNULL\tauto_increment\ndocument_id\tvarchar(255)\tNO\t\tNULL\t\nlast_synced_at\ttimestamp\tNO\t\tNULL\t\nsync_status\tenum('success','failed','pending')\tNO\t\tpending\t\nerror_message\ttext\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\nsource_url\ttext\tYES\t\tNULL\t\nsection\tvarchar(50)\tNO\t\tsoftware\t\nsource_file_path\ttext\tYES\t\tNULL\t\nsource_file_name\tvarchar(500)\tYES\t\tNULL\t\nfile_modified_at\ttimestamp\tYES\t\tNULL\t\nsource_file_url\ttext\tYES\t\tNULL\t\nsection\tlast_synced_at\tsource_file_name\ndecisions\t2026-03-25 17:24:53\tWearable Decisions Canonical .docx\nhearing\t2026-03-25 04:41:49\tW12 Health Canonical Program Review.docx\nsystems\t2026-03-25 04:41:23\tWearables Systems Review-WK13-2026.docx\nsoftware_ie\t2026-03-25 04:41:00\tW12 Experiences & Interfaces Review.docx\nai\t2026-03-24 15:46:10\tW12 AI Hotspots and Product Review.docx\ndevices\t2026-03-24 15:44:13\tDevice & Growth Canonical Program Review.docx\nsoftware\t2026-02-10 00:56:12\tNULL\nsoftware\t2026-02-10 00:16:28\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 63
+}
