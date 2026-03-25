@@ -1,0 +1,82 @@
+{
+  "query": "\n-- Verify Paloma2 (w/ Display) is gone\nSELECT COUNT(*) as paloma2_display_count FROM milestones WHERE product = 'Paloma2 (w/ Display)';\n\n-- Verify RBM2 Refresh Product Commit is gone\nSELECT COUNT(*) as rbm2_product_commit_count FROM milestones \nWHERE product LIKE '%RBM2 Refresh%' AND milestone_name LIKE '%Product Commit%' AND milestone_type = 'pdp_gates';\n\n-- Show remaining PDP gates to confirm the list looks right\nSELECT product, milestone_name, DATE(milestone_date) as date\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nORDER BY milestone_date ASC\nLIMIT 20;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute \n-- Verify Paloma2 (w/ Display) is gone\nSELECT COUNT(*) as paloma2_display_count FROM milestones WHERE product = 'Paloma2 (w/ Display)';\n\n-- Verify RBM2 Refresh Product Commit is gone\nSELECT COUNT(*) as rbm2_product_commit_count FROM milestones \nWHERE product LIKE '%RBM2 Refresh%' AND milestone_name LIKE '%Product Commit%' AND milestone_type = 'pdp_gates';\n\n-- Show remaining PDP gates to confirm the list looks right\nSELECT product, milestone_name, DATE(milestone_date) as date\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nORDER BY milestone_date ASC\nLIMIT 20;\n",
+  "rows": [
+    {
+      "paloma2_display_count": "0"
+    },
+    {
+      "paloma2_display_count": "rbm2_product_commit_count"
+    },
+    {
+      "paloma2_display_count": "0"
+    },
+    {
+      "paloma2_display_count": "product\tmilestone_name\tdate"
+    },
+    {
+      "paloma2_display_count": "Paloma\tEVT Exit\t2025-06-25"
+    },
+    {
+      "paloma2_display_count": "Hypernova Case\tOK2Ramp\t2025-07-01"
+    },
+    {
+      "paloma2_display_count": "Ceres\tOK2Ship\t2025-07-07"
+    },
+    {
+      "paloma2_display_count": "Paloma Lifestyle\tOK2Ramp\t2025-07-07"
+    },
+    {
+      "paloma2_display_count": "Modelo\tConcept Commit\t2025-07-08"
+    },
+    {
+      "paloma2_display_count": "Paloma Lifestyle\tOK2Ship (LE)\t2025-07-09"
+    },
+    {
+      "paloma2_display_count": "Artemis\tConcept Commit\t2025-07-15"
+    },
+    {
+      "paloma2_display_count": "Luna\tDiscover Exit\t2025-07-17"
+    },
+    {
+      "paloma2_display_count": "Ceres2\tConcept Proposal\t2025-07-22"
+    },
+    {
+      "paloma2_display_count": "Paloma Lifestyle\tLaunch Date (LE)\t2025-07-22"
+    },
+    {
+      "paloma2_display_count": "Hypernova\tOK2Ramp\t2025-07-30"
+    },
+    {
+      "paloma2_display_count": "RBM2 Optics\tProduct Commit RBM2 Optics\t2025-07-30"
+    },
+    {
+      "paloma2_display_count": "Paloma Lifestyle\tOK2Ship (Core SKUs)\t2025-08-05"
+    },
+    {
+      "paloma2_display_count": "Hypernova Case\tOK2Ship\t2025-08-12"
+    },
+    {
+      "paloma2_display_count": "RBM2\tOK2Ship\t2025-08-14"
+    },
+    {
+      "paloma2_display_count": "Hypernova\tOK2Ship\t2025-08-19"
+    },
+    {
+      "paloma2_display_count": "Paloma Lifestyle\tLaunch Date (Core SKUs)\t2025-08-26"
+    },
+    {
+      "paloma2_display_count": "Paloma\tDVT Exit\t2025-08-27"
+    },
+    {
+      "paloma2_display_count": "Paloma\tOK2Ramp\t2025-09-01"
+    },
+    {
+      "paloma2_display_count": "RBM2\tLaunch Date\t2025-09-17"
+    }
+  ],
+  "messages": [],
+  "stdout": "paloma2_display_count\n0\nrbm2_product_commit_count\n0\nproduct\tmilestone_name\tdate\nPaloma\tEVT Exit\t2025-06-25\nHypernova Case\tOK2Ramp\t2025-07-01\nCeres\tOK2Ship\t2025-07-07\nPaloma Lifestyle\tOK2Ramp\t2025-07-07\nModelo\tConcept Commit\t2025-07-08\nPaloma Lifestyle\tOK2Ship (LE)\t2025-07-09\nArtemis\tConcept Commit\t2025-07-15\nLuna\tDiscover Exit\t2025-07-17\nCeres2\tConcept Proposal\t2025-07-22\nPaloma Lifestyle\tLaunch Date (LE)\t2025-07-22\nHypernova\tOK2Ramp\t2025-07-30\nRBM2 Optics\tProduct Commit RBM2 Optics\t2025-07-30\nPaloma Lifestyle\tOK2Ship (Core SKUs)\t2025-08-05\nHypernova Case\tOK2Ship\t2025-08-12\nRBM2\tOK2Ship\t2025-08-14\nHypernova\tOK2Ship\t2025-08-19\nPaloma Lifestyle\tLaunch Date (Core SKUs)\t2025-08-26\nPaloma\tDVT Exit\t2025-08-27\nPaloma\tOK2Ramp\t2025-09-01\nRBM2\tLaunch Date\t2025-09-17\n",
+  "stderr": "",
+  "execution_time_ms": 84
+}

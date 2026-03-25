@@ -1,0 +1,213 @@
+{
+  "query": "\nSELECT id, product, milestone_name, milestone_type, milestone_date\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nAND (\n  product LIKE '%Paloma2%'\n  OR (product LIKE '%RBM2%Refresh%' AND milestone_name LIKE '%Product Commit%')\n  OR (product LIKE '%RBM2 Refresh%')\n);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute \nSELECT id, product, milestone_name, milestone_type, milestone_date\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nAND (\n  product LIKE '%Paloma2%'\n  OR (product LIKE '%RBM2%Refresh%' AND milestone_name LIKE '%Product Commit%')\n  OR (product LIKE '%RBM2 Refresh%')\n);\n",
+  "rows": [
+    {
+      "id": "1140898",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Discover Kick-off",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2025-10-21 00:00:00"
+    },
+    {
+      "id": "1140899",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Discover Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-03-27 00:00:00"
+    },
+    {
+      "id": "1140900",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Concept Proposal",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-05-25 00:00:00"
+    },
+    {
+      "id": "1140903",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Concept Commit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-08-31 00:00:00"
+    },
+    {
+      "id": "1140907",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Product Commit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-11-09 00:00:00"
+    },
+    {
+      "id": "1140919",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "EVT Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-05-31 00:00:00"
+    },
+    {
+      "id": "1140926",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "DVT Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-08-27 00:00:00"
+    },
+    {
+      "id": "1140928",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "OK2Ramp",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-09-01 00:00:00"
+    },
+    {
+      "id": "1140930",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "OK2Ship",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-09-19 00:00:00"
+    },
+    {
+      "id": "1140931",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "Launch Date",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-10-20 00:00:00"
+    },
+    {
+      "id": "1140932",
+      "product": "Paloma2 (No Display)",
+      "milestone_name": "End of Life (EOL)",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2030-10-20 00:00:00"
+    },
+    {
+      "id": "1140933",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Discover Kick-off",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2025-10-21 00:00:00"
+    },
+    {
+      "id": "1140934",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Discover Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-03-06 00:00:00"
+    },
+    {
+      "id": "1140935",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Concept Proposal",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-05-18 00:00:00"
+    },
+    {
+      "id": "1140938",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Concept Commit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-12-14 00:00:00"
+    },
+    {
+      "id": "1140939",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Product Commit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-03-22 00:00:00"
+    },
+    {
+      "id": "1140946",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "EVT Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2027-11-29 00:00:00"
+    },
+    {
+      "id": "1140952",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "DVT Exit",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2028-02-07 00:00:00"
+    },
+    {
+      "id": "1140957",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "OK2Ramp",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2028-03-13 00:00:00"
+    },
+    {
+      "id": "1140959",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "OK2Ship",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2028-03-27 00:00:00"
+    },
+    {
+      "id": "1140960",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "Launch Date",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2028-04-24 00:00:00"
+    },
+    {
+      "id": "1140961",
+      "product": "Paloma2 (w/ Display)",
+      "milestone_name": "End of Life (EOL)",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2031-04-24 00:00:00"
+    },
+    {
+      "id": "1141070",
+      "product": "RBM2 Refresh",
+      "milestone_name": "Product Commit RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-03-11 00:00:00"
+    },
+    {
+      "id": "1141073",
+      "product": "RBM2 Refresh",
+      "milestone_name": "EVT Exit RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-04-30 00:00:00"
+    },
+    {
+      "id": "1141082",
+      "product": "RBM2 Refresh",
+      "milestone_name": "DVT Exit RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-06-24 00:00:00"
+    },
+    {
+      "id": "1141084",
+      "product": "RBM2 Refresh",
+      "milestone_name": "OK2Ramp RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-06-29 00:00:00"
+    },
+    {
+      "id": "1141089",
+      "product": "RBM2 Refresh",
+      "milestone_name": "OK2Ship RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-08-11 00:00:00"
+    },
+    {
+      "id": "1141093",
+      "product": "RBM2 Refresh",
+      "milestone_name": "Launch Date RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2026-09-15 00:00:00"
+    },
+    {
+      "id": "1141094",
+      "product": "RBM2 Refresh",
+      "milestone_name": "End of Life (EOL) RBM2 Refresh",
+      "milestone_type": "pdp_gates",
+      "milestone_date": "2028-09-02 00:00:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tproduct\tmilestone_name\tmilestone_type\tmilestone_date\n1140898\tPaloma2 (No Display)\tDiscover Kick-off\tpdp_gates\t2025-10-21 00:00:00\n1140899\tPaloma2 (No Display)\tDiscover Exit\tpdp_gates\t2026-03-27 00:00:00\n1140900\tPaloma2 (No Display)\tConcept Proposal\tpdp_gates\t2026-05-25 00:00:00\n1140903\tPaloma2 (No Display)\tConcept Commit\tpdp_gates\t2026-08-31 00:00:00\n1140907\tPaloma2 (No Display)\tProduct Commit\tpdp_gates\t2026-11-09 00:00:00\n1140919\tPaloma2 (No Display)\tEVT Exit\tpdp_gates\t2027-05-31 00:00:00\n1140926\tPaloma2 (No Display)\tDVT Exit\tpdp_gates\t2027-08-27 00:00:00\n1140928\tPaloma2 (No Display)\tOK2Ramp\tpdp_gates\t2027-09-01 00:00:00\n1140930\tPaloma2 (No Display)\tOK2Ship\tpdp_gates\t2027-09-19 00:00:00\n1140931\tPaloma2 (No Display)\tLaunch Date\tpdp_gates\t2027-10-20 00:00:00\n1140932\tPaloma2 (No Display)\tEnd of Life (EOL)\tpdp_gates\t2030-10-20 00:00:00\n1140933\tPaloma2 (w/ Display)\tDiscover Kick-off\tpdp_gates\t2025-10-21 00:00:00\n1140934\tPaloma2 (w/ Display)\tDiscover Exit\tpdp_gates\t2026-03-06 00:00:00\n1140935\tPaloma2 (w/ Display)\tConcept Proposal\tpdp_gates\t2026-05-18 00:00:00\n1140938\tPaloma2 (w/ Display)\tConcept Commit\tpdp_gates\t2026-12-14 00:00:00\n1140939\tPaloma2 (w/ Display)\tProduct Commit\tpdp_gates\t2027-03-22 00:00:00\n1140946\tPaloma2 (w/ Display)\tEVT Exit\tpdp_gates\t2027-11-29 00:00:00\n1140952\tPaloma2 (w/ Display)\tDVT Exit\tpdp_gates\t2028-02-07 00:00:00\n1140957\tPaloma2 (w/ Display)\tOK2Ramp\tpdp_gates\t2028-03-13 00:00:00\n1140959\tPaloma2 (w/ Display)\tOK2Ship\tpdp_gates\t2028-03-27 00:00:00\n1140960\tPaloma2 (w/ Display)\tLaunch Date\tpdp_gates\t2028-04-24 00:00:00\n1140961\tPaloma2 (w/ Display)\tEnd of Life (EOL)\tpdp_gates\t2031-04-24 00:00:00\n1141070\tRBM2 Refresh\tProduct Commit RBM2 Refresh\tpdp_gates\t2026-03-11 00:00:00\n1141073\tRBM2 Refresh\tEVT Exit RBM2 Refresh\tpdp_gates\t2026-04-30 00:00:00\n1141082\tRBM2 Refresh\tDVT Exit RBM2 Refresh\tpdp_gates\t2026-06-24 00:00:00\n1141084\tRBM2 Refresh\tOK2Ramp RBM2 Refresh\tpdp_gates\t2026-06-29 00:00:00\n1141089\tRBM2 Refresh\tOK2Ship RBM2 Refresh\tpdp_gates\t2026-08-11 00:00:00\n1141093\tRBM2 Refresh\tLaunch Date RBM2 Refresh\tpdp_gates\t2026-09-15 00:00:00\n1141094\tRBM2 Refresh\tEnd of Life (EOL) RBM2 Refresh\tpdp_gates\t2028-09-02 00:00:00\n",
+  "stderr": "",
+  "execution_time_ms": 66
+}

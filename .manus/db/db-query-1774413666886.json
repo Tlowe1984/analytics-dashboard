@@ -1,0 +1,9 @@
+{
+  "query": "\n-- Delete all Paloma2 (w/ Display) milestones across all types\nDELETE FROM milestones\nWHERE product = 'Paloma2 (w/ Display)';\n\n-- Delete RBM2 Refresh Product Commit specifically\nDELETE FROM milestones\nWHERE product LIKE '%RBM2 Refresh%'\nAND milestone_name LIKE '%Product Commit%'\nAND milestone_type = 'pdp_gates';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute \n-- Delete all Paloma2 (w/ Display) milestones across all types\nDELETE FROM milestones\nWHERE product = 'Paloma2 (w/ Display)';\n\n-- Delete RBM2 Refresh Product Commit specifically\nDELETE FROM milestones\nWHERE product LIKE '%RBM2 Refresh%'\nAND milestone_name LIKE '%Product Commit%'\nAND milestone_type = 'pdp_gates';\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 79
+}

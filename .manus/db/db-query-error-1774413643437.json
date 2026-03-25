@@ -1,0 +1,8 @@
+{
+  "query": "\n-- First find the exact rows\nSELECT id, product_name, milestone_name, milestone_type, week_label\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nAND (\n  product_name LIKE '%Paloma2%Display%'\n  OR product_name LIKE '%Paloma2%display%'\n  OR (product_name LIKE '%RBM2 Refresh%' AND milestone_name LIKE '%Product Commit%')\n);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4VdZvHu9exyekxY.d3f098d6b9d7 --database QbeJQJr6TFHAmyLvJbRtnK --execute \n-- First find the exact rows\nSELECT id, product_name, milestone_name, milestone_type, week_label\nFROM milestones\nWHERE milestone_type = 'pdp_gates'\nAND (\n  product_name LIKE '%Paloma2%Display%'\n  OR product_name LIKE '%Paloma2%display%'\n  OR (product_name LIKE '%RBM2 Refresh%' AND milestone_name LIKE '%Product Commit%')\n);\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 3: Unknown column 'product_name' in 'where clause'"
+  ]
+}
