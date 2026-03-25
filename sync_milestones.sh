@@ -38,7 +38,8 @@ import mysql from 'mysql2/promise';
 import { milestones } from './drizzle/schema.js';
 import fs from 'fs';
 
-const connection = await mysql.createConnection(process.env.DATABASE_URL);
+const dbUrl = (process.env.DATABASE_URL || '').replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+const connection = await mysql.createConnection({ uri: dbUrl, ssl: { rejectUnauthorized: true } });
 const db = drizzle(connection);
 
 // Read parsed milestones

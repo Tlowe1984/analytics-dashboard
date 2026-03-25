@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/mysql2';
 import { milestones } from './drizzle/schema.ts';
 import fs from 'fs';
 
-const db = drizzle(process.env.DATABASE_URL);
+const db = drizzle((process.env.DATABASE_URL || '').replace(/([?&])ssl=\{[^}]*\}/, '$1ssl=true'));
 
 // Read milestone data
 const data = JSON.parse(fs.readFileSync('/home/ubuntu/milestones_data.json', 'utf8'));

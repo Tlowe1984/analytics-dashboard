@@ -164,7 +164,7 @@ if [ $SYNC_ERRORS -eq 0 ]; then
     log "✅ All syncs completed successfully!"
     log "========================================="
     # Flush the server-side in-memory query cache so the frontend gets fresh data immediately
-    SYNC_SECRET_VAL="${SYNC_SECRET:-manus}"
+    SYNC_SECRET_VAL="${SYNC_SECRET:-sync-secret-default}"
     CACHE_RESULT=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:3000/api/cache-clear \
       -H "Content-Type: application/json" \
       -H "x-sync-secret: ${SYNC_SECRET_VAL}" \

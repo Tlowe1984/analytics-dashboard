@@ -15,11 +15,13 @@ echo "=== Syncing Software (I+E, AI, Hearing) Review Data ==="
 # Clear any cached files
 echo "Clearing cache..."
 rm -f /tmp/W*Experiences*Interfaces*Review*.docx
-rm -f /tmp/software_data.json
+# Use a unique temp file per run to avoid race conditions with retries
+SOFTWARE_DATA_FILE="/tmp/software_data_$$.json"
+rm -f "$SOFTWARE_DATA_FILE"
 
 # Parse the document (parser will find and download latest weekly archive)
 echo "Finding and parsing latest Software review document..."
-/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_ie_review.py > /tmp/software_data.json
+/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_ie_review.py > "$SOFTWARE_DATA_FILE"
 
 # Load into database
 echo "Loading Software data into database..."
@@ -29,7 +31,7 @@ import { readFileSync } from 'fs';
 import { getDb } from './server/db.js';
 import { softwareItems } from './drizzle/schema.js';
 
-const sections = JSON.parse(readFileSync('/tmp/software_data.json', 'utf8'));
+const sections = JSON.parse(readFileSync(process.env.SOFTWARE_DATA_FILE || '/tmp/software_data.json', 'utf8'));
 const db = await getDb();
 
 if (!db) {
@@ -161,8 +163,10 @@ console.log(`✅ Loaded ${totalInserted} Software items total`);
 process.exit(0);
 ENDSCRIPT
 
+export SOFTWARE_DATA_FILE
 pnpm exec tsx load_software_temp.mjs
 rm load_software_temp.mjs
+rm -f "$SOFTWARE_DATA_FILE"
 
 # Upsert source file metadata into sync_metadata table
 if [ -f /tmp/software_source_meta.json ]; then

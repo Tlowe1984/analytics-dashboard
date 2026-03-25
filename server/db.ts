@@ -1,16 +1,34 @@
 import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem, syncMetadata, upcomingReviews, UpcomingReview } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { cachedQuery } from "./query-cache";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
+// Strip ssl param from DATABASE_URL and pass ssl as a proper object to mysql2.
+function stripSslFromUrl(url: string): string {
+  return url.replace(/[?&]ssl=[^&]*/g, (match, offset, str) => {
+    // If this was the only query param (starts with ?), keep the ? but remove the param
+    // If there are more params after, replace with nothing or &
+    return '';
+  }).replace(/\?$/, '').replace(/\?&/, '?');
+}
+
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      _db = drizzle(process.env.DATABASE_URL, {
+      // Strip the ssl param from the URL and pass ssl as an object instead
+      const dbUrl = process.env.DATABASE_URL.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+      const pool = mysql.createPool({
+        uri: dbUrl,
+        ssl: { rejectUnauthorized: true },
+        waitForConnections: true,
+        connectionLimit: 10,
+      });
+      _db = drizzle(pool, {
         schema: { users, dashboardItems, milestones, softwareItems, decisions, systemsItems, hearingItems, aiItems, syncMetadata, upcomingReviews },
         mode: "default"
       });
