@@ -599,7 +599,10 @@ export async function getUpcomingItemsForAI(limit = 6) {
       const { asc, and, eq, gte, lte } = await import("drizzle-orm");
       
       const now = new Date();
-      const twoWeeksFromNow = new Date(now);
+      // Use start of today (midnight UTC) so items scheduled for today are included
+      const startOfToday = new Date(now);
+      startOfToday.setUTCHours(0, 0, 0, 0);
+      const twoWeeksFromNow = new Date(startOfToday);
       twoWeeksFromNow.setDate(twoWeeksFromNow.getDate() + 14);
       
       // Get PDP gates from current and next 2 weeks
@@ -608,22 +611,22 @@ export async function getUpcomingItemsForAI(limit = 6) {
         .from(milestones)
         .where(and(
           eq(milestones.milestoneType, "pdp_gates"),
-          gte(milestones.milestoneDate, now),
+          gte(milestones.milestoneDate, startOfToday),
           lte(milestones.milestoneDate, twoWeeksFromNow)
         ))
         .orderBy(asc(milestones.milestoneDate))
         .limit(limit);
       
-      // Get upcoming reviews from next 2 weeks
+      // Get upcoming reviews from next 2 weeks (use higher limit to avoid crowding out by PDP gates)
       const reviews = await db
         .select()
         .from(upcomingReviews)
         .where(and(
-          gte(upcomingReviews.date, now),
+          gte(upcomingReviews.date, startOfToday),
           lte(upcomingReviews.date, twoWeeksFromNow)
         ))
         .orderBy(asc(upcomingReviews.date))
-        .limit(limit);
+        .limit(limit * 3);
       
       // Combine and sort by date
       const combined = [
@@ -645,7 +648,8 @@ export async function getUpcomingItemsForAI(limit = 6) {
       
       // Sort by date and take top items (up to limit)
       combined.sort((a, b) => a.date.getTime() - b.date.getTime());
-      return combined.slice(0, limit);
+      // Return up to limit*4 items so all reviews show (top tile handles display truncation)
+      return combined.slice(0, limit * 4);
     } catch (error) {
       console.error("[Database] Error fetching upcoming items for AI:", error);
       return [];
@@ -709,7 +713,7 @@ export async function getPDPMilestonesThisAndNextWeek() {
         .from(milestones)
         .where(and(
           eq(milestones.milestoneType, "pdp_gates"),
-          gte(milestones.milestoneDate, now),
+          gte(milestones.milestoneDate, startOfToday),
           lte(milestones.milestoneDate, endOfNextWeek)
         ))
         .orderBy(asc(milestones.milestoneDate));
