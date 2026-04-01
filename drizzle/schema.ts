@@ -123,9 +123,9 @@ export type InsertSoftwareItem = typeof softwareItems.$inferInsert;
 export const decisions = mysqlTable("decisions", {
   id: int("id").autoincrement().primaryKey(),
   week: varchar("week", { length: 20 }).notNull(), // e.g., "W49 2025"
-  dri: varchar("dri", { length: 255 }).notNull(),
-  forum: varchar("forum", { length: 255 }),
-  status: varchar("status", { length: 100 }),
+  dri: varchar("dri", { length: 500 }).notNull(),
+  forum: varchar("forum", { length: 500 }),
+  status: varchar("status", { length: 500 }),
   decisionOutcome: text("decision_outcome").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

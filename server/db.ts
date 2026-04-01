@@ -703,8 +703,10 @@ export async function getPDPMilestonesThisAndNextWeek() {
       const { asc, and, eq, gte, lte } = await import("drizzle-orm");
       
       const now = new Date();
+      const startOfToday = new Date(now);
+      startOfToday.setUTCHours(0, 0, 0, 0);
       // Calculate end of next week (14 days from now)
-      const endOfNextWeek = new Date(now);
+      const endOfNextWeek = new Date(startOfToday);
       endOfNextWeek.setDate(endOfNextWeek.getDate() + 14);
       
       // Get PDP gates from current date to end of next week
