@@ -20,11 +20,13 @@ function stripSslFromUrl(url: string): string {
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
-      // Strip the ssl param from the URL and pass ssl as an object instead
-      const dbUrl = process.env.DATABASE_URL.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+      // Strip the ssl param from the URL and pass ssl as a proper object to mysql2
+      const rawUrl = process.env.DATABASE_URL;
+      const sslDisabled = /[?&]ssl=false/i.test(rawUrl);
+      const dbUrl = rawUrl.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
       const pool = mysql.createPool({
         uri: dbUrl,
-        ssl: { rejectUnauthorized: true },
+        ...(sslDisabled ? {} : { ssl: { rejectUnauthorized: true } }),
         waitForConnections: true,
         connectionLimit: 10,
       });
