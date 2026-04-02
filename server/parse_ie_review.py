@@ -19,68 +19,77 @@ def get_current_week():
     return datetime.now().isocalendar()[1]
 
 def find_latest_review_file():
-    """Find the most recent Software/I+E Review file based on modification time.
-    Checks both the archive subfolder (weekly WXX files) and the parent folder
-    (canonical no-week-prefix file like 'Software (I+E, AI, Hearing) Canonical Program Review.docx').
-    Returns (filename, modified, id, folder_path).
-    """
-    PARENT_FOLDER = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/"
-    ARCHIVE_FOLDER = PARENT_FOLDER + "I+E Previous Reviews & Review Notes/"
+    """Find the most recent WXX Experiences & Interfaces Review file based on modification time"""
+    try:
+        # List files with metadata in the I+E reviews folder
+        result = subprocess.run(
+            [
+                "rclone", "lsjson",
+                "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/",
+                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        if result.returncode != 0:
+            print(f"rclone error: {result.stderr}", file=sys.stderr)
+            return None, None
+        
+        # Parse JSON and find WXX Experiences & Interfaces Review files
+        files_data = json.loads(result.stdout)
+        review_files = []
+        
+        for item in files_data:
+            name = item.get('Name', '')
+            # Flexible match — handles all known naming variants:
+            #   "W09 Experiences & Interfaces Review.docx"                   (original)
+            #   "W09 Software (I+E, AI, Hearing) Canonical Program Review.docx" (new canonical)
+            #   "WK09 Experiences & Interfaces Review.docx"                  (WK prefix)
+            #   "W9 Software (I+E, AI, Hearing) Review.docx"                 (single digit)
+            if re.match(
+                r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
+                r'|Software\s*\(I\+E[^)]*\).*Review)',
+                name, re.IGNORECASE
+            ):
+                mod_time = item.get('ModTime', '')
+                review_files.append({
+                    'name': name,
+                    'modified': mod_time,
+                    'id': item.get('ID', '')
+                })
+        
+        if not review_files:
+            # Broad fallback: any .docx containing both "Software" and "Review" (or I+E and Review)
+            print("Primary pattern matched nothing — trying broad Software/I+E Review fallback...", file=sys.stderr)
+            for item in files_data:
+                name = item.get('Name', '')
+                if re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
+                    mod_time = item.get('ModTime', '')
+                    review_files.append({'name': name, 'modified': mod_time, 'id': item.get('ID', '')})
+        
+        if not review_files:
+            print("No Software/I+E review files found in folder", file=sys.stderr)
+            return None, None, None
+        
+        # Sort by modification time (most recent first)
+        review_files.sort(key=lambda x: x['modified'], reverse=True)
+        latest_file = review_files[0]['name']
+        latest_modified = review_files[0]['modified']
+        latest_id = review_files[0].get('id', '')
+        
+        print(f"Found latest review file: {latest_file} (modified {latest_modified})", file=sys.stderr)
+        return latest_file, latest_modified, latest_id
+    
+    except Exception as e:
+        print(f"Error finding latest review file: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        return None, None, None
 
-    def list_folder(folder):
-        try:
-            result = subprocess.run(
-                ["rclone", "lsjson", folder, "--config", "/home/ubuntu/.gdrive-rclone.ini"],
-                capture_output=True, text=True, timeout=120
-            )
-            if result.returncode != 0:
-                print(f"rclone error listing {folder}: {result.stderr}", file=sys.stderr)
-                return []
-            return json.loads(result.stdout)
-        except Exception as e:
-            print(f"Error listing {folder}: {e}", file=sys.stderr)
-            return []
-
-    all_candidates = []  # list of (mod_time, name, id, folder_path)
-
-    # 1. Check parent folder for canonical no-week-prefix file
-    for item in list_folder(PARENT_FOLDER):
-        name = item.get('Name', '')
-        if item.get('IsDir'):
-            continue
-        if re.search(r'Software.*\(I\+E[^)]*\).*Review.*\.docx', name, re.IGNORECASE) or \
-           re.search(r'(Experiences\s*[&+]\s*Interfaces).*Review.*\.docx', name, re.IGNORECASE):
-            all_candidates.append((item.get('ModTime', ''), name, item.get('ID', ''), PARENT_FOLDER))
-            print(f"Found canonical file in parent folder: {name} (modified {item.get('ModTime','')})", file=sys.stderr)
-
-    # 2. Check archive subfolder for weekly WXX files
-    for item in list_folder(ARCHIVE_FOLDER):
-        name = item.get('Name', '')
-        if item.get('IsDir'):
-            continue
-        if re.match(
-            r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
-            r'|Software\s*\(I\+E[^)]*\).*Review)',
-            name, re.IGNORECASE
-        ) or re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
-            all_candidates.append((item.get('ModTime', ''), name, item.get('ID', ''), ARCHIVE_FOLDER))
-
-    if not all_candidates:
-        print("No Software/I+E review files found in either folder", file=sys.stderr)
-        return None, None, None, None
-
-    # Pick the most recently modified file across both folders
-    all_candidates.sort(key=lambda x: x[0], reverse=True)
-    latest_mod, latest_file, latest_id, latest_folder = all_candidates[0]
-    print(f"Selected latest review file: {latest_file} (modified {latest_mod}) from {latest_folder}", file=sys.stderr)
-    return latest_file, latest_mod, latest_id, latest_folder
-
-def download_review_file(filename, folder=None):
-    """Download the review file from Google Drive.
-    folder: the rclone remote folder path containing the file (defaults to archive subfolder).
-    """
-    if folder is None:
-        folder = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/"
+def download_review_file(filename):
+    """Download the review file from Google Drive"""
     try:
         # Delete old file first to force fresh download
         local_path = f"/tmp/{filename}"
@@ -89,7 +98,7 @@ def download_review_file(filename, folder=None):
         result = subprocess.run(
             [
                 "rclone", "copy",
-                f"{folder}{filename}",
+                f"manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/{filename}",
                 "/tmp/",
                 "--config", "/home/ubuntu/.gdrive-rclone.ini",
                 "--ignore-times",
@@ -275,7 +284,7 @@ def main():
     print("Finding latest I+E review file...", file=sys.stderr)
     
     # Find latest review file
-    latest_file, latest_modified, latest_file_id, latest_folder = find_latest_review_file()
+    latest_file, latest_modified, latest_file_id = find_latest_review_file()
     if not latest_file:
         print("Failed to find review file", file=sys.stderr)
         print("[]")
@@ -288,7 +297,7 @@ def main():
     
     # Download the file
     print(f"Downloading {latest_file}...", file=sys.stderr)
-    local_path = download_review_file(latest_file, folder=latest_folder)
+    local_path = download_review_file(latest_file)
     if not local_path:
         print("Failed to download review file", file=sys.stderr)
         print("[]")

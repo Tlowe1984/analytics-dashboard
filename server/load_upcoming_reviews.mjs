@@ -7,10 +7,8 @@ import mysql from 'mysql2/promise';
 import fs from 'fs';
 
 async function main() {
-  const rawDbUrl = process.env.DATABASE_URL || '';
-const sslDisabled = /[?&]ssl=false/i.test(rawDbUrl);
-const dbUrl = rawDbUrl.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
-  const connection = await mysql.createConnection({ uri: dbUrl, ...(sslDisabled ? {} : { ssl: { rejectUnauthorized: true } }) });
+  const dbUrl = (process.env.DATABASE_URL || '').replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+  const connection = await mysql.createConnection({ uri: dbUrl, ssl: { rejectUnauthorized: true } });
 
   try {
     // Read parsed data
