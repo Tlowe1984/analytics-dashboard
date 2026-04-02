@@ -186,13 +186,20 @@ export default function DecisionsSection() {
             <div className="overflow-y-auto" style={{ maxHeight: "480px" }}>
               {/* Desktop Table View */}
               <div className="hidden md:block overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full table-fixed">
+                  <colgroup>
+                    <col style={{width: "90px"}} />
+                    <col style={{width: "130px"}} />
+                    <col style={{width: "110px"}} />
+                    <col style={{width: "90px"}} />
+                    <col />
+                  </colgroup>
                   <thead className="sticky top-0 bg-background/95 backdrop-blur-sm z-10">
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%] whitespace-nowrap">Week</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[10%] whitespace-nowrap">DRI</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[8%] whitespace-nowrap">Forum</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%] whitespace-nowrap">Status</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm">Week</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm">DRI</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm">Forum</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm">Status</th>
                       <th className="text-left py-3 px-2 font-semibold text-sm">Decision Outcome</th>
                     </tr>
                   </thead>
