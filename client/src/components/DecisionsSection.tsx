@@ -189,11 +189,11 @@ export default function DecisionsSection() {
                 <table className="w-full">
                   <thead className="sticky top-0 bg-background/95 backdrop-blur-sm z-10">
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[6%]">Week</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[9%]">DRI</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[12%]">Forum</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%]">Status</th>
-                      <th className="text-left py-3 px-2 font-semibold text-sm w-[66%]">Decision Outcome</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%] whitespace-nowrap">Week</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[10%] whitespace-nowrap">DRI</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[8%] whitespace-nowrap">Forum</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm w-[7%] whitespace-nowrap">Status</th>
+                      <th className="text-left py-3 px-2 font-semibold text-sm">Decision Outcome</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -212,9 +212,9 @@ export default function DecisionsSection() {
                           onClick={() => setExpandedId(isExpanded ? null : decision.id)}
                         >
                           <td className="py-3 px-2 text-sm font-medium whitespace-nowrap align-top">{decision.week}</td>
-                          <td className="py-3 px-2 text-sm align-top">{decision.dri}</td>
-                          <td className="py-3 px-2 text-xs align-top text-muted-foreground">{decision.forum ? normalizeForumLabel(decision.forum) : "—"}</td>
-                          <td className={`py-3 px-2 text-xs font-medium align-top ${statusColor}`}>{normStatus || "—"}</td>
+                          <td className="py-3 px-2 text-sm whitespace-nowrap align-top">{decision.dri}</td>
+                          <td className="py-3 px-2 text-xs align-top text-muted-foreground whitespace-nowrap">{decision.forum ? normalizeForumLabel(decision.forum) : "—"}</td>
+                          <td className={`py-3 px-2 text-xs font-medium align-top whitespace-nowrap ${statusColor}`}>{normStatus || "—"}</td>
                           <td className="py-3 px-2 text-sm align-top">
                             {isExpanded ? (
                               <MarkdownText content={decision.decisionOutcome} />
