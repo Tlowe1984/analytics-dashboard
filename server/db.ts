@@ -429,34 +429,46 @@ export async function getRecentDecisionsForAI(limit = 8) {
       return year * 100 + weekNum;
     };
 
-    // Calculate current and previous week strings (cross-year safe)
-    const now = new Date();
-    const startOfYear = new Date(now.getFullYear(), 0, 1);
-    const days = Math.floor((now.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
-    const currentWeekNum = Math.ceil((days + startOfYear.getDay() + 1) / 7);
-    const currentWeekStr = `W${currentWeekNum} ${now.getFullYear()}`;
-    // Handle year boundary: if currentWeekNum is 1, previous week is W52 of last year
-    const prevWeekNum = currentWeekNum > 1 ? currentWeekNum - 1 : 52;
-    const prevWeekYear = currentWeekNum > 1 ? now.getFullYear() : now.getFullYear() - 1;
-    const previousWeekStr = `W${prevWeekNum} ${prevWeekYear}`;
-    
-    const allowedWeeks = new Set([currentWeekStr, previousWeekStr]);
-
-    // Fetch all decisions (no date filter — filter by week string instead)
+    // Fetch all decisions
     const allDecisions = await db
       .select()
       .from(decisions)
       .orderBy(desc(decisions.id));
-    
+
+    // Dynamically find the most recent weeks that actually have data
+    // Get all unique weeks sorted descending by numeric value
+    const allWeeks = [...new Set(allDecisions.map(d => d.week || '').filter(Boolean))]
+      .sort((a, b) => weekToNumber(b) - weekToNumber(a));
+
+    // Pick the top 2 weeks that have at least 1 decision (after basic filters)
+    const candidateWeeks: string[] = [];
+    for (const w of allWeeks) {
+      const hasData = allDecisions.some(d => {
+        const dri = d.dri || '';
+        const outcome = d.decisionOutcome || '';
+        return d.week === w &&
+          !dri.toLowerCase().includes('timothy lowe') &&
+          !outcome.toLowerCase().includes('cannot be displayed');
+      });
+      if (hasData) {
+        candidateWeeks.push(w);
+        if (candidateWeeks.length >= 2) break;
+      }
+    }
+
+    const allowedWeeks = new Set(candidateWeeks);
+    const currentWeekStr = candidateWeeks[0] || '';
+    const previousWeekStr = candidateWeeks[1] || '';
+
     // Apply all filters:
-    // 1. Only last 2 weeks
+    // 1. Only most recent 2 weeks with data
     // 2. Exclude Timothy Lowe as DRI
     // 3. Exclude 'cannot be displayed' in outcome
     const filtered = allDecisions.filter(item => {
       const week = item.week || '';
       const dri = item.dri || '';
       const outcome = item.decisionOutcome || '';
-      
+
       if (!allowedWeeks.has(week)) return false;
       if (dri.toLowerCase().includes('timothy lowe')) return false;
       if (outcome.toLowerCase().includes('cannot be displayed')) return false;
