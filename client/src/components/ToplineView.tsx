@@ -46,7 +46,7 @@ const productConfig = {
   },
   wrist: {
     icon: Watch,
-    label: "WRIST",
+    label: "WRIST / NEW DEVICES",
   },
   arg_ssg: {
     icon: Grid3x3,
