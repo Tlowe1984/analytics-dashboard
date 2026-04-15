@@ -39,11 +39,11 @@ try:
             continue
         
         # Detect product-specific sections within Topline
-        if text in ['AI Glasses', 'Wrist', 'ARG/SSG', 'ARG / SSG', 'In-Market', 'In Market']:
+        if text in ['AI Glasses', 'Wrist', 'Wrist/New Devices', 'Wrist / New Devices', 'ARG/SSG', 'ARG / SSG', 'In-Market', 'In Market']:
             # Map to product categories
             if text == 'AI Glasses':
                 current_product = 'ai_glasses'
-            elif text == 'Wrist':
+            elif text in ['Wrist', 'Wrist/New Devices', 'Wrist / New Devices']:
                 current_product = 'wrist'
             elif text in ['ARG/SSG', 'ARG / SSG']:
                 current_product = 'arg_ssg'
