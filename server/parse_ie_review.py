@@ -19,67 +19,63 @@ def get_current_week():
     return datetime.now().isocalendar()[1]
 
 def find_latest_review_file():
-    """Find the most recent WXX Experiences & Interfaces Review file.
-    Checks both the parent folder (current-week files) and archive subfolder."""
-    PARENT_FOLDER = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/"
-    ARCHIVE_FOLDER = PARENT_FOLDER + "I+E Previous Reviews & Review Notes/"
-
-    def _list_folder(folder_path):
-        result = subprocess.run(
-            ["rclone", "lsjson", folder_path, "--config", "/home/ubuntu/.gdrive-rclone.ini"],
-            capture_output=True, text=True, timeout=120
-        )
-        if result.returncode != 0:
-            print(f"rclone error listing {folder_path}: {result.stderr}", file=sys.stderr)
-            return []
-        try:
-            return json.loads(result.stdout)
-        except Exception:
-            return []
-
+    """Find the most recent WXX Experiences & Interfaces Review file based on modification time.
+    Searches the archive subfolder where weekly review files are stored."""
+    ARCHIVE_FOLDER = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/"
     try:
-        parent_files = _list_folder(PARENT_FOLDER)
-        archive_files = _list_folder(ARCHIVE_FOLDER)
+        result = subprocess.run(
+            [
+                "rclone", "lsjson",
+                ARCHIVE_FOLDER,
+                "--config", "/home/ubuntu/.gdrive-rclone.ini"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
 
+        if result.returncode != 0:
+            print(f"rclone error: {result.stderr}", file=sys.stderr)
+            return None, None, None, None
+
+        files_data = json.loads(result.stdout)
         review_files = []
-        for item, folder in [(i, PARENT_FOLDER) for i in parent_files] + [(i, ARCHIVE_FOLDER) for i in archive_files]:
+
+        for item in files_data:
             name = item.get('Name', '')
             if item.get('IsDir', False):
                 continue
-            # Match WXX / WKxx prefixed files and canonical no-week-prefix files
+            # Match WXX / WKxx prefixed I+E review files
             if re.match(
                 r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
                 r'|Software\s*\(I\+E[^)]*\).*Review)',
-                name, re.IGNORECASE
-            ) or re.match(
-                r'Software\s*\(I\+E[^)]*\)\s*Canonical\s*Program\s*Review',
                 name, re.IGNORECASE
             ):
                 review_files.append({
                     'name': name,
                     'modified': item.get('ModTime', ''),
                     'id': item.get('ID', ''),
-                    'folder': folder
+                    'folder': ARCHIVE_FOLDER
                 })
 
         if not review_files:
-            # Broad fallback across both folders
+            # Broad fallback
             print("Primary pattern matched nothing — trying broad fallback...", file=sys.stderr)
-            for item, folder in [(i, PARENT_FOLDER) for i in parent_files] + [(i, ARCHIVE_FOLDER) for i in archive_files]:
+            for item in files_data:
                 name = item.get('Name', '')
                 if item.get('IsDir', False):
                     continue
                 if re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
-                    review_files.append({'name': name, 'modified': item.get('ModTime', ''), 'id': item.get('ID', ''), 'folder': folder})
+                    review_files.append({'name': name, 'modified': item.get('ModTime', ''), 'id': item.get('ID', ''), 'folder': ARCHIVE_FOLDER})
 
         if not review_files:
-            print("No Software/I+E review files found in either folder", file=sys.stderr)
-            return None, None, None
+            print("No Software/I+E review files found in archive folder", file=sys.stderr)
+            return None, None, None, None
 
         # Sort by modification time (most recent first)
         review_files.sort(key=lambda x: x['modified'], reverse=True)
         latest = review_files[0]
-        print(f"Found latest review file: {latest['name']} (modified {latest['modified']}) in {latest['folder']}", file=sys.stderr)
+        print(f"Found latest review file: {latest['name']} (modified {latest['modified']})", file=sys.stderr)
         return latest['name'], latest['modified'], latest['id'], latest['folder']
 
     except Exception as e:
