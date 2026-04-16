@@ -115,9 +115,20 @@ export function PdpStatusSection() {
                       <StatusBadge status={row.statusPlan} />
                       {row.statusPlan && !["blocked","live","async","tbd"].some(k => row.statusPlan!.toLowerCase().includes(k)) && null}
                     </td>
-                    {/* Critical Topics */}
-                    <td className="py-2.5 px-3 align-top text-foreground leading-snug">
-                      {row.criticalTopics || <span className="text-muted-foreground">—</span>}
+                    {/* Critical Topics — bold title before colon */}
+                    <td className="py-2.5 px-3 align-top text-sm text-foreground">
+                      {row.criticalTopics ? (() => {
+                        const colonIdx = row.criticalTopics!.indexOf(':');
+                        if (colonIdx > 0) {
+                          return (
+                            <span>
+                              <span className="font-bold">{row.criticalTopics!.slice(0, colonIdx)}</span>
+                              <span>{row.criticalTopics!.slice(colonIdx)}</span>
+                            </span>
+                          );
+                        }
+                        return <span>{row.criticalTopics}</span>;
+                      })() : <span className="text-muted-foreground">—</span>}
                     </td>
                     {/* Link */}
                     <td className="py-2.5 px-3 align-top">
