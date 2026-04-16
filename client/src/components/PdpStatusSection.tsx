@@ -94,20 +94,20 @@ export function PdpStatusSection() {
               <tbody>
                 {pageRows.map((row) => (
                   <tr key={row.id} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
-                    {/* PDP Gate — bold week prefix */}
+                    {/* PDP Gate — bold week/date prefix only */}
                     <td className="py-2.5 px-3 align-top">
                       {row.pdpGate ? (() => {
-                        const match = row.pdpGate.match(/^(W\d+\s+\d{4})\s+(.+)$/);
+                        const match = row.pdpGate.match(/^(W\d+(?:\s+\d{4})?)\s+(.+)$/);
                         if (match) {
                           return (
                             <span>
                               <span className="font-bold text-foreground">{match[1]}</span>
                               {" "}
-                              <span className="text-foreground">{match[2]}</span>
+                              <span className="font-normal text-foreground">{match[2]}</span>
                             </span>
                           );
                         }
-                        return <span className="font-medium text-foreground">{row.pdpGate}</span>;
+                        return <span className="font-normal text-foreground">{row.pdpGate}</span>;
                       })() : "—"}
                     </td>
                     {/* Status/Plan */}
