@@ -693,6 +693,13 @@ Return ONLY valid JSON, no other text.`;
         return await db.getSystemsItemsBySection(input);
       }),
   }),
+
+  pdpStatus: router({
+    // Get all PDP status rows ordered by sort_order
+    getAll: publicProcedure.query(async () => {
+      return await db.getAllPdpStatus();
+    }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

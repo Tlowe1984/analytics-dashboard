@@ -253,6 +253,13 @@
       "when": 1775073454750,
       "tag": "0035_steady_lady_vermin",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "5",
+      "when": 1776357175394,
+      "tag": "0036_medical_shiver_man",
+      "breakpoints": true
     }
   ]
 }

@@ -232,3 +232,23 @@ export const aiItems = mysqlTable("ai_items", {
 
 export type AiItem = typeof aiItems.$inferSelect;
 export type InsertAiItem = typeof aiItems.$inferInsert;
+
+/**
+ * PDP Status table from Devices & Growth Canonical Program Review
+ * Extracted from the "PDP Status" section table in the doc
+ */
+export const pdpStatus = mysqlTable("pdp_status", {
+  id: int("id").autoincrement().primaryKey(),
+  pdpGate: varchar("pdp_gate", { length: 500 }).notNull(),
+  statusPlan: varchar("status_plan", { length: 500 }),
+  criticalTopics: text("critical_topics"),
+  linkText: varchar("link_text", { length: 500 }),
+  linkUrl: varchar("link_url", { length: 1000 }),
+  sortOrder: int("sort_order").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  pdpSortOrderIdx: index("pdp_sort_order_idx").on(table.sortOrder),
+}));
+export type PdpStatus = typeof pdpStatus.$inferSelect;
+export type InsertPdpStatus = typeof pdpStatus.$inferInsert;

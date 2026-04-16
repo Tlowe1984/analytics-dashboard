@@ -1,7 +1,7 @@
 import { eq, and, gte, lte, asc, desc, or, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem, syncMetadata, upcomingReviews, UpcomingReview } from "../drizzle/schema";
+import { InsertUser, users, dashboardItems, milestones, InsertMilestone, DashboardItem, InsertDashboardItem, softwareItems, SoftwareItem, InsertSoftwareItem, decisions, Decision, InsertDecision, systemsItems, SystemsItem, InsertSystemsItem, hearingItems, HearingItem, InsertHearingItem, aiItems, AiItem, InsertAiItem, syncMetadata, upcomingReviews, UpcomingReview, pdpStatus, PdpStatus, InsertPdpStatus } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import { cachedQuery } from "./query-cache";
 
@@ -29,7 +29,7 @@ export async function getDb() {
         connectionLimit: 10,
       });
       _db = drizzle(pool, {
-        schema: { users, dashboardItems, milestones, softwareItems, decisions, systemsItems, hearingItems, aiItems, syncMetadata, upcomingReviews },
+        schema: { users, dashboardItems, milestones, softwareItems, decisions, systemsItems, hearingItems, aiItems, syncMetadata, upcomingReviews, pdpStatus },
         mode: "default"
       });
     } catch (error) {
@@ -948,4 +948,26 @@ export async function getSystemsLastUpdated() {
     
     return result.length > 0 ? result[0] : null;
   });
+}
+
+// PDP Status queries
+export async function getAllPdpStatus(): Promise<PdpStatus[]> {
+  return cachedQuery('pdpStatus:all', async () => {
+    const db = await getDb();
+    if (!db) return [];
+    return db.select().from(pdpStatus).orderBy(asc(pdpStatus.sortOrder));
+  });
+}
+
+export async function clearPdpStatus(): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.delete(pdpStatus);
+}
+
+export async function insertPdpStatusRows(rows: InsertPdpStatus[]): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  if (rows.length === 0) return;
+  await db.insert(pdpStatus).values(rows);
 }

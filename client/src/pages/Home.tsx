@@ -5,6 +5,7 @@ import ToplineView from "@/components/ToplineView";
 import PlaceholderSections from "@/components/PlaceholderSections";
 import DecisionsSection from "@/components/DecisionsSection";
 import { UpcomingReviewsSection } from "@/components/UpcomingReviewsSection";
+import { PdpStatusSection } from "@/components/PdpStatusSection";
 import DashboardChat from "@/components/DashboardChat";
 import UpcomingDates from "@/components/UpcomingDates";
 import SyncStatus from "@/components/SyncStatus";
@@ -77,6 +78,7 @@ export default function Home() {
         <div className="px-3 sm:px-6 lg:px-8 max-w-[2000px] mx-auto space-y-4 sm:space-y-8">
           <DecisionsSection />
           <UpcomingReviewsSection />
+          <PdpStatusSection />
         </div>
         <PlaceholderSections />
       </main>
