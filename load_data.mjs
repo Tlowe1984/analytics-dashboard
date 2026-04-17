@@ -3,9 +3,11 @@ import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 import { dashboardItems, softwareItems, systemsItems, decisions } from './drizzle/schema.js';
 
-const DATABASE_URL = (process.env.DATABASE_URL || '').replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+const rawDbUrl = (process.env.DATABASE_URL || '');
+const isLocal = rawDbUrl.includes('localhost') || rawDbUrl.includes('127.0.0.1');
+const DATABASE_URL = rawDbUrl.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
 
-const connection = await mysql.createConnection({ uri: DATABASE_URL, ssl: { rejectUnauthorized: true } });
+const connection = await mysql.createConnection({ uri: DATABASE_URL, ...(isLocal ? {} : { ssl: { rejectUnauthorized: true } }) });
 const db = drizzle(connection);
 
 let totalItems = 0;

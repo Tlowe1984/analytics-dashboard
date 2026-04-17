@@ -21,10 +21,12 @@ export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
       // Strip the ssl param from the URL and pass ssl as an object instead
-      const dbUrl = process.env.DATABASE_URL.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+      const rawUrl = process.env.DATABASE_URL;
+      const isLocal = rawUrl.includes('localhost') || rawUrl.includes('127.0.0.1');
+      const dbUrl = rawUrl.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
       const pool = mysql.createPool({
         uri: dbUrl,
-        ssl: { rejectUnauthorized: true },
+        ...(isLocal ? {} : { ssl: { rejectUnauthorized: true } }),
         waitForConnections: true,
         connectionLimit: 10,
       });

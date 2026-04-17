@@ -3,8 +3,10 @@ import mysql from 'mysql2/promise';
 import { milestones } from '../drizzle/schema.js';
 import fs from 'fs';
 
-const dbUrl = (process.env.DATABASE_URL || '').replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
-const connection = await mysql.createConnection({ uri: dbUrl, ssl: { rejectUnauthorized: true } });
+const rawDbUrl = (process.env.DATABASE_URL || '');
+const isLocal = rawDbUrl.includes('localhost') || rawDbUrl.includes('127.0.0.1');
+const dbUrl = rawDbUrl.replace(/[?&]ssl=[^&]*/g, '').replace(/\?$/, '').replace(/\?&/, '?');
+const connection = await mysql.createConnection({ uri: dbUrl, ...(isLocal ? {} : { ssl: { rejectUnauthorized: true } }) });
 const db = drizzle(connection);
 
 try {
