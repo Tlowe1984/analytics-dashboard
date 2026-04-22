@@ -415,7 +415,9 @@ Return ONLY valid JSON, no other text.`;
           return rawDecisions; // Fallback to raw data
         }
         
-        const parsed = JSON.parse(content);
+        // Strip markdown code fences if present (e.g. ```json ... ```)
+        const cleanContent = content.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+        const parsed = JSON.parse(cleanContent);
         return parsed.summaries.map((s: any) => ({
           outcome: s.summary,
         }));
