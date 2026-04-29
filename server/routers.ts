@@ -344,87 +344,17 @@ Answer the user's question based on this comprehensive data. Be specific and cit
 
     // Get recent decisions for AI Executive Updates top tile
     // Rules: last 2 weeks only, max 8, MZ first, exclude Timothy Lowe, exclude 'cannot be displayed'
-    // Summaries are generated using LLM to keep them concise (≤60 words)
-    // Format: **Forum**: Summary. [Link]
+    // Returns raw DB data directly — no LLM call to avoid production failures.
+    // Format: **Forum**: outcome text (already stored formatted in DB)
     getRecentDecisions: publicProcedure.query(async () => {
-      const { invokeLLM } = await import("./_core/llm");
       const rawDecisions = await db.getRecentDecisionsForAI(8);
-      
-      if (rawDecisions.length === 0) {
-        return [];
-      }
-      
-      // Prepare prompt for LLM to summarize decisions with new format
-      const decisionsText = rawDecisions.map((d, idx) => 
-        `${idx + 1}. Forum: ${d.forum}\nOutcome: ${d.outcome}`
-      ).join('\n\n');
-      
-      const prompt = `For each decision below, format as: **Forum**: Summary (60 words max). [Link]
-Rules:
-1. Start with forum name in bold markdown: **Forum Name**:
-2. Follow with concise outcome summary (up to 60 words, no bolding in the summary text)
-3. Extract and preserve any links at the end as [Post](url) or [Link](url)
-4. If no link in outcome, omit the link part
-
-Examples:
-- "**MZ**: Malibu2 LE steers on 3rd button follow-up with workshop and watch-face experiences. [Post](url)"
-- "**Wearables Review**: Meta AI 2.0 architecture strategy approved with GO for W06 Experiences & Interfaces Review. [Post](url)"
-- "**Product Council**: HN1 LE limited to Elite Bundle; Ceres included with blue transparent frame."
-
-Return as JSON array:
-[
-  { "summary": "**Forum**: Summary. [Link](url)" }
-]
-
-${decisionsText}
-
-Return ONLY valid JSON, no other text.`;
-      
-      try {
-        const response = await invokeLLM({
-          messages: [{ role: "user", content: prompt as string }],
-          response_format: {
-            type: "json_schema",
-            json_schema: {
-              name: "decision_summaries",
-              strict: true,
-              schema: {
-                type: "object",
-                properties: {
-                  summaries: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        summary: { type: "string" },
-                      },
-                      required: ["summary"],
-                      additionalProperties: false,
-                    },
-                  },
-                },
-                required: ["summaries"],
-                additionalProperties: false,
-              },
-            },
-          },
-        });
-        
-        const content = response.choices[0]?.message?.content;
-        if (!content || typeof content !== 'string') {
-          return rawDecisions; // Fallback to raw data
-        }
-        
-        // Strip markdown code fences if present (e.g. ```json ... ```)
-        const cleanContent = content.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
-        const parsed = JSON.parse(cleanContent);
-        return parsed.summaries.map((s: any) => ({
-          outcome: s.summary,
-        }));
-      } catch (error) {
-        console.error("[LLM] Error summarizing decisions:", error);
-        return rawDecisions; // Fallback to raw data
-      }
+      return rawDecisions.map(d => ({
+        outcome: d.outcome || '',
+        forum: d.forum || '',
+        week: d.week || '',
+        isCurrentWeek: d.isCurrentWeek,
+        isPreviousWeek: d.isPreviousWeek,
+      }));
     }),
 
     // Seed sample data

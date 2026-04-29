@@ -123,11 +123,19 @@ export function initSyncScheduler() {
   log('✅ Sync scheduler initialized successfully');
   log('Next sync will run at 8:45 AM PST');
   
-  // Run sync on startup to ensure fresh data when server wakes from hibernation
-  log('Running initial sync on startup...');
-  setTimeout(() => {
-    runSync().catch(err => log('Startup sync failed: ' + err.message));
-  }, 5000); // Wait 5 seconds for server to fully initialize
+  // NOTE: Startup sync is intentionally disabled in production.
+  // The sync scripts depend on rclone, Python venv, and bash tools that only exist
+  // in the sandbox dev environment. Running them on production startup would fail
+  // and could block the server during the critical first-load window.
+  // Data is synced manually from the sandbox via the sync scripts.
+  if (process.env.NODE_ENV !== 'production') {
+    log('Running initial sync on startup (dev only)...');
+    setTimeout(() => {
+      runSync().catch(err => log('Startup sync failed: ' + err.message));
+    }, 5000);
+  } else {
+    log('Production mode: skipping startup sync (data served from DB)');
+  }
 }
 
 /**

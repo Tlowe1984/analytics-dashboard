@@ -11,11 +11,12 @@ import "./index.css";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0, // No caching — always fetch fresh data on every query
-      gcTime: 0, // Immediately discard unused query data
-      refetchOnWindowFocus: true, // Refetch when window regains focus
-      refetchOnMount: true, // Always refetch on mount
-      retry: 1, // Only retry failed requests once
+      staleTime: 2 * 60 * 1000, // 2 minutes — avoid hammering DB on every focus
+      gcTime: 5 * 60 * 1000, // Keep data in cache for 5 minutes
+      refetchOnWindowFocus: false, // Don't refetch on every window focus (causes blank flash)
+      refetchOnMount: true, // Fetch on mount if stale
+      retry: 3, // Retry failed requests 3 times (helps with cold-start DB connections)
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000), // Exponential backoff
     },
   },
 });
