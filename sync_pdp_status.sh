@@ -10,7 +10,7 @@ GDRIVE_REMOTE="manus_google_drive"
 
 # Folder and file
 FOLDER="Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews"
-FILENAME="Device & Growth Canonical Program Review"
+FILENAME="Device Canonical Program Review"
 
 TMP_DIR=$(mktemp -d)
 trap "rm -rf $TMP_DIR" EXIT

@@ -15,11 +15,11 @@ export PYTHONHOME=
 
 echo "📥 Downloading Google Doc from Drive..."
 # Delete old file to force fresh download
-rm -f "/tmp/Device & Growth Canonical Program Review.docx"
+rm -f "/tmp/Device Canonical Program Review.docx"
 
 # Capture file metadata before downloading
-DEVICES_FILE_NAME="Device & Growth Canonical Program Review.docx"
-DEVICES_META=$(rclone lsjson "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx" --config /home/ubuntu/.gdrive-rclone.ini 2>/dev/null)
+DEVICES_FILE_NAME="Device Canonical Program Review.docx"
+DEVICES_META=$(rclone lsjson "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device Canonical Program Review.docx" --config /home/ubuntu/.gdrive-rclone.ini 2>/dev/null)
 DEVICES_FILE_ID=$(echo "$DEVICES_META" | python3 -c "import sys,json; data=json.load(sys.stdin); print(data[0].get('ID','') if data else '')" 2>/dev/null || echo "")
 DEVICES_FILE_MODIFIED=$(echo "$DEVICES_META" | python3 -c "import sys,json; data=json.load(sys.stdin); print(data[0].get('ModTime','') if data else '')" 2>/dev/null || echo "")
 if [ -n "$DEVICES_FILE_ID" ]; then
@@ -28,10 +28,10 @@ else
   DEVICES_FILE_URL=""
 fi
 
-rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device & Growth Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --ignore-times --no-check-certificate
+rclone copy "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Device & Growth Program Reviews/Device Canonical Program Review.docx" /tmp/ --config /home/ubuntu/.gdrive-rclone.ini --ignore-times --no-check-certificate
 
 echo "📊 Parsing executive summary..."
-/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/Device & Growth Canonical Program Review.docx" > /tmp/parsed_data.json
+/home/ubuntu/wearables-venv/bin/python /home/ubuntu/analytics-dashboard/server/parse_exec_summary.py "/tmp/Device Canonical Program Review.docx" > /tmp/parsed_data.json
 
 echo "💾 Loading data into database..."
 cd /home/ubuntu/analytics-dashboard
