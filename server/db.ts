@@ -474,6 +474,9 @@ export async function getRecentDecisionsForAI(limit = 8) {
       if (!allowedWeeks.has(week)) return false;
       if (dri.toLowerCase().includes('timothy lowe')) return false;
       if (outcome.toLowerCase().includes('cannot be displayed')) return false;
+      // Filter out empty or near-empty outcomes (less than 15 meaningful chars after stripping forum prefix)
+      const stripped = outcome.replace(/^[\s\S]*?:\s*/, '').trim();
+      if (stripped.length < 15) return false;
       return true;
     });
 

@@ -277,7 +277,11 @@ export default function AIExecutiveUpdates() {
             </div>
             {recentDecisions && recentDecisions.length > 0 ? (
               <ul className="space-y-2 text-sm">
-                {recentDecisions.map((item: any, idx: number) => (
+                {recentDecisions.filter((item: any) => {
+                  // Hide entries where the outcome body is empty after stripping the bold forum prefix
+                  const body = (item.outcome || '').replace(/^\*\*[^*]+\*\*\s*:?\s*/, '').trim();
+                  return body.length >= 10;
+                }).map((item: any, idx: number) => (
                   <li key={idx} className="flex items-start gap-2">
                     <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0 bg-orange-500" />
                     <div className="leading-relaxed">
