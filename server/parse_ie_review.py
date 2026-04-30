@@ -19,70 +19,71 @@ def get_current_week():
     return datetime.now().isocalendar()[1]
 
 def find_latest_review_file():
-    """Find the most recent WXX Experiences & Interfaces Review file based on modification time.
-    Searches the archive subfolder where weekly review files are stored."""
-    ARCHIVE_FOLDER = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/I+E Previous Reviews & Review Notes/"
-    try:
-        result = subprocess.run(
-            [
-                "rclone", "lsjson",
-                ARCHIVE_FOLDER,
-                "--config", "/home/ubuntu/.gdrive-rclone.ini"
-            ],
-            capture_output=True,
-            text=True,
-            timeout=120
-        )
+    """Find the most recent Software (I+E, AI, Hearing) review file.
+    Primary: the canonical doc in the main folder (updated weekly in-place).
+    Fallback: WXX-prefixed files in the archive subfolder."""
+    MAIN_FOLDER = "manus_google_drive:Wearables Everything/Reviews (Comment Only)/Software (I+E, AI, Hearing) Reviews/"
+    ARCHIVE_FOLDER = MAIN_FOLDER + "I+E Previous Reviews & Review Notes/"
+    CANONICAL_NAME = "Software (I+E, AI, Hearing) Canonical Program Review.docx"
 
-        if result.returncode != 0:
-            print(f"rclone error: {result.stderr}", file=sys.stderr)
-            return None, None, None, None
+    def extract_week_num(name):
+        """Extract week number from filename like W18, WK18, W18 2026, etc."""
+        m = re.search(r'W(?:K)?(\d+)', name, re.IGNORECASE)
+        return int(m.group(1)) if m else 0
 
-        files_data = json.loads(result.stdout)
-        review_files = []
-
-        for item in files_data:
-            name = item.get('Name', '')
-            if item.get('IsDir', False):
+    # Search both main folder and archive subfolder for WXX-prefixed files
+    all_review_files = []
+    for folder in [MAIN_FOLDER, ARCHIVE_FOLDER]:
+        try:
+            result = subprocess.run(
+                [
+                    "rclone", "lsjson",
+                    folder,
+                    "--config", "/home/ubuntu/.gdrive-rclone.ini",
+                    "--max-depth", "1"
+                ],
+                capture_output=True,
+                text=True,
+                timeout=120
+            )
+            if result.returncode != 0:
+                print(f"rclone error listing {folder}: {result.stderr}", file=sys.stderr)
                 continue
-            # Match WXX / WKxx prefixed I+E review files
-            if re.match(
-                r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
-                r'|Software\s*\(I\+E[^)]*\).*Review)',
-                name, re.IGNORECASE
-            ):
-                review_files.append({
-                    'name': name,
-                    'modified': item.get('ModTime', ''),
-                    'id': item.get('ID', ''),
-                    'folder': ARCHIVE_FOLDER
-                })
-
-        if not review_files:
-            # Broad fallback
-            print("Primary pattern matched nothing — trying broad fallback...", file=sys.stderr)
+            files_data = json.loads(result.stdout)
             for item in files_data:
                 name = item.get('Name', '')
                 if item.get('IsDir', False):
                     continue
-                if re.search(r'(Software|I\+E|Experiences).*Review.*\.docx', name, re.IGNORECASE):
-                    review_files.append({'name': name, 'modified': item.get('ModTime', ''), 'id': item.get('ID', ''), 'folder': ARCHIVE_FOLDER})
+                # Match WXX / WKxx prefixed I+E review files
+                if re.match(
+                    r'W(K)?\d+\s+(Experiences\s*[&+]\s*Interfaces\s+Review'
+                    r'|Software\s*\(I\+E[^)]*\).*Review)',
+                    name, re.IGNORECASE
+                ):
+                    all_review_files.append({
+                        'name': name,
+                        'modified': item.get('ModTime', ''),
+                        'id': item.get('ID', ''),
+                        'folder': folder,
+                        'week': extract_week_num(name)
+                    })
+        except Exception as e:
+            print(f"Error listing {folder}: {e}", file=sys.stderr)
 
-        if not review_files:
-            print("No Software/I+E review files found in archive folder", file=sys.stderr)
-            return None, None, None, None
-
-        # Sort by modification time (most recent first)
-        review_files.sort(key=lambda x: x['modified'], reverse=True)
-        latest = review_files[0]
-        print(f"Found latest review file: {latest['name']} (modified {latest['modified']})", file=sys.stderr)
-        return latest['name'], latest['modified'], latest['id'], latest['folder']
-
-    except Exception as e:
-        print(f"Error finding latest review file: {e}", file=sys.stderr)
-        import traceback
-        traceback.print_exc(file=sys.stderr)
+    if not all_review_files:
+        print("No WXX Software/I+E review files found in any folder", file=sys.stderr)
         return None, None, None, None
+
+    # Filter to only files modified in the last 90 days to avoid stale high-week-number files
+    cutoff = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
+    recent_files = [f for f in all_review_files if f['modified'][:10] >= cutoff]
+    candidates = recent_files if recent_files else all_review_files
+
+    # Sort by week number (highest = most recent), break ties by modification time
+    candidates.sort(key=lambda x: (x['week'], x['modified']), reverse=True)
+    latest = candidates[0]
+    print(f"Found latest review file: {latest['name']} (W{latest['week']}, modified {latest['modified']})", file=sys.stderr)
+    return latest['name'], latest['modified'], latest['id'], latest['folder']
 
 def download_review_file(filename, folder=None):
     """Download the review file from Google Drive"""
