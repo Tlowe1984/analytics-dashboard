@@ -11,10 +11,36 @@ from datetime import datetime, timedelta
 import re
 
 def download_spreadsheet():
-    """Download spreadsheet using rclone"""
+    """Download spreadsheet using rclone - uses Aggregation Sheet which has actual data"""
     try:
-        # Delete old file first to force fresh download
-        subprocess.run(["rm", "-f", "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx"], check=False)
+        # Try the Aggregation Sheet first (has actual data in Release_Beast_Data and Smart_Sheet_Data)
+        agg_file = "/tmp/Wearables Device Program Milestones - Aggregation Sheet.xlsx"
+        subprocess.run(["rm", "-f", agg_file], check=False)
+        
+        result = subprocess.run(
+            [
+                "rclone", "copy",
+                "--drive-shared-with-me",
+                "manus_google_drive:Wearables Device Program Milestones - Aggregation Sheet.xlsx",
+                "/tmp/",
+                "--config", "/home/ubuntu/.gdrive-rclone.ini",
+                "--ignore-times",
+                "--no-check-certificate"
+            ],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        if result.returncode == 0:
+            import os
+            if os.path.exists(agg_file) and os.path.getsize(agg_file) > 10000:
+                print(f"Using Aggregation Sheet: {agg_file}", file=sys.stderr)
+                return agg_file
+        
+        # Fallback to SOT file
+        sot_file = "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx"
+        subprocess.run(["rm", "-f", sot_file], check=False)
         
         result = subprocess.run(
             [
@@ -34,7 +60,7 @@ def download_spreadsheet():
             print(f"rclone error: {result.stderr}", file=sys.stderr)
             return None
         
-        return "/tmp/Wearable Program Milestones SOT - For AI ／ User Consumption.xlsx"
+        return sot_file
     except Exception as e:
         print(f"Error downloading spreadsheet: {e}", file=sys.stderr)
         return None
@@ -92,14 +118,24 @@ def categorize_milestone(milestone_type_str):
         return "sw_milestones"  # Default to SW
 
 def parse_xlsx(xlsx_file):
-    """Parse XLSX file and extract milestones"""
+    """Parse XLSX file and extract milestones - handles both SOT and Aggregation Sheet formats"""
     try:
         import openpyxl
+        import os
         
-        wb = openpyxl.load_workbook(xlsx_file, data_only=True)  # data_only=True gets computed values
-        ws = wb.active
-        
+        wb = openpyxl.load_workbook(xlsx_file, data_only=True)
         milestones = []
+        
+        # Check if this is the Aggregation Sheet (has Release_Beast_Data sheet)
+        if 'Release_Beast_Data' in wb.sheetnames:
+            print(f"Detected Aggregation Sheet format", file=sys.stderr)
+            milestones.extend(parse_release_beast_data(wb))
+            milestones.extend(parse_smart_sheet_data(wb))
+            print(f"Total milestones from Aggregation Sheet: {len(milestones)}", file=sys.stderr)
+            return milestones
+        
+        # Fall back to original SOT parsing (Consolidated View)
+        ws = wb.active
         header_row = None
         
         # Find header row
@@ -133,20 +169,16 @@ def parse_xlsx(xlsx_file):
             date_value = row[date_idx]
             milestone_type_str = row[type_idx] if type_idx is not None and len(row) > type_idx else None
             
-            # Skip empty rows
             if not product or not milestone_name or not date_value:
                 continue
             
-            # Convert to strings
             product = str(product).strip()
             milestone_name = str(milestone_name).strip()
             
-            # Parse date
             milestone_date = excel_date_to_iso(date_value)
             if not milestone_date:
                 continue
             
-            # Categorize
             milestone_type = categorize_milestone(milestone_type_str)
             
             milestones.append({
@@ -164,6 +196,108 @@ def parse_xlsx(xlsx_file):
         import traceback
         traceback.print_exc()
         return []
+
+def parse_release_beast_data(wb):
+    """Parse Release_Beast_Data sheet from Aggregation Sheet"""
+    milestones = []
+    try:
+        ws = wb['Release_Beast_Data']
+        headers = [str(cell.value).strip() if cell.value else '' for cell in list(ws.iter_rows(max_row=1))[0]]
+        
+        product_idx = next((i for i, h in enumerate(headers) if h and 'product_label' in h.lower()), None)
+        if product_idx is None:
+            product_idx = next((i for i, h in enumerate(headers) if h and h.lower() == 'product'), None)
+        milestone_idx = next((i for i, h in enumerate(headers) if h and 'release_event' in h.lower()), None)
+        date_idx = next((i for i, h in enumerate(headers) if h and 'current_planned_date' in h.lower()), None)
+        if date_idx is None:
+            date_idx = next((i for i, h in enumerate(headers) if h and 'initial_planned_date' in h.lower()), None)
+        type_idx = next((i for i, h in enumerate(headers) if h and 'milestone type' in h.lower()), None)
+        
+        if product_idx is None or milestone_idx is None or date_idx is None:
+            print(f"Release_Beast_Data: Could not find columns. Headers: {headers}", file=sys.stderr)
+            return []
+        
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if not row or len(row) <= max(product_idx, milestone_idx, date_idx):
+                continue
+            
+            product = row[product_idx]
+            milestone_name = row[milestone_idx]
+            date_value = row[date_idx]
+            milestone_type_str = row[type_idx] if type_idx is not None and len(row) > type_idx else None
+            
+            if not product or not milestone_name or not date_value:
+                continue
+            
+            product = str(product).strip()
+            milestone_name = str(milestone_name).strip()
+            
+            milestone_date = excel_date_to_iso(date_value)
+            if not milestone_date:
+                continue
+            
+            milestone_type = categorize_milestone(milestone_type_str or milestone_name)
+            
+            milestones.append({
+                'product': product,
+                'milestone_name': milestone_name,
+                'milestone_date': milestone_date,
+                'milestone_type': milestone_type,
+                'original_type': str(milestone_type_str) if milestone_type_str else None
+            })
+        
+        print(f"Release_Beast_Data: parsed {len(milestones)} milestones", file=sys.stderr)
+    except Exception as e:
+        print(f"Error parsing Release_Beast_Data: {e}", file=sys.stderr)
+    return milestones
+
+def parse_smart_sheet_data(wb):
+    """Parse Smart_Sheet_Data sheet from Aggregation Sheet"""
+    milestones = []
+    try:
+        ws = wb['Smart_Sheet_Data']
+        headers = [str(cell.value).strip() if cell.value else '' for cell in list(ws.iter_rows(max_row=1))[0]]
+        
+        product_idx = next((i for i, h in enumerate(headers) if h and 'device_name' in h.lower()), None)
+        milestone_idx = next((i for i, h in enumerate(headers) if h and 'milestone_name' in h.lower()), None)
+        date_idx = next((i for i, h in enumerate(headers) if h and 'milestone_date' in h.lower()), None)
+        
+        if product_idx is None or milestone_idx is None or date_idx is None:
+            print(f"Smart_Sheet_Data: Could not find columns. Headers: {headers}", file=sys.stderr)
+            return []
+        
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if not row or len(row) <= max(product_idx, milestone_idx, date_idx):
+                continue
+            
+            product = row[product_idx]
+            milestone_name = row[milestone_idx]
+            date_value = row[date_idx]
+            
+            if not product or not milestone_name or not date_value:
+                continue
+            
+            product = str(product).strip()
+            milestone_name = str(milestone_name).strip()
+            
+            milestone_date = excel_date_to_iso(date_value)
+            if not milestone_date:
+                continue
+            
+            milestone_type = categorize_milestone(milestone_name)
+            
+            milestones.append({
+                'product': product,
+                'milestone_name': milestone_name,
+                'milestone_date': milestone_date,
+                'milestone_type': milestone_type,
+                'original_type': None
+            })
+        
+        print(f"Smart_Sheet_Data: parsed {len(milestones)} milestones", file=sys.stderr)
+    except Exception as e:
+        print(f"Error parsing Smart_Sheet_Data: {e}", file=sys.stderr)
+    return milestones
 
 def main():
     print("Downloading Wearable Program Milestones SOT spreadsheet...", file=sys.stderr)

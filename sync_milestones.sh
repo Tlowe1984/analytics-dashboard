@@ -15,7 +15,7 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting milestones sync..."
 
 # Parse milestones from spreadsheet
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Parsing Wearable Program Milestones SOT spreadsheet..."
-MILESTONES_JSON=$(/home/ubuntu/wearables-venv/bin/python server/parse_milestones_xlsx.py 2>&1 | tail -n +4)
+MILESTONES_JSON=$(/home/ubuntu/wearables-venv/bin/python server/parse_milestones_xlsx.py 2>/tmp/milestones_parse.log)
 
 if [ -z "$MILESTONES_JSON" ] || [ "$MILESTONES_JSON" = "[]" ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: No milestones parsed"
