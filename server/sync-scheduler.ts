@@ -28,11 +28,13 @@ function log(message: string) {
 }
 
 /**
- * Run the sync using TypeScript sync function
+ * Run the sync using the Node.js-native scheduledSync module.
+ * Works in both development and production environments.
+ * Uses GOOGLE_WORKSPACE_CLI_TOKEN + Google Drive API v3 (no rclone/Python needed).
  */
 async function runSync() {
   log('========================================')
-  log('Starting scheduled sync');
+  log('Starting scheduled sync (Node.js-native)');
   log('========================================')
   
   try {
@@ -42,36 +44,31 @@ async function runSync() {
     await invalidateDashboardCache();
     log('✅ Query cache cleared');
     
-    // Step 2: Verify fresh downloads (flags already set in sync scripts)
-    // Import and call the bash script sync function (with weekly archive detection)
-    const { syncAllBash } = await import('./syncAllBash');
-    
-    log('Syncing all 7 data sources using bash scripts...');
-    const result = await syncAllBash();
+    // Step 2: Run Node.js-native sync (works in both production and development)
+    // Uses GOOGLE_WORKSPACE_CLI_TOKEN + Google Drive API v3 directly.
+    // No rclone, Python, or bash tools required.
+    const { runScheduledSync } = await import('./scheduledSync');
+    log('Syncing all 8 data sources via Google Drive API...');
+    const result = await runScheduledSync();
     
     // Log results for each source
-    const sources = ['devices', 'software', 'systems', 'hearing', 'decisions', 'milestones', 'upcomingReviews'] as const;
     let successCount = 0;
     let failCount = 0;
-    
-    for (const source of sources) {
-      const sourceResult = result[source];
+    for (const [source, sourceResult] of Object.entries(result.sources)) {
       if (sourceResult.success) {
         successCount++;
-        log(`✅ ${source}: ${sourceResult.message}`);
+        log(`✅ ${source}: ${sourceResult.items} items`);
       } else {
         failCount++;
-        log(`❌ ${source}: ${sourceResult.message}`);
+        log(`❌ ${source}: ${sourceResult.error || 'failed'}`);
       }
     }
     
     log('========================================')
-    log(`Sync completed: ${successCount} succeeded, ${failCount} failed`);
-    
+    log(`Sync completed: ${successCount} succeeded, ${failCount} failed (${result.totalItems} total items, ${(result.durationMs/1000).toFixed(1)}s)`);
     log('========================================')
     
     if (failCount > 0) {
-      // Notify owner of partial failure
       try {
         await notifyOwner({
           title: '⚠️ Dashboard Sync Completed with Errors',
@@ -88,7 +85,6 @@ async function runSync() {
     log(error.message);
     log(error.stack || '');
     
-    // Notify owner of failure
     try {
       await notifyOwner({
         title: '⚠️ Dashboard Sync Failed',
@@ -123,19 +119,10 @@ export function initSyncScheduler() {
   log('✅ Sync scheduler initialized successfully');
   log('Next sync will run at 8:45 AM PST');
   
-  // NOTE: Startup sync is intentionally disabled in production.
-  // The sync scripts depend on rclone, Python venv, and bash tools that only exist
-  // in the sandbox dev environment. Running them on production startup would fail
-  // and could block the server during the critical first-load window.
-  // Data is synced manually from the sandbox via the sync scripts.
-  if (process.env.NODE_ENV !== 'production') {
-    log('Running initial sync on startup (dev only)...');
-    setTimeout(() => {
-      runSync().catch(err => log('Startup sync failed: ' + err.message));
-    }, 5000);
-  } else {
-    log('Production mode: skipping startup sync (data served from DB)');
-  }
+  // The sync now uses Node.js-native Google Drive API (no rclone/Python needed),
+  // so it works in both production and development environments.
+  // Startup sync is skipped to avoid blocking the server during first-load.
+  log('Sync scheduler ready. Next sync at 8:45 AM PST. No startup sync (use /api/scheduled/sync to trigger manually).');
 }
 
 /**

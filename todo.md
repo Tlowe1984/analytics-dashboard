@@ -2392,3 +2392,33 @@
 - [x] Cat 4: Add defensive unknown-section logging to all parsers
 - [x] Cat 5: Add /api/health endpoint that also triggers a server wake
 - [x] Cat 5: Document cron-job.org setup for guaranteed 8:45 AM wake
+
+## 2026-05-05 — Daily Sync Architecture Fix (Scheduled Task Run)
+
+**Root Cause Identified:** Scheduled task sandboxes are fresh isolated environments that do not inherit:
+- `/home/ubuntu/.gdrive-rclone.ini` — Google Drive rclone config (Meta internal connector only)
+- `DATABASE_URL` — TiDB Cloud connection string (Manus webdev platform secret)
+- `/home/ubuntu/wearables-venv` — Python virtual environment
+
+The previous sync approach (bash scripts + rclone + Python) only worked in the original development sandbox session.
+
+**Fix Implemented:**
+- [x] Created `server/scheduledSync.ts` — Node.js-native sync using Google Drive API v3 directly
+  - Uses `GOOGLE_WORKSPACE_CLI_TOKEN` (Bearer token, available in production)
+  - Uses `JSZip` + `@xmldom/xmldom` (bundled via mammoth) for .docx XML parsing
+  - Uses `exceljs` for .xlsx parsing (milestones spreadsheet)
+  - Handles all 8 data sources: devices, software (I+E), systems, decisions, milestones, upcoming reviews, AI, hearing
+  - Preserves rich text (blue = new, bold, hyperlinks)
+  - Exposes `runScheduledSync()` function
+- [x] Added `/api/scheduled/sync` POST endpoint to `server/_core/index.ts`
+  - Authenticated via Manus platform session cookie (role "user" or higher)
+  - Calls `runScheduledSync()` and invalidates query cache
+- [x] Updated `server/sync-scheduler.ts` to use `runScheduledSync` instead of `syncAllBash`
+  - Works in both production and development (no rclone/Python required)
+- [x] Updated `server/_core/index.ts` to initialize sync scheduler in production mode
+- [x] Added `exceljs` to project dependencies
+
+**Next Steps:**
+- [ ] DEPLOY: Save checkpoint and click Publish button to deploy the updated server
+- [ ] UPDATE SCHEDULED TASK: Change the scheduled task prompt to POST to SCHEDULED_TASK_ENDPOINT_BASE/api/scheduled/sync using SCHEDULED_TASK_COOKIE
+- [ ] VERIFY: After deployment, trigger a manual sync via the admin panel to confirm all 8 sources sync correctly

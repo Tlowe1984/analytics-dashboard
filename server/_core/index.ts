@@ -9,6 +9,8 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { initSyncScheduler } from "../sync-scheduler";
 import { invalidateDashboardCache } from "../query-cache";
+import { runScheduledSync } from "../scheduledSync";
+import { sdk } from "./sdk";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -45,6 +47,34 @@ async function startServer() {
       timestamp: new Date().toISOString(),
       env: process.env.NODE_ENV ?? "unknown",
     });
+  });
+
+  // /api/scheduled/sync — Node.js-native sync endpoint for scheduled tasks.
+  // Accepts POST requests authenticated via the Manus platform session cookie.
+  // Allows any authenticated user (role == "user" or higher) so the platform-injected
+  // scheduled-task cookie (which has role "user") can call it.
+  app.post("/api/scheduled/sync", async (req, res) => {
+    try {
+      // Authenticate via session cookie
+      let user: any = null;
+      try {
+        user = await sdk.authenticateRequest(req);
+      } catch {
+        return res.status(401).json({ error: "Unauthorized — valid session cookie required" });
+      }
+      if (!user) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      console.log(`[ScheduledSync] Triggered by user ${user.openId} (role: ${user.role})`);
+      // Run sync and wait for result (may take several minutes)
+      const result = await runScheduledSync();
+      // Clear query cache so frontend gets fresh data immediately
+      invalidateDashboardCache();
+      res.json(result);
+    } catch (error: any) {
+      console.error("[ScheduledSync] Error:", error);
+      res.status(500).json({ error: error?.message || "Internal server error" });
+    }
   });
 
   // Cache-clear endpoint — called by sync scripts after writing to DB so the
@@ -87,17 +117,14 @@ async function startServer() {
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
     
-    // Initialize sync scheduler only in development (sandbox has Python + rclone)
-    // Production reads from shared database that sandbox updates
-    if (process.env.NODE_ENV === 'development') {
-      try {
-        initSyncScheduler();
-        console.log('[Server] Sync scheduler initialized (development mode)');
-      } catch (error) {
-        console.error('[Server] Failed to initialize sync scheduler:', error);
-      }
-    } else {
-      console.log('[Server] Production mode: Sync disabled (reads from shared database updated by sandbox)');
+    // Initialize sync scheduler in both development and production.
+    // The Node.js-native scheduledSync module uses GOOGLE_WORKSPACE_CLI_TOKEN
+    // and Google Drive API v3 directly — no rclone or Python required.
+    try {
+      initSyncScheduler();
+      console.log('[Server] Sync scheduler initialized');
+    } catch (error) {
+      console.error('[Server] Failed to initialize sync scheduler:', error);
     }
   });
 }
