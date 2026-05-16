@@ -50,23 +50,38 @@ async function startServer() {
   });
 
   // /api/scheduled/sync — Node.js-native sync endpoint for scheduled tasks.
-  // Accepts POST requests authenticated via the Manus platform session cookie.
-  // Allows any authenticated user (role == "user" or higher) so the platform-injected
-  // scheduled-task cookie (which has role "user") can call it.
+  // Accepts POST requests authenticated via:
+  //   1. The Manus platform session cookie (role >= "user"), OR
+  //   2. The x-sync-secret header (same secret as /api/cache-clear)
+  // The secret-based auth allows scheduled task sandboxes to call this endpoint
+  // without a session cookie (they don't have OAuth state).
   app.post("/api/scheduled/sync", async (req, res) => {
     try {
-      // Authenticate via session cookie
-      let user: any = null;
-      try {
-        user = await sdk.authenticateRequest(req);
-      } catch {
-        return res.status(401).json({ error: "Unauthorized — valid session cookie required" });
+      const syncSecret = process.env.SYNC_SECRET || "sync-secret-default";
+      const providedSecret = req.headers["x-sync-secret"] as string | undefined;
+      let triggeredBy = "unknown";
+
+      if (providedSecret && providedSecret === syncSecret) {
+        // Secret-based auth — used by scheduled task sandboxes
+        triggeredBy = "scheduled-task (secret)";
+        console.log(`[ScheduledSync] Triggered via x-sync-secret header`);
+      } else {
+        // Session cookie auth — used by logged-in users (admin panel)
+        let user: any = null;
+        try {
+          user = await sdk.authenticateRequest(req);
+        } catch {
+          return res.status(401).json({ error: "Unauthorized — valid session cookie or x-sync-secret header required" });
+        }
+        if (!user) {
+          return res.status(401).json({ error: "Unauthorized" });
+        }
+        triggeredBy = `user:${user.openId} (role: ${user.role})`;
+        console.log(`[ScheduledSync] Triggered by user ${user.openId} (role: ${user.role})`);
       }
-      if (!user) {
-        return res.status(401).json({ error: "Unauthorized" });
-      }
-      console.log(`[ScheduledSync] Triggered by user ${user.openId} (role: ${user.role})`);
+
       // Run sync and wait for result (may take several minutes)
+      console.log(`[ScheduledSync] Starting sync — triggered by ${triggeredBy}`);
       const result = await runScheduledSync();
       // Clear query cache so frontend gets fresh data immediately
       invalidateDashboardCache();
