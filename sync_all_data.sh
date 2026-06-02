@@ -83,7 +83,7 @@ if wait $PID_DEVICES; then
 else
     log "❌ [1/8] Devices sync failed - check $TEMP_DIR/devices.log"
     cat "$TEMP_DIR/devices.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Software sync
@@ -92,7 +92,7 @@ if wait $PID_SOFTWARE; then
 else
     log "❌ [2/8] Software sync failed - check $TEMP_DIR/software.log"
     cat "$TEMP_DIR/software.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Systems sync
@@ -101,7 +101,7 @@ if wait $PID_SYSTEMS; then
 else
     log "❌ [3/8] Systems sync failed - check $TEMP_DIR/systems.log"
     cat "$TEMP_DIR/systems.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Decisions sync
@@ -110,7 +110,7 @@ if wait $PID_DECISIONS; then
 else
     log "❌ [4/8] Decisions sync failed - check $TEMP_DIR/decisions.log"
     cat "$TEMP_DIR/decisions.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Milestones sync
@@ -119,7 +119,7 @@ if wait $PID_MILESTONES; then
 else
     log "❌ [5/8] Milestones sync failed - check $TEMP_DIR/milestones.log"
     cat "$TEMP_DIR/milestones.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Upcoming Reviews sync
@@ -128,7 +128,7 @@ if wait $PID_REVIEWS; then
 else
     log "❌ [6/8] Upcoming Reviews sync failed - check $TEMP_DIR/upcoming_reviews.log"
     cat "$TEMP_DIR/upcoming_reviews.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check AI sync
@@ -137,7 +137,7 @@ if wait $PID_AI; then
 else
     log "❌ [7/8] AI sync failed - check $TEMP_DIR/ai.log"
     cat "$TEMP_DIR/ai.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Check Hearing sync
@@ -146,7 +146,7 @@ if wait $PID_HEARING; then
 else
     log "❌ [8/8] Hearing sync failed - check $TEMP_DIR/hearing.log"
     cat "$TEMP_DIR/hearing.log" >> "$LOG_FILE"
-    ((SYNC_ERRORS++))
+    SYNC_ERRORS=$((SYNC_ERRORS+1))
 fi
 
 # Calculate total time
