@@ -68,6 +68,37 @@ fix_gdrive_token() {
     return 0
 }
 
+# Function to fix missing rclone config
+fix_rclone_config() {
+    log_warn "Detected missing rclone config, attempting to create from GOOGLE_WORKSPACE_CLI_TOKEN..."
+    
+    RCLONE_CONFIG="/home/ubuntu/.gdrive-rclone.ini"
+    
+    # Check if token is available
+    if [ -z "${GOOGLE_WORKSPACE_CLI_TOKEN}" ] && [ -z "${GOOGLE_DRIVE_TOKEN}" ]; then
+        log_error "GOOGLE_WORKSPACE_CLI_TOKEN is not set — cannot create rclone config"
+        return 1
+    fi
+    
+    TOKEN="${GOOGLE_WORKSPACE_CLI_TOKEN:-${GOOGLE_DRIVE_TOKEN}}"
+    
+    # Create rclone config using the bearer token
+    cat > "$RCLONE_CONFIG" << RCLONE_EOF
+[manus_google_drive]
+type = drive
+scope = drive.readonly
+token = {"access_token":"${TOKEN}","token_type":"Bearer","expiry":"2099-01-01T00:00:00Z"}
+RCLONE_EOF
+    
+    if [ -f "$RCLONE_CONFIG" ]; then
+        log_info "rclone config created at $RCLONE_CONFIG"
+        return 0
+    else
+        log_error "Failed to create rclone config"
+        return 1
+    fi
+}
+
 # Function to detect error type from output
 detect_error_type() {
     local output="$1"
@@ -76,6 +107,8 @@ detect_error_type() {
         echo "python_env"
     elif echo "$output" | grep -q "token error\|rate limit\|429\|quota"; then
         echo "gdrive_token"
+    elif echo "$output" | grep -q "didn't find section in config file\|Config file.*not found\|manus_google_drive"; then
+        echo "rclone_config"
     elif echo "$output" | grep -q "No such file\|cannot find"; then
         echo "missing_file"
     elif echo "$output" | grep -q "Connection\|timeout\|network"; then
@@ -118,6 +151,18 @@ while [ $attempt -le $MAX_RETRIES ]; do
             fix_gdrive_token
             ((attempt++))
             continue
+            ;;
+        rclone_config)
+            fix_rclone_config
+            if [ $? -eq 0 ]; then
+                log_info "Retrying $SOURCE_NAME sync after rclone config fix..."
+                ((attempt++))
+                continue
+            else
+                log_error "Cannot fix rclone config — GOOGLE_WORKSPACE_CLI_TOKEN not available"
+                echo "$output"
+                exit 1
+            fi
             ;;
         network)
             log_warn "Network error detected, waiting ${RETRY_DELAY}s before retry..."
