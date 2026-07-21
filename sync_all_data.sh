@@ -46,6 +46,35 @@ SYNC_START=$(date +%s)
 SYNC_ERRORS=0
 SYNC_WARNINGS=0
 
+# Verify the authorization required by all eight source syncs before starting
+# background jobs. This avoids partial/stale dashboard updates when a fresh
+# scheduled environment does not have the Drive connection injected.
+RCLONE_CONFIG_PATH="${RCLONE_CONFIG:-/home/ubuntu/.gdrive-rclone.ini}"
+RCLONE_REMOTE_NAME="manus_google_drive"
+PRECHECK_FAILURES=()
+
+if ! command -v rclone >/dev/null 2>&1; then
+    PRECHECK_FAILURES+=("rclone is not installed")
+elif [ ! -f "$RCLONE_CONFIG_PATH" ]; then
+    PRECHECK_FAILURES+=("rclone configuration is missing at $RCLONE_CONFIG_PATH")
+elif ! rclone --config "$RCLONE_CONFIG_PATH" listremotes 2>/dev/null | grep -qx "${RCLONE_REMOTE_NAME}:"; then
+    PRECHECK_FAILURES+=("rclone remote ${RCLONE_REMOTE_NAME} is not configured")
+fi
+
+if [ -z "${GOOGLE_WORKSPACE_CLI_TOKEN:-}" ] && [ -z "${GOOGLE_DRIVE_TOKEN:-}" ]; then
+    PRECHECK_FAILURES+=("Google Workspace access token is not available")
+fi
+
+if [ ${#PRECHECK_FAILURES[@]} -gt 0 ]; then
+    log "❌ BLOCKED: source authorization preflight failed"
+    for failure in "${PRECHECK_FAILURES[@]}"; do
+        log "   - $failure"
+    done
+    log "   No source sync jobs were started, so existing dashboard data was left unchanged."
+    log "   Connect the required Google Workspace/Drive account or supply an authorized rclone configuration, then rerun this script."
+    exit 78
+fi
+
 # Run all independent syncs in parallel for maximum speed
 log "📥 Starting all syncs in parallel..."
 
